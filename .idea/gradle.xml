@@ -12,7 +12,6 @@
             <option value="$PROJECT_DIR$/bind-adapter" />
             <option value="$PROJECT_DIR$/bind-banner" />
             <option value="$PROJECT_DIR$/bind-data" />
-            <option value="$PROJECT_DIR$/bind-define" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

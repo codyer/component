@@ -10,6 +10,7 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 28
@@ -35,8 +36,8 @@ android {
 
 dependencies {
     api project(':bind-data')
-    implementation 'androidx.paging:paging-runtime:2.1.0'
-    compileOnly ("com.github.bumptech.glide:glide:4.8.0") {
+    api 'androidx.paging:paging-runtime:2.1.0'
+    api ("com.github.bumptech.glide:glide:4.8.0") {
         exclude group: "com.android.support"
     }
 }

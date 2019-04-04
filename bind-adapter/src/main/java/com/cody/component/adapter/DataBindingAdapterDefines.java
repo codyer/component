@@ -1,15 +1,15 @@
 /*
  * ************************************************************
  * 文件：DataBindingAdapterDefines.java  模块：bind-adapter  项目：component
- * 当前修改时间：2019年04月04日 17:57:29
- * 上次修改时间：2019年04月04日 17:48:51
+ * 当前修改时间：2019年04月04日 18:07:59
+ * 上次修改时间：2019年04月04日 17:57:48
  * 作者：Cody.yi   https://github.com/codyer
  *
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.component.adapter.list;
+package com.cody.component.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
