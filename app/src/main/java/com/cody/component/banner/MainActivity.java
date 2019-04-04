@@ -1,19 +1,20 @@
-package com.cody.banner;
+package com.cody.component.banner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import com.cody.component.adapter.list.OnBindingItemClickListener;
-import com.cody.component.banner.BannerViewData;
-import com.cody.component.banner.BindingBanner;
-import com.cody.component.banner.BindingBannerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.cody.component.R;
+import com.cody.component.bus.BusDemoActivity;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_banner);
         BindingBanner banner = findViewById(R.id.banner);
 
         final List<BannerViewData> banners = new ArrayList<>();
@@ -38,5 +39,12 @@ public class MainActivity extends AppCompatActivity {
         });
         bannerAdapter.submitList(banners);
         banner.setBindingBannerAdapter(bannerAdapter);
+
+        findViewById(R.id.toBus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, BusDemoActivity.class));
+            }
+        });
     }
 }
