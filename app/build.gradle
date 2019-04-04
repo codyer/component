@@ -23,6 +23,7 @@ android {
 }
 
 dependencies {
-    implementation project(":bind-banner")
+//    implementation project(":bind-banner")
+    implementation 'com.github.codyer:component:0.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }
