@@ -1,1 +1,1 @@
-include ':app', ':bind-banner', ':bind-data', ':bind-adapter'
+include ':app', ':bind-banner', ':bind-data', ':bind-adapter', ':bus-lib', ':bus-core', ':bus-compiler'

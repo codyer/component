@@ -12,6 +12,9 @@
             <option value="$PROJECT_DIR$/bind-adapter" />
             <option value="$PROJECT_DIR$/bind-banner" />
             <option value="$PROJECT_DIR$/bind-data" />
+            <option value="$PROJECT_DIR$/bus-compiler" />
+            <option value="$PROJECT_DIR$/bus-core" />
+            <option value="$PROJECT_DIR$/bus-lib" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
