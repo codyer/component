@@ -1,0 +1,24 @@
+apply plugin: 'java-library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.codyer'
+/*
+ * ************************************************************
+ * 文件：build.gradle  模块：bind-data  项目：component
+ * 当前修改时间：2019年04月04日 17:03:25
+ * 上次修改时间：2019年04月04日 14:34:18
+ * 作者：Cody.yi   https://github.com/codyer
+ *
+ * Copyright (c) 2019
+ * ************************************************************
+ */
+
+//指定编译的编码
+tasks.withType(JavaCompile){
+    options.encoding = "UTF-8"
+}
+tasks.withType(Javadoc) {
+    options.encoding = "UTF-8"
+}
+sourceCompatibility = "7"
+targetCompatibility = "7"

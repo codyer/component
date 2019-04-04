@@ -1,0 +1,27 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewData"
+            type="com.cody.component.banner.BannerViewData" />
+    </data>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:onClick="@{onClickListener::onClick}"
+        bind:error="@{@android:drawable/stat_notify_error}"
+        bind:placeholder="@{@android:drawable/stat_notify_error}"
+        bind:rectImageUrl="@{viewData.imgUrl}"
+        tools:src="@android:drawable/stat_notify_error" />
+</layout>

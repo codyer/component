@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="BindingBanner">
+        <attr name="b_Interval" format="integer"/>
+        <attr name="b_ShowIndicator" format="boolean"/>
+        <attr name="b_AutoPlaying" format="boolean"/>
+        <attr name="b_IndicatorSelectedSrc" format="color|reference"/>
+        <attr name="b_IndicatorUnselectedSrc" format="color|reference"/>
+        <attr name="b_IndicatorSize" format="dimension|reference"/>
+        <attr name="b_IndicatorSpace" format="dimension|reference"/>
+        <attr name="b_IndicatorMargin" format="dimension|reference"/>
+        <attr name="b_IndicatorGravity" format="enum">
+            <enum name="left" value="0"/>
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+    </declare-styleable>
+
+</resources>

@@ -1,0 +1,42 @@
+/*
+ * ************************************************************
+ * 文件：build.gradle  模块：bind-adapter  项目：RecyclerBanner
+ * 当前修改时间：2019年04月04日 13:47:52
+ * 上次修改时间：2019年04月04日 13:11:08
+ * 作者：Cody.yi   https://github.com/codyer
+ *
+ * Copyright (c) 2019
+ * ************************************************************
+ */
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    dataBinding {
+        enabled true
+    }
+
+    defaultConfig {
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api project(':bind-data')
+    implementation 'androidx.paging:paging-runtime:2.1.0'
+    compileOnly ("com.github.bumptech.glide:glide:4.8.0") {
+        exclude group: "com.android.support"
+    }
+}
