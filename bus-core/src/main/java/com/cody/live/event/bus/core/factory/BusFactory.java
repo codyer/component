@@ -23,11 +23,14 @@ import java.util.HashMap;
  * 和生命周期绑定的事件总线,创建基于事件的总线，对不同scope进行隔离
  */
 public class BusFactory {
-    private static final BusFactory sInstance = new BusFactory();
     private final HashMap<String, ScopeHolder<Object>> mScopeBus;//不同scope的bus集
 
+    private static class InstanceHolder {
+        private static BusFactory INSTANCE = new BusFactory();
+    }
+
     public static BusFactory ready() {
-        return sInstance;
+        return InstanceHolder.INSTANCE;
     }
 
     private BusFactory() {

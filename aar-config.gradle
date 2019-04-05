@@ -1,0 +1,41 @@
+/*
+ * ************************************************************
+ * 文件：aar-config.gradle  模块：component  项目：component
+ * 当前修改时间：2019年04月05日 12:15:03
+ * 上次修改时间：2019年03月23日 09:01:36
+ * 作者：Cody.yi   https://github.com/codyer
+ *
+ * Copyright (c) 2019
+ * ************************************************************
+ */
+
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+
+repositories {
+    mavenCentral()
+    google()
+    jcenter()
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    dataBinding {
+        enabled true
+    }
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}

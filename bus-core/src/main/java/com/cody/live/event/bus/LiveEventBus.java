@@ -43,13 +43,12 @@ import java.lang.reflect.Proxy;
  *                 .withEvent$userDefinedEvent().setValue("");
  */
 public class LiveEventBus {
-    private static LiveEventBus sInstance;
+    private static class InstanceHolder {
+        private static LiveEventBus INSTANCE = new LiveEventBus();
+    }
 
     public static LiveEventBus begin() {
-        if (sInstance == null) {
-            sInstance = new LiveEventBus();
-        }
-        return sInstance;
+        return InstanceHolder.INSTANCE;
     }
 
     private LiveEventBus() {
@@ -59,8 +58,8 @@ public class LiveEventBus {
      * 在什么范围
      *
      * @param scopeClass 范围，通过注解自动生成的类，如果没有生成，请使用注解
-     *  com.cody.live.event.bus.lib.annotation.EventScope 注解枚举类，并使用
-     *  com.cody.live.event.bus.lib.annotation.Event 注解事件
+     *                   com.cody.live.event.bus.lib.annotation.EventScope 注解枚举类，并使用
+     *                   com.cody.live.event.bus.lib.annotation.Event 注解事件
      * @return 返回代理类实例
      */
     @SuppressWarnings("unchecked")
