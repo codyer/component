@@ -1,15 +1,15 @@
 /*
  * ************************************************************
  * 文件：BindingBannerAdapter.java  模块：bind-banner  项目：component
- * 当前修改时间：2019年04月04日 14:44:56
- * 上次修改时间：2019年04月04日 13:37:04
+ * 当前修改时间：2019年04月05日 17:19:23
+ * 上次修改时间：2019年04月04日 16:56:26
  * 作者：Cody.yi   https://github.com/codyer
  *
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.component.banner;
+package com.cody.component.banner.adapter;
 
 import android.view.ContextMenu;
 import android.view.View;
@@ -17,6 +17,9 @@ import android.widget.AdapterView;
 
 import com.cody.component.adapter.list.BindingListAdapter;
 import com.cody.component.adapter.list.OnBindingItemClickListener;
+import com.cody.component.banner.R;
+import com.cody.component.banner.BR;
+import com.cody.component.banner.data.BannerViewData;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;

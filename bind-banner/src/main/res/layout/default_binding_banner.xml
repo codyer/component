@@ -12,7 +12,7 @@
 
         <variable
             name="viewData"
-            type="com.cody.component.banner.BannerViewData" />
+            type="com.cody.component.banner.data.BannerViewData" />
     </data>
 
     <ImageView

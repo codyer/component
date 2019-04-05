@@ -1,0 +1,26 @@
+/*
+ * ************************************************************
+ * 文件：build.gradle  模块：component  项目：component
+ * 当前修改时间：2019年04月05日 16:28:07
+ * 上次修改时间：2019年04月05日 13:09:29
+ * 作者：Cody.yi   https://github.com/codyer
+ *
+ * Copyright (c) 2019
+ * ************************************************************
+ */
+
+apply from: '../aar-config.gradle'
+dependencies {
+
+    implementation rootProject.ext.dependencies["appcompat"]
+    implementation rootProject.ext.dependencies["volley"]
+    implementation rootProject.ext.dependencies["okhttp3"]
+    implementation rootProject.ext.dependencies["okio"]
+    implementation rootProject.ext.dependencies["gson"]
+    implementation rootProject.ext.dependencies["httpcore"]
+//    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+//    api project(":bind-adapter")
+}

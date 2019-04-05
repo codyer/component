@@ -27,6 +27,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.cody.component.banner.adapter.BindingBannerAdapter;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.view.GravityCompat;

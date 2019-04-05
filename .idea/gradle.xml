@@ -11,10 +11,13 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bind-adapter" />
             <option value="$PROJECT_DIR$/bind-banner" />
+            <option value="$PROJECT_DIR$/bind-base" />
             <option value="$PROJECT_DIR$/bind-data" />
             <option value="$PROJECT_DIR$/bus-compiler" />
             <option value="$PROJECT_DIR$/bus-core" />
             <option value="$PROJECT_DIR$/bus-lib" />
+            <option value="$PROJECT_DIR$/http-core" />
+            <option value="$PROJECT_DIR$/http-monitor" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

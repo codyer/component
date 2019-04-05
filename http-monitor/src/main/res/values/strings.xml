@@ -1,0 +1,5 @@
+<resources>
+    <string name="monitor_app_name">HTTP-Cat</string>
+    <string name="monitor_share">Share</string>
+    <string name="monitor_clear">Clear</string>
+</resources>

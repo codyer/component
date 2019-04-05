@@ -1,0 +1,15 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：strings.xml  模块：bind-base  项目：component
+  ~ 当前修改时间：2019年04月05日 17:44:11
+  ~ 上次修改时间：2019年04月04日 15:54:22
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <string name="monitor_app_name">bind-base</string>
+    <string name="loading">努力加载中&#8230;</string>
+</resources>

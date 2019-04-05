@@ -1,18 +1,17 @@
 /*
  * ************************************************************
  * 文件：BannerViewData.java  模块：bind-banner  项目：component
- * 当前修改时间：2019年04月04日 14:44:56
- * 上次修改时间：2019年04月04日 11:40:54
+ * 当前修改时间：2019年04月05日 17:18:58
+ * 上次修改时间：2019年04月04日 16:12:47
  * 作者：Cody.yi   https://github.com/codyer
  *
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.component.banner;
+package com.cody.component.banner.data;
 
 import android.text.TextUtils;
-import android.widget.TextView;
 
 import com.cody.component.view.data.IViewData;
 import com.cody.component.view.data.ItemViewData;
