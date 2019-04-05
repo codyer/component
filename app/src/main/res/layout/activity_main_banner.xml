@@ -7,8 +7,17 @@
     android:orientation="vertical"
     tools:context=".banner.MainActivity">
 
+    <com.cody.component.banner.BindingBanner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:b_AutoPlaying="true"
+        app:b_Interval="2000"
+        tools:background="@color/colorPrimaryDark" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/toBus"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="test-Bus"
@@ -17,11 +26,4 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.cody.component.banner.BindingBanner
-        android:id="@+id/banner"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:b_AutoPlaying="true"
-        app:b_Interval="2000"
-        tools:background="@color/colorPrimaryDark" />
 </LinearLayout>

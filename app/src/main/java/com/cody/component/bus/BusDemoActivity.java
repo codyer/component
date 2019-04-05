@@ -38,7 +38,9 @@ public class BusDemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bus_demo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,18 +66,20 @@ public class BusDemoActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Toast.makeText(BusDemoActivity.this, "注册事件监听", Toast.LENGTH_SHORT).show();
-            LiveEventBus.begin().inScope(Scope$demo.class).withEvent$testBean()
-                    .observe(BusDemoActivity.this, new ObserverWrapper<TestBean>() {
-                        @Override
-                        public void onChanged(TestBean testBean) {
-                            Toast.makeText(BusDemoActivity.this, "事件监听" + testBean.toString(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            return true;
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                return true;
+            case R.id.action_settings:
+                Toast.makeText(BusDemoActivity.this, "注册事件监听", Toast.LENGTH_SHORT).show();
+                LiveEventBus.begin().inScope(Scope$demo.class).withEvent$testBean()
+                        .observe(BusDemoActivity.this, new ObserverWrapper<TestBean>() {
+                            @Override
+                            public void onChanged(TestBean testBean) {
+                                Toast.makeText(BusDemoActivity.this, "事件监听" + testBean.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
