@@ -2,7 +2,6 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -18,9 +17,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/monitor_background"
+        android:background="@color/cat_background"
         android:orientation="vertical"
-        tools:context=".ui.MonitorMainActivity">
+        tools:context=".ui.CatMainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -38,10 +37,10 @@
 
                 <TextView
                     android:id="@+id/toolbarTitle"
-                    style="@style/monitor.TextAppearance.TransactionTitle"
+                    style="@style/cat.TextAppearance.TransactionTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/monitor_app_name"
+                    android:text="@string/cat_app_name"
                     tools:text="Title" />
 
             </androidx.appcompat.widget.Toolbar>

@@ -3,7 +3,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/monitor_background"
+        android:background="@color/cat_background"
         android:scrollbars="vertical">
 
         <LinearLayout
@@ -14,13 +14,13 @@
 
             <TextView
                 android:id="@+id/headers"
-                style="@style/monitor.TextAppearance.Value"
+                style="@style/cat.TextAppearance.Value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/body"
-                style="@style/monitor.TextAppearance.Value"
+                style="@style/cat.TextAppearance.Value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

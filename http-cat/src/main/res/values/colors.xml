@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="monitor_colorPrimary">#008577</color>
-    <color name="monitor_colorPrimaryDark">#00574B</color>
-    <color name="monitor_colorAccent">#D81B60</color>
+    <color name="cat_colorPrimary">#008577</color>
+    <color name="cat_colorPrimaryDark">#00574B</color>
+    <color name="cat_colorAccent">#D81B60</color>
 
-    <color name="monitor_status_success">#06CA87</color>
-    <color name="monitor_status_error">#f23c61</color>
-    <color name="monitor_background">#F0F0F0</color>
+    <color name="cat_status_success">#06CA87</color>
+    <color name="cat_status_error">#f23c61</color>
+    <color name="cat_background">#F0F0F0</color>
 
 </resources>

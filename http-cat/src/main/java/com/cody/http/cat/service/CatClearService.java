@@ -8,12 +8,12 @@ import com.cody.http.cat.holder.NotificationHolder;
 
 /**
  * Created by xu.yi. on 2019/4/5.
- * ClearMonitorService
+ * CatClearService
  */
-public class ClearMonitorService extends IntentService {
+public class CatClearService extends IntentService {
 
-    public ClearMonitorService() {
-        super(ClearMonitorService.class.getName());
+    public CatClearService() {
+        super(CatClearService.class.getName());
     }
 
     @Override

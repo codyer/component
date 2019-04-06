@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：MonitorDetailsActivity.java  模块：http-monitor  项目：component
+ * 文件：CatDetailsActivity.java  模块：http-cat  项目：component
  * 当前修改时间：2019年04月05日 18:45:24
  * 上次修改时间：2019年04月05日 17:27:09
  * 作者：Cody.yi   https://github.com/codyer
@@ -20,8 +20,8 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.cody.component.app.activity.EmptyBindActivity;
-import com.cody.http.cat.databinding.MonitorActivityDetailsBinding;
-import com.cody.http.cat.db.data.ItemMonitorData;
+import com.cody.http.cat.databinding.CatActivityDetailsBinding;
+import com.cody.http.cat.db.data.ItemHttpData;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -36,25 +36,25 @@ import java.util.List;
 
 import com.cody.http.cat.R;
 import com.cody.http.cat.utils.FormatUtils;
-import com.cody.http.cat.viewmodel.MonitorViewModel;
+import com.cody.http.cat.viewmodel.CatViewModel;
 
 /**
  * Created by xu.yi. on 2019/4/5.
- * MonitorDetailsActivity
+ * CatDetailsActivity
  */
-public class MonitorDetailsActivity extends EmptyBindActivity<MonitorActivityDetailsBinding> {
+public class CatDetailsActivity extends EmptyBindActivity<CatActivityDetailsBinding> {
     private static final String KEY_ID = "keyId";
-    private ItemMonitorData mItemMonitorData;
+    private ItemHttpData mItemHttpData;
 
     public static void openActivity(Context context, long id) {
-        Intent intent = new Intent(context, MonitorDetailsActivity.class);
+        Intent intent = new Intent(context, CatDetailsActivity.class);
         intent.putExtra(KEY_ID, id);
         context.startActivity(intent);
     }
 
     @Override
     protected int getLayoutID() {
-        return R.layout.monitor_activity_details;
+        return R.layout.cat_activity_details;
     }
 
     @Override
@@ -73,13 +73,13 @@ public class MonitorDetailsActivity extends EmptyBindActivity<MonitorActivityDet
         }
         initView();
         long id = getIntent().getLongExtra(KEY_ID, 0);
-        getViewModel(MonitorViewModel.class).queryRecordById(id);
-        getViewModel(MonitorViewModel.class).getRecordLiveData().observe(this, new Observer<ItemMonitorData>() {
+        getViewModel(CatViewModel.class).queryRecordById(id);
+        getViewModel(CatViewModel.class).getRecordLiveData().observe(this, new Observer<ItemHttpData>() {
             @Override
-            public void onChanged(@Nullable ItemMonitorData itemMonitorData) {
-                MonitorDetailsActivity.this.mItemMonitorData = itemMonitorData;
-                if (itemMonitorData != null) {
-                    getBinding().toolbarTitle.setText(String.format("%s  %s", itemMonitorData.getMethod(), itemMonitorData.getPath()));
+            public void onChanged(@Nullable ItemHttpData itemHttpData) {
+                CatDetailsActivity.this.mItemHttpData = itemHttpData;
+                if (itemHttpData != null) {
+                    getBinding().toolbarTitle.setText(String.format("%s  %s", itemHttpData.getMethod(), itemHttpData.getPath()));
                 } else {
                     getBinding().toolbarTitle.setText(null);
                 }
@@ -89,16 +89,16 @@ public class MonitorDetailsActivity extends EmptyBindActivity<MonitorActivityDet
 
     private void initView() {
         PagerAdapter fragmentPagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        fragmentPagerAdapter.addFragment(MonitorOverviewFragment.newInstance(), "overview");
-        fragmentPagerAdapter.addFragment(MonitorPayloadFragment.newInstanceRequest(), "request");
-        fragmentPagerAdapter.addFragment(MonitorPayloadFragment.newInstanceResponse(), "response");
+        fragmentPagerAdapter.addFragment(CatOverviewFragment.newInstance(), "overview");
+        fragmentPagerAdapter.addFragment(CatPayloadFragment.newInstanceRequest(), "request");
+        fragmentPagerAdapter.addFragment(CatPayloadFragment.newInstanceResponse(), "response");
         getBinding().viewPager.setAdapter(fragmentPagerAdapter);
         getBinding().tabLayout.setupWithViewPager(getBinding().viewPager);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.monitor_menu_share, menu);
+        getMenuInflater().inflate(R.menu.cat_menu_share, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -107,9 +107,9 @@ public class MonitorDetailsActivity extends EmptyBindActivity<MonitorActivityDet
         if (item.getItemId() == android.R.id.home) {
             finish();
             return true;
-        } else if (item.getItemId() == R.id.monitor_share) {
-            if (mItemMonitorData != null) {
-                share(FormatUtils.getShareText(mItemMonitorData));
+        } else if (item.getItemId() == R.id.cat_share) {
+            if (mItemHttpData != null) {
+                share(FormatUtils.getShareText(mItemHttpData));
             }
         }
         return true;

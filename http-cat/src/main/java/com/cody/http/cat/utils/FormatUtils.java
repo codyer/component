@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：FormatUtils.java  模块：http-monitor  项目：component
+ * 文件：FormatUtils.java  模块：http-cat  项目：component
  * 当前修改时间：2019年04月05日 18:42:55
  * 上次修改时间：2019年04月05日 17:27:09
  * 作者：Cody.yi   https://github.com/codyer
@@ -13,7 +13,7 @@ package com.cody.http.cat.utils;
 
 import android.text.TextUtils;
 
-import com.cody.http.cat.db.data.ItemMonitorData;
+import com.cody.http.cat.db.data.ItemHttpData;
 import com.google.gson.JsonParser;
 
 import org.xml.sax.InputSource;
@@ -118,37 +118,37 @@ public class FormatUtils {
         }
     }
 
-    public static String getShareText(ItemMonitorData itemMonitorData) {
+    public static String getShareText(ItemHttpData itemHttpData) {
         String text = "";
-        text += "Url" + ": " + check(itemMonitorData.getUrl()) + "\n";
-        text += "Method" + ": " + check(itemMonitorData.getMethod()) + "\n";
-        text += "Protocol" + ": " + check(itemMonitorData.getProtocol()) + "\n";
-        text += "Status" + ": " + check(itemMonitorData.getStatus().toString()) + "\n";
-        text += "Response" + ": " + check(itemMonitorData.getResponseSummaryText()) + "\n";
-        text += "SSL" + ": " + itemMonitorData.isSsl() + "\n";
+        text += "Url" + ": " + check(itemHttpData.getUrl()) + "\n";
+        text += "Method" + ": " + check(itemHttpData.getMethod()) + "\n";
+        text += "Protocol" + ": " + check(itemHttpData.getProtocol()) + "\n";
+        text += "Status" + ": " + check(itemHttpData.getStatus().toString()) + "\n";
+        text += "Response" + ": " + check(itemHttpData.getResponseSummaryText()) + "\n";
+        text += "SSL" + ": " + itemHttpData.isSsl() + "\n";
         text += "\n";
-        text += "Request Time" + ": " + FormatUtils.getDateFormatLong(itemMonitorData.getRequestDate()) + "\n";
-        text += "Response Time" + ": " + FormatUtils.getDateFormatLong(itemMonitorData.getResponseDate()) + "\n";
-        text += "Duration" + ": " + check(itemMonitorData.getDurationFormat()) + "\n";
+        text += "Request Time" + ": " + FormatUtils.getDateFormatLong(itemHttpData.getRequestDate()) + "\n";
+        text += "Response Time" + ": " + FormatUtils.getDateFormatLong(itemHttpData.getResponseDate()) + "\n";
+        text += "Duration" + ": " + check(itemHttpData.getDurationFormat()) + "\n";
         text += "\n";
-        text += "Request Size" + ": " + FormatUtils.formatBytes(itemMonitorData.getRequestContentLength()) + "\n";
-        text += "Response Size" + ": " + FormatUtils.formatBytes(itemMonitorData.getResponseContentLength()) + "\n";
-        text += "Total Size" + ": " + check(itemMonitorData.getTotalSizeString()) + "\n";
+        text += "Request Size" + ": " + FormatUtils.formatBytes(itemHttpData.getRequestContentLength()) + "\n";
+        text += "Response Size" + ": " + FormatUtils.formatBytes(itemHttpData.getResponseContentLength()) + "\n";
+        text += "Total Size" + ": " + check(itemHttpData.getTotalSizeString()) + "\n";
         text += "\n";
         text += "---------- " + "Request" + " ----------\n\n";
-        String headers = itemMonitorData.getRequestHeadersString(false);
+        String headers = itemHttpData.getRequestHeadersString(false);
         if (!TextUtils.isEmpty(headers)) {
             text += headers + "\n";
         }
-        text += (itemMonitorData.isRequestBodyIsPlainText()) ? check(itemMonitorData.getFormattedRequestBody()) :
+        text += (itemHttpData.isRequestBodyIsPlainText()) ? check(itemHttpData.getFormattedRequestBody()) :
                 "(encoded or binary body omitted)";
         text += "\n";
         text += "---------- " + "Response" + " ----------\n\n";
-        headers = itemMonitorData.getResponseHeadersString(false);
+        headers = itemHttpData.getResponseHeadersString(false);
         if (!TextUtils.isEmpty(headers)) {
             text += headers + "\n";
         }
-        text += (itemMonitorData.isResponseBodyIsPlainText()) ? check(itemMonitorData.getFormattedResponseBody()) :
+        text += (itemHttpData.isResponseBodyIsPlainText()) ? check(itemHttpData.getFormattedResponseBody()) :
                 "(encoded or binary body omitted)";
         return text;
     }

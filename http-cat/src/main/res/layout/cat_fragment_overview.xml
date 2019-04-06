@@ -1,6 +1,4 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -15,14 +13,14 @@
 
         <variable
             name="viewData"
-            type="com.cody.http.cat.db.data.ItemMonitorData" />
+            type="com.cody.http.cat.db.data.ItemHttpData" />
 
     </data>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/monitor_background"
+        android:background="@color/cat_background"
         android:paddingTop="12dp"
         android:scrollbars="vertical">
 
@@ -37,13 +35,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Url" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewData.url}"
@@ -56,13 +54,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Method" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewData.method}"
@@ -75,13 +73,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Protocol" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewData.protocol}"
@@ -94,13 +92,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Status" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewData.status}"
@@ -113,13 +111,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Response" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewData.responseSummaryText}"
@@ -132,13 +130,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SSL" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text='@{viewData.ssl?"YES":"NO"}'
@@ -152,13 +150,13 @@
                 android:paddingTop="8dp">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Request Time" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{FormatUtils.getDateFormatLong(viewData.requestDate)}"
@@ -171,13 +169,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Response Time" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{FormatUtils.getDateFormatLong(viewData.responseDate)}"
@@ -190,13 +188,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Duration" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewData.durationFormat}"
@@ -210,13 +208,13 @@
                 android:paddingTop="8dp">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Request Size" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{FormatUtils.formatBytes(viewData.requestContentLength)}"
@@ -229,13 +227,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Response Size" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{FormatUtils.formatBytes(viewData.responseContentLength)}"
@@ -248,13 +246,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Label"
+                    style="@style/cat.TextAppearance.Label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total Size" />
 
                 <TextView
-                    style="@style/monitor.TextAppearance.Value"
+                    style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewData.totalSizeString}"

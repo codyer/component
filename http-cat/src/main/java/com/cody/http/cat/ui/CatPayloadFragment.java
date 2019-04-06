@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：MonitorPayloadFragment.java  模块：http-monitor  项目：component
+ * 文件：CatPayloadFragment.java  模块：http-cat  项目：component
  * 当前修改时间：2019年04月05日 18:45:24
  * 上次修改时间：2019年04月05日 17:27:09
  * 作者：Cody.yi   https://github.com/codyer
@@ -18,45 +18,45 @@ import android.view.View;
 
 import com.cody.component.app.fragment.EmptyBindFragment;
 import com.cody.http.cat.R;
-import com.cody.http.cat.databinding.MonitorFragmentPayloadBinding;
-import com.cody.http.cat.db.data.ItemMonitorData;
-import com.cody.http.cat.viewmodel.MonitorViewModel;
+import com.cody.http.cat.databinding.CatFragmentPayloadBinding;
+import com.cody.http.cat.db.data.ItemHttpData;
+import com.cody.http.cat.viewmodel.CatViewModel;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 
 /**
  * Created by xu.yi. on 2019/4/5.
- * MonitorPayloadFragment
+ * CatPayloadFragment
  */
-public class MonitorPayloadFragment extends EmptyBindFragment<MonitorFragmentPayloadBinding> {
+public class CatPayloadFragment extends EmptyBindFragment<CatFragmentPayloadBinding> {
     private static final int TYPE_REQUEST = 100;
     private static final int TYPE_RESPONSE = 200;
     private static final String TYPE_KEY = "keyType";
     private int type;
 
-    private static MonitorPayloadFragment newInstance(int type) {
-        MonitorPayloadFragment fragment = new MonitorPayloadFragment();
+    private static CatPayloadFragment newInstance(int type) {
+        CatPayloadFragment fragment = new CatPayloadFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(TYPE_KEY, type);
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public static MonitorPayloadFragment newInstanceRequest() {
+    public static CatPayloadFragment newInstanceRequest() {
         return newInstance(TYPE_REQUEST);
     }
 
-    public static MonitorPayloadFragment newInstanceResponse() {
+    public static CatPayloadFragment newInstanceResponse() {
         return newInstance(TYPE_RESPONSE);
     }
 
-    public MonitorPayloadFragment() {
+    public CatPayloadFragment() {
     }
 
     @Override
     protected int getLayoutID() {
-        return R.layout.monitor_fragment_payload;
+        return R.layout.cat_fragment_payload;
     }
 
     @Override
@@ -69,19 +69,19 @@ public class MonitorPayloadFragment extends EmptyBindFragment<MonitorFragmentPay
         if (bundle != null) {
             type = bundle.getInt(TYPE_KEY);
         }
-        getViewModel(MonitorViewModel.class).getRecordLiveData().observe(this, new Observer<ItemMonitorData>() {
+        getViewModel(CatViewModel.class).getRecordLiveData().observe(this, new Observer<ItemHttpData>() {
             @Override
-            public void onChanged(@Nullable ItemMonitorData monitorItemMonitorData) {
-                if (monitorItemMonitorData != null) {
+            public void onChanged(@Nullable ItemHttpData catItemHttpData) {
+                if (catItemHttpData != null) {
                     switch (type) {
                         case TYPE_REQUEST: {
-                            setText(monitorItemMonitorData.getRequestHeadersString(true),
-                                    monitorItemMonitorData.getFormattedRequestBody(), monitorItemMonitorData.isRequestBodyIsPlainText());
+                            setText(catItemHttpData.getRequestHeadersString(true),
+                                    catItemHttpData.getFormattedRequestBody(), catItemHttpData.isRequestBodyIsPlainText());
                             break;
                         }
                         case TYPE_RESPONSE: {
-                            setText(monitorItemMonitorData.getResponseHeadersString(true),
-                                    monitorItemMonitorData.getFormattedResponseBody(), monitorItemMonitorData.isResponseBodyIsPlainText());
+                            setText(catItemHttpData.getResponseHeadersString(true),
+                                    catItemHttpData.getFormattedResponseBody(), catItemHttpData.isResponseBodyIsPlainText());
                             break;
                         }
                     }

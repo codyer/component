@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：NotificationHolder.java  模块：http-monitor  项目：component
+ * 文件：NotificationHolder.java  模块：http-cat  项目：component
  * 当前修改时间：2019年04月05日 18:45:24
  * 上次修改时间：2019年04月05日 17:27:09
  * 作者：Cody.yi   https://github.com/codyer
@@ -24,9 +24,9 @@ import androidx.core.app.NotificationCompat;
 import android.util.LongSparseArray;
 
 import com.cody.http.cat.R;
-import com.cody.http.cat.db.data.ItemMonitorData;
-import com.cody.http.cat.service.ClearMonitorService;
-import com.cody.http.cat.ui.MonitorMainActivity;
+import com.cody.http.cat.db.data.ItemHttpData;
+import com.cody.http.cat.service.CatClearService;
+import com.cody.http.cat.ui.CatMainActivity;
 
 /**
  * Created by xu.yi. on 2019/4/5.
@@ -34,7 +34,7 @@ import com.cody.http.cat.ui.MonitorMainActivity;
  */
 public class NotificationHolder {
 
-    private static final String CHANNEL_ID = "monitorLeavesChannelId";
+    private static final String CHANNEL_ID = "catLeavesChannelId";
 
     private static final String CHANNEL_NAME = "Http Notifications";
 
@@ -44,7 +44,7 @@ public class NotificationHolder {
 
     private static final int BUFFER_SIZE = 10;
 
-    private LongSparseArray<ItemMonitorData> transactionBuffer = new LongSparseArray<>();
+    private LongSparseArray<ItemHttpData> transactionBuffer = new LongSparseArray<>();
 
     private Context context;
 
@@ -75,14 +75,14 @@ public class NotificationHolder {
         return instance;
     }
 
-    public synchronized void show(ItemMonitorData transaction) {
+    public synchronized void show(ItemHttpData transaction) {
         if (showNotification) {
             addToBuffer(transaction);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setContentIntent(getContentIntent(context))
                     .setLocalOnly(true)
-                    .setSmallIcon(R.mipmap.monitor_ic_launcher)
-                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.monitor_ic_launcher))
+                    .setSmallIcon(R.mipmap.cat_ic_launcher)
+                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.cat_ic_launcher))
                     .setContentTitle(NOTIFICATION_TITLE);
             NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
             int size = transactionBuffer.size();
@@ -104,9 +104,9 @@ public class NotificationHolder {
         }
     }
 
-    private synchronized void addToBuffer(ItemMonitorData itemMonitorData) {
+    private synchronized void addToBuffer(ItemHttpData itemHttpData) {
         transactionCount++;
-        transactionBuffer.put(itemMonitorData.getId(), itemMonitorData);
+        transactionBuffer.put(itemHttpData.getId(), itemHttpData);
         if (transactionBuffer.size() > BUFFER_SIZE) {
             transactionBuffer.removeAt(0);
         }
@@ -131,12 +131,12 @@ public class NotificationHolder {
 
     private NotificationCompat.Action getClearAction() {
         PendingIntent intent = PendingIntent.getService(context, 200,
-                new Intent(context, ClearMonitorService.class), PendingIntent.FLAG_ONE_SHOT);
-        return new NotificationCompat.Action(R.mipmap.monitor_ic_launcher, "Clear", intent);
+                new Intent(context, CatClearService.class), PendingIntent.FLAG_ONE_SHOT);
+        return new NotificationCompat.Action(R.mipmap.cat_ic_launcher, "Clear", intent);
     }
 
     private static Intent getLaunchIntent(Context context) {
-        Intent intent = new Intent(context, MonitorMainActivity.class);
+        Intent intent = new Intent(context, CatMainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         return intent;
     }

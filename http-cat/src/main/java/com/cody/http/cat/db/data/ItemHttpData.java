@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：ItemMonitorData.java  模块：http-monitor  项目：component
+ * 文件：ItemHttpData.java  模块：http-cat  项目：component
  * 当前修改时间：2019年04月05日 18:42:43
  * 上次修改时间：2019年04月05日 17:27:09
  * 作者：Cody.yi   https://github.com/codyer
@@ -28,10 +28,10 @@ import okhttp3.Headers;
 
 /**
  * Created by xu.yi. on 2019/3/31.
- * monitor data
+ * cat data
  */
-@Entity(tableName = "http_info_table")
-public class ItemMonitorData extends ItemViewData {
+@Entity(tableName = "http_cat_table")
+public class ItemHttpData extends ItemViewData {
 
     private static final int DEFAULT_RESPONSE_CODE = -100;
 
@@ -90,13 +90,13 @@ public class ItemMonitorData extends ItemViewData {
         }
     }
 
-    public ItemMonitorData.Status getStatus() {
+    public ItemHttpData.Status getStatus() {
         if (mError != null) {
-            return ItemMonitorData.Status.Failed;
-        } else if (mResponseCode == ItemMonitorData.DEFAULT_RESPONSE_CODE) {
-            return ItemMonitorData.Status.Requested;
+            return ItemHttpData.Status.Failed;
+        } else if (mResponseCode == ItemHttpData.DEFAULT_RESPONSE_CODE) {
+            return ItemHttpData.Status.Requested;
         } else {
-            return ItemMonitorData.Status.Complete;
+            return ItemHttpData.Status.Complete;
         }
     }
 
@@ -349,7 +349,7 @@ public class ItemMonitorData extends ItemViewData {
     @NonNull
     @Override
     public String toString() {
-        return "ItemMonitorData{" +
+        return "ItemHttpData{" +
                 "id=" + id +
                 ", mRequestDate=" + mRequestDate +
                 ", mResponseDate=" + mResponseDate +
@@ -380,7 +380,7 @@ public class ItemMonitorData extends ItemViewData {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ItemMonitorData that = (ItemMonitorData) o;
+        ItemHttpData that = (ItemHttpData) o;
         if (id != that.id) return false;
         if (mDuration != that.mDuration) return false;
         if (mRequestContentLength != that.mRequestContentLength) return false;

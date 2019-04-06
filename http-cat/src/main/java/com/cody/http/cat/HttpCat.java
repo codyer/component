@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：HttpCat.java  模块：http-monitor  项目：component
+ * 文件：HttpCat.java  模块：http-cat  项目：component
  * 当前修改时间：2019年04月05日 18:45:24
  * 上次修改时间：2019年04月05日 17:27:09
  * 作者：Cody.yi   https://github.com/codyer
@@ -18,11 +18,11 @@ import android.content.Context;
 
 import java.util.List;
 
-import com.cody.http.cat.db.MonitorHttpInformationDatabase;
-import com.cody.http.cat.db.data.ItemMonitorData;
+import com.cody.http.cat.db.HttpCatDatabase;
+import com.cody.http.cat.db.data.ItemHttpData;
 import com.cody.http.cat.holder.ContextHolder;
 import com.cody.http.cat.holder.NotificationHolder;
-import com.cody.http.cat.ui.MonitorMainActivity;
+import com.cody.http.cat.ui.CatMainActivity;
 import com.cody.http.cat.utils.LauncherUtil;
 
 /**
@@ -48,15 +48,15 @@ public class HttpCat {
      * 在创建OkHttpClient时候进行拦截器添加
      */
     public void install(Context context, OkHttpClient.Builder builder) {
-        builder.addInterceptor(new MonitorInterceptor(context));
-        LauncherUtil.launcherVisible(context, MonitorMainActivity.class, true);
+        builder.addInterceptor(new HttpCatInterceptor(context));
+        LauncherUtil.launcherVisible(context, CatMainActivity.class, true);
     }
 
     /**
      * 只是单纯的删除图标，实际还在继续拦截
      */
     public void unInstall(Context context) {
-        LauncherUtil.launcherVisible(context, MonitorMainActivity.class, false);
+        LauncherUtil.launcherVisible(context, CatMainActivity.class, false);
         showNotification(false);
     }
 
@@ -70,15 +70,15 @@ public class HttpCat {
     }
 
     public void clearCache() {
-        MonitorHttpInformationDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().deleteAll();
+        HttpCatDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().deleteAll();
     }
 
-    public LiveData<List<ItemMonitorData>> queryAllRecord(int limit) {
-        return MonitorHttpInformationDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().queryAllRecordObservable(limit);
+    public LiveData<List<ItemHttpData>> queryAllRecord(int limit) {
+        return HttpCatDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().queryAllRecordObservable(limit);
     }
 
-    public LiveData<List<ItemMonitorData>> queryAllRecord() {
-        return MonitorHttpInformationDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().queryAllRecordObservable();
+    public LiveData<List<ItemHttpData>> queryAllRecord() {
+        return HttpCatDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().queryAllRecordObservable();
     }
 
 }

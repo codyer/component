@@ -15,7 +15,7 @@
 
         <variable
             name="viewData"
-            type="com.cody.http.cat.db.data.ItemMonitorData" />
+            type="com.cody.http.cat.db.data.ItemHttpData" />
 
     </data>
 
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:text="@{viewData.id}"
-            android:textAppearance="@style/monitor.title"
+            android:textAppearance="@style/cat.title"
             tools:text="1" />
 
         <TextView
@@ -45,7 +45,7 @@
             android:drawableStart="@{viewData.isSsl?@drawable/ic_https:null}"
             android:drawablePadding="5dp"
             android:text="@{viewData.scheme}"
-            android:textAppearance="@style/monitor.title"
+            android:textAppearance="@style/cat.title"
             tools:text="https://baidu.com" />
 
         <TextView
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:text="@{viewData.responseCode}"
-            android:textColor="@{viewData.responseCode==200?@color/monitor_status_success:@color/monitor_status_error}"
+            android:textColor="@{viewData.responseCode==200?@color/cat_status_success:@color/cat_status_error}"
             android:textStyle="bold"
             tools:text="200" />
 
@@ -66,7 +66,7 @@
             android:layout_marginTop="12dp"
             android:gravity="center"
             android:text="@{viewData.path}"
-            android:textAppearance="@style/monitor.title"
+            android:textAppearance="@style/cat.title"
             tools:text="/g/index/home/list?sss=99sdas=ddd" />
 
         <LinearLayout

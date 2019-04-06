@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：MonitorInterceptor.java  模块：http-monitor  项目：component
+ * 文件：HttpCatInterceptor.java  模块：http-cat  项目：component
  * 当前修改时间：2019年04月05日 18:42:55
  * 上次修改时间：2019年04月05日 17:27:09
  * 作者：Cody.yi   https://github.com/codyer
@@ -26,8 +26,8 @@ import java.nio.charset.UnsupportedCharsetException;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import com.cody.http.cat.db.MonitorHttpInformationDatabase;
-import com.cody.http.cat.db.data.ItemMonitorData;
+import com.cody.http.cat.db.HttpCatDatabase;
+import com.cody.http.cat.db.data.ItemHttpData;
 import com.cody.http.cat.holder.ContextHolder;
 import com.cody.http.cat.holder.NotificationHolder;
 
@@ -46,11 +46,11 @@ import okio.Okio;
 
 /**
  * Created by xu.yi. on 2019/4/5.
- * MonitorInterceptor
+ * HttpCatInterceptor
  */
-class MonitorInterceptor implements Interceptor {
+class HttpCatInterceptor implements Interceptor {
 
-    private static final String TAG = "MonitorInterceptor";
+    private static final String TAG = "HttpCatInterceptor";
 
     private static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
 
@@ -58,7 +58,7 @@ class MonitorInterceptor implements Interceptor {
 
     private long maxContentLength = 250000L;
 
-    public MonitorInterceptor(Context context) {
+    public HttpCatInterceptor(Context context) {
         this.context = context.getApplicationContext();
         ContextHolder.setContext(context);
     }
@@ -68,29 +68,29 @@ class MonitorInterceptor implements Interceptor {
     public Response intercept(@NonNull Chain chain) throws IOException {
         Request request = chain.request();
         RequestBody requestBody = request.body();
-        ItemMonitorData itemMonitorData = new ItemMonitorData();
-        itemMonitorData.setRequestDate(new Date());
-        itemMonitorData.setRequestHttpHeaders(request.headers());
-        itemMonitorData.setMethod(request.method());
+        ItemHttpData itemHttpData = new ItemHttpData();
+        itemHttpData.setRequestDate(new Date());
+        itemHttpData.setRequestHttpHeaders(request.headers());
+        itemHttpData.setMethod(request.method());
         String url = request.url().toString();
-        itemMonitorData.setUrl(url);
+        itemHttpData.setUrl(url);
         if (!TextUtils.isEmpty(url)) {
             Uri uri = Uri.parse(url);
-            itemMonitorData.setHost(uri.getHost());
-            itemMonitorData.setPath(uri.getPath() + ((uri.getQuery() != null) ? "?" + uri.getQuery() : ""));
-            itemMonitorData.setScheme(uri.getScheme());
+            itemHttpData.setHost(uri.getHost());
+            itemHttpData.setPath(uri.getPath() + ((uri.getQuery() != null) ? "?" + uri.getQuery() : ""));
+            itemHttpData.setScheme(uri.getScheme());
         }
         if (requestBody != null) {
             MediaType contentType = requestBody.contentType();
             if (contentType != null) {
-                itemMonitorData.setRequestContentType(contentType.toString());
+                itemHttpData.setRequestContentType(contentType.toString());
             }
             if (requestBody.contentLength() != -1) {
-                itemMonitorData.setRequestContentLength(requestBody.contentLength());
+                itemHttpData.setRequestContentLength(requestBody.contentLength());
             }
         }
-        itemMonitorData.setRequestBodyIsPlainText(!bodyHasUnsupportedEncoding(request.headers()));
-        if (requestBody != null && itemMonitorData.isRequestBodyIsPlainText()) {
+        itemHttpData.setRequestBodyIsPlainText(!bodyHasUnsupportedEncoding(request.headers()));
+        if (requestBody != null && itemHttpData.isRequestBodyIsPlainText()) {
             BufferedSource source = getNativeSource(new Buffer(), bodyGzipped(request.headers()));
             Buffer buffer = source.buffer();
             requestBody.writeTo(buffer);
@@ -102,39 +102,39 @@ class MonitorInterceptor implements Interceptor {
                 charset = CHARSET_UTF8;
             }
             if (isPlaintext(buffer)) {
-                itemMonitorData.setRequestBody(readFromBuffer(buffer, charset));
+                itemHttpData.setRequestBody(readFromBuffer(buffer, charset));
             } else {
-                itemMonitorData.setResponseBodyIsPlainText(false);
+                itemHttpData.setResponseBodyIsPlainText(false);
             }
         }
-        long id = insert(itemMonitorData);
-        itemMonitorData.setId(id);
+        long id = insert(itemHttpData);
+        itemHttpData.setId(id);
         long startTime = System.nanoTime();
         Response response;
         try {
             response = chain.proceed(request);
         } catch (Exception e) {
-            itemMonitorData.setError(e.toString());
-            update(itemMonitorData);
+            itemHttpData.setError(e.toString());
+            update(itemHttpData);
             throw e;
         }
-        itemMonitorData.setResponseDate(new Date());
-        itemMonitorData.setDuration(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime));
-        itemMonitorData.setRequestHttpHeaders(response.request().headers());
-        itemMonitorData.setProtocol(response.protocol().toString());
-        itemMonitorData.setResponseCode(response.code());
-        itemMonitorData.setResponseMessage(response.message());
+        itemHttpData.setResponseDate(new Date());
+        itemHttpData.setDuration(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime));
+        itemHttpData.setRequestHttpHeaders(response.request().headers());
+        itemHttpData.setProtocol(response.protocol().toString());
+        itemHttpData.setResponseCode(response.code());
+        itemHttpData.setResponseMessage(response.message());
         ResponseBody responseBody = response.body();
         if (responseBody != null) {
-            itemMonitorData.setResponseContentLength(responseBody.contentLength());
+            itemHttpData.setResponseContentLength(responseBody.contentLength());
             MediaType contentType = responseBody.contentType();
             if (contentType != null) {
-                itemMonitorData.setResponseContentType(contentType.toString());
+                itemHttpData.setResponseContentType(contentType.toString());
             }
         }
-        itemMonitorData.setResponseHttpHeaders(response.headers());
-        itemMonitorData.setResponseBodyIsPlainText(!bodyHasUnsupportedEncoding(response.headers()));
-        if (HttpHeaders.hasBody(response) && itemMonitorData.isResponseBodyIsPlainText()) {
+        itemHttpData.setResponseHttpHeaders(response.headers());
+        itemHttpData.setResponseBodyIsPlainText(!bodyHasUnsupportedEncoding(response.headers()));
+        if (HttpHeaders.hasBody(response) && itemHttpData.isResponseBodyIsPlainText()) {
             BufferedSource source = getNativeSource(response);
             source.request(Long.MAX_VALUE);
             Buffer buffer = source.buffer();
@@ -145,34 +145,34 @@ class MonitorInterceptor implements Interceptor {
                     try {
                         charset = contentType.charset(CHARSET_UTF8);
                     } catch (UnsupportedCharsetException e) {
-                        update(itemMonitorData);
+                        update(itemHttpData);
                         return response;
                     }
                 }
             }
             if (isPlaintext(buffer)) {
-                itemMonitorData.setResponseBody(readFromBuffer(buffer.clone(), charset));
+                itemHttpData.setResponseBody(readFromBuffer(buffer.clone(), charset));
             } else {
-                itemMonitorData.setResponseBodyIsPlainText(false);
+                itemHttpData.setResponseBodyIsPlainText(false);
             }
-            itemMonitorData.setResponseContentLength(buffer.size());
+            itemHttpData.setResponseContentLength(buffer.size());
         }
-        update(itemMonitorData);
+        update(itemHttpData);
         return response;
     }
 
-    private long insert(ItemMonitorData itemMonitorData) {
-        showNotification(itemMonitorData);
-        return MonitorHttpInformationDatabase.getInstance(context).getHttpInformationDao().insert(itemMonitorData);
+    private long insert(ItemHttpData itemHttpData) {
+        showNotification(itemHttpData);
+        return HttpCatDatabase.getInstance(context).getHttpInformationDao().insert(itemHttpData);
     }
 
-    private void update(ItemMonitorData itemMonitorData) {
-        showNotification(itemMonitorData);
-        MonitorHttpInformationDatabase.getInstance(context).getHttpInformationDao().update(itemMonitorData);
+    private void update(ItemHttpData itemHttpData) {
+        showNotification(itemHttpData);
+        HttpCatDatabase.getInstance(context).getHttpInformationDao().update(itemHttpData);
     }
 
-    private void showNotification(ItemMonitorData itemMonitorData) {
-        NotificationHolder.getInstance(context).show(itemMonitorData);
+    private void showNotification(ItemHttpData itemHttpData) {
+        NotificationHolder.getInstance(context).show(itemHttpData);
     }
 
     private boolean isPlaintext(Buffer buffer) {
@@ -242,7 +242,7 @@ class MonitorInterceptor implements Interceptor {
         return "gzip".equalsIgnoreCase(headers.get("Content-Encoding"));
     }
 
-    public MonitorInterceptor maxContentLength(long max) {
+    public HttpCatInterceptor maxContentLength(long max) {
         this.maxContentLength = max;
         return this;
     }

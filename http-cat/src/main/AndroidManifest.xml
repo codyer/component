@@ -4,17 +4,17 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/monitor_ic_launcher"
-        android:label="@string/monitor_app_name"
-        android:roundIcon="@mipmap/monitor_ic_launcher"
+        android:icon="@mipmap/cat_ic_launcher"
+        android:label="@string/cat_app_name"
+        android:roundIcon="@mipmap/cat_ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/MonitorAppTheme"
+        android:theme="@style/CatAppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="com.cody.http.cat.ui.MonitorMainActivity"
+            android:name=".ui.CatMainActivity"
             android:launchMode="singleTask"
-            android:taskAffinity="com.cody.http.monitor.singleTask"
-            android:theme="@style/MonitorAppTheme">
+            android:taskAffinity="com.cody.http.cat.singleTask"
+            android:theme="@style/CatAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,14 +22,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.cody.http.cat.ui.MonitorDetailsActivity"
+            android:name=".ui.CatDetailsActivity"
             android:launchMode="singleTask"
-            android:parentActivityName="com.cody.http.cat.ui.MonitorMainActivity"
-            android:taskAffinity="com.cody.http.monitor.singleTask"
-            android:theme="@style/MonitorAppTheme" />
+            android:parentActivityName="com.cody.http.cat.ui.CatMainActivity"
+            android:taskAffinity="com.cody.http.cat.singleTask"
+            android:theme="@style/CatAppTheme" />
 
         <service
-            android:name="com.cody.http.cat.service.ClearMonitorService"
+            android:name=".service.CatClearService"
             android:exported="false" />
     </application>
 </manifest>
