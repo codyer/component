@@ -1,0 +1,35 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cody.http.cat">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/monitor_ic_launcher"
+        android:label="@string/monitor_app_name"
+        android:roundIcon="@mipmap/monitor_ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/MonitorAppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name="com.cody.http.cat.ui.MonitorMainActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity="com.cody.http.monitor.singleTask"
+            android:theme="@style/MonitorAppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.cody.http.cat.ui.MonitorDetailsActivity"
+            android:launchMode="singleTask"
+            android:parentActivityName="com.cody.http.cat.ui.MonitorMainActivity"
+            android:taskAffinity="com.cody.http.monitor.singleTask"
+            android:theme="@style/MonitorAppTheme" />
+
+        <service
+            android:name="com.cody.http.cat.service.ClearMonitorService"
+            android:exported="false" />
+    </application>
+</manifest>

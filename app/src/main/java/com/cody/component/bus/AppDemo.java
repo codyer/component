@@ -11,8 +11,8 @@
 
 package com.cody.component.bus;
 
-import com.cody.live.event.bus.lib.annotation.Event;
-import com.cody.live.event.bus.lib.annotation.EventScope;
+import com.cody.component.bus.lib.annotation.Event;
+import com.cody.component.bus.lib.annotation.EventScope;
 
 /**
  * Created by xu.yi. on 2019/4/3.

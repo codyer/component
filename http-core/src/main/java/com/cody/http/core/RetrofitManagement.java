@@ -13,10 +13,10 @@ package com.cody.http.core;
 
 import android.webkit.URLUtil;
 
-import com.cody.live.event.bus.lib.http.lib.annotation.Domain;
-import com.cody.http.core.bean.Result;
-import com.cody.http.core.config.HttpCode;
-import com.cody.http.core.config.TimeConfig;
+import com.cody.http.lib.annotation.Domain;
+import com.cody.http.lib.bean.Result;
+import com.cody.http.lib.config.HttpCode;
+import com.cody.http.lib.config.TimeConfig;
 import com.cody.http.core.exception.AccountInvalidException;
 import com.cody.http.core.exception.DomainInvalidException;
 import com.cody.http.core.exception.ServerResultException;

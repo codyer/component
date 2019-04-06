@@ -10,6 +10,5 @@
   -->
 
 <resources>
-    <string name="monitor_app_name">bind-base</string>
-    <string name="loading">努力加载中&#8230;</string>
+    <string name="app_loading">努力加载中&#8230;</string>
 </resources>
