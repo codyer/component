@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cody.component.R;
+import com.cody.component.banner.adapter.BindingBannerAdapter;
+import com.cody.component.banner.data.BannerViewData;
 import com.cody.component.bus.BusDemoActivity;
 
 

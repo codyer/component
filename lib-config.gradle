@@ -12,14 +12,14 @@
 apply plugin: 'java-library'
 apply plugin: 'com.github.dcendents.android-maven'
 
-group='com.github.codyer'
+group = 'com.github.codyer'
 
 //指定编译的编码
-tasks.withType(JavaCompile){
+tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
 tasks.withType(Javadoc) {
     options.encoding = "UTF-8"
 }
-sourceCompatibility = "7"
-targetCompatibility = "7"
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'

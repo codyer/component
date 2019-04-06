@@ -24,13 +24,13 @@ android {
 }
 
 dependencies {
-//    implementation project(":bind-banner")
-//    implementation project(":bus-core")
-//    annotationProcessor project(":bus-compiler")
-    implementation("com.github.codyer:component:0.0.3") {
-        exclude module: "bus-compiler"
-    }
-    annotationProcessor "com.github.codyer.component:bus-compiler:0.0.3"
+    implementation project(":bind-banner")
+    implementation project(":bus-core")
+    annotationProcessor project(":bus-compiler")
+//    implementation("com.github.codyer:component:0.0.3") {
+//        exclude module: "bus-compiler"
+//    }
+//    annotationProcessor "com.github.codyer.component:bus-compiler:0.0.3"
     implementation rootProject.ext.dependencies["constraintlayout"]
     implementation rootProject.ext.dependencies["material"]
 }

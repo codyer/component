@@ -1,4 +1,5 @@
 include ':app'
-include ':bind-data', ':bind-adapter', ':bind-banner', ':bind-base'
+include ':bind-data', ':bind-adapter', ':bind-banner', ':bind-handler', ':bind-app'
 include ':bus-lib', ':bus-core', ':bus-compiler'
-include ':http-monitor',':http-core'
+include ':http-lib', ':http-core', ':http-compiler'
+include ':http-monitor'
