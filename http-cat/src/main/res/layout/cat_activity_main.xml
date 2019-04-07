@@ -14,11 +14,10 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/cat_background"
-        android:orientation="vertical"
         tools:context=".ui.CatMainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -50,8 +49,18 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="match_parent"
+            android:layout_below="@+id/appbar" />
 
-    </LinearLayout>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            android:onClick="@{onClickListener::onClick}"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_dialog_alert" />
+    </RelativeLayout>
 </layout>

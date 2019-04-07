@@ -97,6 +97,8 @@ public class CatMainActivity extends EmptyBindActivity<CatActivityMainBinding> {
 
     @Override
     public void onClick(View v) {
-
+        if (v.getId() == R.id.top) {
+            getBinding().recyclerView.smoothScrollToPosition(0);
+        }
     }
 }

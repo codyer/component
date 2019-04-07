@@ -45,7 +45,7 @@ public class HttpCore {
      * 必须在application中初始化
      */
     public static HttpCore init(Context context) {
-        HttpCore.getInstance().mContextWeakReference = new WeakReference<>(context);
+        InstanceHolder.INSTANCE.mContextWeakReference = new WeakReference<>(context);
         return getInstance();
     }
 
