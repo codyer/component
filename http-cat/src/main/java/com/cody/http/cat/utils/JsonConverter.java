@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class JsonConverter {
 
-    private Gson gson;
+    private final Gson gson;
 
     private JsonConverter() {
         gson = new GsonBuilder()

@@ -21,6 +21,8 @@ import com.cody.http.lib.exception.base.BaseException;
  */
 public class DomainInvalidException extends BaseException {
 
+    private static final long serialVersionUID = 3758965851939602176L;
+
     public DomainInvalidException() {
         super(HttpCode.CODE_DOMAIN_INVALID, "接口未指定域名：baseUrl");
     }

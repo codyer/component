@@ -6,13 +6,13 @@ android {
     dataBinding {
         enabled true
     }
-
     defaultConfig {
         applicationId "com.cody.component"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
+        multiDexEnabled true
 //        javaCompileOptions.annotationProcessorOptions.includeCompileClasspath = true
     }
     buildTypes {

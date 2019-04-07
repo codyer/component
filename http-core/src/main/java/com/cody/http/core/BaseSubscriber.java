@@ -24,7 +24,7 @@ import io.reactivex.observers.DisposableObserver;
  */
 public class BaseSubscriber<T> extends DisposableObserver<T> {
 
-    private RequestCallback<T> requestCallback;
+    private final RequestCallback<T> requestCallback;
 
     BaseSubscriber(RequestCallback<T> requestCallback) {
         this.requestCallback = requestCallback;

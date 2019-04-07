@@ -34,7 +34,7 @@ public abstract class BindingListAdapter<VD extends ItemViewData> extends ListAd
     private RecyclerView mRecyclerView;
     private OnBindingItemClickListener mItemClickListener;//item 事件监听
     private View.OnCreateContextMenuListener mItemLongClickListener;//item 长按事件监听
-    private LifecycleOwner mLifecycleOwner;
+    private final LifecycleOwner mLifecycleOwner;
 
     @Override
     public void setItemClickListener(OnBindingItemClickListener itemClickListener) {
@@ -47,7 +47,7 @@ public abstract class BindingListAdapter<VD extends ItemViewData> extends ListAd
     }
 
     protected BindingListAdapter(LifecycleOwner lifecycleOwner) {
-        super(new BindingItemDiffCallback<VD>());
+        super(new BindingItemDiffCallback<>());
         mLifecycleOwner = lifecycleOwner;
     }
 

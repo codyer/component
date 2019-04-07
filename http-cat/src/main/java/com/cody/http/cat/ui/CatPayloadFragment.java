@@ -20,10 +20,6 @@ import com.cody.component.app.fragment.EmptyBindFragment;
 import com.cody.http.cat.R;
 import com.cody.http.cat.databinding.CatFragmentPayloadBinding;
 import com.cody.http.cat.db.data.ItemHttpData;
-import com.cody.http.cat.viewmodel.CatViewModel;
-
-import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 
 /**
  * Created by xu.yi. on 2019/4/5.
@@ -33,22 +29,25 @@ public class CatPayloadFragment extends EmptyBindFragment<CatFragmentPayloadBind
     private static final int TYPE_REQUEST = 100;
     private static final int TYPE_RESPONSE = 200;
     private static final String TYPE_KEY = "keyType";
-    private int type;
+    private static final String ITEM_VIEW_DATA = "itemHttpData";
+    private int mType;
+    private ItemHttpData mItemHttpData;
 
-    private static CatPayloadFragment newInstance(int type) {
+    private static CatPayloadFragment newInstance(int type, ItemHttpData itemHttpData) {
         CatPayloadFragment fragment = new CatPayloadFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(TYPE_KEY, type);
+        bundle.putSerializable(ITEM_VIEW_DATA, itemHttpData);
         fragment.setArguments(bundle);
         return fragment;
     }
 
-    public static CatPayloadFragment newInstanceRequest() {
-        return newInstance(TYPE_REQUEST);
+    public static CatPayloadFragment newInstanceRequest(ItemHttpData itemHttpData) {
+        return newInstance(TYPE_REQUEST, itemHttpData);
     }
 
-    public static CatPayloadFragment newInstanceResponse() {
-        return newInstance(TYPE_RESPONSE);
+    public static CatPayloadFragment newInstanceResponse(ItemHttpData itemHttpData) {
+        return newInstance(TYPE_RESPONSE, itemHttpData);
     }
 
     public CatPayloadFragment() {
@@ -65,29 +64,26 @@ public class CatPayloadFragment extends EmptyBindFragment<CatFragmentPayloadBind
 
     @Override
     protected void onBaseReady(Bundle savedInstanceState) {
+        super.onBaseReady(savedInstanceState);
         Bundle bundle = getArguments();
         if (bundle != null) {
-            type = bundle.getInt(TYPE_KEY);
+            mType = bundle.getInt(TYPE_KEY);
+            mItemHttpData = (ItemHttpData) bundle.getSerializable(ITEM_VIEW_DATA);
         }
-        getViewModel(CatViewModel.class).getRecordLiveData().observe(this, new Observer<ItemHttpData>() {
-            @Override
-            public void onChanged(@Nullable ItemHttpData catItemHttpData) {
-                if (catItemHttpData != null) {
-                    switch (type) {
-                        case TYPE_REQUEST: {
-                            setText(catItemHttpData.getRequestHeadersString(true),
-                                    catItemHttpData.getFormattedRequestBody(), catItemHttpData.isRequestBodyIsPlainText());
-                            break;
-                        }
-                        case TYPE_RESPONSE: {
-                            setText(catItemHttpData.getResponseHeadersString(true),
-                                    catItemHttpData.getFormattedResponseBody(), catItemHttpData.isResponseBodyIsPlainText());
-                            break;
-                        }
-                    }
+        if (mItemHttpData != null) {
+            switch (mType) {
+                case TYPE_REQUEST: {
+                    setText(mItemHttpData.getRequestHeadersString(true),
+                            mItemHttpData.getFormattedRequestBody(), mItemHttpData.isRequestBodyIsPlainText());
+                    break;
+                }
+                case TYPE_RESPONSE: {
+                    setText(mItemHttpData.getResponseHeadersString(true),
+                            mItemHttpData.getFormattedResponseBody(), mItemHttpData.isResponseBodyIsPlainText());
+                    break;
                 }
             }
-        });
+        }
     }
 
     private void setText(String headersString, String bodyString, boolean isPlainText) {

@@ -19,12 +19,14 @@ import com.cody.http.lib.exception.base.BaseException;
  * Created by xu.yi. on 2019/4/6.
  */
 public class GenerateDataSourceException extends BaseException {
+    private static final long serialVersionUID = -5191572865283665745L;
+
     public GenerateDataSourceException(String errorMessage) {
-        super(HttpCode.CODE_GENARATE_FAILED, errorMessage);
+        super(HttpCode.CODE_GENERATE_FAILED, errorMessage);
     }
 
     public GenerateDataSourceException() {
-        super(HttpCode.CODE_GENARATE_FAILED, "生成代码失败");
+        super(HttpCode.CODE_GENERATE_FAILED, "生成代码失败");
     }
 
 }

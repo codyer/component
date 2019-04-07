@@ -1,15 +1,15 @@
 /*
  * ************************************************************
  * 文件：HttpCatInterceptor.java  模块：http-cat  项目：component
- * 当前修改时间：2019年04月05日 18:42:55
- * 上次修改时间：2019年04月05日 17:27:09
+ * 当前修改时间：2019年04月07日 13:18:34
+ * 上次修改时间：2019年04月06日 16:59:54
  * 作者：Cody.yi   https://github.com/codyer
  *
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.http.cat;
+package com.cody.http.cat.interceptor;
 
 import android.content.Context;
 import android.net.Uri;
@@ -28,8 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.cody.http.cat.db.HttpCatDatabase;
 import com.cody.http.cat.db.data.ItemHttpData;
-import com.cody.http.cat.holder.ContextHolder;
-import com.cody.http.cat.holder.NotificationHolder;
+import com.cody.http.cat.notification.NotificationManagement;
 
 import okhttp3.Headers;
 import okhttp3.Interceptor;
@@ -48,19 +47,18 @@ import okio.Okio;
  * Created by xu.yi. on 2019/4/5.
  * HttpCatInterceptor
  */
-class HttpCatInterceptor implements Interceptor {
+public class HttpCatInterceptor implements Interceptor {
 
     private static final String TAG = "HttpCatInterceptor";
 
     private static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
 
-    private Context context;
+    private final Context context;
 
     private long maxContentLength = 250000L;
 
     public HttpCatInterceptor(Context context) {
         this.context = context.getApplicationContext();
-        ContextHolder.setContext(context);
     }
 
     @NonNull
@@ -89,7 +87,7 @@ class HttpCatInterceptor implements Interceptor {
                 itemHttpData.setRequestContentLength(requestBody.contentLength());
             }
         }
-        itemHttpData.setRequestBodyIsPlainText(!bodyHasUnsupportedEncoding(request.headers()));
+        itemHttpData.setRequestBodyIsPlainText(bodyAllSupportedEncoding(request.headers()));
         if (requestBody != null && itemHttpData.isRequestBodyIsPlainText()) {
             BufferedSource source = getNativeSource(new Buffer(), bodyGzipped(request.headers()));
             Buffer buffer = source.buffer();
@@ -133,7 +131,7 @@ class HttpCatInterceptor implements Interceptor {
             }
         }
         itemHttpData.setResponseHttpHeaders(response.headers());
-        itemHttpData.setResponseBodyIsPlainText(!bodyHasUnsupportedEncoding(response.headers()));
+        itemHttpData.setResponseBodyIsPlainText(bodyAllSupportedEncoding(response.headers()));
         if (HttpHeaders.hasBody(response) && itemHttpData.isResponseBodyIsPlainText()) {
             BufferedSource source = getNativeSource(response);
             source.request(Long.MAX_VALUE);
@@ -172,7 +170,7 @@ class HttpCatInterceptor implements Interceptor {
     }
 
     private void showNotification(ItemHttpData itemHttpData) {
-        NotificationHolder.getInstance(context).show(itemHttpData);
+        NotificationManagement.getInstance(context).show(itemHttpData);
     }
 
     private boolean isPlaintext(Buffer buffer) {
@@ -195,11 +193,11 @@ class HttpCatInterceptor implements Interceptor {
         }
     }
 
-    private boolean bodyHasUnsupportedEncoding(Headers headers) {
+    private boolean bodyAllSupportedEncoding(Headers headers) {
         String contentEncoding = headers.get("Content-Encoding");
-        return contentEncoding != null &&
-                !contentEncoding.equalsIgnoreCase("identity") &&
-                !contentEncoding.equalsIgnoreCase("gzip");
+        return contentEncoding == null ||
+                contentEncoding.equalsIgnoreCase("identity") ||
+                contentEncoding.equalsIgnoreCase("gzip");
     }
 
     private String readFromBuffer(Buffer buffer, Charset charset) {

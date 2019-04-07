@@ -22,7 +22,7 @@ public class MethodBean {
     private String name = "";
     private String type = "";//返回值类型
     private boolean original = false;//返回值是否无Result包裹，为原始类型
-    private List<ParameterBean> mParameters = new ArrayList<>();
+    private final List<ParameterBean> mParameters = new ArrayList<>();
 
     public List<ParameterBean> getParameters() {
         return mParameters;

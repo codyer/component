@@ -11,11 +11,13 @@
 
 package com.cody.component.view.data;
 
+import java.io.Serializable;
+
 /**
  * Created by xu.yi. on 2019/3/26.
  * 和界面绑定的数据基类接口
  */
-public interface IViewData {
+public interface IViewData extends Serializable {
     boolean areItemsTheSame(IViewData newBind);
 
     boolean areContentsTheSame(IViewData newBind);

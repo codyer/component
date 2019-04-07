@@ -21,6 +21,8 @@ import com.cody.http.lib.exception.base.BaseException;
  */
 public class TokenInvalidException extends BaseException {
 
+    private static final long serialVersionUID = 275593545034454755L;
+
     public TokenInvalidException() {
         super(HttpCode.CODE_TOKEN_INVALID, "Token失效");
     }

@@ -20,6 +20,7 @@ import com.cody.component.view.data.IViewData;
 import com.cody.component.app.IBinding;
 import com.cody.component.app.BR;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -68,6 +69,11 @@ public abstract class BaseBindFragment<B extends ViewDataBinding> extends BaseFr
         return view;
     }
 
+    @CallSuper
+    @Override
+    protected void onBaseReady(Bundle savedInstanceState) {
+        // The same thing as activity has been done in onCreateView
+    }
     /**
      * @param variableId the BR id of the variable to be set. For example, if the variable is
      *                   <code>x</code>, then variableId will be <code>BR.x</code>.

@@ -11,11 +11,7 @@
 
 package com.cody.http.cat.ui;
 
-import androidx.lifecycle.Observer;
-
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
 
 import android.view.View;
 
@@ -23,16 +19,21 @@ import com.cody.component.app.fragment.SingleBindFragment;
 import com.cody.http.cat.R;
 import com.cody.http.cat.databinding.CatFragmentOverviewBinding;
 import com.cody.http.cat.db.data.ItemHttpData;
-import com.cody.http.cat.viewmodel.CatViewModel;
 
 /**
  * Created by xu.yi. on 2019/4/5.
  * CatOverviewFragment
  */
 public class CatOverviewFragment extends SingleBindFragment<CatFragmentOverviewBinding, ItemHttpData> {
+    private static final String ITEM_VIEW_DATA = "itemHttpData";
+    private ItemHttpData mItemHttpData;
 
-    public static CatOverviewFragment newInstance() {
-        return new CatOverviewFragment();
+    public static CatOverviewFragment newInstance(ItemHttpData itemHttpData) {
+        CatOverviewFragment fragment = new CatOverviewFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ITEM_VIEW_DATA, itemHttpData);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
     public CatOverviewFragment() {
@@ -45,23 +46,14 @@ public class CatOverviewFragment extends SingleBindFragment<CatFragmentOverviewB
 
     @Override
     public void onClick(View v) {
-
-    }
-
-    @Override
-    protected void onBaseReady(Bundle savedInstanceState) {
-        getViewModel(CatViewModel.class).getRecordLiveData().observe(this, new Observer<ItemHttpData>() {
-            @Override
-            public void onChanged(@Nullable ItemHttpData catItemHttpData) {
-                if (catItemHttpData != null) {
-                    bindViewData();
-                }
-            }
-        });
     }
 
     @Override
     protected ItemHttpData getViewData() {
-        return getViewModel(CatViewModel.class).getRecordLiveData().getValue();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            mItemHttpData = (ItemHttpData) bundle.getSerializable(ITEM_VIEW_DATA);
+        }
+        return mItemHttpData;
     }
 }

@@ -37,7 +37,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * http 监视器
  */
 public class CatMainActivity extends EmptyBindActivity<CatActivityMainBinding> {
-    private BindingListAdapter<ItemHttpData> mListAdapter = new BindingListAdapter<ItemHttpData>(this) {
+    private final BindingListAdapter<ItemHttpData> mListAdapter = new BindingListAdapter<ItemHttpData>(this) {
 
         @Override
         public int getViewDataId() {
@@ -61,14 +61,14 @@ public class CatMainActivity extends EmptyBindActivity<CatActivityMainBinding> {
     }
 
     @Override
-    public void onBaseReady(Bundle savedInstanceState) {
+    protected void onBaseReady(Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
         setSupportActionBar(getBinding().toolbar);
         getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mListAdapter.setItemClickListener(new OnBindingItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position, long id) {
-                CatDetailsActivity.openActivity(CatMainActivity.this, id);
+                CatDetailsActivity.openActivity(CatMainActivity.this, mListAdapter.getItem(position));
             }
         });
         getBinding().recyclerView.setAdapter(mListAdapter);

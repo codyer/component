@@ -11,44 +11,39 @@
 
 package com.cody.http.cat.ui;
 
-import androidx.lifecycle.Observer;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-
-import com.cody.component.app.activity.EmptyBindActivity;
-import com.cody.http.cat.databinding.CatActivityDetailsBinding;
-import com.cody.http.cat.db.data.ItemHttpData;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.cody.component.app.activity.EmptyBindActivity;
+import com.cody.http.cat.R;
+import com.cody.http.cat.databinding.CatActivityDetailsBinding;
+import com.cody.http.cat.db.data.ItemHttpData;
+import com.cody.http.cat.utils.FormatUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cody.http.cat.R;
-import com.cody.http.cat.utils.FormatUtils;
-import com.cody.http.cat.viewmodel.CatViewModel;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 /**
  * Created by xu.yi. on 2019/4/5.
  * CatDetailsActivity
  */
 public class CatDetailsActivity extends EmptyBindActivity<CatActivityDetailsBinding> {
-    private static final String KEY_ID = "keyId";
+    private static final String ITEM_HTTP_DATA = "itemHttpData";
     private ItemHttpData mItemHttpData;
 
-    public static void openActivity(Context context, long id) {
+    public static void openActivity(Context context, ItemHttpData itemHttpData) {
         Intent intent = new Intent(context, CatDetailsActivity.class);
-        intent.putExtra(KEY_ID, id);
+        intent.putExtra(ITEM_HTTP_DATA, itemHttpData);
         context.startActivity(intent);
     }
 
@@ -63,7 +58,7 @@ public class CatDetailsActivity extends EmptyBindActivity<CatActivityDetailsBind
     }
 
     @Override
-    public void onBaseReady(Bundle savedInstanceState) {
+    protected void onBaseReady(Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
         setSupportActionBar(getBinding().toolbar);
         if (getSupportActionBar() != null) {
@@ -72,28 +67,22 @@ public class CatDetailsActivity extends EmptyBindActivity<CatActivityDetailsBind
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         initView();
-        long id = getIntent().getLongExtra(KEY_ID, 0);
-        getViewModel(CatViewModel.class).queryRecordById(id);
-        getViewModel(CatViewModel.class).getRecordLiveData().observe(this, new Observer<ItemHttpData>() {
-            @Override
-            public void onChanged(@Nullable ItemHttpData itemHttpData) {
-                CatDetailsActivity.this.mItemHttpData = itemHttpData;
-                if (itemHttpData != null) {
-                    getBinding().toolbarTitle.setText(String.format("%s  %s", itemHttpData.getMethod(), itemHttpData.getPath()));
-                } else {
-                    getBinding().toolbarTitle.setText(null);
-                }
-            }
-        });
     }
 
     private void initView() {
+        mItemHttpData = (ItemHttpData) getIntent().getSerializableExtra(ITEM_HTTP_DATA);
         PagerAdapter fragmentPagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        fragmentPagerAdapter.addFragment(CatOverviewFragment.newInstance(), "overview");
-        fragmentPagerAdapter.addFragment(CatPayloadFragment.newInstanceRequest(), "request");
-        fragmentPagerAdapter.addFragment(CatPayloadFragment.newInstanceResponse(), "response");
+        fragmentPagerAdapter.addFragment(CatOverviewFragment.newInstance(mItemHttpData), "overview");
+        fragmentPagerAdapter.addFragment(CatPayloadFragment.newInstanceRequest(mItemHttpData), "request");
+        fragmentPagerAdapter.addFragment(CatPayloadFragment.newInstanceResponse(mItemHttpData), "response");
         getBinding().viewPager.setAdapter(fragmentPagerAdapter);
         getBinding().tabLayout.setupWithViewPager(getBinding().viewPager);
+
+        if (mItemHttpData != null) {
+            getBinding().toolbarTitle.setText(String.format("%s  %s", mItemHttpData.getMethod(), mItemHttpData.getPath()));
+        } else {
+            getBinding().toolbarTitle.setText(null);
+        }
     }
 
     @Override
@@ -125,9 +114,9 @@ public class CatDetailsActivity extends EmptyBindActivity<CatActivityDetailsBind
 
     private static class PagerAdapter extends FragmentPagerAdapter {
 
-        private List<Fragment> mFragments = new ArrayList<>();
+        private final List<Fragment> mFragments = new ArrayList<>();
 
-        private List<String> mTabs = new ArrayList<>();
+        private final List<String> mTabs = new ArrayList<>();
 
         private PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -138,6 +127,7 @@ public class CatDetailsActivity extends EmptyBindActivity<CatActivityDetailsBind
             mTabs.add(title);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
             return mFragments.get(position);

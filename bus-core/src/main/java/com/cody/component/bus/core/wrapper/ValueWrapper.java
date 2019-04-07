@@ -18,8 +18,9 @@ import androidx.annotation.NonNull;
  * mutableLiveData 值包裹类
  */
 final class ValueWrapper<T> {
-    int sequence;
+    final int sequence;
     @NonNull
+    final
     T value;
 
     ValueWrapper(@NonNull T value, int sequence) {

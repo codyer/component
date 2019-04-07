@@ -44,21 +44,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by xu.yi. on 2019/4/6.
- * Retrofit 工厂
+ * Retrofit 工厂 包级别可见，通过HttpCore进行设置
  */
-public class RetrofitManagement {
+class RetrofitManagement {
 
     private static class InstanceHolder {
-        private static RetrofitManagement INSTANCE = new RetrofitManagement();
+        private static final RetrofitManagement INSTANCE = new RetrofitManagement();
     }
 
-    public static RetrofitManagement getInstance() {
+    static RetrofitManagement getInstance() {
         return InstanceHolder.INSTANCE;
     }
 
     private final Map<String, Object> mRetrofitServices;
+    private Interceptor mHttpCatInterceptor;
     private List<Interceptor> mInterceptors;
-    private boolean mLog = true;
+    private boolean mLog = false;
 
     private RetrofitManagement() {
         mRetrofitServices = new ConcurrentHashMap<>();
@@ -125,6 +126,21 @@ public class RetrofitManagement {
         this.mLog = log;
     }
 
+    public void setHttpCatInterceptor(Interceptor httpCatInterceptor) {
+        mHttpCatInterceptor = httpCatInterceptor;
+        mRetrofitServices.clear();
+    }
+
+    public void addInterceptor(Interceptor interceptor) {
+        if (this.mInterceptors == null) {
+            this.mInterceptors = new ArrayList<>();
+        }
+        if (interceptor != null) {
+            this.mInterceptors.add(interceptor);
+        }
+        mRetrofitServices.clear();
+    }
+
     public void addInterceptor(List<Interceptor> interceptorList) {
         if (this.mInterceptors == null) {
             this.mInterceptors = new ArrayList<>();
@@ -132,6 +148,7 @@ public class RetrofitManagement {
         if (interceptorList != null && interceptorList.size() > 0) {
             this.mInterceptors.addAll(interceptorList);
         }
+        mRetrofitServices.clear();
     }
 
     private Retrofit createRetrofit(String baseUrl) {
@@ -147,11 +164,13 @@ public class RetrofitManagement {
                 builder.addInterceptor(interceptor);
             }
         }
+        if (mHttpCatInterceptor != null) {
+            builder.addInterceptor(mHttpCatInterceptor);
+        }
         if (mLog) {
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(httpLoggingInterceptor);
-//            builder.addInterceptor(new HttpCatInterceptor(HttpCore.getContext()));
         }
         OkHttpClient client = builder.build();
         return new Retrofit.Builder()

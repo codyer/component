@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：NotificationHolder.java  模块：http-cat  项目：component
+ * 文件：NotificationManagement.java  模块：http-cat  项目：component
  * 当前修改时间：2019年04月05日 18:45:24
  * 上次修改时间：2019年04月05日 17:27:09
  * 作者：Cody.yi   https://github.com/codyer
@@ -9,7 +9,7 @@
  * ************************************************************
  */
 
-package com.cody.http.cat.holder;
+package com.cody.http.cat.notification;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -30,11 +30,11 @@ import com.cody.http.cat.ui.CatMainActivity;
 
 /**
  * Created by xu.yi. on 2019/4/5.
- * NotificationHolder
+ * NotificationManagement
  */
-public class NotificationHolder {
+public class NotificationManagement {
 
-    private static final String CHANNEL_ID = "catLeavesChannelId";
+    private static final String CHANNEL_ID = "CatChannelId";
 
     private static final String CHANNEL_NAME = "Http Notifications";
 
@@ -44,19 +44,19 @@ public class NotificationHolder {
 
     private static final int BUFFER_SIZE = 10;
 
-    private LongSparseArray<ItemHttpData> transactionBuffer = new LongSparseArray<>();
+    private final LongSparseArray<ItemHttpData> transactionBuffer = new LongSparseArray<>();
 
-    private Context context;
+    private final Context context;
 
-    private NotificationManager notificationManager;
+    private final NotificationManager notificationManager;
 
     private int transactionCount;
 
     private volatile boolean showNotification = true;
 
-    private static volatile NotificationHolder instance;
+    private static volatile NotificationManagement instance;
 
-    private NotificationHolder(Context context) {
+    private NotificationManagement(Context context) {
         this.context = context.getApplicationContext();
         this.notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -64,11 +64,11 @@ public class NotificationHolder {
         }
     }
 
-    public static NotificationHolder getInstance(Context context) {
+    public static NotificationManagement getInstance(Context context) {
         if (instance == null) {
-            synchronized (NotificationHolder.class) {
+            synchronized (NotificationManagement.class) {
                 if (instance == null) {
-                    instance = new NotificationHolder(context);
+                    instance = new NotificationManagement(context);
                 }
             }
         }

@@ -21,6 +21,8 @@ import com.cody.http.lib.exception.base.BaseException;
  */
 public class AccountInvalidException extends BaseException {
 
+    private static final long serialVersionUID = -9162649761577759500L;
+
     public AccountInvalidException() {
         super(HttpCode.CODE_ACCOUNT_INVALID, "账号或者密码错误");
     }

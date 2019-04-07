@@ -16,6 +16,7 @@ package com.cody.component.view.data;
  * 和界面绑定的数据基类默认实现，并用于列表
  */
 public class ItemViewData extends ViewData {
+    private static final long serialVersionUID = -6368977380223902277L;
     private int mItemType = 0;
 
     public int getItemType() {

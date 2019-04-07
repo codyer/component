@@ -21,6 +21,8 @@ import com.cody.http.lib.exception.base.BaseException;
  */
 public class ConnectionException extends BaseException {
 
+    private static final long serialVersionUID = 5857118712581692912L;
+
     public ConnectionException() {
         super(HttpCode.CODE_CONNECTION_FAILED, "网络请求失败");
     }

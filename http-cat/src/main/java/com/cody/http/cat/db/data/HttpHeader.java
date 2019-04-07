@@ -17,9 +17,9 @@ package com.cody.http.cat.db.data;
  */
 public class HttpHeader {
 
-    private String mName;
+    private final String mName;
 
-    private String mValue;
+    private final String mValue;
 
     HttpHeader(String name, String value) {
         this.mName = name;

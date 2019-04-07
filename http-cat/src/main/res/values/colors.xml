@@ -4,7 +4,7 @@
     <color name="cat_colorPrimaryDark">#00574B</color>
     <color name="cat_colorAccent">#D81B60</color>
 
-    <color name="cat_status_success">#06CA87</color>
+    <color name="cat_status_success">#666666</color>
     <color name="cat_status_error">#f23c61</color>
     <color name="cat_background">#F0F0F0</color>
 

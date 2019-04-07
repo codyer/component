@@ -44,8 +44,15 @@ public abstract class BaseFragment extends Fragment implements IView {
     private ProgressDialog mLoading;
     private List<String> mViewModelNames;
     private Toast mToast;
+    protected String TAG = null;
 
     protected abstract void onBaseReady(Bundle savedInstanceState);
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        TAG = this.getClass().getSimpleName();
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

@@ -17,6 +17,8 @@ package com.cody.component.bus.lib.exception;
  *
  */
 public class WrongTypeDefineException extends RuntimeException {
+    private static final long serialVersionUID = -5035036959348844480L;
+
     public WrongTypeDefineException() {
         super("请使用枚举类进行事件定义");
     }

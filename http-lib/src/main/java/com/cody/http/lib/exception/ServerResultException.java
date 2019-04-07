@@ -20,6 +20,8 @@ import com.cody.http.lib.exception.base.BaseException;
  */
 public class ServerResultException extends BaseException {
 
+    private static final long serialVersionUID = -3348529211360188415L;
+
     public ServerResultException(int code, String message) {
         super(code, message);
     }

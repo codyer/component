@@ -60,7 +60,6 @@ import javax.lang.model.util.Elements;
 @AutoService(Processor.class)
 public class EventInterfaceProcessor extends AbstractProcessor {
     private static final String TAG = "[EventInterfaceProcessor]";
-    ;
     private static final String RETURN_CLASS = "com.cody.component.bus.core.wrapper.LiveEventWrapper";
     private static final String GEN_PKG = ".event";
     private static final String CLN_PREFIX = "Scope$";

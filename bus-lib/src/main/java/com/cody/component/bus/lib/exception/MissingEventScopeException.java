@@ -16,6 +16,8 @@ package com.cody.component.bus.lib.exception;
  * 事件枚举类没有使用EventScope注解
  */
 public class MissingEventScopeException extends RuntimeException {
+    private static final long serialVersionUID = 4265334833804926157L;
+
     public MissingEventScopeException() {
         super("事件枚举类没有使用EventScope注解");
     }

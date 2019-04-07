@@ -21,6 +21,8 @@ import com.cody.http.lib.exception.base.BaseException;
  */
 public class ForbiddenException extends BaseException {
 
+    private static final long serialVersionUID = 4157660885240551288L;
+
     public ForbiddenException() {
         super(HttpCode.CODE_PARAMETER_INVALID, "404错误");
     }

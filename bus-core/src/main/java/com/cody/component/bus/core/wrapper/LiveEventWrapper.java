@@ -28,7 +28,7 @@ import androidx.annotation.Nullable;
 @SuppressWarnings("unused")
 final public class LiveEventWrapper<T> {
     private int mSequence = 0;
-    private MutableLiveData<ValueWrapper<T>> mMutableLiveData;
+    private final MutableLiveData<ValueWrapper<T>> mMutableLiveData;
 
     public LiveEventWrapper() {
         mMutableLiveData = new MutableLiveData<>();

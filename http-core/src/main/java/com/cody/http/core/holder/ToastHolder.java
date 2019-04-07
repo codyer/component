@@ -18,16 +18,16 @@ import com.cody.http.core.HttpCore;
 
 /**
  * Created by xu.yi. on 2019/4/6.
- *
  */
 public class ToastHolder {
 
-    public static void showToast(Context context, String message) {
+    private static void showToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     public static void showToast(String message) {
-        showToast(HttpCore.getContext(), message);
+        if (HttpCore.getInstance().getContext() != null) {
+            showToast(HttpCore.getInstance().getContext(), message);
+        }
     }
-
 }

@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModel;
  * 封装基本逻辑
  */
 public class BaseViewModel extends ViewModel implements IViewModel {
-    private MutableLiveData<ViewAction> mViewActionLiveData;
+    private final MutableLiveData<ViewAction> mViewActionLiveData;
 //    protected LifecycleOwner mLifecycleOwner;
 
     @Override

@@ -1,35 +1,67 @@
 package com.cody.component.banner;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.cody.component.adapter.list.OnBindingItemClickListener;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import com.cody.component.R;
+import com.cody.component.adapter.list.OnBindingItemClickListener;
+import com.cody.component.app.activity.EmptyBindActivity;
 import com.cody.component.banner.adapter.BindingBannerAdapter;
 import com.cody.component.banner.data.BannerViewData;
 import com.cody.component.bean.TestDataBean;
 import com.cody.component.bus.BusDemoActivity;
 import com.cody.component.data.remote.CatApiOpen$DataSource;
 import com.cody.component.data.remote.CatHttpBin$DataSource;
+import com.cody.component.databinding.ActivityMainBannerBinding;
+import com.cody.http.core.HttpCore;
 import com.cody.http.core.callback.RequestCallback;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import androidx.recyclerview.widget.RecyclerView;
+
+
+public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_banner);
-        BindingBanner banner = findViewById(R.id.banner);
+    protected int getLayoutID() {
+        return R.layout.activity_main_banner;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.toBus:
+                startActivity(new Intent(MainActivity.this, BusDemoActivity.class));
+                break;
+            case R.id.httpRequest1:
+                httpRequest1();
+                break;
+            case R.id.httpRequest2:
+                httpRequest2();
+                break;
+            case R.id.hideCat:
+                HttpCore.getInstance().getHttpCat().hide();
+                break;
+            case R.id.showCat:
+                HttpCore.getInstance().getHttpCat().show();
+                break;
+            case R.id.muteCat:
+                HttpCore.getInstance().getHttpCat().mute();
+                break;
+            case R.id.killCat:
+                HttpCore.getInstance().killHttpCat();
+                break;
+        }
+    }
+
+    @Override
+    protected void onBaseReady(Bundle savedInstanceState) {
+        super.onBaseReady(savedInstanceState);
 
         final List<BannerViewData> banners = new ArrayList<>();
         banners.add(new BannerViewData("http://img.zcool.cn/community/01c98059093a88a801214550cd0853.jpg"));
@@ -44,35 +76,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         bannerAdapter.submitList(banners);
-        banner.setBindingBannerAdapter(bannerAdapter);
-
-        findViewById(R.id.toBus).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, BusDemoActivity.class));
-            }
-        });
-        findViewById(R.id.httpRequest1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                httpRequest1();
-            }
-        });
-        findViewById(R.id.httpRequest2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                httpRequest2();
-            }
-        });
+        getBinding().banner.setBindingBannerAdapter(bannerAdapter);
     }
-
 
     private void httpRequest1() {
         CatHttpBin$DataSource api = new CatHttpBin$DataSource(null);
         RequestCallback cb = new RequestCallback<Object>() {
             @Override
-            public void onSuccess(Object s) {
+            public void showToast(String message) {
+                Log.e(TAG, message);
+            }
 
+            @Override
+            public void onSuccess(Object s) {
+                showToast(s.toString());
             }
         };
         api.get(cb);
@@ -109,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         RequestCallback<String> cb = new RequestCallback<String>() {
             @Override
             public void onSuccess(String s) {
-
+                showToast(s);
             }
         };
         api.singlePoetry(cb);

@@ -30,8 +30,8 @@ import io.reactivex.schedulers.Schedulers;
  */
 public abstract class BaseRemoteDataSource {
 
-    private CompositeDisposable mCompositeDisposable;
-    private BaseViewModel mBaseViewModel;
+    private final CompositeDisposable mCompositeDisposable;
+    private final BaseViewModel mBaseViewModel;
 
     public BaseRemoteDataSource(BaseViewModel baseViewModel) {
         this.mCompositeDisposable = new CompositeDisposable();
@@ -113,5 +113,18 @@ public abstract class BaseRemoteDataSource {
             }
             return (callback.endDismissLoading() ? observable.doFinally(this::hideLoading) : observable);
         };
+    }
+
+    /**
+     * Created by xu.yi. on 2019/4/6.
+     *
+     */
+    public static class BaseRepository<T> {
+
+        protected final T mRemoteDataSource;
+
+        public BaseRepository(T remoteDataSource) {
+            this.mRemoteDataSource = remoteDataSource;
+        }
     }
 }

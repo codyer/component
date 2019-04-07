@@ -12,8 +12,8 @@
 
 apply from: '../aar-config.gradle'
 dependencies {
+    implementation rootProject.ext.dependencies["appcompat"]
     api project(":bind-banner")
     api project(":bind-handler")
-    implementation rootProject.ext.dependencies["appcompat"]
-    implementation rootProject.ext.dependencies["lifecycle"]
+    api rootProject.ext.dependencies["lifecycle"]
 }

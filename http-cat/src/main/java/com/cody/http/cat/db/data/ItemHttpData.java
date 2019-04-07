@@ -32,7 +32,7 @@ import okhttp3.Headers;
  */
 @Entity(tableName = "http_cat_table")
 public class ItemHttpData extends ItemViewData {
-
+    private static final long serialVersionUID = -5435259574495140581L;
     private static final int DEFAULT_RESPONSE_CODE = -100;
 
     public enum Status {Requested, Complete, Failed}

@@ -11,6 +11,8 @@
 
 package com.cody.component.bean;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by xu.yi. on 2019/4/3.
  * LiveEventBus
@@ -19,13 +21,13 @@ public class TestBean {
     private String name;
     private String code;
 
+    @NonNull
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("TestDataBean{");
-        sb.append("name='").append(name).append('\'');
-        sb.append(", code='").append(code).append('\'');
-        sb.append('}');
-        return sb.toString();
+        String sb = "TestDataBean{" + "name='" + name + '\'' +
+                ", code='" + code + '\'' +
+                '}';
+        return sb;
     }
 
     public TestBean(String name, String code) {

@@ -50,7 +50,7 @@ public abstract class BaseBindActivity<B extends ViewDataBinding> extends BaseAc
      */
     @CallSuper
     @Override
-    public void onBaseReady(Bundle savedInstanceState) {
+    protected void onBaseReady(Bundle savedInstanceState) {
         mBinding = DataBindingUtil.setContentView(this, getLayoutID());
         if (mBinding != null) {
             mBinding.setLifecycleOwner(this);

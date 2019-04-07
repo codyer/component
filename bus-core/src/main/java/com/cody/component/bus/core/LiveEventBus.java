@@ -44,7 +44,7 @@ import java.lang.reflect.Proxy;
  */
 public class LiveEventBus {
     private static class InstanceHolder {
-        private static LiveEventBus INSTANCE = new LiveEventBus();
+        private static final LiveEventBus INSTANCE = new LiveEventBus();
     }
 
     public static LiveEventBus begin() {

@@ -12,14 +12,15 @@
 package com.cody.http.cat.viewmodel;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
 import com.cody.component.handler.BaseViewModel;
+import com.cody.http.cat.HttpCat;
 import com.cody.http.cat.db.HttpCatDatabase;
 import com.cody.http.cat.db.data.ItemHttpData;
-import com.cody.http.cat.holder.ContextHolder;
-import com.cody.http.cat.holder.NotificationHolder;
+import com.cody.http.cat.notification.NotificationManagement;
 
 /**
  * Created by xu.yi. on 2019/3/31.
@@ -27,31 +28,31 @@ import com.cody.http.cat.holder.NotificationHolder;
  */
 public class CatViewModel extends BaseViewModel {
 
-    private LiveData<List<ItemHttpData>> mAllRecordLiveData;
+    private final LiveData<List<ItemHttpData>> mAllRecordLiveData;
 
-    private LiveData<ItemHttpData> mRecordLiveData;
+    private LiveData<ItemHttpData> mRecordLiveData = new MutableLiveData<>();
 
     private static final int LIMIT = 300;
 
     public CatViewModel() {
-        mAllRecordLiveData = HttpCatDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().queryAllRecordObservable(LIMIT);
+        mAllRecordLiveData = HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().queryAllRecordObservable(LIMIT);
     }
 
     public void clearAllCache() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                HttpCatDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().deleteAll();
+                HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().deleteAll();
             }
         }).start();
     }
 
     public void clearNotification() {
-        NotificationHolder.getInstance(ContextHolder.getContext()).dismiss();
+        NotificationManagement.getInstance(HttpCat.getInstance().getContext()).dismiss();
     }
 
     public void queryRecordById(long id) {
-        mRecordLiveData = HttpCatDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().queryRecordObservable(id);
+        mRecordLiveData = HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().queryRecordObservable(id);
     }
 
     public LiveData<List<ItemHttpData>> getAllRecordLiveData() {

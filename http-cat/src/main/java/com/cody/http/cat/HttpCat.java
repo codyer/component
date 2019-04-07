@@ -12,16 +12,18 @@
 package com.cody.http.cat;
 
 import androidx.lifecycle.LiveData;
-import okhttp3.OkHttpClient;
+import okhttp3.Interceptor;
 
 import android.content.Context;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import com.cody.http.cat.db.HttpCatDatabase;
 import com.cody.http.cat.db.data.ItemHttpData;
-import com.cody.http.cat.holder.ContextHolder;
-import com.cody.http.cat.holder.NotificationHolder;
+import com.cody.http.cat.exception.NoCatCreatedException;
+import com.cody.http.cat.notification.NotificationManagement;
+import com.cody.http.cat.interceptor.HttpCatInterceptor;
 import com.cody.http.cat.ui.CatMainActivity;
 import com.cody.http.cat.utils.LauncherUtil;
 
@@ -30,55 +32,74 @@ import com.cody.http.cat.utils.LauncherUtil;
  * HttpCat
  */
 public class HttpCat {
-    private boolean mActiveCat;
+    private WeakReference<Context> mContext;
+
+    public Context getContext() {
+        if (mContext == null)return null;
+        return mContext.get();
+    }
 
     private HttpCat() {
-        mActiveCat = true;
     }
 
     private static class HttpCatHolder {
-        private static HttpCat INSTANCE = new HttpCat();
+        private static final HttpCat INSTANCE = new HttpCat();
     }
 
     public static HttpCat getInstance() {
-        return HttpCatHolder.INSTANCE;
+        if (HttpCatHolder.INSTANCE.getContext() != null) {
+            return HttpCatHolder.INSTANCE;
+        }
+        throw new NoCatCreatedException();
     }
 
     /**
      * 在创建OkHttpClient时候进行拦截器添加
      */
-    public void install(Context context, OkHttpClient.Builder builder) {
-        builder.addInterceptor(new HttpCatInterceptor(context));
+    public static Interceptor create(Context context) {
         LauncherUtil.launcherVisible(context, CatMainActivity.class, true);
+        HttpCatHolder.INSTANCE.mContext = new WeakReference<>(context);
+        return new HttpCatInterceptor(context);
     }
 
     /**
      * 只是单纯的删除图标，实际还在继续拦截
      */
-    public void unInstall(Context context) {
-        LauncherUtil.launcherVisible(context, CatMainActivity.class, false);
+    public void show() {
+        LauncherUtil.launcherVisible(getContext(), CatMainActivity.class, true);
+        showNotification(true);
+    }
+
+    /**
+     * 只是单纯的删除图标，实际还在继续拦截
+     */
+    public void hide() {
+        LauncherUtil.launcherVisible(getContext(), CatMainActivity.class, false);
         showNotification(false);
     }
 
-    public void clearNotification() {
-        NotificationHolder.getInstance(ContextHolder.getContext()).clearBuffer();
-        NotificationHolder.getInstance(ContextHolder.getContext()).dismiss();
+    /**
+     * 让猫静音
+     */
+    public void mute() {
+        NotificationManagement.getInstance(getContext()).clearBuffer();
+        NotificationManagement.getInstance(getContext()).dismiss();
+        showNotification(false);
     }
 
     public void showNotification(boolean showNotification) {
-        NotificationHolder.getInstance(ContextHolder.getContext()).showNotification(showNotification);
+        NotificationManagement.getInstance(getContext()).showNotification(showNotification);
     }
 
     public void clearCache() {
-        HttpCatDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().deleteAll();
+        HttpCatDatabase.getInstance(getContext()).getHttpInformationDao().deleteAll();
     }
 
     public LiveData<List<ItemHttpData>> queryAllRecord(int limit) {
-        return HttpCatDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().queryAllRecordObservable(limit);
+        return HttpCatDatabase.getInstance(getContext()).getHttpInformationDao().queryAllRecordObservable(limit);
     }
 
     public LiveData<List<ItemHttpData>> queryAllRecord() {
-        return HttpCatDatabase.getInstance(ContextHolder.getContext()).getHttpInformationDao().queryAllRecordObservable();
+        return HttpCatDatabase.getInstance(getContext()).getHttpInformationDao().queryAllRecordObservable();
     }
-
 }

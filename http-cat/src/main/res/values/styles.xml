@@ -8,12 +8,12 @@
     </style>
 
     <style name="cat.title" parent="android:TextAppearance">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/cat_status_success</item>
     </style>
 
     <style name="cat.content" parent="android:TextAppearance">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/cat_status_success</item>
     </style>
 

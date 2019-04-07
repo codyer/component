@@ -52,8 +52,8 @@ public class BindingBanner extends FrameLayout {
     }
 
     private int mInterval;
-    private int mSize;
-    private int mSpace;
+    private final int mSize;
+    private final int mSpace;
     private int startX;
     private int startY;
     private int currentIndex;
@@ -61,19 +61,19 @@ public class BindingBanner extends FrameLayout {
     private boolean isShowIndicator;
     private boolean isPlaying;
     private boolean isTouched;
-    private boolean isAutoPlaying = true;
+    private boolean isAutoPlaying;
 
-    private Drawable mSelectedDrawable;
-    private Drawable mUnselectedDrawable;
+    private final Drawable mSelectedDrawable;
+    private final Drawable mUnselectedDrawable;
 
-    private RecyclerView mRecyclerView;
-    private LinearLayout mLinearLayout;
+    private final RecyclerView mRecyclerView;
+    private final LinearLayout mLinearLayout;
 
     private BindingBannerAdapter mBindingBannerAdapter;
 
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
 
-    private Runnable playTask = new Runnable() {
+    private final Runnable playTask = new Runnable() {
 
         @Override
         public void run() {

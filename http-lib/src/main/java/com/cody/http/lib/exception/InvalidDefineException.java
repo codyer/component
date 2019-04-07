@@ -21,6 +21,8 @@ import com.cody.http.lib.exception.base.BaseException;
  */
 public class InvalidDefineException extends BaseException {
 
+    private static final long serialVersionUID = -1004291191431701343L;
+
     public InvalidDefineException() {
         super(HttpCode.CODE_DOMAIN_DEFINE_INVALID, "Domain注解未定义在接口上");
     }

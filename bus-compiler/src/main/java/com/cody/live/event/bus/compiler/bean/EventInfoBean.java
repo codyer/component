@@ -21,7 +21,7 @@ public class EventInfoBean {
     private String mPackageName;
     private String mClassName;
     private EventScopeBean mScopeBean;
-    private ArrayList<EventBean> mEventBeans = new ArrayList<>();
+    private final ArrayList<EventBean> mEventBeans = new ArrayList<>();
 
     public String getPackageName() {
         return mPackageName;

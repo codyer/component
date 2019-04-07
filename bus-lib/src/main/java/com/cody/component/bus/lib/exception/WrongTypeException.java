@@ -16,6 +16,8 @@ package com.cody.component.bus.lib.exception;
  * 类型错误异常
  */
 public class WrongTypeException extends RuntimeException {
+    private static final long serialVersionUID = -3309643656351709235L;
+
     public WrongTypeException() {
         super("请使用自动生成的接口文件");
     }

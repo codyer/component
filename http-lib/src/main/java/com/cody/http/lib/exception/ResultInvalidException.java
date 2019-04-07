@@ -21,6 +21,8 @@ import com.cody.http.lib.exception.base.BaseException;
  */
 public class ResultInvalidException extends BaseException {
 
+    private static final long serialVersionUID = -5601882119845336021L;
+
     public ResultInvalidException() {
         super(HttpCode.CODE_RESULT_INVALID, "无效请求");
     }

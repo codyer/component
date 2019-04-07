@@ -20,6 +20,7 @@ import com.cody.http.lib.config.HttpCode;
  */
 public class BaseException extends RuntimeException {
 
+    private static final long serialVersionUID = -4760213625687945508L;
     private int errorCode = HttpCode.CODE_UNKNOWN;
 
     public BaseException() {

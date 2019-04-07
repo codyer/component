@@ -1,2 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cody.widget.view.bind" />
+<manifest package="com.cody.widget.view.bind" />

@@ -291,7 +291,7 @@ final class Util {
                 continue;
             }
 
-            Map<String, Object> result = new LinkedHashMap<String, Object>();
+            Map<String, Object> result = new LinkedHashMap<>();
             for (Method m : annotationType.getMethods()) {
                 result.put(m.getName(), m.getDefaultValue());
             }
@@ -450,6 +450,8 @@ final class Util {
      * which a dagger-annotated type depends.
      */
     final static class CodeGenerationIncompleteException extends IllegalStateException {
+        private static final long serialVersionUID = -6711771689480675599L;
+
         public CodeGenerationIncompleteException(String s) {
             super(s);
         }

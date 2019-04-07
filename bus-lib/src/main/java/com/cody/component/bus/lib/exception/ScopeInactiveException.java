@@ -16,6 +16,8 @@ package com.cody.component.bus.lib.exception;
  * scope未激活
  */
 public class ScopeInactiveException extends RuntimeException {
+    private static final long serialVersionUID = -9041702601234976446L;
+
     public ScopeInactiveException() {
         super("使用的scope未激活，事件无法监听和发送");
     }

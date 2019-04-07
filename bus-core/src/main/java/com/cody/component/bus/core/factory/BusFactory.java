@@ -26,7 +26,7 @@ public class BusFactory {
     private final HashMap<String, ScopeHolder<Object>> mScopeBus;//不同scope的bus集
 
     private static class InstanceHolder {
-        private static BusFactory INSTANCE = new BusFactory();
+        private static final BusFactory INSTANCE = new BusFactory();
     }
 
     public static BusFactory ready() {
@@ -58,12 +58,12 @@ public class BusFactory {
      * @param <T>
      */
     final static class ScopeHolder<T> {
-        String scope;
-        HashMap<String, LiveEventWrapper<T>> eventBus = new HashMap<>();
+        final String scope;
+        final HashMap<String, LiveEventWrapper<T>> eventBus = new HashMap<>();
 
         ScopeHolder(String scopeName, String event) {
             if (!eventBus.containsKey(event)) {
-                eventBus.put(event, new LiveEventWrapper<T>());
+                eventBus.put(event, new LiveEventWrapper<>());
             }
             scope = scopeName;
         }

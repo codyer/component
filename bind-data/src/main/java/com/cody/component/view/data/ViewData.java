@@ -16,6 +16,8 @@ package com.cody.component.view.data;
  * 和界面绑定的数据基类默认实现
  */
 public class ViewData implements IViewData {
+    private static final long serialVersionUID = 998314704089921211L;
+
     @Override
     public boolean areItemsTheSame(IViewData newBind) {
         return false;

@@ -21,6 +21,7 @@ import com.cody.component.view.data.ItemViewData;
  * banner viewData
  */
 public class BannerViewData extends ItemViewData {
+    private static final long serialVersionUID = 4802021333332679648L;
     private String mImgId;
     private String mImgDesc;
     private String mImgUrl;

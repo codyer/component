@@ -41,12 +41,14 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     private ProgressDialog mLoading;
     private List<String> mViewModelNames;
     private Toast mToast;
+    protected String TAG = null;
 
     protected abstract void onBaseReady(Bundle savedInstanceState);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TAG = this.getClass().getName();
         onBaseReady(savedInstanceState);
     }
 

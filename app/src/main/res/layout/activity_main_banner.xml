@@ -1,51 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".banner.MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.cody.component.banner.BindingBanner
-        android:id="@+id/banner"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewData"
+            type="com.cody.component.banner.data.BannerViewData" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:b_AutoPlaying="true"
-        app:b_Interval="2000"
-        tools:background="@color/colorPrimaryDark" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".banner.MainActivity">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/toBus"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="test-Bus"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <com.cody.component.banner.BindingBanner
+            android:id="@+id/banner"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            bind:b_AutoPlaying="true"
+            bind:b_Interval="2000"
+            tools:background="@color/colorPrimaryDark" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/httpRequest1"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="httpRequest1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/toBus"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="test-Bus" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/httpRequest2"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="httpRequest2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-</LinearLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/httpRequest1"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:onClick="@{onClickListener::onClick}"
+                android:text="Request1" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/httpRequest2"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:onClick="@{onClickListener::onClick}"
+                android:text="Request2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            bind:layout_constraintBottom_toBottomOf="parent"
+            bind:layout_constraintLeft_toLeftOf="parent"
+            bind:layout_constraintRight_toRightOf="parent"
+            bind:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/hideCat"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:onClick="@{onClickListener::onClick}"
+                android:text="hideCat" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/showCat"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:onClick="@{onClickListener::onClick}"
+                android:text="showCat" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/muteCat"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:onClick="@{onClickListener::onClick}"
+                android:text="muteCat" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/killCat"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:onClick="@{onClickListener::onClick}"
+                android:text="killCat" />
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

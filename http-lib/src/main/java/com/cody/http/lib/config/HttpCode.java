@@ -34,6 +34,6 @@ public class HttpCode {
     public static final int CODE_RESULT_INVALID = -7;
     public static final int CODE_DOMAIN_INVALID = -8;
     public static final int CODE_DOMAIN_DEFINE_INVALID = -9;
-    public static final int CODE_GENARATE_FAILED = -10;
+    public static final int CODE_GENERATE_FAILED = -10;
 
 }
