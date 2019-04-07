@@ -28,6 +28,15 @@ public class Result<T> {
     @SerializedName("dataMap")
     private T data;
 
+    public Result() {
+    }
+
+    public Result(int code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
     public int getCode() {
         return code;
     }

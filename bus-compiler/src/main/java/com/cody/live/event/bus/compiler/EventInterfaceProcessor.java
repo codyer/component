@@ -61,8 +61,7 @@ import javax.lang.model.util.Elements;
 public class EventInterfaceProcessor extends AbstractProcessor {
     private static final String TAG = "[EventInterfaceProcessor]";
     ;
-    private static final String PACKAGE_NAME = "com.cody.component.bus.core.wrapper";
-    private static final String RETURN_CLASS = "LiveEventWrapper";
+    private static final String RETURN_CLASS = "com.cody.component.bus.core.wrapper.LiveEventWrapper";
     private static final String GEN_PKG = ".event";
     private static final String CLN_PREFIX = "Scope$";
     private static final String EVENT_PREFIX = "withEvent$";
@@ -183,7 +182,7 @@ public class EventInterfaceProcessor extends AbstractProcessor {
                 .addAnnotation(autoGenerate)
                 .addJavadoc(FILE_DESCRIPTION);
         for (EventBean e : infoBean.getEventBeans()) {
-            ClassName className = ClassName.get(PACKAGE_NAME, RETURN_CLASS);
+            ClassName className = ClassName.bestGuess(RETURN_CLASS);
             TypeName returnType;
             String eventTypeStr = e.getType();
             if (eventTypeStr == null || eventTypeStr.length() == 0) {

@@ -16,7 +16,11 @@ import java.util.List;
 import com.cody.component.R;
 import com.cody.component.banner.adapter.BindingBannerAdapter;
 import com.cody.component.banner.data.BannerViewData;
+import com.cody.component.bean.TestDataBean;
 import com.cody.component.bus.BusDemoActivity;
+import com.cody.component.data.remote.CatApiOpen$DataSource;
+import com.cody.component.data.remote.CatHttpBin$DataSource;
+import com.cody.http.core.callback.RequestCallback;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -48,5 +52,69 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, BusDemoActivity.class));
             }
         });
+        findViewById(R.id.httpRequest1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                httpRequest1();
+            }
+        });
+        findViewById(R.id.httpRequest2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                httpRequest2();
+            }
+        });
+    }
+
+
+    private void httpRequest1() {
+        CatHttpBin$DataSource api = new CatHttpBin$DataSource(null);
+        RequestCallback cb = new RequestCallback<Object>() {
+            @Override
+            public void onSuccess(Object s) {
+
+            }
+        };
+        api.get(cb);
+        api.post(new TestDataBean("posted"), cb);
+        api.patch(new TestDataBean("patched"), cb);
+        api.put(new TestDataBean("put"), cb);
+        api.delete(cb);
+        api.status(201, cb);
+        api.status(401, cb);
+        api.status(500, cb);
+        api.delay(9, cb);
+        api.delay(15, cb);
+        api.redirectTo("https://http2.akamai.com", cb);
+        api.redirect(3, cb);
+        api.redirectRelative(2, cb);
+        api.redirectAbsolute(4, cb);
+        api.stream(500, cb);
+        api.streamBytes(2048, cb);
+        api.image("image/png", cb);
+        api.gzip(cb);
+        api.xml(cb);
+        api.utf8(cb);
+        api.deflate(cb);
+        api.cookieSet("v", cb);
+        api.basicAuth("me", "pass", cb);
+        api.drip(512, 5, 1, 200, cb);
+        api.deny(cb);
+        api.cache("Mon", cb);
+        api.cache(30, cb);
+    }
+
+    private void httpRequest2() {
+        CatApiOpen$DataSource api = new CatApiOpen$DataSource(null);
+        RequestCallback<String> cb = new RequestCallback<String>() {
+            @Override
+            public void onSuccess(String s) {
+
+            }
+        };
+        api.singlePoetry(cb);
+        api.recommendPoetry(cb);
+        api.musicBroadcasting(cb);
+        api.novelApi(cb);
     }
 }

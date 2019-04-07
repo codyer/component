@@ -11,13 +11,15 @@
 
 package com.cody.live.event.bus.compiler.bean;
 
+import com.squareup.javapoet.TypeName;
+
 /**
  * Created by xu.yi. on 2019/4/2.
  * 根据注解获取的方法参数信息
  */
 public class ParameterBean {
     private String name = "";
-    private String type = "";
+    private TypeName type;
 
     public String getName() {
         return name;
@@ -27,11 +29,11 @@ public class ParameterBean {
         this.name = name;
     }
 
-    public String getType() {
+    public TypeName getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TypeName type) {
         this.type = type;
     }
 }

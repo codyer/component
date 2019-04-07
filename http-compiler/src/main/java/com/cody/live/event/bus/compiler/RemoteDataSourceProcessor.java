@@ -12,6 +12,7 @@
 package com.cody.live.event.bus.compiler;
 
 import com.cody.http.lib.annotation.Domain;
+import com.cody.http.lib.exception.GenerateDataSourceException;
 import com.cody.http.lib.exception.InvalidDefineException;
 import com.cody.live.event.bus.compiler.bean.MethodBean;
 import com.cody.live.event.bus.compiler.bean.DomainBean;
@@ -27,7 +28,6 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -60,14 +60,9 @@ import javax.lang.model.util.Elements;
 public class RemoteDataSourceProcessor extends AbstractProcessor {
     private static final String TAG = "[RemoteDataSourceProcessor]";
 
-    private static final String VIEW_MODEL_PACKAGE_NAME = "com.cody.component.handler";
-    private static final String VIEW_MODEL_CLASS = "BaseViewModel";
-
-    private static final String BASE_DATASOURCE_PACKAGE_NAME = "com.cody.http.core";
-    private static final String BASE_DATASOURCE_CLASS = "BaseRemoteDataSource";
-
-    private static final String CALL_BACK_PACKAGE_NAME = "com.cody.http.core.callback";
-    private static final String CALL_BACK_CLASS = "RequestCallback";
+    private static final String VIEW_MODEL_CLASS = "com.cody.component.handler.BaseViewModel";
+    private static final String BASE_DATA_SOURCE_CLASS = "com.cody.http.core.BaseRemoteDataSource";
+    private static final String CALL_BACK_CLASS = "com.cody.http.core.callback.RequestCallback";
     private static final String CALL_BACK = "callback";
 
     private static final String GEN_PKG = ".remote";
@@ -160,16 +155,28 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
         String methodName = methodElement.getSimpleName().toString();
         TypeMirror returnTypeMirror = methodElement.getReturnType();
         methodBean.setName(methodName);
-        methodBean.setType(Util.innerTypeToString(returnTypeMirror, 2));
+        String type = Util.typeToString(returnTypeMirror);
+        if (type.startsWith("io.reactivex.Observable<")) {//去掉最外层的 Observable
+            type = Util.innerTypeToString(type);
+        } else {
+            throw new GenerateDataSourceException("接口定义方法返回值错误，请用 io.reactivex.Observable 作为返回值");
+        }
+        if (type.startsWith("com.cody.http.lib.bean.Result<")) {//去掉最外层的 Result
+            type = Util.innerTypeToString(type);
+            methodBean.setOriginal(false);
+        } else {
+            methodBean.setOriginal(true);
+        }
+        methodBean.setType(type);
         List<? extends VariableElement> parameters = methodElement.getParameters();
         if (parameters != null && parameters.size() > 0) {
             for (VariableElement parameter : parameters) {
                 ParameterBean parameterBean = new ParameterBean();
                 parameterBean.setName(parameter.getSimpleName().toString());
                 if (parameter.asType().getKind().isPrimitive()) {
-                    parameterBean.setType(Util.box((PrimitiveType) parameter.asType()).toString());
+                    parameterBean.setType(Util.box((PrimitiveType) parameter.asType()));
                 } else {
-                    parameterBean.setType(parameter.asType().toString());
+                    parameterBean.setType(ClassName.bestGuess(parameter.asType().toString()));
                 }
                 methodBean.addParameter(parameterBean);
             }
@@ -191,7 +198,7 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(method.getName())
                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
             for (ParameterBean parameter : method.getParameters()) {
-                methodBuilder = methodBuilder.addParameter(getType(parameter.getType()), parameter.getName());
+                methodBuilder = methodBuilder.addParameter(parameter.getType(), parameter.getName());
             }
             methodBuilder.addParameter(parameterType, CALL_BACK).returns(TypeName.VOID);
             builder.addMethod(methodBuilder.build());
@@ -212,14 +219,14 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
      */
     private void generateDataSourceClass(DataSourceInfoBean infoBean) {
         String className = infoBean.getClassName() + CLASS_NAME_SUFFIX;
-        TypeName superTypeName = ClassName.get(BASE_DATASOURCE_PACKAGE_NAME, BASE_DATASOURCE_CLASS);
+        TypeName superTypeName = ClassName.bestGuess(BASE_DATA_SOURCE_CLASS);
         TypeSpec.Builder builder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC)
                 .superclass(superTypeName)
                 .addSuperinterface(infoBean.getInterfaceTypeName())
                 .addJavadoc(infoBean.getDomainBean().getHost())
                 .addJavadoc(FILE_DESCRIPTION);
-        TypeName viewModelTypeName = ClassName.get(VIEW_MODEL_PACKAGE_NAME, VIEW_MODEL_CLASS);
+        TypeName viewModelTypeName = ClassName.bestGuess(VIEW_MODEL_CLASS);
         if (viewModelTypeName != null) {
             builder.addMethod(MethodSpec.constructorBuilder()
                     .addModifiers(Modifier.PUBLIC)
@@ -232,12 +239,13 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(method.getName())
                     .addModifiers(Modifier.PUBLIC);
             for (ParameterBean parameter : method.getParameters()) {
-                methodBuilder = methodBuilder.addParameter(getType(parameter.getType()), parameter.getName());
+                methodBuilder = methodBuilder.addParameter(parameter.getType(), parameter.getName());
             }
+            String methodExecute = method.isOriginal() ? "executeOriginal" : "execute";
             TypeName serviceTypeName = ClassName.get(infoBean.getPackageName(), infoBean.getClassName());
             methodBuilder.addParameter(callBackTypeName, CALL_BACK)
                     .addAnnotation(Override.class)
-                    .addCode("execute(getService($T.class)."/*service*/, serviceTypeName)
+                    .addCode("$N(getService($T.class)."/*execute,service*/, methodExecute, serviceTypeName)
                     .addCode("$L("/*invoke*/, method.getName());
             int i = 0;
             if (method.getParameters() != null && method.getParameters().size() > 0) {
@@ -262,27 +270,19 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
     }
 
     private TypeName getCallBackTypeName(MethodBean method) {
-        ClassName callbackClassName = ClassName.get(CALL_BACK_PACKAGE_NAME, CALL_BACK_CLASS);
+        ClassName callbackClassName = ClassName.bestGuess(CALL_BACK_CLASS);
         TypeName parameterType;//添加的callback参数类型
         String resultBeanType = method.getType();
         if (resultBeanType == null || resultBeanType.length() == 0) {
             parameterType = ParameterizedTypeName.get(callbackClassName, ClassName.get(Object.class));
         } else {
-            Type callbackType = getType(resultBeanType);
+            TypeName callbackType = ClassName.bestGuess(resultBeanType);
             if (callbackType != null) {
-                parameterType = ParameterizedTypeName.get(callbackClassName, ClassName.get(callbackType));
+                parameterType = ParameterizedTypeName.get(callbackClassName, callbackType);
             } else {
                 parameterType = ParameterizedTypeName.get(callbackClassName, TypeVariableName.get(resultBeanType));
             }
         }
         return parameterType;
-    }
-
-    private Type getType(String name) {
-        try {
-            return Class.forName(name);
-        } catch (ClassNotFoundException e) {
-            return null;
-        }
     }
 }

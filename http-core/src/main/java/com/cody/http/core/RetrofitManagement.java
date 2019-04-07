@@ -151,7 +151,7 @@ public class RetrofitManagement {
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(httpLoggingInterceptor);
-//            builder.addInterceptor(new HttpCatInterceptor(ContextHolder.getContext()));
+//            builder.addInterceptor(new HttpCatInterceptor(HttpCore.getContext()));
         }
         OkHttpClient client = builder.build();
         return new Retrofit.Builder()

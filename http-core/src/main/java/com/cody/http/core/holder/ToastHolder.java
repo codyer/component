@@ -14,6 +14,8 @@ package com.cody.http.core.holder;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.cody.http.core.HttpCore;
+
 /**
  * Created by xu.yi. on 2019/4/6.
  *
@@ -25,7 +27,7 @@ public class ToastHolder {
     }
 
     public static void showToast(String message) {
-        showToast(ContextHolder.getContext(), message);
+        showToast(HttpCore.getContext(), message);
     }
 
 }

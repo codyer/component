@@ -54,6 +54,23 @@ public abstract class BaseRemoteDataSource {
         }
     }
 
+    /**
+     * 原始数据对象不做解析
+     */
+    protected <T> void executeOriginal(Observable<T> observable, RequestCallback<T> callback) {
+        Disposable disposable = observable
+                .throttleFirst(TimeConfig.WINDOW_DURATION, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(loadingTransformer(callback))
+                .subscribeWith(new BaseSubscriber<>(callback));
+        addDisposable(disposable);
+    }
+
+    /**
+     * 直接解析出result中的data
+     */
     protected <T> void execute(Observable<Result<T>> observable, RequestCallback<T> callback) {
         Disposable disposable = observable
                 .throttleFirst(TimeConfig.WINDOW_DURATION, TimeUnit.MILLISECONDS)

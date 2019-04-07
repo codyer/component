@@ -4,6 +4,7 @@
     package="com.cody.component">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -19,8 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".bus.BusDemoActivity">
-        </activity>
+        <activity android:name=".bus.BusDemoActivity"/>
     </application>
 
 </manifest>

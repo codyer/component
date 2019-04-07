@@ -11,6 +11,7 @@
 
 package com.cody.component.bus;
 
+import com.cody.component.bean.TestBean;
 import com.cody.component.bus.lib.annotation.Event;
 import com.cody.component.bus.lib.annotation.EventScope;
 

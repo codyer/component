@@ -30,6 +30,7 @@ android {
 
 dependencies {
     implementation project(":http-core")
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     annotationProcessor project(":http-compiler")
     implementation project(":bind-app")
     implementation project(":bus-core")

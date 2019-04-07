@@ -4,7 +4,7 @@ import android.content.Context;
 
 /**
  * Created by xu.yi. on 2019/4/5.
- * ContextHolder
+ * HttpCore
  */
 public class ContextHolder {
 

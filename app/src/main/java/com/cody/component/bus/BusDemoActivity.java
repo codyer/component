@@ -14,6 +14,7 @@ package com.cody.component.bus;
 import android.os.Bundle;
 
 import com.cody.component.R;
+import com.cody.component.bean.TestBean;
 import com.cody.component.bus.event.Scope$demo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
