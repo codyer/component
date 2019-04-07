@@ -17,10 +17,10 @@ import com.cody.http.lib.annotation.Domain;
 import com.cody.http.lib.bean.Result;
 import com.cody.http.lib.config.HttpCode;
 import com.cody.http.lib.config.TimeConfig;
-import com.cody.http.core.exception.AccountInvalidException;
-import com.cody.http.core.exception.DomainInvalidException;
-import com.cody.http.core.exception.ServerResultException;
-import com.cody.http.core.exception.TokenInvalidException;
+import com.cody.http.lib.exception.AccountInvalidException;
+import com.cody.http.lib.exception.DomainInvalidException;
+import com.cody.http.lib.exception.ServerResultException;
+import com.cody.http.lib.exception.TokenInvalidException;
 import com.cody.http.core.interceptor.HeaderInterceptor;
 import com.cody.http.core.interceptor.HttpInterceptor;
 

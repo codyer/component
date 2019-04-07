@@ -1,0 +1,16 @@
+
+/*
+ * ************************************************************
+ * 文件：build.gradle  模块：component  项目：component
+ * 当前修改时间：2019年04月06日 02:11:50
+ * 上次修改时间：2019年04月05日 17:36:17
+ * 作者：Cody.yi   https://github.com/codyer
+ *
+ * Copyright (c) 2019
+ * ************************************************************
+ */
+
+apply from: '../aar-config.gradle'
+dependencies {
+    implementation rootProject.ext.dependencies["lifecycle"]
+}

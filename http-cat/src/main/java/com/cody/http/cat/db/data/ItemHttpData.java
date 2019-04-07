@@ -214,8 +214,8 @@ public class ItemHttpData extends ItemViewData {
         return mHost;
     }
 
-    public void setHost(String host) {
-        this.mHost = host;
+    public void setHost(String name) {
+        this.mHost = name;
     }
 
     public String getPath() {

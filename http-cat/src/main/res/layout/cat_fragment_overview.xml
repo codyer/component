@@ -101,7 +101,7 @@
                     style="@style/cat.TextAppearance.Value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewData.status}"
+                    android:text='@{viewData.status+""}'
                     tools:text="Complete" />
 
             </TableRow>

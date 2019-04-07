@@ -66,7 +66,7 @@ public class EventInterfaceProcessor extends AbstractProcessor {
     private static final String GEN_PKG = ".event";
     private static final String CLN_PREFIX = "Scope$";
     private static final String EVENT_PREFIX = "withEvent$";
-    private static final String FILE_DESCRIPTION = "LiveEventBus auto generate. don't modify !!!";
+    private static final String FILE_DESCRIPTION = "LiveEventBus auto generate. don't modify !!!\n";
     private Elements mElementUtils;
     private Filer mFiler;
 

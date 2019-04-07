@@ -1,0 +1,20 @@
+/*
+ * ************************************************************
+ * 文件：build.gradle  模块：http-compiler  项目：component
+ * 当前修改时间：2019年04月06日 15:57:45
+ * 上次修改时间：2019年04月05日 13:09:29
+ * 作者：Cody.yi   https://github.com/codyer
+ *
+ * Copyright (c) 2019
+ * ************************************************************
+ */
+
+import org.gradle.internal.jvm.Jvm
+
+apply from:  '../lib-config.gradle'
+dependencies {
+    compileOnly files(Jvm.current().getToolsJar())
+    implementation project(':http-lib')
+    implementation rootProject.ext.dependencies["auto-service"]
+    implementation rootProject.ext.dependencies["javapoet"]
+}

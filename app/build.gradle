@@ -21,10 +21,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
 }
 
 dependencies {
-    implementation project(":bind-banner")
+    implementation project(":http-core")
+    annotationProcessor project(":http-compiler")
+    implementation project(":bind-app")
     implementation project(":bus-core")
     annotationProcessor project(":bus-compiler")
 //    implementation("com.github.codyer:component:0.0.3") {

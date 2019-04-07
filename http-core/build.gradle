@@ -14,14 +14,11 @@ apply from: '../aar-config.gradle'
 dependencies {
     api project(':http-lib')
     api project(":bind-handler")
-    implementation rootProject.ext.dependencies["appcompat"]
-    implementation rootProject.ext.dependencies["okhttp3"]
-//    implementation rootProject.ext.dependencies["okio"]
-    implementation rootProject.ext.dependencies["gson"]
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-//    implementation 'io.reactivex.rxjava2:rxjava:2.2.3'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    api rootProject.ext.dependencies["appcompat"]
+    api rootProject.ext.dependencies["okhttp3"]
+    api rootProject.ext.dependencies["retrofit"]
+    api rootProject.ext.dependencies["converter-gson"]
+    api rootProject.ext.dependencies["logging-interceptor"]
+    api rootProject.ext.dependencies["adapter-rxjava2"]
+    api rootProject.ext.dependencies["rxandroid"]
 }
