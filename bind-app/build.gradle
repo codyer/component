@@ -1,4 +1,3 @@
-
 /*
  * ************************************************************
  * 文件：build.gradle  模块：bind-ui  项目：component
@@ -16,4 +15,6 @@ dependencies {
     api project(":bind-banner")
     api project(":bind-list")
     api rootProject.ext.dependencies["lifecycle"]
+    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }

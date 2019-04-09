@@ -16,6 +16,7 @@ import com.cody.component.adapter.list.OnBindingItemClickListener;
 import com.cody.component.list.BR;
 import com.cody.component.list.data.ItemMultiViewData;
 import com.cody.component.list.R;
+import com.cody.component.list.define.Operation;
 import com.cody.component.list.define.RequestStatus;
 import com.cody.component.list.exception.MissingOverrideBaseFunction;
 import com.cody.component.list.listener.OnRetryListener;
@@ -25,10 +26,12 @@ import androidx.lifecycle.LifecycleOwner;
 
 /**
  * Created by xu.yi. on 2019/4/8.
- * 包含下拉加载更多，加载失败显示重试 footer
+ * 包含下拉加载更多，加载失败显示重试 header
+ * 包含上拉加载更多，加载失败显示重试 footer
  */
 public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> extends BindingPageListAdapter<VD> implements OnRetryListener {
-    final private static int FOOTER_VIEW_TYPE = -1;
+    final private static int HEADER_OR_FOOTER_VIEW_TYPE = -1;
+    private Operation mOperation;
     private RequestStatus mRequestStatus;
 
     protected MultiBindingPageListAdapter(LifecycleOwner lifecycleOwner) {
@@ -37,7 +40,7 @@ public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> 
     }
 
     @Override
-   final public void setItemClickListener(final OnBindingItemClickListener itemClickListener) {
+    final public void setItemClickListener(final OnBindingItemClickListener itemClickListener) {
         super.setItemClickListener((parent, view, position, id) -> {
             if (view.getId() == R.id.retryButton) {
                 retry();
@@ -48,13 +51,33 @@ public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> 
     }
 
     /**
+     * 操作改变通知adapter
+     */
+    final public void setOperation(Operation operation) {
+        mOperation = operation;
+    }
+
+    /**
      * 加载状态改变的时候记得通知adapter
      */
-   final public void setRequestStatus(RequestStatus newState) {
+    final public void setRequestStatus(RequestStatus newState) {
         RequestStatus oldState = mRequestStatus;
+        boolean hadHeader = hasHeaderItem();
         boolean hadFooter = hasFooterItem();
         mRequestStatus = newState;
+        boolean hasHeader = hasHeaderItem();
         boolean hasFooter = hasFooterItem();
+
+        if (hadHeader != hasHeader) {
+            if (hadHeader) {
+                notifyItemRemoved(0);
+            } else {
+                notifyItemInserted(0);
+            }
+        } else if (hasHeader && oldState != newState) {
+            notifyItemChanged(0);
+        }
+
         if (hadFooter != hasFooter) {
             if (hadFooter) {
                 notifyItemRemoved(super.getItemCount());
@@ -79,26 +102,34 @@ public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> 
     @CallSuper
     @Override
     final public int getItemLayoutId(int viewType) {
-        if (viewType == FOOTER_VIEW_TYPE) {
-            return R.layout.item_load_more_footer;
+        if (viewType == HEADER_OR_FOOTER_VIEW_TYPE) {
+            return R.layout.item_load_more;
         }
         throw new MissingOverrideBaseFunction("getItemLayoutId");
     }
 
     @Override
     final public int getItemViewType(int position) {
-        if (hasFooterItem() && position == getItemCount() - 1) {
-            return FOOTER_VIEW_TYPE;
+        if ((hasFooterItem() && position == getItemCount() - 1) || (hasHeaderItem() && position == 0)) {
+            return HEADER_OR_FOOTER_VIEW_TYPE;
         }
         return super.getItemViewType(position);
     }
 
     @Override
     final public int getItemCount() {
-        return super.getItemCount() + (hasFooterItem() ? 1 : 0);
+        return super.getItemCount() + (hasHeaderOrFooterItem() ? 1 : 0);
+    }
+
+    private boolean hasHeaderOrFooterItem() {
+        return hasHeaderItem() || hasFooterItem();
+    }
+
+    private boolean hasHeaderItem() {
+        return (mOperation == Operation.LOAD_BEFORE) && mRequestStatus != null && (mRequestStatus.isError() || mRequestStatus.isLoading());
     }
 
     private boolean hasFooterItem() {
-        return mRequestStatus != null && (mRequestStatus.isError() || mRequestStatus.isLoading());
+        return (mOperation == Operation.LOAD_AFTER) && mRequestStatus != null && (mRequestStatus.isError() || mRequestStatus.isLoading());
     }
 }
