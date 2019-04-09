@@ -26,22 +26,22 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by xu.yi. on 2019/4/4.
  * component
  */
-public class BindingViewHolder<I extends ItemViewData> extends RecyclerView.ViewHolder {
+public class BindingViewHolder<VD extends ItemViewData> extends RecyclerView.ViewHolder {
     private int mViewDataId;
     private int mOnClickListenerId;
     private View.OnCreateContextMenuListener mContextMenuListener;
     private OnBindingItemClickListener mClickListener;
     private RecyclerView mParentView;
 
-    BindingViewHolder(@NonNull View itemView) {
+    protected BindingViewHolder(@NonNull View itemView) {
         super(itemView);
     }
 
-    public <T extends ViewDataBinding> T getItemBinding() {
+    public <B extends ViewDataBinding> B getItemBinding() {
         return DataBindingUtil.bind(itemView);
     }
 
-    void bindTo(I item, int viewDataId, int onClickListenerId, RecyclerView recyclerView, View.OnCreateContextMenuListener contextMenuListener, OnBindingItemClickListener clickListener) {
+    void bindTo(VD item, int viewDataId, int onClickListenerId, RecyclerView recyclerView, View.OnCreateContextMenuListener contextMenuListener, OnBindingItemClickListener clickListener) {
         mViewDataId = viewDataId;
         mOnClickListenerId = onClickListenerId;
         mContextMenuListener = contextMenuListener;

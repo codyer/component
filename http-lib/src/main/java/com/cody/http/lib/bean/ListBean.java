@@ -11,6 +11,8 @@
 
 package com.cody.http.lib.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -19,20 +21,33 @@ import java.util.List;
  */
 public class ListBean<T> {
     /**
-     * 上次分页请求结果位置，默认0
+     * 上次分页请求结果位置，默认-1
      */
-    private String position;
+    private String prePosition;
+    /**
+     * 上次分页请求结果位置，默认-1
+     */
+    @SerializedName(value = "nextPosition", alternate = {"nextPosition", "position"})
+    private String nextPosition;
     /**
      * 列表请求结果
      */
     private List<T> items;
 
-    public String getPosition() {
-        return position;
+    public String getPrePosition() {
+        return prePosition;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setPrePosition(String prePosition) {
+        this.prePosition = prePosition;
+    }
+
+    public String getNextPosition() {
+        return nextPosition;
+    }
+
+    public void setNextPosition(String position) {
+        this.nextPosition = position;
     }
 
     public List<T> getItems() {
@@ -46,7 +61,8 @@ public class ListBean<T> {
     @Override
     public String toString() {
         return "{" +
-                "position=" + position +
+                "prePosition=" + prePosition +
+                "nextPosition=" + nextPosition +
                 ", items=" + items +
                 '}';
     }

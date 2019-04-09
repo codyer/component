@@ -13,8 +13,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
 repositories {
-    mavenCentral()
     google()
+    mavenCentral()
     jcenter()
 }
 

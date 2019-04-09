@@ -32,7 +32,7 @@ dependencies {
     implementation project(":http-core")
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     annotationProcessor project(":http-compiler")
-    implementation project(":bind-app")
+//    implementation project(":bind-app")
     implementation project(":bus-core")
     annotationProcessor project(":bus-compiler")
 //    implementation("com.github.codyer:component:0.0.3") {

@@ -17,7 +17,7 @@ package com.cody.component.view.data;
  */
 public class ItemViewData extends ViewData {
     private static final long serialVersionUID = -6368977380223902277L;
-    private int mItemType = 0;
+    private int mItemType = 0;//不要为负数
 
     public int getItemType() {
         return mItemType;

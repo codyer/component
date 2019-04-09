@@ -4,7 +4,6 @@ buildscript {
     repositories {
         google()
         jcenter()
-        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.2'
@@ -14,11 +13,18 @@ buildscript {
 
 allprojects {
     repositories {
-        maven { url 'https://jitpack.io' }
-        mavenCentral()
         google()
         jcenter()
-
+        maven { url 'https://jitpack.io' }
+    }
+    configurations {
+        all {
+            resolutionStrategy {
+                force "androidx.lifecycle:lifecycle-livedata:2.1.0-alpha04"
+                force "androidx.lifecycle:lifecycle-livedata-core:2.1.0-alpha04"
+                force "androidx.arch.core:core-runtime:2.1.0-alpha01"
+            }
+        }
     }
 }
 

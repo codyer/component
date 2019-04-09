@@ -22,10 +22,10 @@ public class Result<T> {
     @SerializedName("code")
     private int code;
 
-    @SerializedName("msg")
+    @SerializedName(value = "message", alternate = {"message", "msg"})
     private String message;
 
-    @SerializedName("dataMap")
+    @SerializedName(value = "data", alternate = {"data", "dataMap"})
     private T data;
 
     public Result() {
