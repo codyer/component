@@ -11,4 +11,12 @@
 
 <resources>
     <string name="app_loading">努力加载中&#8230;</string>
+    <!-- 网络 -->
+    <string name="network_connect_error">网络连接异常</string>
+    <string name="network_connect_timeout">网络连接超时</string>
+    <string name="no_route_to_host">无法连接到服务器</string>
+    <string name="network_response_code_error">服务器状态码异常：</string>
+    <string name="bad_network_view_tip">您的网络不给力，点击屏幕可重新加载</string>
+    <string name="load_failed_click_to_reload">加载失败，点击可重新加载</string>
+    <string name="no_content">暂无数据</string>
 </resources>

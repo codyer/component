@@ -16,7 +16,7 @@ import com.cody.component.list.define.RequestStatus;
 import com.cody.component.list.exception.ParameterNullPointerException;
 import com.cody.component.list.listener.OnListListener;
 
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by xu.yi. on 2019/4/8.
@@ -47,7 +47,7 @@ public class DataSourceWrapper<ItemBean> implements OnListListener {
     }
 
     @Override
-    public LiveData<Operation> getOperation() {
+    public MutableLiveData<Operation> getOperation() {
         if (mDataSource != null) {
             return mDataSource.getOperation();
         }
@@ -55,7 +55,7 @@ public class DataSourceWrapper<ItemBean> implements OnListListener {
     }
 
     @Override
-    public LiveData<RequestStatus> getRequestStatus() {
+    public MutableLiveData<RequestStatus> getRequestStatus() {
         if (mDataSource != null) {
             return mDataSource.getRequestStatus();
         }

@@ -24,6 +24,7 @@ import com.cody.component.list.exception.ParameterNullPointerException;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
@@ -42,7 +43,7 @@ public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean
     }
 
     @Override
-    public LiveData<Operation> getOperation() {
+    public MutableLiveData<Operation> getOperation() {
         if (mWrapper != null) {
             return mWrapper.getOperation();
         }
@@ -50,7 +51,7 @@ public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean
     }
 
     @Override
-    public LiveData<RequestStatus> getRequestStatus() {
+    public MutableLiveData<RequestStatus> getRequestStatus() {
         if (mWrapper != null) {
             return mWrapper.getRequestStatus();
         }

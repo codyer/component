@@ -3,7 +3,7 @@
     package="com.cody.component.app">
 
     <application>
-        <activity android:name=".activity.BindListActivity"></activity>
+        <activity android:name=".fragment.BindListFragment"></activity>
     </application>
 
 </manifest>
