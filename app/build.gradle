@@ -30,11 +30,8 @@ android {
 
 dependencies {
     if (isRemote) {
-//        annotationProcessor("com.github.codyer:component:compiler-SNAPSHOT")
-        implementation("com.github.codyer:component:0.0.3") {
-            exclude module: "bus-compiler"
-        }
-        annotationProcessor "com.github.codyer.component:bus-compiler:0.0.3"
+        implementation 'com.github.codyer:component:component-SNAPSHOT'
+        annotationProcessor 'com.github.codyer:component:compiler-SNAPSHOT'
     } else {
         implementation project(":http-core")
         implementation project(":bus-core")
