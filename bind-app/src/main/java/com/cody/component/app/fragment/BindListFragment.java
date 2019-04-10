@@ -14,20 +14,31 @@ package com.cody.component.app.fragment;
 import android.os.Bundle;
 import android.view.View;
 
+import com.cody.component.adapter.list.OnBindingItemClickListener;
+import com.cody.component.app.IBindList;
 import com.cody.component.app.R;
 import com.cody.component.app.data.StubViewData;
 import com.cody.component.app.databinding.FragmentBindListBinding;
 import com.cody.component.list.adapter.MultiBindingPageListAdapter;
-import com.cody.component.list.define.RequestStatus;
+import com.cody.component.list.data.ItemMultiViewData;
 import com.cody.component.list.viewmodel.MultiListViewModel;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-public class BindListFragment extends SingleBindFragment<FragmentBindListBinding, StubViewData> {
-    private MultiBindingPageListAdapter mListAdapter;
+public abstract class BindListFragment<IVD extends ItemMultiViewData> extends SingleBindFragment<FragmentBindListBinding, StubViewData> implements IBindList<IVD>, OnBindingItemClickListener {
+    private MultiBindingPageListAdapter<IVD> mListAdapter;
+
+    @Override
+    public MultiBindingPageListAdapter<IVD> getListAdapter() {
+        return new MultiBindingPageListAdapter<IVD>(this, this) {
+        };
+    }
+
+    @Override
+    final public <VM extends MultiListViewModel<IVD, ?>> VM getListViewModel() {
+        return getViewModel(getVMClass());
+    }
 
     @Override
     protected StubViewData getViewData() {
@@ -37,24 +48,16 @@ public class BindListFragment extends SingleBindFragment<FragmentBindListBinding
     @Override
     protected void onBaseReady(Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
+        mListAdapter = getListAdapter();
+        mListAdapter.setItemClickListener(this);
+        mListAdapter.setItemLongClickListener(this);
         getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
-        getBinding().recyclerView.setAdapter(mListAdapter = new MultiBindingPageListAdapter(this) {
-
-            @Override
-            public void retry() {
-                getViewModel(MultiListViewModel.class).retry();
-            }
-        });
-        getBinding().swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark,
-                android.R.color.holo_orange_dark);
-        getBinding().swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                getViewModel(MultiListViewModel.class).refresh();
-            }
-        });
-        MutableLiveData<RequestStatus> requestStatus = getViewModel(MultiListViewModel.class).getRequestStatus();
-        requestStatus.observe(this, requestStatus1 -> mListAdapter.setRequestStatus(requestStatus1));
+        getBinding().recyclerView.setAdapter(mListAdapter);
+        getBinding().swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
+        getBinding().swipeRefreshLayout.setOnRefreshListener(() -> getListViewModel().refresh());
+        getListViewModel().getRequestStatus().observe(this, requestStatus -> mListAdapter.setRequestStatus(requestStatus));
+        getListViewModel().getOperation().observe(this, operation -> mListAdapter.setOperation(operation));
+        getListViewModel().getPagedList().observe(this, items -> mListAdapter.submitList(items));
     }
 
     @Override
@@ -63,7 +66,7 @@ public class BindListFragment extends SingleBindFragment<FragmentBindListBinding
     }
 
     @Override
-    public void onClick(View v) {
-
+    public void retry() {
+        getListViewModel().retry();
     }
 }

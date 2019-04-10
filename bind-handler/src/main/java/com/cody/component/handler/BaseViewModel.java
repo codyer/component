@@ -13,8 +13,10 @@ package com.cody.component.handler;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * Created by xu.yi. on 2019/3/25.
@@ -35,7 +37,7 @@ public class BaseViewModel extends ViewModel implements IViewModel {
     }
 
     @Override
-    public <T extends BaseViewModel> T getViewModel(@NonNull Class<T> viewModelClass) {
+    public <T extends BaseViewModel> T getViewModel(@NonNull final Class<T> viewModelClass, @Nullable final ViewModelProvider.Factory factory) {
         //noinspection unchecked
         return (T) this;
     }

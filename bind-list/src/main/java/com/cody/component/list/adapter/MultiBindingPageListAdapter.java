@@ -29,21 +29,23 @@ import androidx.lifecycle.LifecycleOwner;
  * 包含下拉加载更多，加载失败显示重试 header
  * 包含上拉加载更多，加载失败显示重试 footer
  */
-public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> extends BindingPageListAdapter<VD> implements OnRetryListener {
+public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> extends BindingPageListAdapter<VD> {
     final private static int HEADER_OR_FOOTER_VIEW_TYPE = -1;
     private Operation mOperation;
     private RequestStatus mRequestStatus;
+    private OnRetryListener mOnRetryListener;
 
-    protected MultiBindingPageListAdapter(LifecycleOwner lifecycleOwner) {
+    protected MultiBindingPageListAdapter(LifecycleOwner lifecycleOwner, OnRetryListener onRetryListener) {
         super(lifecycleOwner);
+        mOnRetryListener = onRetryListener;
         setItemClickListener(null);
     }
 
     @Override
     final public void setItemClickListener(final OnBindingItemClickListener itemClickListener) {
         super.setItemClickListener((parent, view, position, id) -> {
-            if (view.getId() == R.id.retryButton) {
-                retry();
+            if (view.getId() == R.id.retryButton && mOnRetryListener != null) {
+                mOnRetryListener.retry();
             } else if (itemClickListener != null) {
                 itemClickListener.onItemClick(parent, view, position, id);
             }

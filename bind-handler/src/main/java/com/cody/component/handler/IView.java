@@ -13,13 +13,19 @@ package com.cody.component.handler;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 /**
  * Created by xu.yi. on 2019/3/25.
  * base activity and base fragment 需要实现的接口
  */
 public interface IView {
-    <T extends BaseViewModel> T getViewModel(@NonNull Class<T> viewModelClass);
+    default <T extends BaseViewModel> T getViewModel(@NonNull Class<T> viewModelClass) {
+        return getViewModel(viewModelClass, null);
+    }
+
+    <T extends BaseViewModel> T getViewModel(@NonNull Class<T> viewModelClass, @Nullable ViewModelProvider.Factory factory);
 
     /**
      * show loading message

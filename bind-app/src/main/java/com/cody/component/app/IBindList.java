@@ -1,0 +1,29 @@
+/*
+ * ************************************************************
+ * 文件：IBindList.java  模块：bind-app  项目：component
+ * 当前修改时间：2019年04月10日 08:36:25
+ * 上次修改时间：2019年04月10日 08:36:25
+ * 作者：Cody.yi   https://github.com/codyer
+ *
+ * Copyright (c) 2019
+ * ************************************************************
+ */
+
+package com.cody.component.app;
+
+import com.cody.component.list.adapter.MultiBindingPageListAdapter;
+import com.cody.component.list.data.ItemMultiViewData;
+import com.cody.component.list.listener.OnRetryListener;
+import com.cody.component.list.viewmodel.MultiListViewModel;
+
+/**
+ * Created by xu.yi. on 2019/4/10.
+ * 列表绑定需要实现的接口
+ */
+public interface IBindList<IVD extends ItemMultiViewData> extends OnRetryListener {
+    <VM extends MultiListViewModel<IVD, ?>> Class<VM> getVMClass();
+
+    <VM extends MultiListViewModel<IVD, ?>> VM getListViewModel();
+
+    MultiBindingPageListAdapter<IVD> getListAdapter();
+}

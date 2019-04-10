@@ -31,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 /**
@@ -59,12 +60,12 @@ public abstract class BaseActivity extends AppCompatActivity implements IView {
     }
 
     @Override
-    public <T extends BaseViewModel> T getViewModel(@NonNull Class<T> viewModelClass) {
+    public <VM extends BaseViewModel> VM getViewModel(@NonNull Class<VM> viewModelClass, @Nullable ViewModelProvider.Factory factory) {
         String canonicalName = viewModelClass.getCanonicalName();
         if (canonicalName == null) {
             throw new IllegalArgumentException("Local and anonymous classes can not be ViewModels");
         }
-        T viewModel = ViewModelProviders.of(this).get(viewModelClass);
+        VM viewModel = ViewModelProviders.of(this, factory).get(viewModelClass);
         checkViewModel(canonicalName, viewModel);
         return viewModel;
     }
