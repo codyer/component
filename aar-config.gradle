@@ -10,9 +10,14 @@
  */
 
 apply plugin: 'com.android.library'
+
 if (isComponent) {
-    apply plugin: 'com.github.dcendents.android-maven'
-    group = 'com.github.codyer'
+    if (isPushLocal) {
+        apply from: '../local-maven.gradle'
+    } else {
+        apply plugin: 'com.github.dcendents.android-maven'
+        group = 'com.github.codyer'
+    }
 }
 
 repositories {

@@ -10,7 +10,9 @@
  */
 
 apply plugin: 'java-library'
-if (isCompiler) {
+if (isPushLocal) {
+    apply from: '../local-maven.gradle'
+} else if (isCompiler) {
     apply plugin: 'com.github.dcendents.android-maven'
     group = 'com.github.codyer'
 }

@@ -14,6 +14,10 @@ buildscript {
 
 allprojects {
     repositories {
+        //本地Maven仓库地址
+        maven {
+            url LOCAL_REPOSITORY
+        }
         google()
         jcenter()
         maven { url 'https://jitpack.io' }

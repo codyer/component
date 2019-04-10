@@ -125,6 +125,15 @@ def boolean isComponent() {
 def boolean isRemote() {
     return getGitTag().contains("remote") || getGitBranch().contains("remote")
 }
+
+/**
+ * tag or branch contains local
+ * true：推送到本地仓库
+ * false：推送到远程仓库
+ */
+def boolean isPushLocal() {
+    return getGitTag().contains("local") || getGitBranch().contains("local")
+}
 /**
  * 定义几个变量，在build.gradle里面引用
  */
@@ -137,4 +146,5 @@ ext {
     isCompiler = isCompiler()
     isComponent = isComponent()
     isRemote = isRemote()
+    isPushLocal = isPushLocal()
 }
