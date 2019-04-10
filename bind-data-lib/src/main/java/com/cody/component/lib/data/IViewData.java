@@ -9,7 +9,7 @@
  * ************************************************************
  */
 
-package com.cody.component.view.data;
+package com.cody.component.lib.data;
 
 import java.io.Serializable;
 

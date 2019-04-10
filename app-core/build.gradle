@@ -11,7 +11,5 @@
 
 apply from: '../aar-config.gradle'
 dependencies {
-    implementation rootProject.ext.dependencies["appcompat"]
     api project(":bind-list")
-    api rootProject.ext.dependencies["lifecycle"]
 }

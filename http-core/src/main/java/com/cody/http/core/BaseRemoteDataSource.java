@@ -11,8 +11,8 @@
 
 package com.cody.http.core;
 
-import com.cody.component.handler.BaseViewModel;
-import com.cody.http.lib.bean.Result;
+import com.cody.component.lib.view.IView;
+import com.cody.component.lib.bean.Result;
 import com.cody.http.core.callback.RequestCallback;
 import com.cody.http.lib.config.TimeConfig;
 
@@ -31,9 +31,9 @@ import io.reactivex.schedulers.Schedulers;
 public abstract class BaseRemoteDataSource {
 
     private final CompositeDisposable mCompositeDisposable;
-    private final BaseViewModel mBaseViewModel;
+    private final IView mBaseViewModel;
 
-    public BaseRemoteDataSource(BaseViewModel baseViewModel) {
+    public BaseRemoteDataSource(IView baseViewModel) {
         this.mCompositeDisposable = new CompositeDisposable();
         this.mBaseViewModel = baseViewModel;
     }
@@ -113,18 +113,5 @@ public abstract class BaseRemoteDataSource {
             }
             return (callback.endDismissLoading() ? observable.doFinally(this::hideLoading) : observable);
         };
-    }
-
-    /**
-     * Created by xu.yi. on 2019/4/6.
-     *
-     */
-    public static class BaseRepository<T> {
-
-        protected final T mRemoteDataSource;
-
-        public BaseRepository(T remoteDataSource) {
-            this.mRemoteDataSource = remoteDataSource;
-        }
     }
 }

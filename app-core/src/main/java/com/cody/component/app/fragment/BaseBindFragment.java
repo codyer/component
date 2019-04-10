@@ -16,8 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cody.component.view.data.IViewData;
-import com.cody.component.app.IBinding;
+import com.cody.component.lib.data.IViewData;
+import com.cody.component.lib.bind.IBinding;
 import com.cody.component.app.BR;
 
 import androidx.annotation.CallSuper;

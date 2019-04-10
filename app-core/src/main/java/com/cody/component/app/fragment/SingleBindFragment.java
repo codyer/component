@@ -12,7 +12,7 @@
 package com.cody.component.app.fragment;
 
 
-import com.cody.component.view.data.IViewData;
+import com.cody.component.lib.data.IViewData;
 import com.cody.component.app.BR;
 
 import androidx.databinding.ViewDataBinding;

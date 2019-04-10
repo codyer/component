@@ -12,6 +12,7 @@
 apply from: '../aar-config.gradle'
 dependencies {
     api project(':app-core')
+    implementation rootProject.ext.dependencies["okhttp3"]
     implementation rootProject.ext.dependencies["material"]
     implementation rootProject.ext.dependencies["legacy"]
     implementation rootProject.ext.dependencies["lifecycle"]

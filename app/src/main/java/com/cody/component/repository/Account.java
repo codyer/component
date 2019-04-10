@@ -12,7 +12,7 @@
 package com.cody.component.repository;
 
 import com.cody.http.lib.annotation.Domain;
-import com.cody.http.lib.bean.Result;
+import com.cody.component.lib.bean.Result;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

@@ -11,7 +11,7 @@
 
 package com.cody.component.list.data;
 
-import com.cody.component.view.data.ItemViewData;
+import com.cody.component.lib.data.ItemViewData;
 
 import androidx.lifecycle.MutableLiveData;
 

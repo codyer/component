@@ -10,7 +10,3 @@
  */
 
 apply from:  '../lib-config.gradle'
-dependencies {
-    api rootProject.ext.dependencies["gson"]
-    api rootProject.ext.dependencies["okhttp3"]
-}

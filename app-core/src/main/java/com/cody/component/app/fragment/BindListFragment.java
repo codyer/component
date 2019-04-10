@@ -12,29 +12,30 @@
 package com.cody.component.app.fragment;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.cody.component.adapter.list.OnBindingItemClickListener;
-import com.cody.component.app.IBindList;
+import com.cody.component.app.IBaseListView;
 import com.cody.component.app.R;
-import com.cody.component.app.data.StubViewData;
+import com.cody.component.list.data.StubViewData;
 import com.cody.component.app.databinding.FragmentBindListBinding;
 import com.cody.component.list.adapter.MultiBindingPageListAdapter;
 import com.cody.component.list.data.ItemMultiViewData;
 import com.cody.component.list.viewmodel.MultiListViewModel;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public abstract class BindListFragment<IVD extends ItemMultiViewData> extends SingleBindFragment<FragmentBindListBinding, StubViewData> implements IBindList<IVD>, OnBindingItemClickListener {
+public abstract class BindListFragment<IVD extends ItemMultiViewData> extends SingleBindFragment<FragmentBindListBinding, StubViewData> implements IBaseListView<IVD>, OnBindingItemClickListener {
     private MultiBindingPageListAdapter<IVD> mListAdapter;
 
-    @Override
+/*    @Override
     public MultiBindingPageListAdapter<IVD> getListAdapter() {
         return new MultiBindingPageListAdapter<IVD>(this, this) {
         };
-    }
+    }*/
 
+    @NonNull
     @Override
     final public <VM extends MultiListViewModel<IVD, ?>> VM getListViewModel() {
         return getViewModel(getVMClass());
@@ -42,7 +43,7 @@ public abstract class BindListFragment<IVD extends ItemMultiViewData> extends Si
 
     @Override
     protected StubViewData getViewData() {
-        return new StubViewData();
+        return getListViewModel().getStubViewData();
     }
 
     @Override
@@ -55,7 +56,18 @@ public abstract class BindListFragment<IVD extends ItemMultiViewData> extends Si
         getBinding().recyclerView.setAdapter(mListAdapter);
         getBinding().swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
         getBinding().swipeRefreshLayout.setOnRefreshListener(() -> getListViewModel().refresh());
-        getListViewModel().getRequestStatus().observe(this, requestStatus -> mListAdapter.setRequestStatus(requestStatus));
+        getListViewModel().getRequestStatus().observe(this, requestStatus -> {
+            mListAdapter.setRequestStatus(requestStatus);
+            if (requestStatus.isError()) {
+                getViewData().failedView(requestStatus.getMessage());
+            } else if (requestStatus.isLoaded()) {
+                if (mListAdapter.getItemCount() == 0) {
+                    getViewData().noContentView();
+                } else {
+                    getViewData().noStubView();
+                }
+            }
+        });
         getListViewModel().getOperation().observe(this, operation -> mListAdapter.setOperation(operation));
         getListViewModel().getPagedList().observe(this, items -> mListAdapter.submitList(items));
     }

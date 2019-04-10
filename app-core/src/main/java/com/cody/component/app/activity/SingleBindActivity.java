@@ -12,7 +12,7 @@
 package com.cody.component.app.activity;
 
 import com.cody.component.app.BR;
-import com.cody.component.view.data.IViewData;
+import com.cody.component.lib.data.IViewData;
 
 import androidx.databinding.ViewDataBinding;
 

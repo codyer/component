@@ -18,10 +18,10 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.cody.component.app.R;
-import com.cody.component.handler.IView;
 import com.cody.component.handler.BaseViewModel;
+import com.cody.component.handler.view.IBaseView;
 import com.cody.component.handler.IViewModel;
-import com.cody.component.handler.ViewAction;
+import com.cody.component.handler.action.ViewAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ import androidx.lifecycle.ViewModelProviders;
  * Created by xu.yi. on 2019/3/25.
  * 所有activity的基类
  */
-public abstract class BaseActivity extends AppCompatActivity implements IView {
+public abstract class BaseActivity extends AppCompatActivity implements IBaseView {
     private ProgressDialog mLoading;
     private List<String> mViewModelNames;
     private Toast mToast;

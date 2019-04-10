@@ -15,7 +15,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 
-import com.cody.component.view.data.ItemViewData;
+import com.cody.component.lib.data.ItemViewData;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;

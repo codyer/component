@@ -15,8 +15,8 @@ import android.os.Bundle;
 import android.view.View;
 import com.cody.component.app.BR;
 
-import com.cody.component.app.IBinding;
-import com.cody.component.view.data.IViewData;
+import com.cody.component.lib.bind.IBinding;
+import com.cody.component.lib.data.IViewData;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.IdRes;

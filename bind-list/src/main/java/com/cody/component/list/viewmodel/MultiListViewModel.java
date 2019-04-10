@@ -12,6 +12,7 @@
 package com.cody.component.list.viewmodel;
 
 import com.cody.component.handler.BaseViewModel;
+import com.cody.component.list.data.StubViewData;
 import com.cody.component.list.factory.MultiDataSourceFactory;
 import com.cody.component.list.source.DataSourceWrapper;
 import com.cody.component.list.listener.OnListListener;
@@ -35,8 +36,13 @@ import androidx.paging.PagedList;
  */
 public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean> extends BaseViewModel
         implements OnRequestPageListener<ItemBean>, Function<ItemBean, IVD>, OnListListener {
+    private StubViewData mStubViewData;
     private DataSourceWrapper<ItemBean> mWrapper;
     private LiveData<PagedList<IVD>> mPagedList = new LivePagedListBuilder<>(initSourceFactory(), initPageListConfig()).build();
+
+    public StubViewData getStubViewData() {
+        return mStubViewData;
+    }
 
     public LiveData<PagedList<IVD>> getPagedList() {
         return mPagedList;

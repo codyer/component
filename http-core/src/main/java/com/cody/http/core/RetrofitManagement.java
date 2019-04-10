@@ -14,7 +14,7 @@ package com.cody.http.core;
 import android.webkit.URLUtil;
 
 import com.cody.http.lib.annotation.Domain;
-import com.cody.http.lib.bean.Result;
+import com.cody.component.lib.bean.Result;
 import com.cody.http.lib.config.HttpCode;
 import com.cody.http.lib.config.TimeConfig;
 import com.cody.http.lib.exception.AccountInvalidException;

@@ -13,7 +13,8 @@ package com.cody.component.list.define;
 
 import android.text.TextUtils;
 
-import com.cody.http.lib.bean.ListResult;
+import com.cody.component.lib.bean.ListBean;
+import com.cody.component.lib.bean.Result;
 
 /**
  * Created by xu.yi. on 2019/4/8.
@@ -34,14 +35,14 @@ public class PageInfo {
         mPosition = position;
     }
 
-    public static PageInfo getPrePageInfo(ListResult<?> result) {
+    public static <ItemBean> PageInfo getPrePageInfo(Result<ListBean<ItemBean>> result) {
         if (result == null || result.getData() == null) {
             return null;
         }
         return getPageInfo(result.getData().getPrePosition());
     }
 
-    public static PageInfo getNextPageInfo(ListResult<?> result) {
+    public static <ItemBean> PageInfo getNextPageInfo(Result<ListBean<ItemBean>> result) {
         if (result == null || result.getData() == null) {
             return null;
         }

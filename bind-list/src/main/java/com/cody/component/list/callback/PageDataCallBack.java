@@ -12,8 +12,9 @@
 package com.cody.component.list.callback;
 
 
+import com.cody.component.lib.bean.ListBean;
+import com.cody.component.lib.bean.Result;
 import com.cody.component.list.define.PageInfo;
-import com.cody.http.lib.bean.ListResult;
 
 import java.util.List;
 
@@ -31,10 +32,10 @@ public interface PageDataCallBack<ItemBean> {
     void onSuccess(@NonNull List<ItemBean> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey);
 
     /**
-     * eg: callBack.onSuccess(listResult);
+     * eg: callBack.onSuccess(result);
      */
-    default void onSuccess(@NonNull ListResult<ItemBean> listResult) {
-        onSuccess(listResult.getData().getItems(), PageInfo.getPrePageInfo(listResult), PageInfo.getNextPageInfo(listResult));
+    default void onSuccess(@NonNull Result<ListBean<ItemBean>> result) {
+        onSuccess(result.getData().getItems(), PageInfo.getPrePageInfo(result), PageInfo.getNextPageInfo(result));
     }
 
     /**

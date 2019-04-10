@@ -15,7 +15,7 @@ import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.cody.component.view.data.ItemViewData;
+import com.cody.component.lib.data.ItemViewData;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;

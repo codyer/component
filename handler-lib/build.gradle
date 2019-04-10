@@ -1,4 +1,3 @@
-
 /*
  * ************************************************************
  * 文件：build.gradle  模块：component  项目：component
@@ -12,5 +11,6 @@
 
 apply from: '../aar-config.gradle'
 dependencies {
-    implementation rootProject.ext.dependencies["lifecycle"]
+    api rootProject.ext.dependencies["lifecycle"]
+    api project(':bind-data-lib')
 }

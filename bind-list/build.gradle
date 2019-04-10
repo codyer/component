@@ -12,8 +12,7 @@
 
 apply from: '../aar-config.gradle'
 dependencies {
+    api rootProject.ext.dependencies["appcompat"]
     api project(":bind-adapter")
-    api project(":bind-handler")
-    api project(":http-lib")
-    implementation rootProject.ext.dependencies["appcompat"]
+    api project(':handler-lib')
 }

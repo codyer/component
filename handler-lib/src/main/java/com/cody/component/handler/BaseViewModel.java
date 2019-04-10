@@ -12,11 +12,10 @@
 package com.cody.component.handler;
 
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import com.cody.component.handler.action.ViewAction;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 /**
  * Created by xu.yi. on 2019/3/25.
@@ -24,7 +23,6 @@ import androidx.lifecycle.ViewModelProvider;
  */
 public class BaseViewModel extends ViewModel implements IViewModel {
     private final MutableLiveData<ViewAction> mViewActionLiveData;
-//    protected LifecycleOwner mLifecycleOwner;
 
     @Override
     protected void onCleared() {
@@ -34,12 +32,6 @@ public class BaseViewModel extends ViewModel implements IViewModel {
 
     public BaseViewModel() {
         mViewActionLiveData = new MutableLiveData<>();
-    }
-
-    @Override
-    public <T extends BaseViewModel> T getViewModel(@NonNull final Class<T> viewModelClass, @Nullable final ViewModelProvider.Factory factory) {
-        //noinspection unchecked
-        return (T) this;
     }
 
     @Override
@@ -74,9 +66,7 @@ public class BaseViewModel extends ViewModel implements IViewModel {
 
     @Override
     final public void executeAction(ViewAction action) {
-        if (mViewActionLiveData != null) {
-            mViewActionLiveData.setValue(action);
-        }
+        mViewActionLiveData.setValue(action);
     }
 
     @Override

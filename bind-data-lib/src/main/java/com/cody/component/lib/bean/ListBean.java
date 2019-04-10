@@ -9,7 +9,7 @@
  * ************************************************************
  */
 
-package com.cody.http.lib.bean;
+package com.cody.component.lib.bean;
 
 import com.google.gson.annotations.SerializedName;
 

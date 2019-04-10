@@ -11,6 +11,9 @@
 
 package com.cody.component.handler;
 
+import com.cody.component.handler.action.ViewAction;
+import com.cody.component.lib.view.IView;
+
 import androidx.lifecycle.MutableLiveData;
 
 /**
@@ -24,5 +27,4 @@ public interface IViewModel extends IView {
      * 处理其他action，扩展用
      */
     void executeAction(ViewAction action);
-//    <T extends BaseViewModel> T setLifecycleOwner(LifecycleOwner lifecycleOwner);
 }

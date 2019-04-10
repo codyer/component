@@ -13,8 +13,8 @@ package com.cody.component.banner.data;
 
 import android.text.TextUtils;
 
-import com.cody.component.view.data.IViewData;
-import com.cody.component.view.data.ItemViewData;
+import com.cody.component.lib.data.IViewData;
+import com.cody.component.lib.data.ItemViewData;
 
 /**
  * Created by cody.yi on 2019/4/4.

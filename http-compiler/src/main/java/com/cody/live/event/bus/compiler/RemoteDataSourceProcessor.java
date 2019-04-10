@@ -161,7 +161,7 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
         } else {
             throw new GenerateDataSourceException("接口定义方法返回值错误，请用 io.reactivex.Observable 作为返回值");
         }
-        if (type.startsWith("com.cody.http.lib.bean.Result<")) {//去掉最外层的 Result
+        if (type.startsWith("com.cody.component.lib.bean.Result<")) {//去掉最外层的 Result
             type = Util.innerTypeToString(type);
             methodBean.setOriginal(false);
         } else {

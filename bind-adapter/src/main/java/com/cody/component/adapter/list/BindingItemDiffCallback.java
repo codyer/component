@@ -11,7 +11,7 @@
 
 package com.cody.component.adapter.list;
 
-import com.cody.component.view.data.ItemViewData;
+import com.cody.component.lib.data.ItemViewData;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;

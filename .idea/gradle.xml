@@ -14,11 +14,11 @@
             <option value="$PROJECT_DIR$/bind-adapter" />
             <option value="$PROJECT_DIR$/bind-banner" />
             <option value="$PROJECT_DIR$/bind-data-lib" />
-            <option value="$PROJECT_DIR$/bind-handler" />
             <option value="$PROJECT_DIR$/bind-list" />
             <option value="$PROJECT_DIR$/bus-compiler" />
             <option value="$PROJECT_DIR$/bus-core" />
             <option value="$PROJECT_DIR$/bus-lib" />
+            <option value="$PROJECT_DIR$/handler-lib" />
             <option value="$PROJECT_DIR$/http-cat" />
             <option value="$PROJECT_DIR$/http-compiler" />
             <option value="$PROJECT_DIR$/http-core" />

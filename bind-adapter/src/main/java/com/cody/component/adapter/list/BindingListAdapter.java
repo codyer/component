@@ -15,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cody.component.view.data.ItemViewData;
+import com.cody.component.lib.data.ItemViewData;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;

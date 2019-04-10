@@ -38,6 +38,7 @@ dependencies {
         implementation project(":app-core")
         implementation project(":bind-banner")
         implementation project(":http-cat")
+        annotationProcessor project(":bus-compiler")
         annotationProcessor project(":http-compiler")
     }
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

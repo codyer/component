@@ -9,7 +9,7 @@
  * ************************************************************
  */
 
-package com.cody.component.view.data;
+package com.cody.component.lib.data;
 
 /**
  * Created by xu.yi. on 2019/3/28.

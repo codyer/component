@@ -9,7 +9,7 @@
  * ************************************************************
  */
 
-package com.cody.component.data;
+package com.cody.component.lib.data;
 
 import com.cody.component.bean.TestDataBean;
 import com.cody.http.lib.annotation.Domain;
