@@ -11,6 +11,7 @@
 
 package com.cody.component;
 
+import com.cody.http.cat.HttpCat;
 import com.cody.http.core.HttpCore;
 
 import androidx.multidex.MultiDexApplication;
@@ -25,7 +26,7 @@ public class BaseApplication extends MultiDexApplication {
         super.onCreate();
         HttpCore.init(this)
                 .withLog(true)
-                .withHttpCat(true)
+                .withHttpCat(HttpCat.create(this))
                 .done();
     }
 }

@@ -16,6 +16,7 @@ import com.cody.component.bus.BusDemoActivity;
 import com.cody.component.data.remote.CatApiOpen$DataSource;
 import com.cody.component.data.remote.CatHttpBin$DataSource;
 import com.cody.component.databinding.ActivityMainBannerBinding;
+import com.cody.http.cat.HttpCat;
 import com.cody.http.core.HttpCore;
 import com.cody.http.core.callback.RequestCallback;
 
@@ -45,16 +46,16 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
                 httpRequest2();
                 break;
             case R.id.hideCat:
-                HttpCore.getInstance().getHttpCat().hide();
+                HttpCat.getInstance().hide();
                 break;
             case R.id.showCat:
-                HttpCore.getInstance().getHttpCat().show();
+                HttpCat.getInstance().show();
                 break;
             case R.id.muteCat:
-                HttpCore.getInstance().getHttpCat().mute();
+                HttpCat.getInstance().mute();
                 break;
             case R.id.killCat:
-                HttpCore.getInstance().killHttpCat();
+                HttpCore.getInstance().killHttpCat().done();
                 break;
         }
     }

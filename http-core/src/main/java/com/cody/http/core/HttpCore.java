@@ -13,10 +13,11 @@ package com.cody.http.core;
 
 import android.content.Context;
 
-import com.cody.http.cat.HttpCat;
 import com.cody.http.lib.exception.HttpCoreNotInitializedException;
 
 import java.lang.ref.WeakReference;
+
+import okhttp3.Interceptor;
 
 /**
  * Created by xu.yi. on 2019/4/6.
@@ -58,13 +59,6 @@ public class HttpCore {
     }
 
     /**
-     * 获取HttpCat
-     */
-    public HttpCat getHttpCat() {
-        return HttpCat.getInstance();
-    }
-
-    /**
      * 杀死HttpCat
      */
     public HttpCore killHttpCat() {
@@ -75,12 +69,8 @@ public class HttpCore {
     /**
      * 默认关闭log
      */
-    public HttpCore withHttpCat(boolean cat) {
-        if (cat) {
-            RetrofitManagement.getInstance().setHttpCatInterceptor(HttpCat.create(getContext()));
-        } else {
-            RetrofitManagement.getInstance().setHttpCatInterceptor(null);
-        }
+    public HttpCore withHttpCat(Interceptor cat) {
+        RetrofitManagement.getInstance().setHttpCatInterceptor(cat);
         return this;
     }
 

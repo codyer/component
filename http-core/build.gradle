@@ -12,7 +12,7 @@
 apply from: '../aar-config.gradle'
 
 dependencies {
-    api project(":http-cat")
+    api project(':http-lib')
     api rootProject.ext.dependencies["appcompat"]
     api rootProject.ext.dependencies["retrofit"]
     api rootProject.ext.dependencies["converter-gson"]

@@ -1,5 +1,5 @@
 include ':app'
-include ':bind-data', ':bind-adapter', ':bind-list', ':bind-banner', ':bind-handler', ':app-core'
+include ':bind-data-lib', ':bind-adapter', ':bind-list', ':bind-banner', ':bind-handler', ':app-core'
 include ':bus-lib', ':bus-core', ':bus-compiler'
 include ':http-lib', ':http-core', ':http-compiler'
 include ':http-cat'

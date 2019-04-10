@@ -11,7 +11,7 @@
 
 apply from: '../aar-config.gradle'
 dependencies {
-    api project(':bind-data')
+    api project(':bind-data-lib')
     api rootProject.ext.dependencies["paging"]
     api(rootProject.ext.dependencies["glide"]) {
         exclude group: "com.android.support"
