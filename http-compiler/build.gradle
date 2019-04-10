@@ -11,7 +11,7 @@
 
 import org.gradle.internal.jvm.Jvm
 
-apply from:  '../lib-config.gradle'
+apply from:  '../compiler-config.gradle'
 dependencies {
     compileOnly files(Jvm.current().getToolsJar())
     implementation project(':http-lib')

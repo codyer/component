@@ -34,7 +34,8 @@ dependencies {
     annotationProcessor project(":http-compiler")
 //    implementation project(":bind-app")
     implementation project(":bus-core")
-    annotationProcessor project(":bus-compiler")
+    annotationProcessor("com.github.codyer:component:compiler-SNAPSHOT")
+//    annotationProcessor("com.github.codyer.component:bus-compiler:0.1.0")
 //    implementation("com.github.codyer:component:0.0.3") {
 //        exclude module: "bus-compiler"
 //    }
