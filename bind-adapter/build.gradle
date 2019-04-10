@@ -9,7 +9,7 @@
  * ************************************************************
  */
 
-apply from: '../aar-config.gradle'
+apply from: '../config-aar.gradle'
 dependencies {
     api project(':bind-data-lib')
     api rootProject.ext.dependencies["paging"]

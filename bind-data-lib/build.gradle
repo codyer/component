@@ -9,7 +9,7 @@
  * ************************************************************
  */
 
-apply from:  '../lib-config.gradle'
+apply from:  '../config-lib.gradle'
 
 dependencies {
     api rootProject.ext.dependencies["gson"]

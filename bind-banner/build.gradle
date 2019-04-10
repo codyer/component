@@ -10,7 +10,7 @@
  * ************************************************************
  */
 
-apply from: '../aar-config.gradle'
+apply from: '../config-aar.gradle'
 dependencies {
     api project(":bind-adapter")
     implementation rootProject.ext.dependencies["appcompat"]

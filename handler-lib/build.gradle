@@ -9,7 +9,7 @@
  * ************************************************************
  */
 
-apply from: '../aar-config.gradle'
+apply from: '../config-aar.gradle'
 dependencies {
     api rootProject.ext.dependencies["lifecycle"]
     api project(':bind-data-lib')

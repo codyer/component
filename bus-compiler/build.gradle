@@ -11,7 +11,7 @@
 
 import org.gradle.internal.jvm.Jvm
 
-apply from:  '../compiler-config.gradle'
+apply from:  '../config-compiler.gradle'
 dependencies {
     compileOnly files(Jvm.current().getToolsJar())
     implementation project(':bus-lib')
