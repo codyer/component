@@ -11,7 +11,7 @@
 
 apply from: '../aar-config.gradle'
 dependencies {
-    api project(':bind-app')
+    api project(':app-core')
     api project(':http-lib')
     implementation rootProject.ext.dependencies["material"]
     implementation rootProject.ext.dependencies["legacy"]

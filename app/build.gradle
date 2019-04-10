@@ -35,7 +35,8 @@ dependencies {
     } else {
         implementation project(":http-core")
         implementation project(":bus-core")
-        implementation project(":bind-app")
+        implementation project(":app-core")
+        implementation project(":bind-banner")
         annotationProcessor project(":http-compiler")
     }
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
