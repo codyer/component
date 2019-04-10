@@ -9,4 +9,4 @@
  * ************************************************************
  */
 
-apply from:  '../lib-config.gradle'
+apply from:  '../aar-config.gradle'
