@@ -1,4 +1,4 @@
-include ':app'
+include ':app',':component'
 include ':bind-data-lib', ':bind-adapter', ':bind-list', ':bind-banner', ':handler-lib', ':app-core'
 include ':bus-lib', ':bus-core', ':bus-compiler'
 include ':http-lib', ':http-core', ':http-compiler'

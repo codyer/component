@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/bus-compiler" />
             <option value="$PROJECT_DIR$/bus-core" />
             <option value="$PROJECT_DIR$/bus-lib" />
+            <option value="$PROJECT_DIR$/component" />
             <option value="$PROJECT_DIR$/handler-lib" />
             <option value="$PROJECT_DIR$/http-cat" />
             <option value="$PROJECT_DIR$/http-compiler" />
