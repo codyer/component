@@ -30,8 +30,8 @@ android {
 
 dependencies {
     if (isRemote) {
-        implementation 'com.github.codyer:component:component-SNAPSHOT'
-        annotationProcessor 'com.github.codyer:component:compiler-SNAPSHOT'
+        implementation 'com.github.codyer:component:component-0.1.3'
+        annotationProcessor 'com.github.codyer:component:compiler-0.1.3'
     } else {
         implementation project(":http-core")
         implementation project(":bus-core")
