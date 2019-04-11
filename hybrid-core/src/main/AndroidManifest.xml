@@ -3,7 +3,7 @@
     package="com.cody.component.hybrid">
 
     <application>
-        <activity android:name=".activity.HtmlActivity"></activity>
+        <activity android:name=".activity.HtmlActivity"/>
     </application>
 
 </manifest>

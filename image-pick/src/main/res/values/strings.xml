@@ -1,0 +1,15 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：strings.xml  模块：component  项目：component
+  ~ 当前修改时间：2019年04月11日 17:43:33
+  ~ 上次修改时间：2019年04月10日 15:58:25
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <string name="from_photos">从相册中选择</string>
+    <string name="from_camera">拍照</string>
+</resources>

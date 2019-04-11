@@ -15,6 +15,7 @@ package com.cody.component.app.fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -41,7 +42,7 @@ import androidx.lifecycle.ViewModelProviders;
  * Created by xu.yi. on 2019/3/25.
  * 所有fragment的基类
  */
-public abstract class BaseFragment extends Fragment implements IBaseView {
+public abstract class BaseFragment extends Fragment implements IBaseView, DialogInterface.OnCancelListener {
     private ProgressDialog mLoading;
     private List<String> mViewModelNames;
     private Toast mToast;
@@ -65,6 +66,11 @@ public abstract class BaseFragment extends Fragment implements IBaseView {
     public void onDestroy() {
         hideLoading();
         super.onDestroy();
+    }
+
+    @Override
+    public void onCancel(final DialogInterface dialog) {
+        hideLoading();
     }
 
     @Override

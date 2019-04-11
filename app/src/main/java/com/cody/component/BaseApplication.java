@@ -11,6 +11,7 @@
 
 package com.cody.component;
 
+import com.cody.component.image.ImagePicker;
 import com.cody.http.cat.HttpCat;
 import com.cody.http.core.HttpCore;
 
@@ -24,6 +25,7 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        ImagePicker.init();
         HttpCore.init(this)
                 .withLog(true)
                 .withHttpCat(HttpCat.create(this))

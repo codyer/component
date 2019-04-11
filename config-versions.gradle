@@ -22,6 +22,7 @@ ext {
     dependencies = [
             //dependencies list
             "material"        : "com.google.android.material:material:1.1.0-alpha05",
+            "exifinterface"   : "androidx.exifinterface:exifinterface:1.1.0-alpha01",
             "appcompat"       : "androidx.appcompat:appcompat:1.1.0-alpha04",
             "legacy"          : "androidx.legacy:legacy-support-v4:1.0.0",
             "room-runtime"    : "androidx.room:room-runtime:2.1.0-alpha06",
@@ -40,8 +41,8 @@ ext {
             "logging"         : "com.squareup.okhttp3:logging-interceptor:3.12.0",
             "adapter-rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
             "rxandroid"       : "io.reactivex.rxjava2:rxandroid:2.1.0",
-            
-            "imagepicker"       : "'com.lzy.widget:imagepicker:0.6.1'",
+
+            "image-picker"    : "com.lzy.widget:imagepicker:0.6.1",
 
 // local maven
             "component"       : "com.github.codyer:component:component:${componentVersion}",

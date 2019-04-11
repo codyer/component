@@ -36,6 +36,7 @@ dependencies {
         implementation project(":bus-core")
         implementation project(":bind-banner")
         implementation project(":http-cat")
+        implementation project(":hybrid-core")
         annotationProcessor project(":bus-compiler")
         annotationProcessor project(":http-compiler")
     } else {//if (isApp || isJitPack)

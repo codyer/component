@@ -15,4 +15,5 @@ dependencies {
     api project(":http-core")
     api project(":bind-banner")
     api project(":bus-core")
+    api project(":hybrid-core")
 }

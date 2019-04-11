@@ -1,0 +1,20 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：strings.xml  模块：hybrid-core  项目：component
+  ~ 当前修改时间：2019年04月11日 15:54:00
+  ~ 上次修改时间：2019年04月11日 15:54:00
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <string name="refresh">刷新一下试试</string>
+    <string name="ignore">忽略本次错误</string>
+    <string name="html_loading">努力加载中&#8230;</string>
+    <string name="html_url_null">链接地址错误</string>
+    <string name="action_share">分享</string>
+
+    <string name="click_back_two_times">再按一次退出程序</string>
+</resources>

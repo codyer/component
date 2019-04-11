@@ -1,15 +1,15 @@
 /*
  * ************************************************************
  * 文件：CatApiOpen.java  模块：app  项目：component
- * 当前修改时间：2019年04月07日 10:48:03
- * 上次修改时间：2019年04月07日 10:48:02
+ * 当前修改时间：2019年04月11日 20:05:47
+ * 上次修改时间：2019年04月10日 15:58:25
  * 作者：Cody.yi   https://github.com/codyer
  *
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.component.lib.data;
+package com.cody.component.data;
 
 import com.cody.http.lib.annotation.Domain;
 

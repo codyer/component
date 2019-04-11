@@ -13,9 +13,10 @@ import com.cody.component.banner.adapter.BindingBannerAdapter;
 import com.cody.component.banner.data.BannerViewData;
 import com.cody.component.bean.TestDataBean;
 import com.cody.component.bus.BusDemoActivity;
+import com.cody.component.data.remote.CatApiOpen$DataSource;
+import com.cody.component.data.remote.CatHttpBin$DataSource;
 import com.cody.component.databinding.ActivityMainBannerBinding;
-import com.cody.component.lib.data.remote.CatApiOpen$DataSource;
-import com.cody.component.lib.data.remote.CatHttpBin$DataSource;
+import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.http.cat.HttpCat;
 import com.cody.http.core.HttpCore;
 import com.cody.http.core.callback.RequestCallback;
@@ -56,6 +57,9 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
                 break;
             case R.id.killCat:
                 HttpCore.getInstance().killHttpCat().done();
+                break;
+            case R.id.openHtml:
+                HtmlActivity.startHtml("test","https://www.baidu.com");
                 break;
         }
     }

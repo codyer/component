@@ -26,6 +26,7 @@
             <option value="$PROJECT_DIR$/http-core" />
             <option value="$PROJECT_DIR$/http-lib" />
             <option value="$PROJECT_DIR$/hybrid-core" />
+            <option value="$PROJECT_DIR$/image-pick" />
             <option value="$PROJECT_DIR$/util-core" />
           </set>
         </option>

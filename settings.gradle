@@ -5,7 +5,7 @@ include ':compiler'
 
 // components
 include ':http-cat'
-include ':app-core', ':bind-list', ':bind-adapter', ':handler-core', ':bind-data-lib'
+include ':app-core', ':bind-list', ':bind-adapter', ':handler-core',':image-pick', ':bind-data-lib'
 include ':hybrid-core','util-core'
 include ':bind-banner'
 include ':bus-core', ':bus-lib', ':bus-compiler'

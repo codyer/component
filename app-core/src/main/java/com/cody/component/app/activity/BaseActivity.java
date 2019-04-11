@@ -12,6 +12,7 @@
 package com.cody.component.app.activity;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -22,6 +23,7 @@ import com.cody.component.handler.BaseViewModel;
 import com.cody.component.handler.view.IBaseView;
 import com.cody.component.handler.IViewModel;
 import com.cody.component.handler.action.ViewAction;
+import com.cody.component.util.ActivityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +40,7 @@ import androidx.lifecycle.ViewModelProviders;
  * Created by xu.yi. on 2019/3/25.
  * 所有activity的基类
  */
-public abstract class BaseActivity extends AppCompatActivity implements IBaseView {
+public abstract class BaseActivity extends AppCompatActivity implements IBaseView, DialogInterface.OnCancelListener {
     private ProgressDialog mLoading;
     private List<String> mViewModelNames;
     private Toast mToast;
@@ -50,13 +52,25 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TAG = this.getClass().getName();
+        ActivityUtil.setCurrentActivity(this);
         onBaseReady(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ActivityUtil.setCurrentActivity(this);
     }
 
     @Override
     protected void onDestroy() {
         hideLoading();
         super.onDestroy();
+    }
+
+    @Override
+    public void onCancel(final DialogInterface dialog) {
+        hideLoading();
     }
 
     @Override

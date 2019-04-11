@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ *************************************************************
   ~ 文件：html_menu.xml  模块：hybrid-core  项目：component
   ~ 当前修改时间：2019年04月11日 16:33:22
@@ -16,5 +15,6 @@
         android:id="@+id/action_share"
         android:icon="@drawable/ic_share"
         android:title="@string/action_share"
+        android:visible="false"
         app:showAsAction="ifRoom" />
 </menu>

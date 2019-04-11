@@ -18,6 +18,7 @@ import java.io.Serializable;
  * 打开 html 需要的配置参数保存类
  */
 public class HtmlConfig implements Serializable {
+    private static final long serialVersionUID = 5525877332573712886L;
     private String mTitle;
     private String mDescription;
     private String mUrl;
