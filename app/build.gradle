@@ -28,13 +28,12 @@ android {
 }
 
 dependencies {
-    if (isRemote) {
+    if (isJitPack) {
         implementation rootProject.ext.dependencies["component"]
         annotationProcessor rootProject.ext.dependencies["compiler"]
-    } else if (isPushLocal) {
+    } else if (isLocalMaven) {
         implementation rootProject.ext.dependencies["local-component"]
-        annotationProcessor rootProject.ext.dependencies["bus-compiler"]
-        annotationProcessor rootProject.ext.dependencies["http-compiler"]
+        annotationProcessor rootProject.ext.dependencies["local-compiler"]
     } else {
         implementation project(":http-core")
         implementation project(":bus-core")

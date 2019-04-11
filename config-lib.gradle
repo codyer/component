@@ -11,7 +11,7 @@
 
 apply plugin: 'java-library'
 
-if (isPushLocal) {
+if (isLocalMaven) {
     apply from: "${project.rootDir}/config-local-maven.gradle"
 } else {
     apply plugin: 'com.github.dcendents.android-maven'
