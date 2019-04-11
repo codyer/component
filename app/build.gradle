@@ -28,19 +28,19 @@ android {
 }
 
 dependencies {
-    if (isJitPack) {
-        implementation rootProject.ext.dependencies["component"]
-        annotationProcessor rootProject.ext.dependencies["compiler"]
-    } else if (isLocalMaven) {
+    if (isLocalMaven) {
         implementation rootProject.ext.dependencies["local-component"]
         annotationProcessor rootProject.ext.dependencies["local-compiler"]
-    } else {
+    } else if (isComponent) {
         implementation project(":http-core")
         implementation project(":bus-core")
         implementation project(":bind-banner")
         implementation project(":http-cat")
         annotationProcessor project(":bus-compiler")
         annotationProcessor project(":http-compiler")
+    } else {//if (isApp || isJitPack)
+        implementation rootProject.ext.dependencies["component"]
+        annotationProcessor rootProject.ext.dependencies["compiler"]
     }
     implementation rootProject.ext.dependencies["constraintlayout"]
     implementation rootProject.ext.dependencies["material"]

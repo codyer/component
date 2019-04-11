@@ -119,7 +119,8 @@ ext {
     gitSHA = getGitSHA()
     jenkinsRevision = getJenkinsBuildCode()
     jenkinsName = getJenkinsName()
-    isComponent = isInScope("component")
     isJitPack = isInScope("remote")
+    isApp = isInScope("app")
+    isComponent = isInScope("component")
     isLocalMaven = isInScope("local")
 }
