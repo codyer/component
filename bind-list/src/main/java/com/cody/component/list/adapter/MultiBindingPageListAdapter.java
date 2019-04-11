@@ -14,14 +14,15 @@ package com.cody.component.list.adapter;
 import com.cody.component.adapter.list.BindingPageListAdapter;
 import com.cody.component.adapter.list.OnBindingItemClickListener;
 import com.cody.component.list.BR;
-import com.cody.component.list.data.ItemMultiViewData;
 import com.cody.component.list.R;
+import com.cody.component.list.data.ItemMultiViewData;
 import com.cody.component.list.define.Operation;
 import com.cody.component.list.define.RequestStatus;
 import com.cody.component.list.exception.MissingOverrideBaseFunction;
 import com.cody.component.list.listener.OnRetryListener;
 
 import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 
 /**
@@ -31,6 +32,14 @@ import androidx.lifecycle.LifecycleOwner;
  */
 public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> extends BindingPageListAdapter<VD> {
     final private static int HEADER_OR_FOOTER_VIEW_TYPE = -1;
+    final private VD mHeaderOrFooterViewData = initHeaderOrFooterViewData();
+
+    @NonNull
+    /**
+     * 构建一个viewData 提供给头部或者底部显示
+     */
+    abstract protected VD initHeaderOrFooterViewData();
+
     private Operation mOperation;
     private RequestStatus mRequestStatus;
     private OnRetryListener mOnRetryListener;
@@ -46,6 +55,7 @@ public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> 
         super.setItemClickListener((parent, view, position, id) -> {
             if (view.getId() == R.id.retryButton && mOnRetryListener != null) {
                 mOnRetryListener.retry();
+                notifyItemChanged(getItemCount() - 1);
             } else if (itemClickListener != null) {
                 itemClickListener.onItemClick(parent, view, position, id);
             }
@@ -64,6 +74,7 @@ public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> 
      */
     final public void setRequestStatus(RequestStatus newState) {
         RequestStatus oldState = mRequestStatus;
+        mHeaderOrFooterViewData.setRequestStatus(newState);
         boolean hadHeader = hasHeaderItem();
         boolean hadFooter = hasFooterItem();
         mRequestStatus = newState;
@@ -116,6 +127,14 @@ public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> 
             return HEADER_OR_FOOTER_VIEW_TYPE;
         }
         return super.getItemViewType(position);
+    }
+
+    @Override
+    public VD getItem(final int position) {
+        if ((hasFooterItem() && position == getItemCount() - 1) || (hasHeaderItem() && position == 0)) {
+            return mHeaderOrFooterViewData;
+        }
+        return super.getItem(position);
     }
 
     @Override

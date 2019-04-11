@@ -1,8 +1,8 @@
 /*
  * ************************************************************
- * 文件：build.gradle  模块：bind-ui  项目：component
- * 当前修改时间：2019年04月05日 17:31:57
- * 上次修改时间：2019年04月05日 13:09:29
+ * 文件：build.gradle  模块：hybrid-core  项目：component
+ * 当前修改时间：2019年04月11日 11:39:17
+ * 上次修改时间：2019年04月11日 09:54:17
  * 作者：Cody.yi   https://github.com/codyer
  *
  * Copyright (c) 2019
@@ -11,7 +11,9 @@
 
 apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
-    api project(":bind-list")
+    api project(":app-core")
+    api project(":util-core")
     implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
 }

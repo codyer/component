@@ -13,8 +13,8 @@ package com.cody.component.handler;
 
 
 import com.cody.component.handler.action.ViewAction;
+import com.cody.component.lib.safe.SafeMutableLiveData;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 /**
@@ -22,7 +22,7 @@ import androidx.lifecycle.ViewModel;
  * 封装基本逻辑
  */
 public class BaseViewModel extends ViewModel implements IViewModel {
-    private final MutableLiveData<ViewAction> mViewActionLiveData;
+    private final SafeMutableLiveData<ViewAction> mViewActionLiveData;
 
     @Override
     protected void onCleared() {
@@ -31,7 +31,7 @@ public class BaseViewModel extends ViewModel implements IViewModel {
     }
 
     public BaseViewModel() {
-        mViewActionLiveData = new MutableLiveData<>();
+        mViewActionLiveData = new SafeMutableLiveData<>();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class BaseViewModel extends ViewModel implements IViewModel {
     }
 
     @Override
-    final public MutableLiveData<ViewAction> getActionLiveData() {
+    final public SafeMutableLiveData<ViewAction> getActionLiveData() {
         return mViewActionLiveData;
     }
 //

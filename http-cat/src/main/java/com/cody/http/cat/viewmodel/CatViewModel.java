@@ -12,11 +12,11 @@
 package com.cody.http.cat.viewmodel;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
 import com.cody.component.handler.BaseViewModel;
+import com.cody.component.lib.safe.SafeMutableLiveData;
 import com.cody.http.cat.HttpCat;
 import com.cody.http.cat.db.HttpCatDatabase;
 import com.cody.http.cat.db.data.ItemHttpData;
@@ -30,7 +30,7 @@ public class CatViewModel extends BaseViewModel {
 
     private final LiveData<List<ItemHttpData>> mAllRecordLiveData;
 
-    private LiveData<ItemHttpData> mRecordLiveData = new MutableLiveData<>();
+    private LiveData<ItemHttpData> mRecordLiveData = new SafeMutableLiveData<>();
 
     private static final int LIMIT = 300;
 

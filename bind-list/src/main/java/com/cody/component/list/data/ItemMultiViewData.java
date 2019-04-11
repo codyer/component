@@ -12,8 +12,9 @@
 package com.cody.component.list.data;
 
 import com.cody.component.lib.data.ItemViewData;
+import com.cody.component.lib.safe.SafeMutableLiveData;
+import com.cody.component.list.define.RequestStatus;
 
-import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by xu.yi. on 2019/4/8.
@@ -21,24 +22,31 @@ import androidx.lifecycle.MutableLiveData;
  */
 public class ItemMultiViewData extends ItemViewData {
     private static final long serialVersionUID = 6101620960031035326L;
-    final private MutableLiveData<Boolean> mNoMoreItem = new MutableLiveData<>();
-    final private MutableLiveData<Boolean> mError = new MutableLiveData<>();
-    final private MutableLiveData<Boolean> mLoading = new MutableLiveData<>();
-    final private MutableLiveData<String> mErrorMessage = new MutableLiveData<>();
+    final private SafeMutableLiveData<Boolean> mNoMoreItem = new SafeMutableLiveData<>(false);
+    final private SafeMutableLiveData<Boolean> mError = new SafeMutableLiveData<>(false);
+    final private SafeMutableLiveData<Boolean> mLoading = new SafeMutableLiveData<>(false);
+    final private SafeMutableLiveData<String> mErrorMessage = new SafeMutableLiveData<>("");
 
-    public MutableLiveData<Boolean> getNoMoreItem() {
+    public SafeMutableLiveData<Boolean> getNoMoreItem() {
         return mNoMoreItem;
     }
 
-    public MutableLiveData<Boolean> getError() {
+    public SafeMutableLiveData<Boolean> getError() {
         return mError;
     }
 
-    public MutableLiveData<Boolean> getLoading() {
+    public SafeMutableLiveData<Boolean> getLoading() {
         return mLoading;
     }
 
-    public MutableLiveData<String> getErrorMessage() {
+    public SafeMutableLiveData<String> getErrorMessage() {
         return mErrorMessage;
+    }
+
+    public void setRequestStatus(final RequestStatus status) {
+        mNoMoreItem.postValue(status.isEmpty());
+        mError.postValue(status.isError());
+        mLoading.postValue(status.isLoading());
+        mErrorMessage.postValue(status.getMessage());
     }
 }

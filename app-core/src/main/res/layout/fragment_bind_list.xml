@@ -25,7 +25,7 @@
 
         <variable
             name="viewData"
-            type="com.cody.component.list.data.StubViewData" />
+            type="com.cody.component.list.data.MaskViewData" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -45,7 +45,7 @@
 
             <include
                 android:id="@+id/stubView"
-                layout="@layout/stub_view"
+                layout="@layout/mask_view"
                 bind:onClickListener="@{onClickListener}"
                 bind:viewData="@{viewData}" />
         </FrameLayout>

@@ -11,6 +11,5 @@
 
 apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
-    api rootProject.ext.dependencies["lifecycle"]
     api project(':bind-data-lib')
 }

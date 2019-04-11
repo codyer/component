@@ -12,7 +12,8 @@
 package com.cody.component.list.viewmodel;
 
 import com.cody.component.handler.BaseViewModel;
-import com.cody.component.list.data.StubViewData;
+import com.cody.component.lib.safe.SafeMutableLiveData;
+import com.cody.component.list.data.MaskViewData;
 import com.cody.component.list.factory.MultiDataSourceFactory;
 import com.cody.component.list.source.DataSourceWrapper;
 import com.cody.component.list.listener.OnListListener;
@@ -25,7 +26,6 @@ import com.cody.component.list.exception.ParameterNullPointerException;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
@@ -36,12 +36,12 @@ import androidx.paging.PagedList;
  */
 public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean> extends BaseViewModel
         implements OnRequestPageListener<ItemBean>, Function<ItemBean, IVD>, OnListListener {
-    private StubViewData mStubViewData;
+    private MaskViewData mMaskViewData = new MaskViewData();
     private DataSourceWrapper<ItemBean> mWrapper;
     private LiveData<PagedList<IVD>> mPagedList = new LivePagedListBuilder<>(initSourceFactory(), initPageListConfig()).build();
 
-    public StubViewData getStubViewData() {
-        return mStubViewData;
+    public MaskViewData getMaskViewData() {
+        return mMaskViewData;
     }
 
     public LiveData<PagedList<IVD>> getPagedList() {
@@ -49,7 +49,7 @@ public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean
     }
 
     @Override
-    public MutableLiveData<Operation> getOperation() {
+    public SafeMutableLiveData<Operation> getOperation() {
         if (mWrapper != null) {
             return mWrapper.getOperation();
         }
@@ -57,7 +57,7 @@ public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean
     }
 
     @Override
-    public MutableLiveData<RequestStatus> getRequestStatus() {
+    public SafeMutableLiveData<RequestStatus> getRequestStatus() {
         if (mWrapper != null) {
             return mWrapper.getRequestStatus();
         }

@@ -25,6 +25,8 @@
             <option value="$PROJECT_DIR$/http-compiler" />
             <option value="$PROJECT_DIR$/http-core" />
             <option value="$PROJECT_DIR$/http-lib" />
+            <option value="$PROJECT_DIR$/hybrid-core" />
+            <option value="$PROJECT_DIR$/util-core" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

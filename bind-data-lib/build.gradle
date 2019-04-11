@@ -9,8 +9,9 @@
  * ************************************************************
  */
 
-apply from:  "${project.rootDir}/config-lib.gradle"
+apply from:  "${project.rootDir}/config-aar.gradle"
 
 dependencies {
+    api rootProject.ext.dependencies["lifecycle"]
     api rootProject.ext.dependencies["gson"]
 }

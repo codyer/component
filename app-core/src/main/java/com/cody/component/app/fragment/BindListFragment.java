@@ -16,7 +16,7 @@ import android.os.Bundle;
 import com.cody.component.adapter.list.OnBindingItemClickListener;
 import com.cody.component.app.IBaseListView;
 import com.cody.component.app.R;
-import com.cody.component.list.data.StubViewData;
+import com.cody.component.list.data.MaskViewData;
 import com.cody.component.app.databinding.FragmentBindListBinding;
 import com.cody.component.list.adapter.MultiBindingPageListAdapter;
 import com.cody.component.list.data.ItemMultiViewData;
@@ -26,7 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public abstract class BindListFragment<IVD extends ItemMultiViewData> extends SingleBindFragment<FragmentBindListBinding, StubViewData> implements IBaseListView<IVD>, OnBindingItemClickListener {
+public abstract class BindListFragment<IVD extends ItemMultiViewData> extends SingleBindFragment<FragmentBindListBinding, MaskViewData> implements IBaseListView<IVD>, OnBindingItemClickListener {
     private MultiBindingPageListAdapter<IVD> mListAdapter;
 
 /*    @Override
@@ -42,8 +42,8 @@ public abstract class BindListFragment<IVD extends ItemMultiViewData> extends Si
     }
 
     @Override
-    protected StubViewData getViewData() {
-        return getListViewModel().getStubViewData();
+    protected MaskViewData getViewData() {
+        return getListViewModel().getMaskViewData();
     }
 
     @Override
@@ -57,16 +57,18 @@ public abstract class BindListFragment<IVD extends ItemMultiViewData> extends Si
         getBinding().swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
         getBinding().swipeRefreshLayout.setOnRefreshListener(() -> getListViewModel().refresh());
         getListViewModel().getRequestStatus().observe(this, requestStatus -> {
-            mListAdapter.setRequestStatus(requestStatus);
-            if (requestStatus.isError()) {
-                getViewData().failedView(requestStatus.getMessage());
-            } else if (requestStatus.isLoaded()) {
-                if (mListAdapter.getItemCount() == 0) {
+            if (mListAdapter.getItemCount() == 0) {//本来为空
+                if (requestStatus.isError()) {
+                    getViewData().failedView(requestStatus.getMessage());
+                } else if (requestStatus.isEmpty()) {
                     getViewData().noContentView();
                 } else {
-                    getViewData().noStubView();
+                    getViewData().hideMaskView();
                 }
+            } else {// 本来有数据
+                getViewData().hideMaskView();
             }
+            mListAdapter.setRequestStatus(requestStatus);
         });
         getListViewModel().getOperation().observe(this, operation -> mListAdapter.setOperation(operation));
         getListViewModel().getPagedList().observe(this, items -> mListAdapter.submitList(items));

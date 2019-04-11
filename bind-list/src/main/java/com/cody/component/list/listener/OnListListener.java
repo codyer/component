@@ -11,18 +11,17 @@
 
 package com.cody.component.list.listener;
 
+import com.cody.component.lib.safe.SafeMutableLiveData;
 import com.cody.component.list.define.Operation;
 import com.cody.component.list.define.RequestStatus;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by xu.yi. on 2019/4/9.
  * 列表通用监听
  */
 public interface OnListListener extends OnRefreshListener, OnRetryListener {
-    MutableLiveData<Operation> getOperation();
+    SafeMutableLiveData<Operation> getOperation();
 
-    MutableLiveData<RequestStatus> getRequestStatus();
+    SafeMutableLiveData<RequestStatus> getRequestStatus();
 }

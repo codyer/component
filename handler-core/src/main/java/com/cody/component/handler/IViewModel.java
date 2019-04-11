@@ -12,16 +12,15 @@
 package com.cody.component.handler;
 
 import com.cody.component.handler.action.ViewAction;
+import com.cody.component.lib.safe.SafeMutableLiveData;
 import com.cody.component.lib.view.IView;
-
-import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by xu.yi. on 2019/3/25.
  * p-gbb-android
  */
 public interface IViewModel extends IView {
-    MutableLiveData<ViewAction> getActionLiveData();
+    SafeMutableLiveData<ViewAction> getActionLiveData();
 
     /**
      * 处理其他action，扩展用

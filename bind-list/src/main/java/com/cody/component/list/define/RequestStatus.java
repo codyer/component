@@ -11,13 +11,17 @@
 
 package com.cody.component.list.define;
 
+import android.text.TextUtils;
+
+import androidx.annotation.NonNull;
+
 /**
  * Created by xu.yi. on 2019/4/8.
  * 请求数据的的状态
  */
 public class RequestStatus {
 
-    public static RequestStatus error(String message) {
+    public static RequestStatus error(@NonNull String message) {
         return new RequestStatus(Status.FAILED, message);
     }
 
@@ -25,27 +29,33 @@ public class RequestStatus {
         return new RequestStatus(Status.SUCCESS);
     }
 
+    public static RequestStatus empty() {
+        return new RequestStatus(Status.EMPTY);
+    }
+
     public static RequestStatus loading() {
         return new RequestStatus(Status.RUNNING);
     }
 
     private Status mStatus;
+    @NonNull
     private String mMessage;
 
     public RequestStatus(Status status) {
         mStatus = status;
     }
 
-    public RequestStatus(Status status, String message) {
+    public RequestStatus(Status status, @NonNull String message) {
         mStatus = status;
         mMessage = message;
     }
 
+    @NonNull
     public String getMessage() {
         return mMessage;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(@NonNull String message) {
         mMessage = message;
     }
 
@@ -67,5 +77,9 @@ public class RequestStatus {
 
     public boolean isLoaded() {
         return mStatus == Status.SUCCESS;
+    }
+
+    public boolean isEmpty() {
+        return mStatus == Status.EMPTY;
     }
 }

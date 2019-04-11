@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>JsBridge</title>
+    <meta name="author" content="cody">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1, target-densitydpi=medium-dpi, user-scalable=no">
+    <meta property="og:site_name" content="JsBridge"/>
+    <script src="JsBridge.js" type="text/javascript"></script>
+
+    <style>
+        .entry{
+        -webkit-padding-start: 30px;
+        }
+        .entry li {
+        line-height: 29px;
+        margin-left: -10px;
+        }
+        .entry li div{
+        margin-right: 10px;
+        padding-left: 8px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        background: #222222;
+        color: white;
+        word-break: break-all;
+        -ms-word-wrap: break-word;
+        word-wrap: break-word;
+        line-height: 15px;
+        font-size: 10pt;
+        }
+        .entry li button{
+        margin-top: 5px;
+        width: 60px;
+        height: 35px;
+        color: #111111;
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+<div class="blog-header">
+    <h3>JsBridge调用native测试列表</h3>
+</div>
+<ul class="entry">
+    <li>
+        Toast弹出<br/>
+        代码：<br/>
+        <div>
+            JsBridge.callNative('JsHandlerCommonImpl','showToast',{'message':'我是Js调起的Toast'},function(msg){alert(JSON.stringify(msg))}));
+        </div>
+        <button onclick="JsBridge.callNative('JsHandlerCommonImpl','showToast',{'message':'我是Js调起的Toast'},function(msg){alert(JSON.stringify(msg))});">
+            测试
+        </button>
+    </li>
+    <li>
+        埋点信息 getStatInfo<br/>
+        代码：<br/>
+        <div>
+            JsBridge.callNative('JsHandlerCommonImpl','getStatInfo',{},function(msg){alert(JSON.stringify(msg))});
+        </div>
+        <button onclick="JsBridge.callNative('JsHandlerCommonImpl','getStatInfo',{},function(msg){alert(JSON.stringify(msg))});">
+            测试
+        </button>
+    </li>
+    <br/>
+    <li>
+        登录 startActivityForResult<br/>
+        代码：<br/>
+        <div>
+            JsBridge.callNative('JsHandlerImpl','login',{},function(msg){alert(JSON.stringify(msg))});
+        </div>
+        <button onclick="JsBridge.callNative('JsHandlerImpl','login',{},function(msg){alert(JSON.stringify(msg))});">
+            测试
+        </button>
+    </li>
+    <br/>
+    <li>
+        获取AppName<br/>
+        代码：<br/>
+        <div>
+            JsBridge.callNative('JsHandlerCommonImpl','getAppName',{},function(msg){alert(JSON.stringify(msg))});
+        </div>
+        <button onclick="JsBridge.callNative('JsHandlerCommonImpl','getAppName',{},function(msg){alert(JSON.stringify(msg))});">
+            测试
+        </button>
+    </li>
+    <br/>
+    <li>
+        延迟3s执行native方法<br/>
+        代码：<br/>
+        <div>
+            JsBridge.callNative('JsHandlerImpl','delayExecuteTask',{},function(msg){alert(JSON.stringify(msg))});
+        </div>
+        <button onclick="JsBridge.callNative('JsHandlerImpl','delayExecuteTask',{},function(msg){alert(JSON.stringify(msg))});">
+            测试
+        </button>
+    </li>
+    <br/>
+    <li>
+        获取IMSI<br/>
+        代码：<br/>
+        <div>
+            JsBridge.callNative('JsHandlerCommonImpl','getIMSI',{},function(msg){alert(JSON.stringify(msg))});
+        </div>
+        <button onclick="JsBridge.callNative('JsHandlerCommonImpl','getIMSI',{},function(msg){alert(JSON.stringify(msg))});">
+            测试
+        </button>
+    </li>
+    <br/>
+    <li>
+        获取当前设备OsSDK版本<br/>
+        代码：<br/>
+        <div>
+            JsBridge.callNative('JsHandlerCommonImpl','getOsSdk',{},function(result){alert(JSON.stringify(result))});
+        </div>
+        <button onclick="JsBridge.callNative('JsHandlerCommonImpl','getOsSdk',{},function(result){alert(JSON.stringify(result))});">
+            测试
+        </button>
+    </li>
+    <br/>
+    <br/>
+    <li>
+        通过异步来处理耗时操作<br/>
+        代码：<br/>
+        <div>
+            JsBridge.callNative('JsHandlerImpl','performTimeConsumeTask',{},function(result){alert(JSON.stringify(result))});
+        </div>
+        <button onclick="JsBridge.callNative('JsHandlerImpl','performTimeConsumeTask',{},function(result){alert(JSON.stringify(result))});">
+            测试
+        </button>
+    </li>
+    <li>
+        关闭Activity<br/>
+        代码：<br/>
+        <div>
+            JsBridge.callNative('JsHandlerCommonImpl','finish',{},function(result){alert(JSON.stringify(result))});
+        </div>
+        <button onclick="JsBridge.callNative('JsHandlerCommonImpl','finish',{},function(result){alert(JSON.stringify(result))});">
+            测试
+        </button>
+    </li>
+</ul>
+</body>
+</html>

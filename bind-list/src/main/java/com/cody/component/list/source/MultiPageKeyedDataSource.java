@@ -11,6 +11,7 @@
 
 package com.cody.component.list.source;
 
+import com.cody.component.lib.safe.SafeMutableLiveData;
 import com.cody.component.list.callback.PageDataCallBack;
 import com.cody.component.list.define.Operation;
 import com.cody.component.list.define.PageInfo;
@@ -24,7 +25,6 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
 /**
@@ -34,8 +34,8 @@ import androidx.paging.PageKeyedDataSource;
  */
 public class MultiPageKeyedDataSource<ItemBean> extends PageKeyedDataSource<PageInfo, ItemBean>
         implements OnListListener {
-    private MutableLiveData<RequestStatus> mRequestStatus = new MutableLiveData<>();
-    private MutableLiveData<Operation> mOperation = new MutableLiveData<>();
+    private SafeMutableLiveData<RequestStatus> mRequestStatus = new SafeMutableLiveData<>();
+    private SafeMutableLiveData<Operation> mOperation = new SafeMutableLiveData<>();
     private OnRequestPageListener<ItemBean> mOnRequestPageListener;
     private OnRetryListener mOnRetryListener;
     private OnRefreshListener mOnRefreshListener;
@@ -46,12 +46,12 @@ public class MultiPageKeyedDataSource<ItemBean> extends PageKeyedDataSource<Page
     }
 
     @Override
-    public MutableLiveData<RequestStatus> getRequestStatus() {
+    public SafeMutableLiveData<RequestStatus> getRequestStatus() {
         return mRequestStatus;
     }
 
     @Override
-    public MutableLiveData<Operation> getOperation() {
+    public SafeMutableLiveData<Operation> getOperation() {
         return mOperation;
     }
 
@@ -83,7 +83,7 @@ public class MultiPageKeyedDataSource<ItemBean> extends PageKeyedDataSource<Page
             @Override
             public void onSuccess(@NonNull List<ItemBean> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
                 callback.onResult(data, prePageKey, nextPageKey);
-                mRequestStatus.postValue(RequestStatus.loaded());
+                mRequestStatus.postValue(data.isEmpty() ? RequestStatus.empty() : RequestStatus.loaded());
                 mOnRetryListener = null;
             }
 
@@ -104,7 +104,7 @@ public class MultiPageKeyedDataSource<ItemBean> extends PageKeyedDataSource<Page
             @Override
             public void onSuccess(@NonNull List<ItemBean> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
                 callback.onResult(data, prePageKey);
-                mRequestStatus.postValue(RequestStatus.loaded());
+                mRequestStatus.postValue(data.isEmpty() ? RequestStatus.empty() : RequestStatus.loaded());
                 mOnRetryListener = null;
             }
 
@@ -125,7 +125,7 @@ public class MultiPageKeyedDataSource<ItemBean> extends PageKeyedDataSource<Page
             @Override
             public void onSuccess(@NonNull List<ItemBean> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
                 callback.onResult(data, nextPageKey);
-                mRequestStatus.postValue(RequestStatus.loaded());
+                mRequestStatus.postValue(data.isEmpty() ? RequestStatus.empty() : RequestStatus.loaded());
                 mOnRetryListener = null;
             }
 

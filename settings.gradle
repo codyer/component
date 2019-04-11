@@ -1,6 +1,13 @@
 include ':app'
-include ':bind-data-lib', ':bind-adapter', ':bind-list', ':bind-banner', ':handler-core', ':app-core'
-include ':bus-lib', ':bus-core', ':bus-compiler'
-include ':http-lib', ':http-core', ':http-compiler'
+include ':component'
+// holder
+include ':compiler'
+
+// components
 include ':http-cat'
-include ':component',':compiler'
+include ':app-core', ':bind-list', ':bind-adapter', ':handler-core', ':bind-data-lib'
+include ':hybrid-core','util-core'
+include ':bind-banner'
+include ':bus-core', ':bus-lib', ':bus-compiler'
+include ':http-core', ':http-lib', ':http-compiler'
+

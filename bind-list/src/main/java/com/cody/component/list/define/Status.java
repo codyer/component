@@ -18,5 +18,6 @@ package com.cody.component.list.define;
 public enum  Status {
     RUNNING,
     SUCCESS,
-    FAILED
+    FAILED,
+    EMPTY
 }
