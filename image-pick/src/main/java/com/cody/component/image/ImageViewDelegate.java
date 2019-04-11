@@ -116,14 +116,19 @@ public class ImageViewDelegate implements IImageViewListener {
         if (ActivityUtil.isActivityDestroyed()) return;
         Activity activity = ActivityUtil.getCurrentActivity();
         if (activity == null) return;
+        String[] choice = {activity.getString(R.string.from_photos), activity.getString(R.string.from_camera)};
         AlertDialog alertDialog = new AlertDialog.Builder(activity)
                 .setCancelable(true)
-                .setNegativeButton(R.string.from_photos, (dialog, which) -> ActivityUtil.navigateToForResult(mContext, ImageGridActivity.class, REQUEST_CODE_SELECT))
-                .setPositiveButton(R.string.from_camera, (dialog, which) -> {
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
-                    ActivityUtil.navigateToForResult(mContext, ImageGridActivity.class,
-                            REQUEST_CODE_SELECT, bundle);
+                .setSingleChoiceItems(choice, 0, (dialog, which) -> {
+                    if (which == 0) {
+                        ActivityUtil.navigateToForResult(mContext, ImageGridActivity.class, REQUEST_CODE_SELECT);
+                    } else {
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean(ImageGridActivity.EXTRAS_TAKE_PICKERS, true); // 是否是直接打开相机
+                        ActivityUtil.navigateToForResult(mContext, ImageGridActivity.class,
+                                REQUEST_CODE_SELECT, bundle);
+                    }
+                    dialog.dismiss();
                 }).create();
         if (activity instanceof DialogInterface.OnCancelListener) {
             alertDialog.setOnCancelListener((DialogInterface.OnCancelListener) activity);

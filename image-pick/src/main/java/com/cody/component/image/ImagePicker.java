@@ -55,8 +55,8 @@ public class ImagePicker {
                                  int height) {
             if (TextUtils.isEmpty(path)) return;
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .transform(new CircleCrop())
+//                    .centerCrop()
+//                    .transform(new CircleCrop())
 //                    .placeholder(placeholder)
 //                    .error(error)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -75,8 +75,8 @@ public class ImagePicker {
         public void displayImagePreview(final Activity activity, final String path, final ImageView imageView, final int width, final int height) {
             if (TextUtils.isEmpty(path)) return;
             RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .transform(new CircleCrop())
+//                    .centerCrop()
+//                    .transform(new CircleCrop())
 //                    .placeholder(placeholder)
 //                    .error(error)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
