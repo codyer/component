@@ -9,4 +9,4 @@
  * ************************************************************
  */
 
-apply from:  '../config-lib.gradle'
+apply from:  "${project.rootDir}/config-lib.gradle"

@@ -12,7 +12,7 @@
 apply plugin: 'java-library'
 
 if (isPushLocal) {
-    apply from: '../config-local-maven.gradle'
+    apply from: "${project.rootDir}/config-local-maven.gradle"
 } else {
     apply plugin: 'com.github.dcendents.android-maven'
     group = 'com.github.codyer'
