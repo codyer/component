@@ -1,19 +1,19 @@
 /*
  * ************************************************************
- * 文件：EventInterfaceProcessor.java  模块：compiler  项目：CleanFramework
- * 当前修改时间：2019年04月02日 15:13:47
- * 上次修改时间：2019年04月02日 15:13:46
+ * 文件：EventInterfaceProcessor.java  模块：bus-compiler  项目：component
+ * 当前修改时间：2019年04月11日 08:57:46
+ * 上次修改时间：2019年04月11日 08:54:12
  * 作者：Cody.yi   https://github.com/codyer
  *
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.live.event.bus.compiler;
+package com.cody.component.bus.compiler;
 
-import com.cody.live.event.bus.compiler.bean.EventBean;
-import com.cody.live.event.bus.compiler.bean.EventInfoBean;
-import com.cody.live.event.bus.compiler.bean.EventScopeBean;
+import com.cody.component.bus.compiler.bean.EventBean;
+import com.cody.component.bus.compiler.bean.EventInfoBean;
+import com.cody.component.bus.compiler.bean.EventScopeBean;
 import com.cody.component.bus.lib.IEvent;
 import com.cody.component.bus.lib.annotation.AutoGenerate;
 import com.cody.component.bus.lib.annotation.Event;

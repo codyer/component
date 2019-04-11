@@ -1,15 +1,15 @@
 /*
  * ************************************************************
  * 文件：DataSourceInfoBean.java  模块：http-compiler  项目：component
- * 当前修改时间：2019年04月06日 19:25:39
- * 上次修改时间：2019年04月03日 18:59:21
+ * 当前修改时间：2019年04月11日 08:59:17
+ * 上次修改时间：2019年04月11日 08:54:12
  * 作者：Cody.yi   https://github.com/codyer
  *
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.live.event.bus.compiler.bean;
+package com.cody.component.http.compiler.bean;
 
 import com.squareup.javapoet.TypeName;
 

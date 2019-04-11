@@ -106,34 +106,10 @@ def getJenkinsBuildCode() {
  * tag or branch contains compiler
  * @return
  */
-def boolean isCompiler() {
-    return getGitTag().contains("compiler") || getGitBranch().contains("compiler")
+def boolean isInScope(String scope) {
+    return getGitTag().contains(scope) || getGitBranch().contains(scope)
 }
 
-/**
- * tag or branch contains component
- */
-def boolean isComponent() {
-    return getGitTag().contains("component") || getGitBranch().contains("component")
-}
-
-/**
- * tag or branch contains remote
- * true：依赖远程仓库
- * false：依赖本地project
- */
-def boolean isRemote() {
-    return getGitTag().contains("remote") || getGitBranch().contains("remote")
-}
-
-/**
- * tag or branch contains local
- * true：推送到本地仓库
- * false：推送到远程仓库
- */
-def boolean isPushLocal() {
-    return getGitTag().contains("local") || getGitBranch().contains("local")
-}
 /**
  * 定义几个变量，在build.gradle里面引用
  */
@@ -143,8 +119,8 @@ ext {
     gitSHA = getGitSHA()
     jenkinsRevision = getJenkinsBuildCode()
     jenkinsName = getJenkinsName()
-    isCompiler = isCompiler()
-    isComponent = isComponent()
-    isRemote = isRemote()
-    isPushLocal = isPushLocal()
+    isCompiler = isInScope("compiler")
+    isComponent = isInScope("component")
+    isRemote = isInScope("remote")
+    isPushLocal = isInScope("local")
 }

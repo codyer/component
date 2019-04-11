@@ -9,7 +9,7 @@
  * ************************************************************
  */
 
-package com.cody.live.event.bus.compiler.bean;
+package com.cody.component.bus.compiler.bean;
 
 import java.util.ArrayList;
 

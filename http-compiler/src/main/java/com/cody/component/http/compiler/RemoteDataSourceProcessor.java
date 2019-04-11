@@ -1,23 +1,23 @@
 /*
  * ************************************************************
  * 文件：RemoteDataSourceProcessor.java  模块：http-compiler  项目：component
- * 当前修改时间：2019年04月06日 16:38:35
- * 上次修改时间：2019年04月03日 18:59:21
+ * 当前修改时间：2019年04月11日 08:58:38
+ * 上次修改时间：2019年04月11日 08:54:12
  * 作者：Cody.yi   https://github.com/codyer
  *
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.live.event.bus.compiler;
+package com.cody.component.http.compiler;
 
+import com.cody.component.http.compiler.bean.DataSourceInfoBean;
+import com.cody.component.http.compiler.bean.DomainBean;
+import com.cody.component.http.compiler.bean.MethodBean;
+import com.cody.component.http.compiler.bean.ParameterBean;
 import com.cody.http.lib.annotation.Domain;
 import com.cody.http.lib.exception.GenerateDataSourceException;
 import com.cody.http.lib.exception.InvalidDefineException;
-import com.cody.live.event.bus.compiler.bean.MethodBean;
-import com.cody.live.event.bus.compiler.bean.DomainBean;
-import com.cody.live.event.bus.compiler.bean.DataSourceInfoBean;
-import com.cody.live.event.bus.compiler.bean.ParameterBean;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;

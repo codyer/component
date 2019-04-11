@@ -1,15 +1,15 @@
 /*
  * ************************************************************
  * 文件：Util.java  模块：http-compiler  项目：component
- * 当前修改时间：2019年04月07日 07:05:12
- * 上次修改时间：2019年04月07日 06:54:50
+ * 当前修改时间：2019年04月11日 08:58:38
+ * 上次修改时间：2019年04月07日 18:02:21
  * 作者：Cody.yi   https://github.com/codyer
  *
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.live.event.bus.compiler;
+package com.cody.component.http.compiler;
 
 import com.google.common.base.Joiner;
 import com.squareup.javapoet.AnnotationSpec;
