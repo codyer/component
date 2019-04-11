@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：IBaseView.java  模块：handler-lib  项目：component
+ * 文件：IBaseView.java  模块：handler-core  项目：component
  * 当前修改时间：2019年04月10日 14:36:04
  * 上次修改时间：2019年04月10日 14:26:59
  * 作者：Cody.yi   https://github.com/codyer

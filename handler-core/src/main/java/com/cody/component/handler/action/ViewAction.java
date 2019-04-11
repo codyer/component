@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：ViewAction.java  模块：handler-lib  项目：component
+ * 文件：ViewAction.java  模块：handler-core  项目：component
  * 当前修改时间：2019年04月10日 14:36:20
  * 上次修改时间：2019年04月06日 16:24:06
  * 作者：Cody.yi   https://github.com/codyer

@@ -1,0 +1,15 @@
+/*
+ * ************************************************************
+ * 文件：build.gradle  模块：component  项目：component
+ * 当前修改时间：2019年04月11日 08:53:27
+ * 上次修改时间：2019年04月11日 08:43:03
+ * 作者：Cody.yi   https://github.com/codyer
+ *
+ * Copyright (c) 2019
+ * ************************************************************
+ */
+apply from:  "${project.rootDir}/config-compiler.gradle"
+dependencies {
+    implementation project(':bus-compiler')
+    implementation project(':http-compiler')
+}
