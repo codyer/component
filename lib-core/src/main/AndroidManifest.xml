@@ -1,0 +1,13 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：AndroidManifest.xml  模块：lib-core  项目：component
+  ~ 当前修改时间：2019年04月12日 09:21:20
+  ~ 上次修改时间：2019年04月11日 14:41:04
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<manifest package="com.cody.component.lib" />

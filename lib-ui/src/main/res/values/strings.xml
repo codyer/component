@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *************************************************************
+  ~ 文件：strings.xml  模块：lib-ui  项目：component
+  ~ 当前修改时间：2019年04月12日 15:48:56
+  ~ 上次修改时间：2019年04月12日 13:10:23
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-ui
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <string name="ui_str_loading">努力加载中&#8230;</string>
+    <string name="ui_str_please_input_username">请输入用户名</string>
+    <string name="ui_str_please_input_password">请输入登录密码</string>
+    <string name="ui_str_login">登 录</string>
+    <string name="ui_str_login_or_register">登录/注册</string>
+    <string name="ui_str_quick_register">快速注册</string>
+    <string name="ui_str_forget_password">忘记密码?</string>
+    <string name="ui_str_skip">跳过</string>
+    <string name="ui_str_next">下一步</string>
+    <string name="ui_str_edit">编辑</string>
+    <string name="ui_str_done">完成</string>
+    <string name="ui_str_select_all">全选</string>
+    <string name="ui_str_action_setting">设置</string>
+    <string name="ui_str_action_message">消息</string>
+    <string name="ui_str_all">全部</string>
+</resources>

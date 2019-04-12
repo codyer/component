@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：bg_secondary_round_touch_selector.xml  模块：lib-ui  项目：component
+  ~ 当前修改时间：2019年04月12日 15:48:56
+  ~ 上次修改时间：2019年04月12日 15:48:56
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-ui
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <stroke android:width="@dimen/dimen_line" android:color="@color/uiColorLine" />
+            <corners android:radius="@dimen/dimen_smaller" />
+            <solid android:color="@color/uiColorSecondaryDark" />
+        </shape>
+    </item>
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <stroke android:width="@dimen/dimen_line" android:color="@color/uiColorLine" />
+            <corners android:radius="@dimen/dimen_smaller" />
+            <solid android:color="@color/uiColorSecondaryDark" />
+        </shape>
+    </item>
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <stroke android:width="@dimen/dimen_line" android:color="@color/uiColorLine" />
+            <corners android:radius="@dimen/dimen_smaller" />
+            <solid android:color="@color/uiColorSecondaryAccent" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <stroke android:width="@dimen/dimen_line" android:color="@color/uiColorLine" />
+            <corners android:radius="@dimen/dimen_smaller" />
+            <solid android:color="@color/uiColorSecondary" />
+        </shape>
+    </item>
+</selector>

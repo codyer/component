@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：dimens.xml  模块：lib-ui  项目：component
+  ~ 当前修改时间：2019年04月12日 15:48:56
+  ~ 上次修改时间：2019年04月12日 10:04:15
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-ui
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <dimen name="dimen_hugest">34dp</dimen>
+    <dimen name="dimen_hugger">32dp</dimen>
+    <dimen name="dimen_huge">30dp</dimen>
+    <dimen name="dimen_largest">28dp</dimen>
+    <dimen name="dimen_larger">26dp</dimen>
+    <dimen name="dimen_large">24dp</dimen>
+    <dimen name="dimen_biggest">22dp</dimen>
+    <dimen name="dimen_bigger">20dp</dimen>
+    <dimen name="dimen_big">18dp</dimen>
+    <dimen name="dimen_normal">16dp</dimen>
+    <dimen name="dimen_small">14dp</dimen>
+    <dimen name="dimen_smaller">12dp</dimen>
+    <dimen name="dimen_smallest">10dp</dimen>
+    <dimen name="dimen_tiny">8dp</dimen>
+    <dimen name="dimen_tinier">6dp</dimen>
+    <dimen name="dimen_tiniest">4dp</dimen>
+
+    <dimen name="dimen_line">0.5dp</dimen>
+</resources>

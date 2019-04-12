@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：default-theme.xml  模块：lib-ui  项目：component
+  ~ 当前修改时间：2019年04月12日 15:48:56
+  ~ 上次修改时间：2019年04月12日 15:48:56
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-ui
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <!-- Default application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="colorPrimary">@color/uiColorPrimary</item>
+        <item name="colorPrimaryDark">@color/uiColorPrimaryDark</item>
+        <item name="colorAccent">@color/uiColorPrimaryAccent</item>
+        <item name="android:windowBackground">@color/uiColorPrimaryBackground</item>
+        <item name="android:buttonStyle">@style/ButtonTheme</item>
+        <item name="alertDialogTheme">@style/AlertDialog</item>
+        <item name="android:textViewStyle">@style/TexTtViewStyle</item>
+    </style>
+
+    <style name="TexTtViewStyle" parent="@android:style/Widget.TextView">
+    </style>
+
+    <style name="ButtonTheme" parent="@android:style/Widget.Button">
+        <item name="android:textSize">@dimen/ui_font_normal</item>
+        <item name="android:textColor">@color/uiColorPrimaryText</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_margin">@dimen/dimen_tiny</item>
+        <item name="android:paddingTop">@dimen/dimen_smallest</item>
+        <item name="android:paddingBottom">@dimen/dimen_smallest</item>
+        <item name="android:background">@drawable/bg_primary_round_touch_selector</item>
+    </style>
+
+    <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowTitleStyle">@style/AlertDialogTitle</item>
+        <item name="colorAccent">@color/uiColorPrimary</item>
+        <item name="android:background">@color/uiColorPrimaryAccent</item>
+    </style>
+
+    <style name="AlertDialogTitle">
+        <item name="android:textAppearance">@style/AlertDialogTitleStyle</item>
+    </style>
+
+    <style name="AlertDialogTitleStyle" parent="@android:style/TextAppearance.Holo.DialogWindowTitle">
+        <item name="android:textSize">@dimen/ui_font_normal</item>
+        <item name="android:textColor">@color/uiColorPrimary</item>
+    </style>
+</resources>

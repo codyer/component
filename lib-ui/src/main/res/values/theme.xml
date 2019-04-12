@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *************************************************************
+  ~ 文件：theme.xml  模块：lib-ui  项目：component
+  ~ 当前修改时间：2019年04月12日 15:48:56
+  ~ 上次修改时间：2019年04月12日 10:12:56
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-ui
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <!--  Base application theme. -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--<item name="android:background">@drawable/main_background</item>-->
+        <item name="android:windowNoTitle">true</item>
+    </style>
+</resources>

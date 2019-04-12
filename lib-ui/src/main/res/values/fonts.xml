@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：fonts.xml  模块：lib-ui  项目：component
+  ~ 当前修改时间：2019年04月12日 15:48:56
+  ~ 上次修改时间：2019年04月12日 13:10:23
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-ui
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <dimen name="ui_font_hugest">34sp</dimen>
+    <dimen name="ui_font_hugger">32sp</dimen>
+    <dimen name="ui_font_huge">30sp</dimen>
+    <dimen name="ui_font_largest">28sp</dimen>
+    <dimen name="ui_font_larger">26sp</dimen>
+    <dimen name="ui_font_large">24sp</dimen>
+    <dimen name="ui_font_biggest">22sp</dimen>
+    <dimen name="ui_font_bigger">20sp</dimen>
+    <dimen name="ui_font_big">18sp</dimen>
+    <dimen name="ui_font_normal">16sp</dimen>
+    <dimen name="ui_font_small">14sp</dimen>
+    <dimen name="ui_font_smaller">12sp</dimen>
+    <dimen name="ui_font_smallest">10sp</dimen>
+    <dimen name="ui_font_tiny">8sp</dimen>
+    <dimen name="ui_font_tinier">6sp</dimen>
+    <dimen name="ui_font_tiniest">4sp</dimen>
+</resources>

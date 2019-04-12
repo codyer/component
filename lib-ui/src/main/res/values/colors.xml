@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：colors.xml  模块：lib-ui  项目：component
+  ~ 当前修改时间：2019年04月12日 15:48:56
+  ~ 上次修改时间：2019年04月12日 15:40:02
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-ui
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <!--主题色-->
+    <color name="uiColorPrimary">#ed0c1e</color>
+    <color name="uiColorPrimaryDark">#b20000</color>
+    <color name="uiColorPrimaryAccent">#ff5949</color>
+    <color name="uiColorPrimaryText">#fafafa</color>
+    <color name="uiColorPrimaryBackground">#ffffff</color>
+
+    <color name="uiColorSecondary">#ffffff</color>
+    <color name="uiColorSecondaryDark">#f1f1f1</color>
+    <color name="uiColorSecondaryAccent">#f6f6f6</color>
+    <color name="uiColorSecondaryText">#000000</color>
+    <color name="uiColorSecondaryBackground">#ffffff</color>
+
+    <color name="uiColorThird">#f6f6f6</color>
+    <color name="uiColorThirdDark">#fcfcfc</color>
+    <color name="uiColorThirdAccent">#ffffff</color>
+    <color name="uiColorThirdText">#666666</color>
+    <color name="uiColorThirdBackground">#ffffff</color>
+
+    <color name="uiColorWhite">#ffffff</color>
+    <color name="uiColorBlack">#333333</color>
+    <color name="uiColorBlue">#1C90DB</color>
+    <color name="uiColorGreen">#3BB032</color>
+    <color name="uiColorGray">#d3d3d3</color>
+    <color name="uiColorLightGray">#fafafa</color>
+    <color name="uiColorTransparent">#00000000</color>
+    <color name="uiColorTransparentWhite">#00FFFFFF</color>
+    <color name="uiColorTransparentMask">#22000000</color>
+    <color name="uiColorLine">#F5F5F5</color>
+</resources>
