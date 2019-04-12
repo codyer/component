@@ -1,10 +1,11 @@
 /*
  * ************************************************************
  * 文件：BusDemoActivity.java  模块：app  项目：component
- * 当前修改时间：2019年04月04日 18:43:04
- * 上次修改时间：2019年04月03日 21:06:17
+ * 当前修改时间：2019年04月12日 09:21:11
+ * 上次修改时间：2019年04月12日 09:21:09
  * 作者：Cody.yi   https://github.com/codyer
  *
+ * 描述：app
  * Copyright (c) 2019
  * ************************************************************
  */
@@ -37,14 +38,14 @@ public class BusDemoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bus_demo);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {

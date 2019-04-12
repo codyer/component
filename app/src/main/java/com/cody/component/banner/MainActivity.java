@@ -1,3 +1,15 @@
+/*
+ * ************************************************************
+ * 文件：MainActivity.java  模块：app  项目：component
+ * 当前修改时间：2019年04月12日 09:21:11
+ * 上次修改时间：2019年04月11日 20:36:56
+ * 作者：Cody.yi   https://github.com/codyer
+ *
+ * 描述：app
+ * Copyright (c) 2019
+ * ************************************************************
+ */
+
 package com.cody.component.banner;
 
 import android.content.Intent;

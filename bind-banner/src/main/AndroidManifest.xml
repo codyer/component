@@ -1,1 +1,13 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：AndroidManifest.xml  模块：bind-banner  项目：component
+  ~ 当前修改时间：2019年04月12日 09:21:19
+  ~ 上次修改时间：2019年04月07日 18:04:36
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：bind-banner
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
 <manifest package="com.cody.component.banner" />

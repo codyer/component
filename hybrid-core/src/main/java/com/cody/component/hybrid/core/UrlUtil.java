@@ -1,10 +1,11 @@
 /*
  * ************************************************************
  * 文件：UrlUtil.java  模块：hybrid-core  项目：component
- * 当前修改时间：2019年04月11日 11:35:16
- * 上次修改时间：2019年03月02日 15:50:43
+ * 当前修改时间：2019年04月12日 09:21:19
+ * 上次修改时间：2019年04月12日 09:21:09
  * 作者：Cody.yi   https://github.com/codyer
  *
+ * 描述：hybrid-core
  * Copyright (c) 2019
  * ************************************************************
  */
@@ -53,9 +54,7 @@ public class UrlUtil {
                     return true;
                 }*/
                 // debug 条件下，ip地址的都算内网地址，测试用
-                if (BuildConfig.DEBUG) {
-                    return true;
-                }
+                return BuildConfig.DEBUG;
             }
             return false;
         } catch (Exception e) {
@@ -76,7 +75,7 @@ public class UrlUtil {
         if (TextUtils.isEmpty(url)) return params;
         int beginIndex = url.indexOf("?");
         if (beginIndex >= 0 && url.length() > 1) {
-            url = url.substring(++beginIndex, url.length());
+            url = url.substring(++beginIndex);
         }
         //每个键值为一组
         String[] keyValueParts = url.split("&");

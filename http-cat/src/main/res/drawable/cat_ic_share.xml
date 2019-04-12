@@ -1,3 +1,15 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：cat_ic_share.xml  模块：http-cat  项目：component
+  ~ 当前修改时间：2019年04月12日 09:21:19
+  ~ 上次修改时间：2019年04月05日 11:39:22
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：http-cat
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
         android:width="24dp"
         android:height="24dp"

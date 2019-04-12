@@ -1,10 +1,11 @@
 /*
  * ************************************************************
  * 文件：JsInteract.java  模块：hybrid-core  项目：component
- * 当前修改时间：2019年04月11日 11:35:16
- * 上次修改时间：2018年09月26日 13:42:13
+ * 当前修改时间：2019年04月12日 09:21:19
+ * 上次修改时间：2019年04月12日 09:21:09
  * 作者：Cody.yi   https://github.com/codyer
  *
+ * 描述：hybrid-core
  * Copyright (c) 2019
  * ************************************************************
  */
@@ -75,7 +76,7 @@ public class JsInteract {
         try {
             if (message.contains("?")) {
                 int beginIndex = message.indexOf("?");
-                String query = message.substring(++beginIndex, message.length());
+                String query = message.substring(++beginIndex);
                 mParams = new JsonParser().parse(query).getAsJsonObject();
             }
         } catch (JsonParseException
