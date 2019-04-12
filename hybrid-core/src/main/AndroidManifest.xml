@@ -16,6 +16,7 @@
     <application>
         <activity
             android:name=".activity.HtmlActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
     </application>
 

@@ -30,8 +30,8 @@
 
     <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowTitleStyle">@style/AlertDialogTitle</item>
-        <item name="colorAccent">@color/uiColorPrimary</item>
-        <item name="android:background">@color/uiColorPrimaryAccent</item>
+        <item name="colorAccent">@color/uiColorPrimaryAccent</item>
+        <item name="android:background">@color/uiColorPrimaryBackground</item>
     </style>
 
     <style name="AlertDialogTitle">
