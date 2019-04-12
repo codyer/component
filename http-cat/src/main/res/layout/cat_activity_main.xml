@@ -73,6 +73,6 @@
             android:layout_margin="16dp"
             android:onClick="@{onClickListener::onClick}"
             app:fabSize="mini"
-            app:srcCompat="@android:drawable/ic_dialog_alert" />
+            app:srcCompat="@drawable/ic_arrow_upward" />
     </RelativeLayout>
 </layout>

@@ -39,9 +39,11 @@
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
             android:onClick="@{onClickListener::onClick}"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:visibility="@{viewData.showHeader?View.VISIBLE:View.GONE}"
-            bind:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            bind:subtitleTextColor="@color/uiColorPrimaryText"
             bind:title="@{viewData.header}"
+            bind:titleTextColor="@color/uiColorPrimaryText"
             tools:visibility="visible" />
 
         <WebView
@@ -78,8 +80,8 @@
             android:id="@+id/errorMaskView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/uiColorWhite"
             android:layout_below="@id/toolbar"
+            android:background="@color/uiColorWhite"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="@{viewData.error?View.VISIBLE:View.GONE}"
@@ -90,6 +92,8 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_load_failed"
                 android:drawablePadding="@dimen/dimen_normal"
+                android:ellipsize="end"
+                android:maxLines="5"
                 android:text="@{viewData.message}"
                 tools:text="@string/ui_str_bad_network_view_tip" />
 

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ *************************************************************
   ~ 文件：AndroidManifest.xml  模块：hybrid-core  项目：component
   ~ 当前修改时间：2019年04月12日 09:21:20
@@ -15,7 +14,9 @@
     package="com.cody.component.hybrid">
 
     <application>
-        <activity android:name=".activity.HtmlActivity"/>
+        <activity
+            android:name=".activity.HtmlActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

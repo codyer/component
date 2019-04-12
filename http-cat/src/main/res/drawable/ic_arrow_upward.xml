@@ -1,0 +1,17 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：ic_arrow_upward.xml  模块：http-cat  项目：component
+  ~ 当前修改时间：2019年04月12日 20:39:56
+  ~ 上次修改时间：2019年04月12日 20:39:56
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：http-cat
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<vector android:height="24dp" android:tint="#F9F9F9"
+    android:viewportHeight="24.0" android:viewportWidth="24.0"
+    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#FF000000" android:pathData="M4,12l1.41,1.41L11,7.83V20h2V7.83l5.58,5.59L20,12l-8,-8 -8,8z"/>
+</vector>

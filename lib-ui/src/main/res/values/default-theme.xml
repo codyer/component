@@ -25,15 +25,7 @@
     <style name="TexTtViewStyle" parent="@android:style/Widget.TextView">
     </style>
 
-    <style name="ButtonTheme" parent="@android:style/Widget.Button">
-        <item name="android:textSize">@dimen/ui_font_normal</item>
-        <item name="android:textColor">@color/uiColorPrimaryText</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_margin">@dimen/dimen_tiny</item>
-        <item name="android:paddingTop">@dimen/dimen_smallest</item>
-        <item name="android:paddingBottom">@dimen/dimen_smallest</item>
-        <item name="android:background">@drawable/bg_primary_round_touch_selector</item>
+    <style name="ButtonTheme" parent="@style/Widget.AppCompat.Button.Colored">
     </style>
 
     <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">

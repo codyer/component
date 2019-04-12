@@ -1,0 +1,17 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：ic_default_error.xml块：lib-ui  项目：component
+  ~ 当前修改时间：2019年04月12日 19:30:24
+  ~ 上次修改时间：2019年04月12日 19:30:24
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-ui
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<vector android:height="24dp" android:tint="#F1F1F1"
+    android:viewportHeight="24.0" android:viewportWidth="24.0"
+    android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#FF000000" android:pathData="M12,2C6.48,2 2,6.48 2,12s4.48,10 10,10 10,-4.48 10,-10S17.52,2 12,2zM13,17h-2v-2h2v2zM13,13h-2L11,7h2v6z"/>
+</vector>

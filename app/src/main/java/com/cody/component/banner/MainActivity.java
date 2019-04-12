@@ -71,7 +71,7 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
                 HttpCore.getInstance().killHttpCat().done();
                 break;
             case R.id.openHtml:
-                HtmlActivity.startHtml("test","https://www.baidu.com");
+                HtmlActivity.startHtml("test","description","https://www.baidu.com",true,true);
                 break;
         }
     }

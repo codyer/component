@@ -84,8 +84,9 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
             ((AppCompatActivity) getActivity()).setSupportActionBar(getBinding().toolbar);
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (actionBar != null) {
+                actionBar.setHomeButtonEnabled(true);
+                actionBar.setDisplayShowHomeEnabled(true);
                 actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setDisplayShowTitleEnabled(false);
                 if (mHtmlConfig != null) {
                     actionBar.setTitle(mHtmlConfig.getTitle());
                     actionBar.setSubtitle(mHtmlConfig.getDescription());
@@ -135,16 +136,16 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
             if (!TextUtils.isEmpty(url)) {
                 if (UrlUtil.isInnerLink(url)) {//内部链接原生可能不需要显示头部
                     if (!TextUtils.isEmpty(title)) {
-                        getBinding().toolbar.setTitle(title);
+                        mHtmlViewData.getHeader().setValue(title);
                     } else {
                         // title为空意味着html页面自己处理头部，原生不需要显示头部
-                        getBinding().toolbar.setVisibility(View.GONE);
+                        mHtmlViewData.getShowHeader().setValue(false);
                     }
                 } else {//外链显示头部
                     if (!TextUtils.isEmpty(title)) {
-                        getBinding().toolbar.setTitle(title);
+                        mHtmlViewData.getHeader().setValue(title);
                     }
-                    getBinding().toolbar.setVisibility(View.VISIBLE);
+                    mHtmlViewData.getShowHeader().setValue(true);
                 }
                 mHtmlViewData.setUrl(url);
             } else {

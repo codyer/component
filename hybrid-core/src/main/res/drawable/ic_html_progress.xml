@@ -28,9 +28,9 @@
             <shape>
                 <corners android:radius="2dp"/>
                 <gradient
-                    android:centerColor="@color/uiColorPrimaryAccent"
-                    android:endColor="@color/uiColorPrimaryAccent"
-                    android:startColor="@color/uiColorPrimaryAccent"/>
+                    android:centerColor="@color/uiColorGreen"
+                    android:endColor="@color/uiColorGreen"
+                    android:startColor="@color/uiColorGreen"/>
 
             </shape>
         </clip>
