@@ -18,9 +18,9 @@
             <corners android:radius="2dp"/>
             <gradient
                 android:angle="270"
-                android:centerColor="@color/white"
-                android:endColor="@color/white"
-                android:startColor="@color/white"/>
+                android:centerColor="@color/uiColorWhite"
+                android:endColor="@color/uiColorWhite"
+                android:startColor="@color/uiColorWhite"/>
         </shape>
     </item>
     <item android:id="@android:id/progress">
@@ -28,9 +28,9 @@
             <shape>
                 <corners android:radius="2dp"/>
                 <gradient
-                    android:centerColor="@color/colorAccent"
-                    android:endColor="@color/colorAccent"
-                    android:startColor="@color/colorAccent"/>
+                    android:centerColor="@color/uiColorPrimaryAccent"
+                    android:endColor="@color/uiColorPrimaryAccent"
+                    android:startColor="@color/uiColorPrimaryAccent"/>
 
             </shape>
         </clip>

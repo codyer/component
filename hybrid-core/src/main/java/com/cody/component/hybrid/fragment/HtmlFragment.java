@@ -148,7 +148,7 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
                 }
                 mHtmlViewData.setUrl(url);
             } else {
-                showToast(getString(R.string.html_url_null));
+                showToast(getString(R.string.ui_str_url_error));
             }
         }
         return mHtmlViewData;

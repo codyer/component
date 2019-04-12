@@ -33,7 +33,7 @@ public class HtmlViewData extends ViewData {
     final private SafeMutableLiveData<String> mHeader = new SafeMutableLiveData<>("");
     final private SafeMutableLiveData<String> mMessage = new SafeMutableLiveData<>("");
     final private SafeMutableLiveData<String> mUrl = new SafeMutableLiveData<>("");
-    private int loadingResId = R.drawable.ic_html_loading_gif;
+    private int loadingResId = R.drawable.ic_loading_gif;
 
     public int getLoadingResId() {
         return loadingResId;

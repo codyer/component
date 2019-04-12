@@ -41,7 +41,7 @@
             android:layout_height="200dp"
             bind:b_AutoPlaying="true"
             bind:b_Interval="2000"
-            tools:background="@color/colorPrimaryDark" />
+            tools:background="@color/uiColorPrimaryDark" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/toBus"

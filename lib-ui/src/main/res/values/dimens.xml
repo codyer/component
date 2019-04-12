@@ -27,6 +27,7 @@
     <dimen name="dimen_tiny">8dp</dimen>
     <dimen name="dimen_tinier">6dp</dimen>
     <dimen name="dimen_tiniest">4dp</dimen>
+    <dimen name="dimen_super_tiny">2dp</dimen>
 
     <dimen name="dimen_line">0.5dp</dimen>
 </resources>

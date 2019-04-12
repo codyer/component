@@ -97,7 +97,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
             mLoading.setCanceledOnTouchOutside(false);
             mLoading.setCancelable(false);
         }
-        mLoading.setTitle(TextUtils.isEmpty(message) ? getString(R.string.app_loading) : message);
+        mLoading.setTitle(TextUtils.isEmpty(message) ? getString(R.string.ui_str_loading) : message);
         mLoading.show();
     }
 

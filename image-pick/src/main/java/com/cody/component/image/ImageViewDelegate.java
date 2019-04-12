@@ -117,7 +117,7 @@ public class ImageViewDelegate implements IImageViewListener {
         if (ActivityUtil.isActivityDestroyed()) return;
         Activity activity = ActivityUtil.getCurrentActivity();
         if (activity == null) return;
-        String[] choice = {activity.getString(R.string.from_photos), activity.getString(R.string.from_camera)};
+        String[] choice = {activity.getString(R.string.ui_str_from_photos), activity.getString(R.string.ui_str_from_camera)};
         AlertDialog alertDialog = new AlertDialog.Builder(activity)
                 .setCancelable(true)
                 .setSingleChoiceItems(choice, 0, (dialog, which) -> {

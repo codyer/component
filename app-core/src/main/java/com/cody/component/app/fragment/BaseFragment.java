@@ -98,7 +98,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView, Dialog
             mLoading.setCanceledOnTouchOutside(false);
             mLoading.setCancelable(false);
         }
-        mLoading.setTitle(TextUtils.isEmpty(message) ? getString(R.string.app_loading) : message);
+        mLoading.setTitle(TextUtils.isEmpty(message) ? getString(R.string.ui_str_loading) : message);
         mLoading.show();
     }
 

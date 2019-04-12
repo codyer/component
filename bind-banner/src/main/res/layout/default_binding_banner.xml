@@ -32,8 +32,9 @@
         android:layout_height="match_parent"
         android:contentDescription="@null"
         android:onClick="@{onClickListener::onClick}"
-        bind:error="@{@android:drawable/stat_notify_error}"
-        bind:placeholder="@{@android:drawable/stat_notify_error}"
+        android:scaleType="fitCenter"
+        bind:error="@{@drawable/ic_default_error}"
+        bind:placeholder="@{@drawable/ic_default_place_holder}"
         bind:rectImageUrl="@{viewData.imgUrl}"
-        tools:src="@android:drawable/stat_notify_error" />
+        tools:src="@drawable/ic_default_error" />
 </layout>

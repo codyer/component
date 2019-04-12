@@ -19,7 +19,6 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.cody.component.app.activity.FragmentContainerActivity;
-import com.cody.component.hybrid.JsBridge;
 import com.cody.component.hybrid.R;
 import com.cody.component.hybrid.data.HtmlConfig;
 import com.cody.component.hybrid.fragment.HtmlFragment;
@@ -122,7 +121,7 @@ public class HtmlActivity extends FragmentContainerActivity {
         if (!isExit) {
             isExit = true;
             // 准备退出
-            showToast(getString(R.string.click_back_two_times));
+            showToast(getString(R.string.ui_str_click_back_two_times));
             tExit = new Timer();
             tExit.schedule(new TimerTask() {
                 @Override

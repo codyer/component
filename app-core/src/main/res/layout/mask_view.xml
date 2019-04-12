@@ -42,19 +42,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:drawableTop="@{viewData.imageId}"
-                android:drawablePadding="@dimen/padding"
+                android:drawablePadding="@dimen/dimen_normal"
                 android:gravity="center"
                 android:text="@{viewData.infoId}"
                 tools:drawableTop="@drawable/ic_load_failed"
-                tools:text="@string/load_failed_click_to_reload" />
+                tools:text="@string/ui_str_load_failed_click_to_reload" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/padding"
+                android:layout_marginTop="@dimen/dimen_normal"
                 android:gravity="center"
                 android:text="@{viewData.message}"
-                tools:text="@string/no_route_to_host" />
+                tools:text="@string/ui_str_bad_network_view_tip" />
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

@@ -95,7 +95,7 @@ public class JsWebChromeClient extends WebChromeClient {
         ViewGroup parent = (ViewGroup) mWebView.getParent();
         parent.removeView(mWebView);
         // 设置背景色为黑色
-        view.setBackgroundColor(view.getResources().getColor(R.color.black));
+        view.setBackgroundColor(view.getResources().getColor(R.color.uiColorBlack));
         parent.addView(view, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mCustomView = view;
         setFullScreen();

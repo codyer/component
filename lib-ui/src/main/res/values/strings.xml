@@ -27,4 +27,21 @@
     <string name="ui_str_action_setting">设置</string>
     <string name="ui_str_action_message">消息</string>
     <string name="ui_str_all">全部</string>
+    <string name="ui_str_retry">重试</string>
+    <string name="ui_str_no_more_data">没有更多内容了</string>
+    <string name="ui_str_from_photos">从相册中选择</string>
+    <string name="ui_str_from_camera">拍照</string>
+    <!-- 网络 -->
+    <string name="ui_str_network_connect_error">网络连接异常</string>
+    <string name="ui_str_network_connect_timeout">网络连接超时</string>
+    <string name="ui_str_bad_network_view_tip">您的网络不给力，点击屏幕可重新加载</string>
+    <string name="ui_str_load_failed_click_to_reload">加载失败，点击可重新加载</string>
+    <string name="ui_str_no_content">暂无数据</string>
+
+    <string name="ui_str_refresh">刷新一下试试</string>
+    <string name="ui_str_ignore">忽略本次错误</string>
+    <string name="ui_str_url_error">链接地址错误</string>
+    <string name="ui_str_action_share">分享</string>
+    <string name="ui_str_click_back_two_times">再按一次退出程序</string>
+
 </resources>

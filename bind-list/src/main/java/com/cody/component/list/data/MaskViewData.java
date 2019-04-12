@@ -23,7 +23,7 @@ import com.cody.component.lib.data.ViewData;
 public class MaskViewData extends ViewData {
     private static final long serialVersionUID = -381194114860141421L;
     private final SafeMutableLiveData<Boolean> mVisibility = new SafeMutableLiveData<>(false);
-    private final SafeMutableLiveData<Integer> mInfoId = new SafeMutableLiveData<>(R.string.no_content);
+    private final SafeMutableLiveData<Integer> mInfoId = new SafeMutableLiveData<>(R.string.ui_str_no_content);
     private final SafeMutableLiveData<String> mMessage = new SafeMutableLiveData<>("");
     private final SafeMutableLiveData<Integer> mImageId = new SafeMutableLiveData<>(R.drawable.ic_no_content);
 
@@ -33,13 +33,13 @@ public class MaskViewData extends ViewData {
 
     public void noContentView() {
         mVisibility.postValue(true);
-        mInfoId.postValue(R.string.no_content);
+        mInfoId.postValue(R.string.ui_str_no_content);
         mImageId.postValue(R.drawable.ic_no_content);
     }
 
     public void badNetWorkView() {
         mVisibility.postValue(true);
-        mInfoId.postValue(R.string.bad_network_view_tip);
+        mInfoId.postValue(R.string.ui_str_bad_network_view_tip);
         mImageId.postValue(R.drawable.ic_bad_network);
     }
 
@@ -50,7 +50,7 @@ public class MaskViewData extends ViewData {
 
     public void failedView() {
         mVisibility.postValue(true);
-        mInfoId.postValue(R.string.load_failed_click_to_reload);
+        mInfoId.postValue(R.string.ui_str_load_failed_click_to_reload);
         mImageId.postValue(R.drawable.ic_load_failed);
     }
 
