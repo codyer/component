@@ -115,11 +115,11 @@ public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> 
 
     @CallSuper
     @Override
-    final public int getItemLayoutId(int viewType) {
+    public int getItemLayoutId(int viewType) {
         if (viewType == HEADER_OR_FOOTER_VIEW_TYPE) {
             return R.layout.item_load_more;
         }
-        throw new MissingOverrideBaseFunction("getItemLayoutId");
+        return -1;
     }
 
     @Override

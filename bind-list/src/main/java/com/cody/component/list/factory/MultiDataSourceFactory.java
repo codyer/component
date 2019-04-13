@@ -12,6 +12,7 @@
 
 package com.cody.component.list.factory;
 
+import com.cody.component.lib.safe.SafeMutableLiveData;
 import com.cody.component.list.data.ItemMultiViewData;
 import com.cody.component.list.define.PageInfo;
 import com.cody.component.list.listener.OnRequestPageListener;
@@ -27,7 +28,7 @@ import androidx.paging.DataSource;
  * 泛型为分页Item的类类型
  */
 public class MultiDataSourceFactory<IVD extends ItemMultiViewData, ItemBean> extends DataSource.Factory<PageInfo, ItemBean> {
-    private MultiPageKeyedDataSource<ItemBean> mDataSource;
+    private SafeMutableLiveData<MultiPageKeyedDataSource<ItemBean>> mDataSource = new SafeMutableLiveData<>();
     private OnRequestPageListener<ItemBean> mOnRequestPageListener;
     private Function<ItemBean, IVD> mModelMapper;
 
@@ -44,11 +45,12 @@ public class MultiDataSourceFactory<IVD extends ItemMultiViewData, ItemBean> ext
     @NonNull
     @Override
     public DataSource<PageInfo, ItemBean> create() {
-        mDataSource = new MultiPageKeyedDataSource<>(mOnRequestPageListener);
-        return mDataSource;
+        MultiPageKeyedDataSource<ItemBean> dataSource = new MultiPageKeyedDataSource<>(mOnRequestPageListener);
+        mDataSource.postValue(dataSource);
+        return dataSource;
     }
 
-    public MultiPageKeyedDataSource<ItemBean> getDataSource() {
+    public SafeMutableLiveData<MultiPageKeyedDataSource<ItemBean>> getDataSource() {
         return mDataSource;
     }
 }

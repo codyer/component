@@ -50,6 +50,14 @@ public class PageInfo {
         return getPageInfo(result.getData().getNextPosition());
     }
 
+    public static PageInfo getNextPageInfo(PageInfo lastPageInfo) {
+        if (lastPageInfo == null) {
+            return defaultPageInfo();
+        }
+        lastPageInfo.mPageNo++;
+        return lastPageInfo;
+    }
+
     public static PageInfo getPageInfo(String position) {
         if (position == null || TextUtils.isDigitsOnly(position)) {
             return null;

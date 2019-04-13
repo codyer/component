@@ -81,6 +81,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView, Dialog
             throw new IllegalArgumentException("Local and anonymous classes can not be ViewModels");
         }
         VM viewModel = ViewModelProviders.of(this, factory).get(viewModelClass);
+        viewModel.setLifecycleOwner(this);
         checkViewModel(canonicalName, viewModel);
         return viewModel;
     }

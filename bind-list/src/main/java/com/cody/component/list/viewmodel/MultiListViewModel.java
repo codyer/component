@@ -27,7 +27,6 @@ import com.cody.component.list.exception.ParameterNullPointerException;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
-import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
@@ -38,8 +37,9 @@ import androidx.paging.PagedList;
 public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean> extends BaseViewModel
         implements OnRequestPageListener<ItemBean>, Function<ItemBean, IVD>, OnListListener {
     private MaskViewData mMaskViewData = new MaskViewData();
+    private MultiDataSourceFactory<IVD, ItemBean> mSourceFactory = new MultiDataSourceFactory<>(this, this);
     private DataSourceWrapper<ItemBean> mWrapper;
-    private LiveData<PagedList<IVD>> mPagedList = new LivePagedListBuilder<>(initSourceFactory(), initPageListConfig()).build();
+    private LiveData<PagedList<IVD>> mPagedList = new LivePagedListBuilder<>(mSourceFactory.map(), initPageListConfig()).build();
 
     public MaskViewData getMaskViewData() {
         return mMaskViewData;
@@ -49,33 +49,40 @@ public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean
         return mPagedList;
     }
 
+    private DataSourceWrapper<ItemBean> getWrapper() {
+        if (mWrapper == null && mSourceFactory.getDataSource() != null && mSourceFactory.getDataSource().getValue() != null) {
+            mWrapper = new DataSourceWrapper<>(mSourceFactory.getDataSource().getValue());
+        }
+        return mWrapper;
+    }
+
     @Override
     public SafeMutableLiveData<Operation> getOperation() {
-        if (mWrapper != null) {
-            return mWrapper.getOperation();
+        if (getWrapper() != null) {
+            return getWrapper().getOperation();
         }
         throw new ParameterNullPointerException("DataSourceWrapper");
     }
 
     @Override
     public SafeMutableLiveData<RequestStatus> getRequestStatus() {
-        if (mWrapper != null) {
-            return mWrapper.getRequestStatus();
+        if (getWrapper() != null) {
+            return getWrapper().getRequestStatus();
         }
         throw new ParameterNullPointerException("DataSourceWrapper");
     }
 
     @Override
     public void refresh() {
-        if (mWrapper != null) {
-            mWrapper.refresh();
+        if (getWrapper() != null) {
+            getWrapper().refresh();
         }
     }
 
     @Override
     public void retry() {
-        if (mWrapper != null) {
-            mWrapper.retry();
+        if (getWrapper() != null) {
+            getWrapper().retry();
         }
     }
 
@@ -89,11 +96,5 @@ public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean
                 .setInitialLoadSizeHint(PageInfo.DEFAULT_PAGE_SIZE)
                 .setPageSize(PageInfo.DEFAULT_PAGE_SIZE)
                 .build();
-    }
-
-    private DataSource.Factory<PageInfo, IVD> initSourceFactory() {
-        MultiDataSourceFactory<IVD, ItemBean> factory = new MultiDataSourceFactory<>(this, this);
-        mWrapper = new DataSourceWrapper<>(factory.getDataSource());
-        return factory.map();
     }
 }

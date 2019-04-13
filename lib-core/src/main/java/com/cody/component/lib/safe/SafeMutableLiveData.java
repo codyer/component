@@ -22,7 +22,7 @@ public class SafeMutableLiveData<T> extends MutableLiveData<T> {
     public SafeMutableLiveData(final T value) {
         super();
         if (value != null) {
-            setValue(value);
+            postValue(value);
         }
     }
 

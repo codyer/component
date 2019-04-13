@@ -16,6 +16,7 @@ package com.cody.component.handler;
 import com.cody.component.handler.action.ViewAction;
 import com.cody.component.lib.safe.SafeMutableLiveData;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModel;
 
 /**
@@ -24,6 +25,7 @@ import androidx.lifecycle.ViewModel;
  */
 public class BaseViewModel extends ViewModel implements IViewModel {
     private final SafeMutableLiveData<ViewAction> mViewActionLiveData;
+    protected LifecycleOwner mLifecycleOwner;
 
     @Override
     protected void onCleared() {
@@ -74,13 +76,13 @@ public class BaseViewModel extends ViewModel implements IViewModel {
     final public SafeMutableLiveData<ViewAction> getActionLiveData() {
         return mViewActionLiveData;
     }
-//
-//    @Override
-//    public  <T extends BaseViewModel> T setLifecycleOwner(LifecycleOwner lifecycleOwner) {
-//        this.mLifecycleOwner = lifecycleOwner;
-//        //noinspection unchecked
-//        return (T) this;
-//    }
+
+    @Override
+    public  <T extends BaseViewModel> T setLifecycleOwner(LifecycleOwner lifecycleOwner) {
+        this.mLifecycleOwner = lifecycleOwner;
+        //noinspection unchecked
+        return (T) this;
+    }
 
     final protected void setAction(int action) {
         setAction(action, null);

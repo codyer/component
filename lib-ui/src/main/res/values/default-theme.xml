@@ -16,7 +16,7 @@
         <item name="colorPrimary">@color/uiColorPrimary</item>
         <item name="colorPrimaryDark">@color/uiColorPrimaryDark</item>
         <item name="colorAccent">@color/uiColorPrimaryAccent</item>
-        <item name="android:windowBackground">@color/uiColorPrimaryBackground</item>
+        <item name="android:windowBackground">@color/uiColorSecondaryBackground</item>
         <item name="android:buttonStyle">@style/ButtonTheme</item>
         <item name="alertDialogTheme">@style/AlertDialog</item>
         <item name="android:textViewStyle">@style/TexTtViewStyle</item>
@@ -31,7 +31,7 @@
     <style name="AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowTitleStyle">@style/AlertDialogTitle</item>
         <item name="colorAccent">@color/uiColorPrimaryAccent</item>
-        <item name="android:background">@color/uiColorPrimaryBackground</item>
+        <item name="android:background">@color/uiColorSecondaryBackground</item>
     </style>
 
     <style name="AlertDialogTitle">

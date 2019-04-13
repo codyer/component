@@ -16,6 +16,8 @@ import com.cody.component.handler.action.ViewAction;
 import com.cody.component.lib.safe.SafeMutableLiveData;
 import com.cody.component.lib.view.IView;
 
+import androidx.lifecycle.LifecycleOwner;
+
 /**
  * Created by xu.yi. on 2019/3/25.
  * p-gbb-android
@@ -27,4 +29,5 @@ public interface IViewModel extends IView {
      * 处理其他action，扩展用
      */
     void executeAction(ViewAction action);
+    <T extends BaseViewModel> T setLifecycleOwner(LifecycleOwner lifecycleOwner);
 }
