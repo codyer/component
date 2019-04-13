@@ -22,7 +22,7 @@
     <color name="uiColorSecondaryDark">#f1f1f1</color>
     <color name="uiColorSecondaryAccent">#f6f6f6</color>
     <color name="uiColorSecondaryText">#000000</color>
-    <color name="uiColorSecondaryBackground">#ffffff</color>
+    <color name="uiColorSecondaryBackground">#F5F5F5</color>
 
     <color name="uiColorThird">#f6f6f6</color>
     <color name="uiColorThirdDark">#fcfcfc</color>
@@ -31,11 +31,14 @@
     <color name="uiColorThirdBackground">#ffffff</color>
 
     <color name="uiColorWhite">#ffffff</color>
-    <color name="uiColorBlack">#333333</color>
+    <color name="uiColorBlack">#000000</color>
     <color name="uiColorBlue">#1C90DB</color>
     <color name="uiColorGreen">#3BB032</color>
     <color name="uiColorGray">#d3d3d3</color>
     <color name="uiColorLightGray">#fafafa</color>
+    <color name="uiColorGray3">#333333</color>
+    <color name="uiColorGray6">#666666</color>
+    <color name="uiColorGray9">#999999</color>
     <color name="uiColorTransparent">#00000000</color>
     <color name="uiColorTransparentWhite">#00FFFFFF</color>
     <color name="uiColorTransparentMask">#22000000</color>

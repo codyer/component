@@ -30,4 +30,5 @@
     <dimen name="dimen_super_tiny">2dp</dimen>
 
     <dimen name="dimen_line">0.5dp</dimen>
+    <dimen name="dimen_0dp">0dp</dimen>
 </resources>
