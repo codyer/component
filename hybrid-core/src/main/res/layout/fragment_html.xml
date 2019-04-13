@@ -32,31 +32,15 @@
         android:layout_height="match_parent"
         tools:context=".activity.HtmlActivity">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:onClick="@{onClickListener::onClick}"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:visibility="@{viewData.showHeader?View.VISIBLE:View.GONE}"
-            bind:subtitleTextColor="@color/uiColorPrimaryText"
-            bind:title="@{viewData.header}"
-            bind:titleTextColor="@color/uiColorPrimaryText"
-            tools:visibility="visible" />
-
         <WebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/toolbar" />
+            android:layout_height="match_parent" />
 
         <LinearLayout
             android:id="@+id/loadingMaskView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar"
             android:background="#60000000"
             android:gravity="center"
             android:orientation="vertical"
@@ -80,7 +64,6 @@
             android:id="@+id/errorMaskView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar"
             android:background="@color/uiColorWhite"
             android:gravity="center"
             android:orientation="vertical"
@@ -124,7 +107,7 @@
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_super_tiny"
-            android:layout_below="@id/toolbar"
+            android:layout_alignParentTop="true"
             android:max="@{viewData.MAX_PROGRESS}"
             android:progress="@{viewData.progress}"
             android:progressDrawable="@drawable/ic_html_progress"

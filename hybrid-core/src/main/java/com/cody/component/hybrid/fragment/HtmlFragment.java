@@ -37,6 +37,8 @@ import com.cody.component.hybrid.databinding.FragmentHtmlBinding;
 import com.cody.component.hybrid.handler.JsHandlerCommonImpl;
 import com.cody.component.image.ImageViewDelegate;
 import com.cody.component.image.OnImageViewListener;
+import com.cody.component.lib.view.Refreshable;
+import com.cody.component.lib.view.Scrollable;
 import com.cody.component.util.LogUtil;
 import com.lzy.imagepicker.bean.ImageItem;
 
@@ -51,22 +53,21 @@ import androidx.appcompat.app.AppCompatActivity;
  * Html 页面具体实现
  */
 public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlViewData>
-        implements OnImageViewListener, JsWebChromeClient.OpenFileChooserCallBack {
-    private static final String HTML_WITH_CONFIG = "html_with_config";
+        implements OnImageViewListener, JsWebChromeClient.OpenFileChooserCallBack, Scrollable, Refreshable {
+    private static final String HTML_URL = "html_url";
     private HtmlViewData mHtmlViewData;
     private ImageViewDelegate mImageViewDelegate;
     private ValueCallback<Uri[]> mFilePathCallback;
     private ValueCallback<Uri> mUploadMsg;
-    private HtmlConfig mHtmlConfig;
 
     public HtmlFragment() {
         // Required empty public constructor
     }
 
-    public static HtmlFragment getInstance(HtmlConfig args) {
+    public static HtmlFragment getInstance(String url) {
         HtmlFragment fragment = new HtmlFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(HTML_WITH_CONFIG, args);
+        bundle.putString(HTML_URL, url);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -79,21 +80,7 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
     @Override
     protected void onBaseReady(final Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
-        if (getActivity() != null) {
-            if (!isBound()) return;
-            ((AppCompatActivity) getActivity()).setSupportActionBar(getBinding().toolbar);
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setHomeButtonEnabled(true);
-                actionBar.setDisplayShowHomeEnabled(true);
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                if (mHtmlConfig != null) {
-                    actionBar.setTitle(mHtmlConfig.getTitle());
-                    actionBar.setSubtitle(mHtmlConfig.getDescription());
-                }
-            }
-        }
-
+        if (!isBound()) return;
         mImageViewDelegate = new ImageViewDelegate(this);
         JsBridge.getInstance()
                 .addJsHandler(JsHandlerCommonImpl.class.getSimpleName(), JsHandlerCommonImpl.class)
@@ -111,65 +98,20 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        menu.clear();
-        inflater.inflate(R.menu.html_menu, menu);
-    }
-
-    @Override
     protected HtmlViewData getViewData() {
         if (mHtmlViewData != null) return mHtmlViewData;
         mHtmlViewData = new HtmlViewData();
-        String url;
-        String title;
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mHtmlConfig = (HtmlConfig) bundle.getSerializable(HTML_WITH_CONFIG);
-        }
-        if (mHtmlConfig == null) return mHtmlViewData;
-        setHasOptionsMenu(true);
-
-        if (bundle != null) {
-            url = mHtmlConfig.getUrl();
-            title = mHtmlConfig.getTitle();
-            if (!TextUtils.isEmpty(url)) {
-                if (UrlUtil.isInnerLink(url)) {//内部链接原生可能不需要显示头部
-                    if (!TextUtils.isEmpty(title)) {
-                        mHtmlViewData.getHeader().setValue(title);
-                    } else {
-                        // title为空意味着html页面自己处理头部，原生不需要显示头部
-                        mHtmlViewData.getShowHeader().setValue(false);
-                    }
-                } else {//外链显示头部
-                    if (!TextUtils.isEmpty(title)) {
-                        mHtmlViewData.getHeader().setValue(title);
-                    }
-                    mHtmlViewData.getShowHeader().setValue(true);
-                }
+            String url = bundle.getString(HTML_URL);
+            if (url != null) {
                 mHtmlViewData.setUrl(url);
-            } else {
-                showToast(getString(R.string.ui_str_url_error));
-            }
-        }
-        return mHtmlViewData;
-    }
-
-    //添加点击返回箭头事件
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            if (getBinding().webView.canGoBack()) {
-                getBinding().webView.goBack();
             } else {
                 finish();
             }
-            return true;
-        } else if (item.getItemId() == R.id.action_share) {
-            showToast("share");
-            return true;
         }
-        return super.onOptionsItemSelected(item);
+        return mHtmlViewData;
     }
 
     @Override
@@ -274,12 +216,8 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
     @Override
     public void onClick(View v) {
         int i = v.getId();
-        if (i == R.id.toolbar) {
-            getBinding().webView.scrollTo(0, 0);
-        } else if (i == R.id.refresh) {
-            getViewData().setError(false);
-            getViewData().setProgress(0);
-            getBinding().webView.loadUrl(getViewData().getUrl().getValue());
+        if (i == R.id.refresh) {
+            refresh();
         } else if (i == R.id.ignore) {
             getViewData().setIgnoreError(true);
         }
@@ -310,5 +248,17 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void scrollToTop() {
+        getBinding().webView.scrollTo(0, 0);
+    }
+
+    @Override
+    public void refresh() {
+        getViewData().setError(false);
+        getViewData().setProgress(0);
+        getBinding().webView.loadUrl(getViewData().getUrl().getValue());
     }
 }

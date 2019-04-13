@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 /**
  * Created by xu.yi. on 2019/3/25.
- * p-gbb-android
+ * component
  */
 public interface IBaseView extends IView {
     default <T extends BaseViewModel> T getViewModel(@NonNull Class<T> viewModelClass) {

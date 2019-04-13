@@ -14,7 +14,7 @@ package com.cody.component.lib.bind;
 
 /**
  * Created by xu.yi. on 2019/3/25.
- * p-gbb-android
+ * component
  */
 public interface IBinding<B> {
     /**

@@ -15,11 +15,15 @@ package com.cody.component.hybrid.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.cody.component.app.activity.FragmentContainerActivity;
 import com.cody.component.hybrid.R;
+import com.cody.component.hybrid.core.UrlUtil;
 import com.cody.component.hybrid.data.HtmlConfig;
 import com.cody.component.hybrid.fragment.HtmlFragment;
 import com.cody.component.util.ActivityUtil;
@@ -27,6 +31,7 @@ import com.cody.component.util.ActivityUtil;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 /**
@@ -77,7 +82,21 @@ public class HtmlActivity extends FragmentContainerActivity {
             HtmlConfig config = (HtmlConfig) intent.getExtras().getSerializable(HTML_WITH_CONFIG);
             if (config != null) {
                 mIsRoot = config.isRoot();
-                mHtmlFragment = HtmlFragment.getInstance(config);
+                mHtmlFragment = HtmlFragment.getInstance(config.getUrl());
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(config.getTitle());
+                    getSupportActionBar().setSubtitle(config.getDescription());
+                    if (!TextUtils.isEmpty(config.getUrl())) {
+                        if (!UrlUtil.isInnerLink(config.getUrl()) || !TextUtils.isEmpty(config.getTitle())) {
+                            //外链 或者内链且有title显示头部
+                            getBinding().toolbar.setVisibility(View.VISIBLE);
+                        } else {
+                            getBinding().toolbar.setVisibility(View.GONE);
+                        }
+                    } else {
+                        showToast(getString(R.string.ui_str_url_error));
+                    }
+                }
             }
         }
         return mHtmlFragment;
@@ -93,6 +112,27 @@ public class HtmlActivity extends FragmentContainerActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mHtmlFragment.onActivityResult(requestCode, resultCode, data);
+    }
+
+    //添加点击返回箭头事件
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (mHtmlFragment.canGoBack()) {
+                return true;
+            }
+        } else if (item.getItemId() == R.id.action_share) {
+            showToast("share");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.clear();
+        getMenuInflater().inflate(R.menu.html_menu, menu);
+        return true;
     }
 
     /**
@@ -111,11 +151,6 @@ public class HtmlActivity extends FragmentContainerActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    @Override
-    public void onClick(final View v) {
-    }
-
-
     private void exitByDoubleClick() {
         Timer tExit;
         if (!isExit) {
@@ -133,5 +168,10 @@ public class HtmlActivity extends FragmentContainerActivity {
         } else {
             finish();
         }
+    }
+
+    @Override
+    public void scrollToTop() {
+        mHtmlFragment.scrollToTop();
     }
 }

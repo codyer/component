@@ -20,7 +20,7 @@ import androidx.lifecycle.LifecycleOwner;
 
 /**
  * Created by xu.yi. on 2019/3/25.
- * p-gbb-android
+ * component
  */
 public interface IViewModel extends IView {
     SafeMutableLiveData<ViewAction> getActionLiveData();

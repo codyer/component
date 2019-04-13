@@ -14,15 +14,18 @@ package com.cody.component.app.activity;
 
 
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 
 import com.cody.component.app.R;
 import com.cody.component.app.databinding.ActivityFragmentContainerBinding;
+import com.cody.component.lib.view.Scrollable;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-public abstract class FragmentContainerActivity extends EmptyBindActivity<ActivityFragmentContainerBinding> {
+public abstract class FragmentContainerActivity extends EmptyBindActivity<ActivityFragmentContainerBinding> implements Scrollable {
     public abstract Fragment getFragment();
 
     @Override
@@ -30,17 +33,53 @@ public abstract class FragmentContainerActivity extends EmptyBindActivity<Activi
         return R.layout.activity_fragment_container;
     }
 
+    protected boolean isShowBack() {
+        return true;
+    }
+
+    protected boolean isShowTitle() {
+        return true;
+    }
+
     @Override
     protected void onBaseReady(final Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        Fragment fragment = getFragment();
-        if (fragment == null) {
-            finish();
-            return;
+        if (!isBound()) return;
+        setSupportActionBar(getBinding().toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(isShowBack());
+            getSupportActionBar().setDisplayShowTitleEnabled(isShowTitle());
         }
-        transaction.replace(R.id.container, fragment);
-        transaction.commit();
+        FragmentManager manager = getSupportFragmentManager();
+        Fragment fragment = manager.findFragmentById(R.id.container);
+        if (fragment == null) {
+            fragment = getFragment();
+            if (fragment == null) {
+                finish();
+                return;
+            }
+        }
+        manager.beginTransaction()
+                .add(R.id.container, fragment)
+                .commit();
+    }
+
+    //添加点击返回箭头事件
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            if (isShowBack()) {
+                finish();
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(final View v) {
+        if (v.getId() == R.id.toolbar) {
+            scrollToTop();
+        }
     }
 }
