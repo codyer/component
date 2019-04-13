@@ -12,20 +12,43 @@
 
 apply plugin: 'com.android.application'
 
+//加载签名配置的文件
+Properties props = new Properties()
+props.load(new FileInputStream(file("signing.properties")))
+
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    // 签名配置
+    signingConfigs {
+        config {
+            keyAlias props['KEY_ALIAS']
+            keyPassword props['KEY_PASSWORD']
+            storeFile file(props['KEYSTORE_FILE'])
+            storePassword props['KEYSTORE_PASSWORD']
+            v2SigningEnabled true
+        }
+    }
 
     dataBinding {
         enabled true
     }
+
+    // 编译sdk版本
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    // 构建工具版本
+    // 默认配置
     defaultConfig {
         applicationId "com.cody.component"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
+        versionName rootProject.ext.versionName // 版本号
+        // dex突破65535的限制
         multiDexEnabled true
     }
+
+    // 构建类型，此处配置debug和release版本的一些参数，像混淆、签名配置。
     buildTypes {
         release {
             minifyEnabled false
