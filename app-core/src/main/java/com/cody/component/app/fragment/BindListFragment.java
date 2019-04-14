@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class BindListFragment<IVD extends ItemMultiViewData> extends SingleBindFragment<FragmentBindListBinding, MaskViewData> implements IBaseListView<IVD>, OnBindingItemClickListener {
-    private MultiBindingPageListAdapter<IVD> mListAdapter;
+    protected MultiBindingPageListAdapter<IVD> mListAdapter;
 
 /*    @Override
     public MultiBindingPageListAdapter<IVD> getListAdapter() {
