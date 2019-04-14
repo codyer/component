@@ -13,20 +13,21 @@
 package com.cody.component.list.viewmodel;
 
 import com.cody.component.handler.BaseViewModel;
-import com.cody.component.lib.safe.SafeMutableLiveData;
+import com.cody.component.list.data.ItemMultiViewData;
 import com.cody.component.list.data.MaskViewData;
-import com.cody.component.list.factory.MultiDataSourceFactory;
-import com.cody.component.list.source.DataSourceWrapper;
-import com.cody.component.list.listener.OnListListener;
-import com.cody.component.list.listener.OnRequestPageListener;
 import com.cody.component.list.define.Operation;
 import com.cody.component.list.define.PageInfo;
 import com.cody.component.list.define.RequestStatus;
-import com.cody.component.list.data.ItemMultiViewData;
-import com.cody.component.list.exception.ParameterNullPointerException;
+import com.cody.component.list.factory.MultiDataSourceFactory;
+import com.cody.component.list.listener.OnListListener;
+import com.cody.component.list.listener.OnRequestPageListener;
+import com.cody.component.list.source.DataSourceWrapper;
+import com.cody.component.list.source.MultiPageKeyedDataSource;
 
 import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
@@ -38,7 +39,10 @@ public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean
         implements OnRequestPageListener<ItemBean>, Function<ItemBean, IVD>, OnListListener {
     private MaskViewData mMaskViewData = new MaskViewData();
     private MultiDataSourceFactory<IVD, ItemBean> mSourceFactory = new MultiDataSourceFactory<>(this, this);
-    private DataSourceWrapper<ItemBean> mWrapper;
+    private DataSourceWrapper<ItemBean> mWrapper = new DataSourceWrapper<>(Transformations.switchMap(mSourceFactory.getDataSource(), MultiPageKeyedDataSource::getRequestStatus),
+            Transformations.switchMap(mSourceFactory.getDataSource(), MultiPageKeyedDataSource::getOperation),
+            mSourceFactory.getDataSource());
+
     private LiveData<PagedList<IVD>> mPagedList = new LivePagedListBuilder<>(mSourceFactory.map(), initPageListConfig()).build();
 
     public MaskViewData getMaskViewData() {
@@ -49,41 +53,24 @@ public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean
         return mPagedList;
     }
 
-    private DataSourceWrapper<ItemBean> getWrapper() {
-        if (mWrapper == null && mSourceFactory.getDataSource() != null && mSourceFactory.getDataSource().getValue() != null) {
-            mWrapper = new DataSourceWrapper<>(mSourceFactory.getDataSource().getValue());
-        }
-        return mWrapper;
+    @Override
+    public MutableLiveData<Operation> getOperation() {
+        return mWrapper.getOperation();
     }
 
     @Override
-    public SafeMutableLiveData<Operation> getOperation() {
-        if (getWrapper() != null) {
-            return getWrapper().getOperation();
-        }
-        throw new ParameterNullPointerException("DataSourceWrapper");
-    }
-
-    @Override
-    public SafeMutableLiveData<RequestStatus> getRequestStatus() {
-        if (getWrapper() != null) {
-            return getWrapper().getRequestStatus();
-        }
-        throw new ParameterNullPointerException("DataSourceWrapper");
+    public MutableLiveData<RequestStatus> getRequestStatus() {
+        return mWrapper.getRequestStatus();
     }
 
     @Override
     public void refresh() {
-        if (getWrapper() != null) {
-            getWrapper().refresh();
-        }
+        mWrapper.refresh();
     }
 
     @Override
     public void retry() {
-        if (getWrapper() != null) {
-            getWrapper().retry();
-        }
+        mWrapper.retry();
     }
 
     /**

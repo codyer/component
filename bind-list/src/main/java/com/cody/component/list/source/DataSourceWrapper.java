@@ -15,50 +15,47 @@ package com.cody.component.list.source;
 import com.cody.component.lib.safe.SafeMutableLiveData;
 import com.cody.component.list.define.Operation;
 import com.cody.component.list.define.RequestStatus;
-import com.cody.component.list.exception.ParameterNullPointerException;
-import com.cody.component.list.listener.OnListListener;
+import com.cody.component.list.listener.OnRefreshListener;
+import com.cody.component.list.listener.OnRetryListener;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by xu.yi. on 2019/4/8.
  * dataSource wrapper
  */
-public class DataSourceWrapper<ItemBean> implements OnListListener {
-    private MultiPageKeyedDataSource<ItemBean> mDataSource;
+public class DataSourceWrapper<ItemBean> implements OnRefreshListener, OnRetryListener {
+    final private MutableLiveData<RequestStatus> mRequestStatus;
+    final private MutableLiveData<Operation> mOperation;
+    final private SafeMutableLiveData<MultiPageKeyedDataSource<ItemBean>> mDataSource;
 
-    public DataSourceWrapper(MultiPageKeyedDataSource<ItemBean> dataSource) {
-        if (dataSource == null) {
-            throw new ParameterNullPointerException("DataSourceWrapper");
-        }
+    public DataSourceWrapper(final LiveData<RequestStatus> requestStatus, final LiveData<Operation> operation,
+                             final SafeMutableLiveData<MultiPageKeyedDataSource<ItemBean>> dataSource) {
+        mRequestStatus = (MutableLiveData<RequestStatus>) requestStatus;
+        mOperation = (MutableLiveData<Operation>) operation;
         mDataSource = dataSource;
+    }
+
+    public MutableLiveData<RequestStatus> getRequestStatus() {
+        return mRequestStatus;
+    }
+
+    public MutableLiveData<Operation> getOperation() {
+        return mOperation;
     }
 
     @Override
     public void refresh() {
-        if (mDataSource != null) {
-            mDataSource.refresh();
+        if (mDataSource != null && mDataSource.getValue() != null) {
+            mDataSource.getValue().refresh();
         }
     }
 
     @Override
     public void retry() {
-        if (mDataSource != null) {
-            mDataSource.retry();
+        if (mDataSource != null && mDataSource.getValue() != null) {
+            mDataSource.getValue().retry();
         }
-    }
-
-    @Override
-    public SafeMutableLiveData<Operation> getOperation() {
-        if (mDataSource != null) {
-            return mDataSource.getOperation();
-        }
-        throw new ParameterNullPointerException("DataSourceWrapper");
-    }
-
-    @Override
-    public SafeMutableLiveData<RequestStatus> getRequestStatus() {
-        if (mDataSource != null) {
-            return mDataSource.getRequestStatus();
-        }
-        throw new ParameterNullPointerException("DataSourceWrapper");
     }
 }

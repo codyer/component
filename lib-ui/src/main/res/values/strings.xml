@@ -19,6 +19,7 @@
     <string name="ui_str_login_or_register">登录/注册</string>
     <string name="ui_str_quick_register">快速注册</string>
     <string name="ui_str_forget_password">忘记密码?</string>
+    <string name="ui_str_confirm">确定</string>
     <string name="ui_str_skip">跳过</string>
     <string name="ui_str_next">下一步</string>
     <string name="ui_str_edit">编辑</string>

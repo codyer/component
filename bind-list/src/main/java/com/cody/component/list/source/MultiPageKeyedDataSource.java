@@ -12,13 +12,11 @@
 
 package com.cody.component.list.source;
 
-import com.cody.component.lib.safe.SafeMutableLiveData;
 import com.cody.component.list.callback.PageDataCallBack;
 import com.cody.component.list.define.Operation;
 import com.cody.component.list.define.PageInfo;
 import com.cody.component.list.define.RequestStatus;
 import com.cody.component.list.listener.OnListListener;
-import com.cody.component.list.listener.OnRefreshListener;
 import com.cody.component.list.listener.OnRequestPageListener;
 import com.cody.component.list.listener.OnRetryListener;
 
@@ -26,6 +24,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
 /**
@@ -35,11 +34,10 @@ import androidx.paging.PageKeyedDataSource;
  */
 public class MultiPageKeyedDataSource<ItemBean> extends PageKeyedDataSource<PageInfo, ItemBean>
         implements OnListListener {
-    private SafeMutableLiveData<RequestStatus> mRequestStatus = new SafeMutableLiveData<>();
-    private SafeMutableLiveData<Operation> mOperation = new SafeMutableLiveData<>();
+    private MutableLiveData<RequestStatus> mRequestStatus = new MutableLiveData<>();
+    private MutableLiveData<Operation> mOperation = new MutableLiveData<>();
     private OnRequestPageListener<ItemBean> mOnRequestPageListener;
     private OnRetryListener mOnRetryListener;
-    private OnRefreshListener mOnRefreshListener;
 
     public MultiPageKeyedDataSource(OnRequestPageListener<ItemBean> onRequestPageListener) {
         mOnRequestPageListener = onRequestPageListener;
@@ -47,21 +45,19 @@ public class MultiPageKeyedDataSource<ItemBean> extends PageKeyedDataSource<Page
     }
 
     @Override
-    public SafeMutableLiveData<RequestStatus> getRequestStatus() {
+    public MutableLiveData<RequestStatus> getRequestStatus() {
         return mRequestStatus;
     }
 
     @Override
-    public SafeMutableLiveData<Operation> getOperation() {
+    public MutableLiveData<Operation> getOperation() {
         return mOperation;
     }
 
     @Override
     public void refresh() {
-        if (mOnRefreshListener != null) {
-            setOperation(Operation.REFRESH);
-            mOnRefreshListener.refresh();
-        }
+        this.invalidate();
+        setOperation(Operation.REFRESH);
     }
 
     @Override
@@ -76,9 +72,6 @@ public class MultiPageKeyedDataSource<ItemBean> extends PageKeyedDataSource<Page
         PageInfo pageInfo = new PageInfo(PageInfo.DEFAULT_PAGE_NO, params.requestedLoadSize, PageInfo.DEFAULT_POSITION);
         if (mOnRetryListener == null) {
             mOnRetryListener = () -> loadInitial(params, callback);
-        }
-        if (mOnRefreshListener == null) {
-            mOnRefreshListener = () -> loadInitial(params, callback);
         }
         requestPageData(pageInfo, new PageDataCallBack<ItemBean>() {
             @Override

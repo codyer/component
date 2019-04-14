@@ -20,10 +20,7 @@ import androidx.lifecycle.MutableLiveData;
  */
 public class SafeMutableLiveData<T> extends MutableLiveData<T> {
     public SafeMutableLiveData(final T value) {
-        super();
-        if (value != null) {
-            postValue(value);
-        }
+        super(value);
     }
 
     public SafeMutableLiveData() {

@@ -102,4 +102,7 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">注册事件</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

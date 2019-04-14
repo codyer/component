@@ -1,16 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ *************************************************************
-  ~ 文件：AndroidManifest.xml  模块：app  项目：component
-  ~ 当前修改时间：2019年04月13日 08:43:54
-  ~ 上次修改时间：2019年04月12日 15:52:45
-  ~ 作者：Cody.yi   https://github.com/codyer
-  ~
-  ~ 描述：app
-  ~ Copyright (c) 2019
-  ~ *************************************************************
-  -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.cody.component">
@@ -23,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".BaseApplication"
         android:allowBackup="false"
@@ -32,6 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".list.ListTestActivity"/>
         <activity android:name=".banner.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

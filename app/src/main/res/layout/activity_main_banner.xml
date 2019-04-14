@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ *************************************************************
   ~ 文件：activity_main_banner.xml  模块：app  项目：component
   ~ 当前修改时间：2019年04月13日 08:43:54
@@ -125,5 +124,13 @@
             android:layout_height="60dp"
             android:onClick="@{onClickListener::onClick}"
             android:text="openHtml" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/testList"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="testList" />
     </LinearLayout>
 </layout>

@@ -58,6 +58,7 @@ public abstract class BindListFragment<IVD extends ItemMultiViewData> extends Si
         getBinding().swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
         getBinding().swipeRefreshLayout.setOnRefreshListener(() -> getListViewModel().refresh());
         getListViewModel().getRequestStatus().observe(this, requestStatus -> {
+            getBinding().swipeRefreshLayout.setRefreshing(requestStatus.isLoading());
             if (mListAdapter.getItemCount() == 0) {//本来为空
                 if (requestStatus.isError()) {
                     getViewData().failedView(requestStatus.getMessage());

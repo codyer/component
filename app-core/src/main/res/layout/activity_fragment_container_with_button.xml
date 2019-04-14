@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：activity_fragment_container_with_button.xml  模块：app-core  项目：component
+  ~ 当前修改时间：2019年04月14日 01:32:56
+  ~ 上次修改时间：2019年04月13日 23:31:06
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：app-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:onClick="@{onClickListener::onClick}"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:context=".activity.FragmentContainerActivity" />
+
+        <Button
+            android:id="@+id/actionBottom"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_normal"
+            android:onClick="@{onClickListener::onClick}"
+            android:padding="@dimen/dimen_normal"
+            android:text="@string/ui_str_confirm"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</layout>

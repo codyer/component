@@ -12,35 +12,35 @@
 
 <resources>
     <!--主题色-->
-    <color name="uiColorPrimary">#ed0c1e</color>
-    <color name="uiColorPrimaryDark">#b20000</color>
-    <color name="uiColorPrimaryAccent">#ff5949</color>
-    <color name="uiColorPrimaryText">#fafafa</color>
-    <color name="uiColorPrimaryBackground">#ffffff</color>
+    <color name="uiColorPrimary">#ED0C1E</color>
+    <color name="uiColorPrimaryDark">#B20000</color>
+    <color name="uiColorPrimaryAccent">#FF5949</color>
+    <color name="uiColorPrimaryText">#FAFAFA</color>
+    <color name="uiColorPrimaryBackground">#FFFFFF</color>
 
-    <color name="uiColorSecondary">#ffffff</color>
-    <color name="uiColorSecondaryDark">#f1f1f1</color>
-    <color name="uiColorSecondaryAccent">#f6f6f6</color>
+    <color name="uiColorSecondary">#FFFFFF</color>
+    <color name="uiColorSecondaryDark">#F1F1F1</color>
+    <color name="uiColorSecondaryAccent">#F6F6F6</color>
     <color name="uiColorSecondaryText">#000000</color>
     <color name="uiColorSecondaryBackground">#F5F5F5</color>
 
-    <color name="uiColorThird">#f6f6f6</color>
-    <color name="uiColorThirdDark">#fcfcfc</color>
-    <color name="uiColorThirdAccent">#ffffff</color>
+    <color name="uiColorThird">#F6F6F6</color>
+    <color name="uiColorThirdDark">#FCFCFC</color>
+    <color name="uiColorThirdAccent">#FFFFFF</color>
     <color name="uiColorThirdText">#666666</color>
-    <color name="uiColorThirdBackground">#ffffff</color>
+    <color name="uiColorThirdBackground">#FFFFFF</color>
 
-    <color name="uiColorWhite">#ffffff</color>
+    <color name="uiColorWhite">#FFFFFF</color>
     <color name="uiColorBlack">#000000</color>
     <color name="uiColorBlue">#1C90DB</color>
     <color name="uiColorGreen">#3BB032</color>
-    <color name="uiColorGray">#d3d3d3</color>
-    <color name="uiColorLightGray">#fafafa</color>
+    <color name="uiColorGray">#D3D3D3</color>
+    <color name="uiColorLightGray">#FAFAFA</color>
     <color name="uiColorGray3">#333333</color>
     <color name="uiColorGray6">#666666</color>
     <color name="uiColorGray9">#999999</color>
     <color name="uiColorTransparent">#00000000</color>
     <color name="uiColorTransparentWhite">#00FFFFFF</color>
-    <color name="uiColorTransparentMask">#22000000</color>
+    <color name="uiColorTransparentMask">#FF000000</color>
     <color name="uiColorLine">#F5F5F5</color>
 </resources>
