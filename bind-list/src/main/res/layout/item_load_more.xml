@@ -46,7 +46,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dimen_line"
                 android:layout_weight="1"
-                android:background="@color/uiColorLine" />
+                android:background="@color/uiColorGray9" />
 
             <TextView
                 android:id="@+id/loadMoreInfo"
@@ -62,7 +62,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/dimen_line"
                 android:layout_weight="1"
-                android:background="@color/uiColorLine" />
+                android:background="@color/uiColorGray9" />
 
         </LinearLayout>
 
