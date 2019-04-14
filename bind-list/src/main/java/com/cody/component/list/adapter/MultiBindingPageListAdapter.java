@@ -148,10 +148,10 @@ public abstract class MultiBindingPageListAdapter<VD extends ItemMultiViewData> 
     }
 
     private boolean hasHeaderItem() {
-        return (mOperation == Operation.LOAD_BEFORE) && mRequestStatus != null && (mRequestStatus.isError() || mRequestStatus.isLoading());
+        return (mOperation == Operation.LOAD_BEFORE) && mRequestStatus != null && (!mRequestStatus.isLoaded());
     }
 
     private boolean hasFooterItem() {
-        return (mOperation == Operation.LOAD_AFTER) && mRequestStatus != null && (mRequestStatus.isError() || mRequestStatus.isLoading());
+        return (mOperation == Operation.LOAD_AFTER) && mRequestStatus != null && (!mRequestStatus.isLoaded());
     }
 }

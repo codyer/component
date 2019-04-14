@@ -12,6 +12,9 @@
 
 package com.cody.component.list;
 
+import android.text.TextUtils;
+
+import com.cody.component.lib.data.IViewData;
 import com.cody.component.list.data.ItemMultiViewData;
 
 /**
@@ -32,5 +35,15 @@ public class ItemTestViewData extends ItemMultiViewData {
 
     public void setTest(final String test) {
         this.test = test;
+    }
+
+    @Override
+    public boolean areItemsTheSame(final IViewData newBind) {
+        return TextUtils.equals(test, ((ItemTestViewData) newBind).getTest());
+    }
+
+    @Override
+    public boolean areContentsTheSame(final IViewData newBind) {
+        return TextUtils.equals(test, ((ItemTestViewData) newBind).getTest());
     }
 }
