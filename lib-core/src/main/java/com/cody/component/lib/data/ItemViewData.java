@@ -18,7 +18,16 @@ package com.cody.component.lib.data;
  */
 public class ItemViewData extends ViewData {
     private static final long serialVersionUID = -6368977380223902277L;
+    private int mItemId = 0;
     private int mItemType = 0;//不要为负数
+
+    public int getItemId() {
+        return mItemId;
+    }
+
+    public void setItemId(final int itemId) {
+        mItemId = itemId;
+    }
 
     public int getItemType() {
         return mItemType;
@@ -26,5 +35,18 @@ public class ItemViewData extends ViewData {
 
     public void setItemType(int itemType) {
         mItemType = itemType;
+    }
+
+    @Override
+    public boolean areItemsTheSame(final IViewData newBind) {
+        if (newBind instanceof ItemViewData) {
+            return mItemId == ((ItemViewData) newBind).getItemId();
+        }
+        return super.areItemsTheSame(newBind);
+    }
+
+    @Override
+    public boolean areContentsTheSame(final IViewData newBind) {
+        return this.equals(newBind);
     }
 }

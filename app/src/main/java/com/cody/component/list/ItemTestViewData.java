@@ -29,6 +29,21 @@ public class ItemTestViewData extends ItemMultiViewData {
         this.test = test;
     }
 
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final ItemTestViewData that = (ItemTestViewData) o;
+
+        return test != null ? test.equals(that.test) : that.test == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return test != null ? test.hashCode() : 0;
+    }
+
     public String getTest() {
         return test;
     }
@@ -37,13 +52,13 @@ public class ItemTestViewData extends ItemMultiViewData {
         this.test = test;
     }
 
-    @Override
-    public boolean areItemsTheSame(final IViewData newBind) {
-        return TextUtils.equals(test, ((ItemTestViewData) newBind).getTest());
-    }
-
-    @Override
-    public boolean areContentsTheSame(final IViewData newBind) {
-        return TextUtils.equals(test, ((ItemTestViewData) newBind).getTest());
-    }
+//    @Override
+//    public boolean areItemsTheSame(final IViewData newBind) {
+//        return TextUtils.equals(test, ((ItemTestViewData) newBind).getTest());
+//    }
+//
+//    @Override
+//    public boolean areContentsTheSame(final IViewData newBind) {
+//        return TextUtils.equals(test, ((ItemTestViewData) newBind).getTest());
+//    }
 }
