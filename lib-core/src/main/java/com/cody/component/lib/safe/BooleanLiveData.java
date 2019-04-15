@@ -17,6 +17,9 @@ package com.cody.component.lib.safe;
  * component
  */
 public class BooleanLiveData extends SafeMutableLiveData<Boolean> {
+    public BooleanLiveData(final Boolean value) {
+        super(value);
+    }
 
     public void negation() {
         Boolean old = getValue();

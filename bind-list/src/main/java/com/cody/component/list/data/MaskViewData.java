@@ -12,9 +12,11 @@
 
 package com.cody.component.list.data;
 
-import com.cody.component.lib.safe.SafeMutableLiveData;
-import com.cody.component.list.R;
 import com.cody.component.lib.data.ViewData;
+import com.cody.component.lib.safe.BooleanLiveData;
+import com.cody.component.lib.safe.IntegerLiveData;
+import com.cody.component.lib.safe.StringLiveData;
+import com.cody.component.list.R;
 
 /**
  * Created by xu.yi. on 2019/4/9.
@@ -22,10 +24,10 @@ import com.cody.component.lib.data.ViewData;
  */
 public class MaskViewData extends ViewData {
     private static final long serialVersionUID = -381194114860141421L;
-    private final SafeMutableLiveData<Boolean> mVisibility = new SafeMutableLiveData<>(false);
-    private final SafeMutableLiveData<Integer> mInfoId = new SafeMutableLiveData<>(R.string.ui_str_no_content);
-    private final SafeMutableLiveData<String> mMessage = new SafeMutableLiveData<>("");
-    private final SafeMutableLiveData<Integer> mImageId = new SafeMutableLiveData<>(R.drawable.ic_no_content);
+    private final BooleanLiveData mVisibility = new BooleanLiveData(false);
+    private final IntegerLiveData mInfoId = new IntegerLiveData(R.string.ui_str_no_content);
+    private final StringLiveData mMessage = new StringLiveData("");
+    private final IntegerLiveData mImageId = new IntegerLiveData(R.drawable.ic_no_content);
 
     public void hideMaskView() {
         mVisibility.postValue(false);
@@ -57,19 +59,19 @@ public class MaskViewData extends ViewData {
     public MaskViewData() {
     }
 
-    public SafeMutableLiveData<Boolean> getVisibility() {
+    public BooleanLiveData getVisibility() {
         return mVisibility;
     }
 
-    public SafeMutableLiveData<Integer> getInfoId() {
+    public IntegerLiveData getInfoId() {
         return mInfoId;
     }
 
-    public SafeMutableLiveData<String> getMessage() {
+    public StringLiveData getMessage() {
         return mMessage;
     }
 
-    public SafeMutableLiveData<Integer> getImageId() {
+    public IntegerLiveData getImageId() {
         return mImageId;
     }
 }

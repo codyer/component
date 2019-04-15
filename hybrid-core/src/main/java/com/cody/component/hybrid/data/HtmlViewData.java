@@ -15,7 +15,9 @@ package com.cody.component.hybrid.data;
 import com.cody.component.hybrid.R;
 import com.cody.component.lib.BuildConfig;
 import com.cody.component.lib.data.ViewData;
-import com.cody.component.lib.safe.SafeMutableLiveData;
+import com.cody.component.lib.safe.BooleanLiveData;
+import com.cody.component.lib.safe.IntegerLiveData;
+import com.cody.component.lib.safe.StringLiveData;
 
 /**
  * Created by xu.yi. on 2019/4/11.
@@ -25,14 +27,14 @@ public class HtmlViewData extends ViewData {
     private static final long serialVersionUID = -5654022087355170345L;
     public final static int MAX_PROGRESS = 100;
     private boolean mIgnoreError = false;
-    final private SafeMutableLiveData<Boolean> mLoading = new SafeMutableLiveData<>(true);
-    final private SafeMutableLiveData<Boolean> mShowHeader = new SafeMutableLiveData<>(true);
-    final private SafeMutableLiveData<Boolean> mError = new SafeMutableLiveData<>(false);
-    final private SafeMutableLiveData<Boolean> mDebug = new SafeMutableLiveData<>(BuildConfig.DEBUG);
-    final private SafeMutableLiveData<Integer> mProgress = new SafeMutableLiveData<>(0);
-    final private SafeMutableLiveData<String> mHeader = new SafeMutableLiveData<>("");
-    final private SafeMutableLiveData<String> mMessage = new SafeMutableLiveData<>("");
-    final private SafeMutableLiveData<String> mUrl = new SafeMutableLiveData<>("");
+    final private BooleanLiveData mLoading = new BooleanLiveData(true);
+    final private BooleanLiveData mShowHeader = new BooleanLiveData(true);
+    final private BooleanLiveData mError = new BooleanLiveData(false);
+    final private BooleanLiveData mDebug = new BooleanLiveData(BuildConfig.DEBUG);
+    final private IntegerLiveData mProgress = new IntegerLiveData(0);
+    final private StringLiveData mHeader = new StringLiveData("");
+    final private StringLiveData mMessage = new StringLiveData("");
+    final private StringLiveData mUrl = new StringLiveData("");
     private int loadingResId = R.drawable.ic_loading_gif;
 
     public int getLoadingResId() {
@@ -43,11 +45,11 @@ public class HtmlViewData extends ViewData {
         this.loadingResId = loadingResId;
     }
 
-    public SafeMutableLiveData<Boolean> getLoading() {
+    public BooleanLiveData getLoading() {
         return mLoading;
     }
 
-    public SafeMutableLiveData<Boolean> getShowHeader() {
+    public BooleanLiveData getShowHeader() {
         return mShowHeader;
     }
 
@@ -62,23 +64,23 @@ public class HtmlViewData extends ViewData {
         setError(false);
     }
 
-    public SafeMutableLiveData<Boolean> getError() {
+    public BooleanLiveData getError() {
         return mError;
     }
 
-    public SafeMutableLiveData<Boolean> getDebug() {
+    public BooleanLiveData getDebug() {
         return mDebug;
     }
 
-    public SafeMutableLiveData<Integer> getProgress() {
+    public IntegerLiveData getProgress() {
         return mProgress;
     }
 
-    public SafeMutableLiveData<String> getHeader() {
+    public StringLiveData getHeader() {
         return mHeader;
     }
 
-    public SafeMutableLiveData<String> getMessage() {
+    public StringLiveData getMessage() {
         return mMessage;
     }
 
@@ -87,7 +89,7 @@ public class HtmlViewData extends ViewData {
         mUrl.setValue(url);
     }
 
-    public SafeMutableLiveData<String> getUrl() {
+    public StringLiveData getUrl() {
         return mUrl;
     }
 

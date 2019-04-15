@@ -13,7 +13,8 @@
 package com.cody.component.list.data;
 
 import com.cody.component.lib.data.ItemViewData;
-import com.cody.component.lib.safe.SafeMutableLiveData;
+import com.cody.component.lib.safe.BooleanLiveData;
+import com.cody.component.lib.safe.StringLiveData;
 import com.cody.component.list.define.RequestStatus;
 
 
@@ -23,24 +24,24 @@ import com.cody.component.list.define.RequestStatus;
  */
 public class ItemMultiViewData extends ItemViewData {
     private static final long serialVersionUID = 6101620960031035326L;
-    final private SafeMutableLiveData<Boolean> mNoMoreItem = new SafeMutableLiveData<>(false);
-    final private SafeMutableLiveData<Boolean> mError = new SafeMutableLiveData<>(false);
-    final private SafeMutableLiveData<Boolean> mLoading = new SafeMutableLiveData<>(false);
-    final private SafeMutableLiveData<String> mErrorMessage = new SafeMutableLiveData<>("");
+    final private BooleanLiveData mNoMoreItem = new BooleanLiveData(false);
+    final private BooleanLiveData mError = new BooleanLiveData(false);
+    final private BooleanLiveData mLoading = new BooleanLiveData(false);
+    final private StringLiveData mErrorMessage = new StringLiveData("");
 
-    public SafeMutableLiveData<Boolean> getNoMoreItem() {
+    public BooleanLiveData getNoMoreItem() {
         return mNoMoreItem;
     }
 
-    public SafeMutableLiveData<Boolean> getError() {
+    public BooleanLiveData getError() {
         return mError;
     }
 
-    public SafeMutableLiveData<Boolean> getLoading() {
+    public BooleanLiveData getLoading() {
         return mLoading;
     }
 
-    public SafeMutableLiveData<String> getErrorMessage() {
+    public StringLiveData getErrorMessage() {
         return mErrorMessage;
     }
 
