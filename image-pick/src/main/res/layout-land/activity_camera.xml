@@ -25,37 +25,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
+        <!--左侧相机预览布局-->
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal">
 
-            <!--相机裁剪区域顶部-->
-            <TextView
-                android:id="@+id/touch_hint"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+            <!--相机裁剪区域左边-->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="5"
                 android:background="@color/uiColorMask"
-                android:gravity="center"
-                android:text="@string/touch_to_focus"
-                android:textColor="@color/uiColorGray9"
-                android:textSize="@dimen/ui_font_normal"
                 tools:ignore="NestedWeights" />
 
             <LinearLayout
                 android:id="@+id/camera_crop_container"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <!--相机裁剪区域左边-->
+                <!--相机裁剪区域顶部-->
                 <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="@color/uiColorMask" />
 
@@ -74,30 +70,33 @@
                     android:layout_height="wrap_content"
                     android:visibility="gone" />
 
-                <!--相机裁剪区域左边-->
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <!--相机裁剪区域底部-->
+                <TextView
+                    android:id="@+id/touch_hint"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/uiColorMask" />
+                    android:background="@color/uiColorMask"
+                    android:gravity="center"
+                    android:text="@string/touch_to_focus"
+                    android:textColor="@color/uiColorGray9"
+                    android:textSize="@dimen/ui_font_normal" />
 
             </LinearLayout>
 
-            <!--相机裁剪区域顶部-->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+            <!--相机裁剪区域右边-->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:background="@color/uiColorMask"
-                android:gravity="center"
-                tools:ignore="NestedWeights" />
+                android:background="@color/uiColorMask" />
 
         </LinearLayout>
 
-        <!--底部操作布局-->
+        <!--右侧操作布局-->
         <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/uiColorMask">
 
             <!--拍照前操作布局-->
@@ -106,14 +105,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/camera_close"
+                    android:id="@+id/camera_flash"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@null"
-                    android:src="@mipmap/camera_close" />
+                    android:src="@mipmap/camera_flash_off" />
 
                 <ImageView
                     android:id="@+id/camera_take"
@@ -124,11 +123,11 @@
                     android:src="@mipmap/camera_take" />
 
                 <ImageView
-                    android:id="@+id/camera_flash"
+                    android:id="@+id/camera_close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@null"
-                    android:src="@mipmap/camera_flash_off" />
+                    android:src="@mipmap/camera_close" />
 
             </LinearLayout>
 
@@ -138,23 +137,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:visibility="gone">
 
                 <ImageView
-                    android:id="@+id/camera_result_cancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@null"
-                    android:src="@mipmap/camera_result_cancel" />
-
-                <ImageView
                     android:id="@+id/camera_result_ok"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="80dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:contentDescription="@null"
                     android:src="@mipmap/camera_result_ok" />
+
+                <ImageView
+                    android:id="@+id/camera_result_cancel"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="80dp"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/camera_result_cancel" />
 
             </LinearLayout>
 

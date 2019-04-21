@@ -166,6 +166,22 @@
                     android:onClick="@{onClickListener::onClick}"
                     android:text="身份证反面" />
 
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/testCompanyV"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:text="营业执照垂直" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/testCompanyH"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:text="营业执照水平" />
+
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

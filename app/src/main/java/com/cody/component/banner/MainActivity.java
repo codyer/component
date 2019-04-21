@@ -87,6 +87,12 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
             case R.id.testBehind:
                 backIdCard();
                 break;
+            case R.id.testCompanyV:
+                companyV();
+                break;
+            case R.id.testCompanyH:
+                companyH();
+                break;
         }
     }
 
@@ -122,6 +128,19 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
      */
     public void backIdCard() {
         CameraActivity.toCameraActivity(this, CameraActivity.TYPE_IDCARD_BACK);
+    }
+    /**
+     * 营业执照水平
+     */
+    public void companyH() {
+        CameraActivity.toCameraActivity(this, CameraActivity.TYPE_COMPANY_LANDSCAPE);
+    }
+
+    /**
+     * 营业执照垂直
+     */
+    public void companyV() {
+        CameraActivity.toCameraActivity(this, CameraActivity.TYPE_COMPANY_PORTRAIT);
     }
 
     @Override

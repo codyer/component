@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,33 +48,50 @@ import androidx.core.app.ActivityCompat;
  */
 public class CameraActivity extends Activity implements View.OnClickListener {
 
-    public final static  int     TYPE_IDCARD_FRONT     = 1;//身份证正面
-    public final static  int     TYPE_IDCARD_BACK      = 2;//身份证反面
-    public final static  int     REQUEST_CODE          = 0X11;//请求码
-    public final static  int     RESULT_CODE           = 0X12;//结果码
-    private final        int     PERMISSION_CODE_FIRST = 0x13;//权限请求码
-    private final static String TAKE_TYPE             = "take_type";//拍摄类型标记
-    private final static String IMAGE_PATH            = "image_path";//图片路径标记
-    private              int     mType;//拍摄类型
-    private              boolean isToast               = true;//是否弹吐司，为了保证for循环只弹一次
+    /**
+     * 拍摄类型-身份证正面
+     */
+    public final static int TYPE_IDCARD_FRONT = 1;
+    /**
+     * 拍摄类型-身份证反面
+     */
+    public final static int TYPE_IDCARD_BACK = 2;
+    /**
+     * 拍摄类型-竖版营业执照
+     */
+    public final static int TYPE_COMPANY_PORTRAIT = 3;
+    /**
+     * 拍摄类型-横版营业执照
+     */
+    public final static int TYPE_COMPANY_LANDSCAPE = 4;
+
+    public final static int REQUEST_CODE = 0X11;//请求码
+    public final static int RESULT_CODE = 0X12;//结果码
+    private final int PERMISSION_CODE_FIRST = 0x13;//权限请求码
+    private final static String TAKE_TYPE = "take_type";//拍摄类型标记
+    private final static String IMAGE_PATH = "image_path";//图片路径标记
+    private int mType;//拍摄类型
+    private boolean isToast = true;//是否弹吐司，为了保证for循环只弹一次
 
     private CropImageView mCropImageView;
     private Bitmap mCropBitmap;
     private CameraPreview mCameraPreview;
-    private View mLlCameraCropContainer;
-    private ImageView mIvCameraCrop;
-    private ImageView mIvCameraFlash;
-    private View mLlCameraOption;
-    private View mLlCameraResult;
-    private TextView mViewCameraCropBottom;
-    private FrameLayout mFlCameraOption;
-    private View mViewCameraCropLeft;
+    private View mContainerView;
+    private ImageView mCropView;
+    private ImageView mFlashView;
+    private View mOptionView;
+    private View mResultView;
+    private TextView mTouchHint;
 
     /**
      * 跳转到拍照界面
      *
      * @param activity
      * @param type     拍摄类型
+     *                 {@link #TYPE_IDCARD_FRONT}
+     *                 {@link #TYPE_IDCARD_BACK}
+     *                 {@link #TYPE_COMPANY_PORTRAIT}
+     *                 {@link #TYPE_COMPANY_LANDSCAPE}
      */
     public static void toCameraActivity(Activity activity, int type) {
         Intent intent = new Intent(activity, CameraActivity.class);
@@ -140,45 +158,71 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     }
 
     private void init() {
-        setContentView(R.layout.activity_camera);
         mType = getIntent().getIntExtra(TAKE_TYPE, 0);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        if (mType == TYPE_COMPANY_PORTRAIT) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+        setContentView(R.layout.activity_camera);
         initView();
         initListener();
     }
 
     private void initView() {
         mCameraPreview = (CameraPreview) findViewById(R.id.camera_preview);
-        mLlCameraCropContainer = findViewById(R.id.ll_camera_crop_container);
-        mIvCameraCrop = (ImageView) findViewById(R.id.iv_camera_crop);
-        mIvCameraFlash = (ImageView) findViewById(R.id.iv_camera_flash);
-        mLlCameraOption = findViewById(R.id.ll_camera_option);
-        mLlCameraResult = findViewById(R.id.ll_camera_result);
         mCropImageView = findViewById(R.id.crop_image_view);
-        mViewCameraCropBottom = (TextView) findViewById(R.id.view_camera_crop_bottom);
-        mFlCameraOption = (FrameLayout) findViewById(R.id.fl_camera_option);
-        mViewCameraCropLeft = findViewById(R.id.view_camera_crop_left);
-
+        mFlashView = (ImageView) findViewById(R.id.camera_flash);
+        mOptionView = findViewById(R.id.camera_option);
+        mResultView = findViewById(R.id.camera_result);
+        mContainerView = findViewById(R.id.camera_crop_container);
+        mCropView = findViewById(R.id.camera_crop);
+        mTouchHint = findViewById(R.id.touch_hint);
         float screenMinSize = Math.min(ScreenUtils.getScreenWidth(this), ScreenUtils.getScreenHeight(this));
         float screenMaxSize = Math.max(ScreenUtils.getScreenWidth(this), ScreenUtils.getScreenHeight(this));
-        float height = (int) (screenMinSize * 0.75);
-        float width = (int) (height * 75.0f / 47.0f);
-        //获取底部"操作区域"的宽度
-        float flCameraOptionWidth = (screenMaxSize - width) / 2;
-        LinearLayout.LayoutParams containerParams = new LinearLayout.LayoutParams((int) width, ViewGroup.LayoutParams.MATCH_PARENT);
-        LinearLayout.LayoutParams cropParams = new LinearLayout.LayoutParams((int) width, (int) height);
-        LinearLayout.LayoutParams cameraOptionParams = new LinearLayout.LayoutParams((int) flCameraOptionWidth, ViewGroup.LayoutParams.MATCH_PARENT);
-        mLlCameraCropContainer.setLayoutParams(containerParams);
-        mIvCameraCrop.setLayoutParams(cropParams);
-        //获取"相机裁剪区域"的宽度来动态设置底部"操作区域"的宽度，使"相机裁剪区域"居中
-        mFlCameraOption.setLayoutParams(cameraOptionParams);
+        RelativeLayout.LayoutParams layoutParams;
+        if (mType == TYPE_COMPANY_PORTRAIT) {
+            layoutParams = new RelativeLayout.LayoutParams((int) screenMinSize, (int) screenMaxSize);
+        } else {
+            layoutParams = new RelativeLayout.LayoutParams((int) screenMaxSize, (int) screenMinSize);
+        }
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        mCameraPreview.setLayoutParams(layoutParams);
 
+        if (mType == TYPE_COMPANY_PORTRAIT) {
+            float width = (int) (screenMinSize * 0.8);
+            float height = (int) (width * 43.0f / 30.0f);
+            LinearLayout.LayoutParams containerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) height);
+            LinearLayout.LayoutParams cropParams = new LinearLayout.LayoutParams((int) width, (int) height);
+            mContainerView.setLayoutParams(containerParams);
+            mCropView.setLayoutParams(cropParams);
+        } else if (mType == TYPE_COMPANY_LANDSCAPE) {
+            float height = (int) (screenMinSize * 0.8);
+            float width = (int) (height * 43.0f / 30.0f);
+            LinearLayout.LayoutParams containerParams = new LinearLayout.LayoutParams((int) width, ViewGroup.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams cropParams = new LinearLayout.LayoutParams((int) width, (int) height);
+            mContainerView.setLayoutParams(containerParams);
+            mCropView.setLayoutParams(cropParams);
+        } else {
+            float height = (int) (screenMinSize * 0.75);
+            float width = (int) (height * 75.0f / 47.0f);
+            LinearLayout.LayoutParams containerParams = new LinearLayout.LayoutParams((int) width, ViewGroup.LayoutParams.MATCH_PARENT);
+            LinearLayout.LayoutParams cropParams = new LinearLayout.LayoutParams((int) width, (int) height);
+            mContainerView.setLayoutParams(containerParams);
+            mCropView.setLayoutParams(cropParams);
+        }
         switch (mType) {
             case TYPE_IDCARD_FRONT:
-                mIvCameraCrop.setImageResource(R.mipmap.camera_idcard_front);
+                mCropView.setImageResource(R.mipmap.camera_idcard_front);
                 break;
             case TYPE_IDCARD_BACK:
-                mIvCameraCrop.setImageResource(R.mipmap.camera_idcard_back);
+                mCropView.setImageResource(R.mipmap.camera_idcard_back);
+                break;
+            case TYPE_COMPANY_PORTRAIT:
+                mCropView.setImageResource(R.mipmap.camera_company);
+                break;
+            case TYPE_COMPANY_LANDSCAPE:
+                mCropView.setImageResource(R.mipmap.camera_company_landscape);
                 break;
         }
 
@@ -198,11 +242,11 @@ public class CameraActivity extends Activity implements View.OnClickListener {
 
     private void initListener() {
         mCameraPreview.setOnClickListener(this);
-        mIvCameraFlash.setOnClickListener(this);
-        findViewById(R.id.iv_camera_close).setOnClickListener(this);
-        findViewById(R.id.iv_camera_take).setOnClickListener(this);
-        findViewById(R.id.iv_camera_result_ok).setOnClickListener(this);
-        findViewById(R.id.iv_camera_result_cancel).setOnClickListener(this);
+        findViewById(R.id.camera_close).setOnClickListener(this);
+        findViewById(R.id.camera_take).setOnClickListener(this);
+        mFlashView.setOnClickListener(this);
+        findViewById(R.id.camera_result_ok).setOnClickListener(this);
+        findViewById(R.id.camera_result_cancel).setOnClickListener(this);
     }
 
     @Override
@@ -210,20 +254,20 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         int id = v.getId();
         if (id == R.id.camera_preview) {
             mCameraPreview.focus();
-        } else if (id == R.id.iv_camera_close) {
+        } else if (id == R.id.camera_close) {
             finish();
-        } else if (id == R.id.iv_camera_take) {
+        } else if (id == R.id.camera_take) {
             takePhoto();
-        } else if (id == R.id.iv_camera_flash) {
+        } else if (id == R.id.camera_flash) {
             boolean isFlashOn = mCameraPreview.switchFlashLight();
-            mIvCameraFlash.setImageResource(isFlashOn ? R.mipmap.camera_flash_on : R.mipmap.camera_flash_off);
-        } else if (id == R.id.iv_camera_result_ok) {
+            mFlashView.setImageResource(isFlashOn ? R.mipmap.camera_flash_on : R.mipmap.camera_flash_off);
+        } else if (id == R.id.camera_result_ok) {
             confirm();
-        } else if (id == R.id.iv_camera_result_cancel) {
+        } else if (id == R.id.camera_result_cancel) {
             mCameraPreview.setEnabled(true);
             mCameraPreview.addCallback();
             mCameraPreview.startPreview();
-            mIvCameraFlash.setImageResource(R.mipmap.camera_flash_off);
+            mFlashView.setImageResource(R.mipmap.camera_flash_off);
             setTakePhotoLayout();
         }
     }
@@ -255,31 +299,33 @@ public class CameraActivity extends Activity implements View.OnClickListener {
      * 裁剪图片
      */
     private void cropImage(Bitmap bitmap) {
-        /*计算扫描框的坐标点*/
-        float left = mViewCameraCropLeft.getWidth();
-        float top = mIvCameraCrop.getTop();
-        float right = mIvCameraCrop.getRight() + left;
-        float bottom = mIvCameraCrop.getBottom();
+        //计算裁剪位置
+        float left, top, right, bottom;
+        if (mType == TYPE_COMPANY_PORTRAIT) {
+            left = (float) mCropView.getLeft() / (float) mCameraPreview.getWidth();
+            top = ((float) mContainerView.getTop() - (float) mCameraPreview.getTop()) / (float) mCameraPreview.getHeight();
+            right = (float) mCropView.getRight() / (float) mCameraPreview.getWidth();
+            bottom = (float) mContainerView.getBottom() / (float) mCameraPreview.getHeight();
+        } else {
+            left = ((float) mContainerView.getLeft() - (float) mCameraPreview.getLeft()) / (float) mCameraPreview.getWidth();
+            top = (float) mCropView.getTop() / (float) mCameraPreview.getHeight();
+            right = (float) mContainerView.getRight() / (float) mCameraPreview.getWidth();
+            bottom = (float) mCropView.getBottom() / (float) mCameraPreview.getHeight();
+        }
 
-        /*计算扫描框坐标点占原图坐标点的比例*/
-        float leftProportion = left / mCameraPreview.getWidth();
-        float topProportion = top / mCameraPreview.getHeight();
-        float rightProportion = right / mCameraPreview.getWidth();
-        float bottomProportion = bottom / mCameraPreview.getBottom();
-
-        /*自动裁剪*/
+        //裁剪及保存到文件
         mCropBitmap = Bitmap.createBitmap(bitmap,
-                (int) (leftProportion * (float) bitmap.getWidth()),
-                (int) (topProportion * (float) bitmap.getHeight()),
-                (int) ((rightProportion - leftProportion) * (float) bitmap.getWidth()),
-                (int) ((bottomProportion - topProportion) * (float) bitmap.getHeight()));
+                (int) (left * (float) bitmap.getWidth()),
+                (int) (top * (float) bitmap.getHeight()),
+                (int) ((right - left) * (float) bitmap.getWidth()),
+                (int) ((bottom - top) * (float) bitmap.getHeight()));
 
         /*设置成手动裁剪模式*/
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 //将手动裁剪区域设置成与扫描框一样大
-                mCropImageView.setLayoutParams(new LinearLayout.LayoutParams(mIvCameraCrop.getWidth(), mIvCameraCrop.getHeight()));
+                mCropImageView.setLayoutParams(new LinearLayout.LayoutParams(mCropView.getWidth(), mCropView.getHeight()));
                 setCropLayout();
                 mCropImageView.setImageBitmap(mCropBitmap);
             }
@@ -290,25 +336,24 @@ public class CameraActivity extends Activity implements View.OnClickListener {
      * 设置裁剪布局
      */
     private void setCropLayout() {
-        mIvCameraCrop.setVisibility(View.GONE);
+        mCropView.setVisibility(View.GONE);
         mCameraPreview.setVisibility(View.GONE);
-        mLlCameraOption.setVisibility(View.GONE);
+        mOptionView.setVisibility(View.INVISIBLE);
         mCropImageView.setVisibility(View.VISIBLE);
-        mLlCameraResult.setVisibility(View.VISIBLE);
-        mViewCameraCropBottom.setText("");
+        mResultView.setVisibility(View.VISIBLE);
+        mTouchHint.setText("");
     }
 
     /**
      * 设置拍照布局
      */
     private void setTakePhotoLayout() {
-        mIvCameraCrop.setVisibility(View.VISIBLE);
+        mCropView.setVisibility(View.VISIBLE);
         mCameraPreview.setVisibility(View.VISIBLE);
-        mLlCameraOption.setVisibility(View.VISIBLE);
+        mOptionView.setVisibility(View.VISIBLE);
         mCropImageView.setVisibility(View.GONE);
-        mLlCameraResult.setVisibility(View.GONE);
-        mViewCameraCropBottom.setText(getString(R.string.touch_to_focus));
-
+        mResultView.setVisibility(View.GONE);
+        mTouchHint.setText(getString(R.string.touch_to_focus));
         mCameraPreview.focus();
     }
 
