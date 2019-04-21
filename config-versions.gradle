@@ -43,7 +43,9 @@ ext {
             "adapter-rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
             "rxandroid"       : "io.reactivex.rxjava2:rxandroid:2.1.0",
 
-            "image-picker"    : "com.lzy.widget:imagepicker:0.6.1",
+            "image-picker"    : "com.cysion:ImagePicker:1.0.6",
+            //二维码
+            "qrcode"          : "cn.bingoogolapple:bga-qrcode-zxing:1.3.4",
 
 // local maven
             "component"       : "com.github.codyer:component:component:${componentVersion}",

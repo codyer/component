@@ -22,7 +22,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.cody.component.image.certificate.utils.ScreenUtils;
+import com.cody.component.image.utils.ScreenUtils;
 
 import java.util.List;
 

@@ -34,13 +34,14 @@ import com.cody.component.image.R;
 import com.cody.component.image.certificate.cropper.CropImageView;
 import com.cody.component.image.certificate.cropper.CropListener;
 import com.cody.component.image.certificate.global.Constant;
-import com.cody.component.image.certificate.utils.FileUtils;
-import com.cody.component.image.certificate.utils.ImageUtils;
-import com.cody.component.image.certificate.utils.PermissionUtils;
-import com.cody.component.image.certificate.utils.ScreenUtils;
+import com.cody.component.image.utils.FileUtils;
+import com.cody.component.image.utils.ImageUtils;
+import com.cody.component.image.utils.PermissionUtils;
+import com.cody.component.image.utils.ScreenUtils;
 
 import java.util.Date;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 
@@ -136,7 +137,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
      * @param grantResults 请求权限结果数组
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         boolean isPermissions = true;
         for (int i = 0; i < permissions.length; i++) {

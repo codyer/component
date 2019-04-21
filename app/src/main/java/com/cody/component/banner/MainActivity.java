@@ -32,6 +32,7 @@ import com.cody.component.data.remote.CatHttpBin$DataSource;
 import com.cody.component.databinding.ActivityMainBannerBinding;
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.image.certificate.camera.CameraActivity;
+import com.cody.component.image.scan.ScanActivity;
 import com.cody.component.list.ListTestActivity;
 import com.cody.component.util.ActivityUtil;
 import com.cody.http.cat.HttpCat;
@@ -93,6 +94,9 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
             case R.id.testCompanyH:
                 companyH();
                 break;
+            case R.id.scan:
+                ScanActivity.openScanActivity();
+                break;
         }
     }
 
@@ -129,6 +133,7 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
     public void backIdCard() {
         CameraActivity.openCameraActivity(this, CameraActivity.TYPE_ID_CARD_BACK);
     }
+
     /**
      * 营业执照水平
      */
@@ -152,6 +157,10 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
             if (!TextUtils.isEmpty(path)) {
                 getBinding().identify.setImageBitmap(BitmapFactory.decodeFile(path));
             }
+        }
+        String result = ScanActivity.getScanResult(requestCode, resultCode, data);
+        if (!TextUtils.isEmpty(result)) {
+            showToast(result);
         }
     }
 

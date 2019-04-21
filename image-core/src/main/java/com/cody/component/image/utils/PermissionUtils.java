@@ -10,7 +10,7 @@
  * ************************************************************
  */
 
-package com.cody.component.image.certificate.utils;
+package com.cody.component.image.utils;
 
 import android.app.Activity;
 import android.content.Context;

@@ -11,6 +11,11 @@
   -->
 
 <resources>
+    <string name="photo">相册</string>
     <string name="touch_to_focus">触摸屏幕对焦</string>
     <string name="crop_fail">裁剪失败</string>
+    <string name="scan_hint">将二维码/条码放入框内，即可自动扫描</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

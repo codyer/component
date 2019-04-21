@@ -1,0 +1,64 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：activity_scan.xml  模块：image-core  项目：component
+  ~ 当前修改时间：2019年04月21日 17:28:51
+  ~ 上次修改时间：2019年03月01日 19:38:59
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：image-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:onClick="@{onClickListener::onClick}"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        <cn.bingoogolapple.qrcode.zxing.ZXingView
+            android:id="@+id/qrCodeView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bind:qrcv_animTime="1000"
+            bind:qrcv_borderColor="@color/uiColorPrimaryBackground"
+            bind:qrcv_borderSize="@dimen/dimen_line"
+            bind:qrcv_cornerColor="@color/uiColorPrimaryAccent"
+            bind:qrcv_cornerLength="@dimen/dimen_bigger"
+            bind:qrcv_cornerSize="@dimen/dimen_super_tiny"
+            bind:qrcv_isAutoZoom="true"
+            bind:qrcv_isOnlyDecodeScanBoxArea="true"
+            bind:qrcv_isShowDefaultGridScanLineDrawable="true"
+            bind:qrcv_isShowLocationPoint="true"
+            bind:qrcv_isShowTipTextAsSingleLine="true"
+            bind:qrcv_isTipTextBelowRect="true"
+            bind:qrcv_maskColor="@color/uiColorMask"
+            bind:qrcv_qrCodeTipText="@string/scan_hint"
+            bind:qrcv_rectWidth="200dp"
+            bind:qrcv_scanLineColor="@color/uiColorPrimaryAccent"
+            bind:qrcv_scanLineSize="@dimen/dimen_line"
+            bind:qrcv_tipTextMargin="@dimen/dimen_smallest"
+            bind:qrcv_verticalBias="0.5" />
+
+    </LinearLayout>
+</layout>

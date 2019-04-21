@@ -12,7 +12,7 @@
 
 package com.cody.component.image.certificate.global;
 
-import com.cody.component.image.certificate.utils.FileUtils;
+import com.cody.component.image.utils.FileUtils;
 
 import java.io.File;
 

@@ -183,6 +183,14 @@
                     android:text="营业执照水平" />
 
             </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/scan"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:onClick="@{onClickListener::onClick}"
+                android:text="scan" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

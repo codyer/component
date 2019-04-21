@@ -12,8 +12,8 @@
 
 apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
-    api project(":util-core")
-    api project(":bind-adapter")
+    api project(":app-core")
     api rootProject.ext.dependencies["image-picker"]
+    api rootProject.ext.dependencies["qrcode"]
     api rootProject.ext.dependencies["exifinterface"]
 }
