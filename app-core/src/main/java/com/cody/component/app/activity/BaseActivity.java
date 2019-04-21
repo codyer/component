@@ -16,9 +16,11 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -48,7 +50,7 @@ import androidx.lifecycle.ViewModelProviders;
  * 所有activity的基类
  */
 public abstract class BaseActivity extends AppCompatActivity implements IBaseView, DialogInterface.OnCancelListener {
-    private final static float DISTANCE = 5;
+    private final static float DISTANCE = dp2px(10);
     private ProgressDialog mLoading;
     private List<String> mViewModelNames;
     private Toast mToast;
@@ -58,6 +60,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     private float mDownY;
 
     protected abstract void onBaseReady(Bundle savedInstanceState);
+
+    public static int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                Resources.getSystem().getDisplayMetrics());
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
