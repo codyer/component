@@ -96,7 +96,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
      *                 {@link #TYPE_BUSINESS_LICENSE_PORTRAIT}
      *                 {@link #TYPE_BUSINESS_LICENSE_LANDSCAPE}
      */
-    public static void toCameraActivity(Activity activity, int type) {
+    public static void openCameraActivity(Activity activity, int type) {
         Intent intent = new Intent(activity, CameraActivity.class);
         intent.putExtra(TAKE_TYPE, type);
         activity.startActivityForResult(intent, REQUEST_CODE);
