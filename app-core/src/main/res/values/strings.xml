@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *************************************************************
+  ~ 文件：strings.xml  模块：app-core  项目：component
+  ~ 当前修改时间：2019年04月21日 22:07:48
+  ~ 上次修改时间：2019年04月21日 22:07:48
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：app-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <string name="app_name">component</string>
+    <string name="upgrade_title">发现新版本</string>
+    <string name="permission_granted">申请权限成功！</string>
+    <string name="permission_un_granted">缺少权限！</string>
+    <string name="version_update">版本更新中</string>
+    <string name="downLoading">下载中 -</string>
+    <string name="update_progress">更新进度：0/100</string>
+    <string name="update_now">现在升级</string>
+    <string name="not_now">暂时忽略</string>
+    <string name="download_finished">下载完成！</string>
+    <string name="download_progress_format">下载进度：%1$s/%2$s</string>
+</resources>
