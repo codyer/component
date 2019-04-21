@@ -13,7 +13,9 @@
 package com.cody.component.banner;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ import com.cody.component.data.remote.CatApiOpen$DataSource;
 import com.cody.component.data.remote.CatHttpBin$DataSource;
 import com.cody.component.databinding.ActivityMainBannerBinding;
 import com.cody.component.hybrid.activity.HtmlActivity;
+import com.cody.component.image.certificate.camera.CameraActivity;
 import com.cody.component.list.ListTestActivity;
 import com.cody.component.util.ActivityUtil;
 import com.cody.http.cat.HttpCat;
@@ -78,6 +81,12 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
             case R.id.testList:
                 ActivityUtil.navigateTo(ListTestActivity.class);
                 break;
+            case R.id.testFront:
+                frontIdCard();
+                break;
+            case R.id.testBehind:
+                backIdCard();
+                break;
         }
     }
 
@@ -99,6 +108,32 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
         });
         bannerAdapter.submitList(banners);
         getBinding().banner.setBindingBannerAdapter(bannerAdapter);
+    }
+
+    /**
+     * 身份证正面
+     */
+    public void frontIdCard() {
+        CameraActivity.toCameraActivity(this, CameraActivity.TYPE_IDCARD_FRONT);
+    }
+
+    /**
+     * 身份证反面
+     */
+    public void backIdCard() {
+        CameraActivity.toCameraActivity(this, CameraActivity.TYPE_IDCARD_BACK);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CameraActivity.REQUEST_CODE && resultCode == CameraActivity.RESULT_CODE) {
+            //获取图片路径，显示图片
+            final String path = CameraActivity.getImagePath(data);
+            if (!TextUtils.isEmpty(path)) {
+                getBinding().identify.setImageBitmap(BitmapFactory.decodeFile(path));
+            }
+        }
     }
 
     private void httpRequest1() {

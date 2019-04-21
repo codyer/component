@@ -27,110 +27,146 @@
             type="com.cody.component.banner.data.BannerViewData" />
     </data>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        tools:context=".banner.MainActivity">
-
-        <com.cody.component.banner.BindingBanner
-            android:id="@+id/banner"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            bind:b_AutoPlaying="true"
-            bind:b_Interval="2000"
-            tools:background="@color/uiColorPrimaryDark" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/toBus"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:onClick="@{onClickListener::onClick}"
-            android:text="test-Bus" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:gravity="center_horizontal"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            tools:context=".banner.MainActivity">
+
+            <com.cody.component.banner.BindingBanner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                bind:b_AutoPlaying="true"
+                bind:b_Interval="2000"
+                tools:background="@color/uiColorPrimaryDark" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/httpRequest1"
+                android:id="@+id/toBus"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:onClick="@{onClickListener::onClick}"
+                android:text="test-Bus" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/httpRequest1"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:text="Request1" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/httpRequest2"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:text="Request2" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                bind:layout_constraintBottom_toBottomOf="parent"
+                bind:layout_constraintLeft_toLeftOf="parent"
+                bind:layout_constraintRight_toRightOf="parent"
+                bind:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/hideCat"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:text="hideCat" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/showCat"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:text="showCat" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/muteCat"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:text="muteCat" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/killCat"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:text="killCat" />
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/openHtml"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:onClick="@{onClickListener::onClick}"
-                android:text="Request1" />
+                android:text="openHtml" />
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/httpRequest2"
+                android:id="@+id/testList"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:onClick="@{onClickListener::onClick}"
-                android:text="Request2" />
+                android:text="testList" />
 
+            <ImageView
+                android:id="@+id/identify"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                tools:src="@drawable/ic_default_error" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/testFront"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:text="身份证正面" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/testBehind"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:text="身份证反面" />
+
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            bind:layout_constraintBottom_toBottomOf="parent"
-            bind:layout_constraintLeft_toLeftOf="parent"
-            bind:layout_constraintRight_toRightOf="parent"
-            bind:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/hideCat"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:onClick="@{onClickListener::onClick}"
-                android:text="hideCat" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/showCat"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:onClick="@{onClickListener::onClick}"
-                android:text="showCat" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/muteCat"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:onClick="@{onClickListener::onClick}"
-                android:text="muteCat" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/killCat"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:onClick="@{onClickListener::onClick}"
-                android:text="killCat" />
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/openHtml"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:onClick="@{onClickListener::onClick}"
-            android:text="openHtml" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/testList"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:onClick="@{onClickListener::onClick}"
-            android:text="testList" />
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

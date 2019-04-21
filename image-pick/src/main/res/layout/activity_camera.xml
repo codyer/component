@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：activity_camera.xml  模块：image-pick  项目：component
+  ~ 当前修改时间：2019年04月21日 10:45:25
+  ~ 上次修改时间：2019年04月21日 10:45:25
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：image-pick
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/uiColorBlack">
+
+    <!--相机预览-->
+    <com.cody.component.image.certificate.camera.CameraPreview
+        android:id="@+id/camera_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <!--左侧相机预览布局-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!--相机裁剪区域左边-->
+            <View
+                android:id="@+id/view_camera_crop_left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:background="@color/uiColorMask"
+                tools:ignore="NestedWeights" />
+
+            <LinearLayout
+                android:id="@+id/ll_camera_crop_container"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+
+                <!--相机裁剪区域顶部-->
+                <View
+                    android:id="@+id/view_camera_crop_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/uiColorMask" />
+
+                <!--相机裁剪区域-->
+                <ImageView
+                    android:id="@+id/iv_camera_crop"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:contentDescription="@null"
+                    android:scaleType="fitXY" />
+
+                <!--手动裁剪区域-->
+                <com.cody.component.image.certificate.cropper.CropImageView
+                    android:id="@+id/crop_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <!--相机裁剪区域底部-->
+                <TextView
+                    android:id="@+id/view_camera_crop_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/uiColorMask"
+                    android:gravity="center"
+                    android:text="@string/touch_to_focus"
+                    android:textColor="@color/uiColorGray9"
+                    android:textSize="@dimen/ui_font_normal" />
+
+            </LinearLayout>
+
+            <!--相机裁剪区域右边-->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/uiColorMask" />
+
+        </LinearLayout>
+
+        <!--右侧操作布局-->
+        <FrameLayout
+            android:id="@+id/fl_camera_option"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/uiColorMask">
+
+            <!--拍照前操作布局-->
+            <LinearLayout
+                android:id="@+id/ll_camera_option"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_camera_flash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/camera_flash_off" />
+
+                <ImageView
+                    android:id="@+id/iv_camera_take"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="32dp"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/camera_take" />
+
+                <ImageView
+                    android:id="@+id/iv_camera_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/camera_close" />
+
+            </LinearLayout>
+
+            <!--拍照后操作布局-->
+            <LinearLayout
+                android:id="@+id/ll_camera_result"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_camera_result_ok"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/camera_result_ok" />
+
+                <ImageView
+                    android:id="@+id/iv_camera_result_cancel"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="80dp"
+                    android:contentDescription="@null"
+                    android:src="@mipmap/camera_result_cancel" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </LinearLayout>
+</RelativeLayout>
