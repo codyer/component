@@ -13,7 +13,7 @@
 package com.cody.component.app.upgrade;
 
 import com.cody.component.lib.data.ViewData;
-import com.cody.component.lib.safe.SafeMutableLiveData;
+import com.cody.component.lib.safe.StringLiveData;
 
 /**
  * Created by cody.yi on 2017/5/8.
@@ -21,7 +21,7 @@ import com.cody.component.lib.safe.SafeMutableLiveData;
  */
 public class UpdateViewData extends ViewData {
     private static final long serialVersionUID = -2157233147924647191L;
-    private final SafeMutableLiveData<String> mCountTime = new SafeMutableLiveData<>("3s");
+    private final StringLiveData mCountTime = new StringLiveData("3s");
     private boolean mVersionChecked = false;
     private boolean mForceUpdate = false;
     private boolean mOptionalUpdate = false;
@@ -78,7 +78,7 @@ public class UpdateViewData extends ViewData {
         mUpdateInfo = updateInfo;
     }
 
-    public SafeMutableLiveData<String> getCountTime() {
+    public StringLiveData getCountTime() {
         return mCountTime;
     }
 

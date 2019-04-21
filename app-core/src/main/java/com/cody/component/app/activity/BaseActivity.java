@@ -12,18 +12,25 @@
 
 package com.cody.component.app.activity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.cody.component.app.R;
 import com.cody.component.handler.BaseViewModel;
-import com.cody.component.handler.view.IBaseView;
 import com.cody.component.handler.IViewModel;
 import com.cody.component.handler.action.ViewAction;
+import com.cody.component.handler.view.IBaseView;
 import com.cody.component.util.ActivityUtil;
 
 import java.util.ArrayList;
@@ -33,7 +40,6 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -42,10 +48,14 @@ import androidx.lifecycle.ViewModelProviders;
  * 所有activity的基类
  */
 public abstract class BaseActivity extends AppCompatActivity implements IBaseView, DialogInterface.OnCancelListener {
+    private final static float DISTANCE = 5;
     private ProgressDialog mLoading;
     private List<String> mViewModelNames;
     private Toast mToast;
     protected String TAG = null;
+    private boolean mIsMoving = false;
+    private float mDownX;
+    private float mDownY;
 
     protected abstract void onBaseReady(Bundle savedInstanceState);
 
@@ -87,6 +97,61 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        final int action = ev.getActionMasked();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN: {
+                mIsMoving = false;
+                mDownX = ev.getX();
+                mDownY = ev.getY();
+                break;
+            }
+            case MotionEvent.ACTION_MOVE: {
+                float moveX = Math.abs(ev.getX() - mDownX);//X轴距离
+                float moveY = Math.abs(ev.getY() - mDownY);//y轴距离
+                mIsMoving = (moveX > DISTANCE || moveY > DISTANCE);
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                View v = getCurrentFocus();
+                if (!mIsMoving && isShouldHideKeyboard(v, ev)) {
+                    hideKeyboard(v.getWindowToken());
+                }
+                break;
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    /**
+     * 根据EditText所在坐标和用户点击的坐标相对比，来判断是否隐藏键盘，因为当用户点击EditText时则不能隐藏
+     */
+    private boolean isShouldHideKeyboard(View v, MotionEvent event) {
+        if ((v instanceof EditText)) {
+            int[] l = {0, 0};
+            v.getLocationInWindow(l);
+            int left = l[0],
+                    top = l[1],
+                    bottom = top + v.getHeight(),
+                    right = left + v.getWidth();
+            return !(event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom);
+        }
+        // 如果焦点不是EditText则忽略，这个发生在视图刚绘制完，第一个焦点不在EditText上，和用户用轨迹球选择其他的焦点
+        return false;
+    }
+
+    /**
+     * 获取InputMethodManager，隐藏软键盘
+     */
+    private void hideKeyboard(IBinder token) {
+        if (token != null) {
+            InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
+    @Override
     public void showLoading() {
         showLoading(null);
     }
@@ -109,6 +174,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         }
     }
 
+    @SuppressLint("ShowToast")
     @Override
     public void showToast(String message) {
         if (!TextUtils.isEmpty(message)) {
@@ -170,11 +236,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
      */
     private void observeAction(IViewModel viewModel) {
         if (viewModel == null) return;
-        viewModel.getActionLiveData().observe(this, new Observer<ViewAction>() {
-            @Override
-            public void onChanged(@Nullable ViewAction action) {
-                onExecuteAction(action);
-            }
-        });
+        viewModel.getActionLiveData().observe(this, this::onExecuteAction);
     }
 }
