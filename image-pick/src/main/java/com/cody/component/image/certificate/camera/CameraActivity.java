@@ -24,7 +24,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -40,6 +39,8 @@ import com.cody.component.image.certificate.utils.ImageUtils;
 import com.cody.component.image.certificate.utils.PermissionUtils;
 import com.cody.component.image.certificate.utils.ScreenUtils;
 
+import java.util.Date;
+
 import androidx.core.app.ActivityCompat;
 
 
@@ -51,19 +52,21 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     /**
      * 拍摄类型-身份证正面
      */
-    public final static int TYPE_IDCARD_FRONT = 1;
+    public final static int TYPE_ID_CARD_FRONT = 1;
     /**
      * 拍摄类型-身份证反面
      */
-    public final static int TYPE_IDCARD_BACK = 2;
+    public final static int TYPE_ID_CARD_BACK = 2;
     /**
      * 拍摄类型-竖版营业执照
      */
-    public final static int TYPE_COMPANY_PORTRAIT = 3;
+    public final static int TYPE_BUSINESS_LICENSE_PORTRAIT = 3;
     /**
      * 拍摄类型-横版营业执照
      */
-    public final static int TYPE_COMPANY_LANDSCAPE = 4;
+    public final static int TYPE_BUSINESS_LICENSE_LANDSCAPE = 4;
+    public final static float BUSINESS_LICENSE_RATIO = 43.0f / 30.0f;
+    public final static float ID_CARD_RATIO = 85.6f / 54.0f;
 
     public final static int REQUEST_CODE = 0X11;//请求码
     public final static int RESULT_CODE = 0X12;//结果码
@@ -88,10 +91,10 @@ public class CameraActivity extends Activity implements View.OnClickListener {
      *
      * @param activity
      * @param type     拍摄类型
-     *                 {@link #TYPE_IDCARD_FRONT}
-     *                 {@link #TYPE_IDCARD_BACK}
-     *                 {@link #TYPE_COMPANY_PORTRAIT}
-     *                 {@link #TYPE_COMPANY_LANDSCAPE}
+     *                 {@link #TYPE_ID_CARD_FRONT}
+     *                 {@link #TYPE_ID_CARD_BACK}
+     *                 {@link #TYPE_BUSINESS_LICENSE_PORTRAIT}
+     *                 {@link #TYPE_BUSINESS_LICENSE_LANDSCAPE}
      */
     public static void toCameraActivity(Activity activity, int type) {
         Intent intent = new Intent(activity, CameraActivity.class);
@@ -159,7 +162,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
 
     private void init() {
         mType = getIntent().getIntExtra(TAKE_TYPE, 0);
-        if (mType == TYPE_COMPANY_PORTRAIT) {
+        if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -181,7 +184,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         float screenMinSize = Math.min(ScreenUtils.getScreenWidth(this), ScreenUtils.getScreenHeight(this));
         float screenMaxSize = Math.max(ScreenUtils.getScreenWidth(this), ScreenUtils.getScreenHeight(this));
         RelativeLayout.LayoutParams layoutParams;
-        if (mType == TYPE_COMPANY_PORTRAIT) {
+        if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
             layoutParams = new RelativeLayout.LayoutParams((int) screenMinSize, (int) screenMaxSize);
         } else {
             layoutParams = new RelativeLayout.LayoutParams((int) screenMaxSize, (int) screenMinSize);
@@ -189,39 +192,39 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         mCameraPreview.setLayoutParams(layoutParams);
 
-        if (mType == TYPE_COMPANY_PORTRAIT) {
+        if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
             float width = (int) (screenMinSize * 0.8);
-            float height = (int) (width * 43.0f / 30.0f);
+            float height = (int) (width * BUSINESS_LICENSE_RATIO);
             LinearLayout.LayoutParams containerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) height);
             LinearLayout.LayoutParams cropParams = new LinearLayout.LayoutParams((int) width, (int) height);
             mContainerView.setLayoutParams(containerParams);
             mCropView.setLayoutParams(cropParams);
-        } else if (mType == TYPE_COMPANY_LANDSCAPE) {
+        } else if (mType == TYPE_BUSINESS_LICENSE_LANDSCAPE) {
             float height = (int) (screenMinSize * 0.8);
-            float width = (int) (height * 43.0f / 30.0f);
+            float width = (int) (height * BUSINESS_LICENSE_RATIO);
             LinearLayout.LayoutParams containerParams = new LinearLayout.LayoutParams((int) width, ViewGroup.LayoutParams.MATCH_PARENT);
             LinearLayout.LayoutParams cropParams = new LinearLayout.LayoutParams((int) width, (int) height);
             mContainerView.setLayoutParams(containerParams);
             mCropView.setLayoutParams(cropParams);
         } else {
             float height = (int) (screenMinSize * 0.75);
-            float width = (int) (height * 75.0f / 47.0f);
+            float width = (int) (height * ID_CARD_RATIO);
             LinearLayout.LayoutParams containerParams = new LinearLayout.LayoutParams((int) width, ViewGroup.LayoutParams.MATCH_PARENT);
             LinearLayout.LayoutParams cropParams = new LinearLayout.LayoutParams((int) width, (int) height);
             mContainerView.setLayoutParams(containerParams);
             mCropView.setLayoutParams(cropParams);
         }
         switch (mType) {
-            case TYPE_IDCARD_FRONT:
+            case TYPE_ID_CARD_FRONT:
                 mCropView.setImageResource(R.mipmap.camera_idcard_front);
                 break;
-            case TYPE_IDCARD_BACK:
+            case TYPE_ID_CARD_BACK:
                 mCropView.setImageResource(R.mipmap.camera_idcard_back);
                 break;
-            case TYPE_COMPANY_PORTRAIT:
+            case TYPE_BUSINESS_LICENSE_PORTRAIT:
                 mCropView.setImageResource(R.mipmap.camera_company);
                 break;
-            case TYPE_COMPANY_LANDSCAPE:
+            case TYPE_BUSINESS_LICENSE_LANDSCAPE:
                 mCropView.setImageResource(R.mipmap.camera_company_landscape);
                 break;
         }
@@ -288,6 +291,9 @@ public class CameraActivity extends Activity implements View.OnClickListener {
                         final int w = size.width;
                         final int h = size.height;
                         Bitmap bitmap = ImageUtils.getBitmapFromByte(bytes, w, h);
+                        if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
+                            bitmap = ImageUtils.rotateBitmapByDegree(bitmap, 90);
+                        }
                         cropImage(bitmap);
                     }
                 }).start();
@@ -301,7 +307,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     private void cropImage(Bitmap bitmap) {
         //计算裁剪位置
         float left, top, right, bottom;
-        if (mType == TYPE_COMPANY_PORTRAIT) {
+        if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
             left = (float) mCropView.getLeft() / (float) mCameraPreview.getWidth();
             top = ((float) mContainerView.getTop() - (float) mCameraPreview.getTop()) / (float) mCameraPreview.getHeight();
             right = (float) mCropView.getRight() / (float) mCameraPreview.getWidth();
@@ -372,14 +378,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
 
                 /*保存图片到sdcard并返回图片路径*/
                 if (FileUtils.createOrExistsDir(Constant.DIR_ROOT)) {
-                    StringBuffer buffer = new StringBuffer();
-                    String imagePath = "";
-                    if (mType == TYPE_IDCARD_FRONT) {
-                        imagePath = buffer.append(Constant.DIR_ROOT).append(Constant.APP_NAME).append(".").append("idCardFrontCrop.jpg").toString();
-                    } else if (mType == TYPE_IDCARD_BACK) {
-                        imagePath = buffer.append(Constant.DIR_ROOT).append(Constant.APP_NAME).append(".").append("idCardBackCrop.jpg").toString();
-                    }
-
+                    String imagePath = getFileName();
                     if (ImageUtils.save(bitmap, imagePath, Bitmap.CompressFormat.JPEG)) {
                         Intent intent = new Intent();
                         intent.putExtra(CameraActivity.IMAGE_PATH, imagePath);
@@ -405,5 +404,26 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         if (mCameraPreview != null) {
             mCameraPreview.onStop();
         }
+    }
+
+    /**
+     * @return 拍摄图片裁剪文件
+     */
+    private String getFileName() {
+        StringBuilder buffer = new StringBuilder();
+        String fileName = new Date(System.currentTimeMillis()).toString();
+        switch (mType) {
+            case TYPE_ID_CARD_FRONT:
+                fileName += "_identity_card_front.jpg";
+                break;
+            case TYPE_ID_CARD_BACK:
+                fileName += "_identity_card_back.jpg";
+                break;
+            case TYPE_BUSINESS_LICENSE_PORTRAIT:
+            case TYPE_BUSINESS_LICENSE_LANDSCAPE:
+                fileName += "_business_license.jpg";
+                break;
+        }
+        return buffer.append(Constant.DIR_ROOT).append(Constant.APP_NAME).append(".").append(fileName).toString();
     }
 }

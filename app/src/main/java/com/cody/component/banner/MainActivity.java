@@ -127,20 +127,20 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
      * 身份证反面
      */
     public void backIdCard() {
-        CameraActivity.toCameraActivity(this, CameraActivity.TYPE_IDCARD_BACK);
+        CameraActivity.toCameraActivity(this, CameraActivity.TYPE_ID_CARD_BACK);
     }
     /**
      * 营业执照水平
      */
     public void companyH() {
-        CameraActivity.toCameraActivity(this, CameraActivity.TYPE_COMPANY_LANDSCAPE);
+        CameraActivity.toCameraActivity(this, CameraActivity.TYPE_BUSINESS_LICENSE_LANDSCAPE);
     }
 
     /**
      * 营业执照垂直
      */
     public void companyV() {
-        CameraActivity.toCameraActivity(this, CameraActivity.TYPE_COMPANY_PORTRAIT);
+        CameraActivity.toCameraActivity(this, CameraActivity.TYPE_BUSINESS_LICENSE_PORTRAIT);
     }
 
     @Override

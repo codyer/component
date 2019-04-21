@@ -35,7 +35,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 
     private Camera camera;
     private AutoFocusManager mAutoFocusManager;
-    private SensorControler  mSensorControler;
+    private SensorControler mSensorControler;
     private Context mContext;
     private SurfaceHolder mSurfaceHolder;
 
@@ -82,16 +82,21 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 camera.setPreviewDisplay(holder);
 
                 Camera.Parameters parameters = camera.getParameters();
+
+                int w = ScreenUtils.getScreenWidth(mContext);
+                int h = ScreenUtils.getScreenHeight(mContext);
                 if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                     //竖屏拍照时，需要设置旋转90度，否者看到的相机预览方向和界面方向不相同
                     camera.setDisplayOrientation(90);
                     parameters.setRotation(90);
+                    w = ScreenUtils.getScreenHeight(mContext);
+                    h = ScreenUtils.getScreenWidth(mContext);
                 } else {
                     camera.setDisplayOrientation(0);
                     parameters.setRotation(0);
                 }
                 List<Camera.Size> sizeList = parameters.getSupportedPreviewSizes();//获取所有支持的预览大小
-                Camera.Size bestSize = getOptimalPreviewSize(sizeList, ScreenUtils.getScreenWidth(mContext), ScreenUtils.getScreenHeight(mContext));
+                Camera.Size bestSize = getOptimalPreviewSize(sizeList, w, h);
                 parameters.setPreviewSize(bestSize.width, bestSize.height);//设置预览大小
                 camera.setParameters(parameters);
                 camera.startPreview();
@@ -132,8 +137,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
         final double ASPECT_TOLERANCE = 0.1;
         double targetRatio = (double) w / h;
-        if (sizes == null)
-            return null;
+        if (sizes == null) return null;
 
         Camera.Size optimalSize = null;
         double minDiff = Double.MAX_VALUE;
@@ -143,8 +147,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         // Try to find an size match aspect ratio and size
         for (Camera.Size size : sizes) {
             double ratio = (double) size.width / size.height;
-            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE)
-                continue;
+            if (Math.abs(ratio - targetRatio) > ASPECT_TOLERANCE) continue;
             if (Math.abs(size.height - targetHeight) < minDiff) {
                 optimalSize = size;
                 minDiff = Math.abs(size.height - targetHeight);
