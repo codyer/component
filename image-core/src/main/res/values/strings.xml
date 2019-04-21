@@ -11,7 +11,7 @@
   -->
 
 <resources>
-    <string name="photo">相册</string>
+    <string name="gallery">相册</string>
     <string name="touch_to_focus">触摸屏幕对焦</string>
     <string name="crop_fail">裁剪失败</string>
     <string name="scan_hint">将二维码/条码放入框内，即可自动扫描</string>

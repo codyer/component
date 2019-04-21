@@ -105,58 +105,88 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_normal">
 
                 <ImageView
                     android:id="@+id/camera_flash"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:contentDescription="@null"
-                    android:src="@mipmap/camera_flash_off" />
+                    android:padding="@dimen/dimen_normal"
+                    android:src="@drawable/ic_flashlight_off" />
+
+                <ImageView
+                    android:id="@+id/camera_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/dimen_normal"
+                    android:src="@drawable/ic_gallery" />
 
                 <ImageView
                     android:id="@+id/camera_take"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="32dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:contentDescription="@null"
-                    android:src="@mipmap/camera_take" />
+                    android:padding="@dimen/dimen_normal"
+                    android:src="@drawable/ic_photo" />
 
                 <ImageView
                     android:id="@+id/camera_close"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:contentDescription="@null"
-                    android:src="@mipmap/camera_close" />
+                    android:padding="@dimen/dimen_normal"
+                    android:src="@drawable/ic_close" />
 
             </LinearLayout>
 
             <!--拍照后操作布局-->
+
             <LinearLayout
                 android:id="@+id/camera_result"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:padding="@dimen/dimen_normal"
+                android:visibility="gone"
+                android:weightSum="7"
+                tools:visibility="visible">
 
                 <ImageView
                     android:id="@+id/camera_result_ok"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
                     android:contentDescription="@null"
-                    android:src="@mipmap/camera_result_ok" />
+                    android:padding="@dimen/dimen_normal"
+                    android:src="@drawable/ic_check" />
+
+                <ImageView
+                    android:id="@+id/camera_rotate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/dimen_normal"
+                    android:src="@drawable/ic_rotate" />
 
                 <ImageView
                     android:id="@+id/camera_result_cancel"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
                     android:contentDescription="@null"
-                    android:src="@mipmap/camera_result_cancel" />
+                    android:padding="@dimen/dimen_normal"
+                    android:src="@drawable/ic_close" />
 
             </LinearLayout>
-
         </FrameLayout>
 
     </LinearLayout>

@@ -1,0 +1,24 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：ic_rotate.xml  模块：image-core  项目：component
+  ~ 当前修改时间：2019年04月21日 21:07:02
+  ~ 上次修改时间：2019年04月21日 21:07:02
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：image-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+  <path
+      android:pathData="M775.6,758.9c-66.3,71.4 -161,116 -266.1,116 -200.6,0 -363.2,-162.6 -363.2,-363.2s162.6,-363.2 363.2,-363.2c105.1,0 199.8,44.7 266.1,116l59.9,-59.9C753.8,118 638,63.9 509.5,63.9c-247.3,0 -447.8,200.5 -447.8,447.8s200.5,447.8 447.8,447.8c128.5,0 244.3,-54.1 326,-140.8l-59.9,-59.8z"
+      android:fillColor="#ffffff"/>
+  <path
+      android:pathData="M959.3,77v339.9H619.4z"
+      android:fillColor="#ffffff"/>
+</vector>

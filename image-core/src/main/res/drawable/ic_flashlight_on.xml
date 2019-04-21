@@ -1,0 +1,21 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：ic_flashlight_on.xml  模块：image-core  项目：component
+  ~ 当前修改时间：2019年04月21日 20:27:45
+  ~ 上次修改时间：2019年04月21日 20:27:44
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：image-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+  <path
+      android:pathData="M631.83,12.7c16.44,-19.74 24.47,-16.13 17.84,8.58l-83.46,311.45 274.38,78.36c12.62,3.58 16.41,14.62 8.45,24.68L412.19,988.42c-15.97,20.22 -23.55,16.9 -16.82,-7.65l88.35,-322.89L166.71,604.93c-13.06,-2.2 -17.1,-11.85 -8.7,-21.96L631.83,12.7z"
+      android:fillColor="#ffffff"/>
+</vector>

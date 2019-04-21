@@ -30,16 +30,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cody.component.app.activity.BaseActivity;
+import com.cody.component.image.ImageViewDelegate;
+import com.cody.component.image.OnImageViewListener;
 import com.cody.component.image.R;
 import com.cody.component.image.certificate.cropper.CropImageView;
-import com.cody.component.image.certificate.cropper.CropListener;
 import com.cody.component.image.certificate.global.Constant;
 import com.cody.component.image.utils.FileUtils;
 import com.cody.component.image.utils.ImageUtils;
 import com.cody.component.image.utils.PermissionUtils;
 import com.cody.component.image.utils.ScreenUtils;
+import com.lzy.imagepicker.bean.ImageItem;
 
 import java.util.Date;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -48,7 +52,7 @@ import androidx.core.app.ActivityCompat;
 /**
  * Desc ${拍照界面}
  */
-public class CameraActivity extends Activity implements View.OnClickListener {
+public class CameraActivity extends BaseActivity implements View.OnClickListener, OnImageViewListener {
 
     /**
      * 拍摄类型-身份证正面
@@ -71,12 +75,12 @@ public class CameraActivity extends Activity implements View.OnClickListener {
 
     public final static int REQUEST_CODE = 0X11;//请求码
     public final static int RESULT_CODE = 0X12;//结果码
-    private final int PERMISSION_CODE_FIRST = 0x13;//权限请求码
     private final static String TAKE_TYPE = "take_type";//拍摄类型标记
     private final static String IMAGE_PATH = "image_path";//图片路径标记
     private int mType;//拍摄类型
     private boolean isToast = true;//是否弹吐司，为了保证for循环只弹一次
 
+    private ImageViewDelegate mImageViewDelegate;
     private CropImageView mCropImageView;
     private Bitmap mCropBitmap;
     private CameraPreview mCameraPreview;
@@ -90,12 +94,11 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     /**
      * 跳转到拍照界面
      *
-     * @param activity
-     * @param type     拍摄类型
-     *                 {@link #TYPE_ID_CARD_FRONT}
-     *                 {@link #TYPE_ID_CARD_BACK}
-     *                 {@link #TYPE_BUSINESS_LICENSE_PORTRAIT}
-     *                 {@link #TYPE_BUSINESS_LICENSE_LANDSCAPE}
+     * @param type 拍摄类型
+     *             {@link #TYPE_ID_CARD_FRONT}
+     *             {@link #TYPE_ID_CARD_BACK}
+     *             {@link #TYPE_BUSINESS_LICENSE_PORTRAIT}
+     *             {@link #TYPE_BUSINESS_LICENSE_LANDSCAPE}
      */
     public static void openCameraActivity(Activity activity, int type) {
         Intent intent = new Intent(activity, CameraActivity.class);
@@ -105,9 +108,6 @@ public class CameraActivity extends Activity implements View.OnClickListener {
 
     /**
      * 获取图片路径
-     *
-     * @param data
-     * @return
      */
     public static String getImagePath(Intent data) {
         if (data != null) {
@@ -116,17 +116,19 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         return "";
     }
 
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
+    protected void onBaseReady(Bundle savedInstanceState) {
         /*动态请求需要的权限*/
+        //权限请求码
+        final int PERMISSION_CODE_FIRST = 0x13;
         boolean checkPermissionFirst = PermissionUtils.checkPermissionFirst(this, PERMISSION_CODE_FIRST,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA});
         if (checkPermissionFirst) {
             init();
         }
+
+        mImageViewDelegate = new ImageViewDelegate(this);
+        mImageViewDelegate.setCanDelete(false);
     }
 
     /**
@@ -174,9 +176,9 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     }
 
     private void initView() {
-        mCameraPreview = (CameraPreview) findViewById(R.id.camera_preview);
+        mCameraPreview = findViewById(R.id.camera_preview);
         mCropImageView = findViewById(R.id.crop_image_view);
-        mFlashView = (ImageView) findViewById(R.id.camera_flash);
+        mFlashView = findViewById(R.id.camera_flash);
         mOptionView = findViewById(R.id.camera_option);
         mResultView = findViewById(R.id.camera_result);
         mContainerView = findViewById(R.id.camera_crop_container);
@@ -231,26 +233,48 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         }
 
         /*增加0.5秒过渡界面，解决个别手机首次申请权限导致预览界面启动慢的问题*/
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mCameraPreview.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
-        }, 500);
+        new Handler().postDelayed(() -> runOnUiThread(() -> mCameraPreview.setVisibility(View.VISIBLE)), 500);
     }
 
     private void initListener() {
         mCameraPreview.setOnClickListener(this);
         findViewById(R.id.camera_close).setOnClickListener(this);
+        findViewById(R.id.camera_gallery).setOnClickListener(this);
         findViewById(R.id.camera_take).setOnClickListener(this);
         mFlashView.setOnClickListener(this);
         findViewById(R.id.camera_result_ok).setOnClickListener(this);
+        findViewById(R.id.camera_rotate).setOnClickListener(this);
         findViewById(R.id.camera_result_cancel).setOnClickListener(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (null != mImageViewDelegate) {
+            mImageViewDelegate.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void onPreview(int id, List<ImageItem> images) {
+    }
+
+    @Override
+    public void onPickImage(int id, List<ImageItem> images) {
+        if (images == null || images.size() == 0) return;
+        if (id == R.id.action_gallery) {
+            mCropBitmap = ImageUtils.getBitmap(images.get(0).path,800,800);
+            if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
+                mCropBitmap = ImageUtils.rotateBitmapByDegree(mCropBitmap, 90);
+            }
+            /*设置成手动裁剪模式*/
+            runOnUiThread(() -> {
+                //将手动裁剪区域设置成与扫描框一样大
+                mCropImageView.setLayoutParams(new LinearLayout.LayoutParams(mCropView.getWidth(), mCropView.getHeight()));
+                setCropLayout();
+                mCropImageView.setImageBitmap(mCropBitmap);
+            });
+        }
     }
 
     @Override
@@ -262,16 +286,24 @@ public class CameraActivity extends Activity implements View.OnClickListener {
             finish();
         } else if (id == R.id.camera_take) {
             takePhoto();
+        } else if (id == R.id.camera_gallery) {
+            if (null != mImageViewDelegate) {
+                mImageViewDelegate.withId(R.id.action_gallery).selectImage(1, false);
+            }
         } else if (id == R.id.camera_flash) {
             boolean isFlashOn = mCameraPreview.switchFlashLight();
-            mFlashView.setImageResource(isFlashOn ? R.mipmap.camera_flash_on : R.mipmap.camera_flash_off);
+            mFlashView.setImageResource(isFlashOn ? R.drawable.ic_flashlight_on : R.drawable.ic_flashlight_off);
         } else if (id == R.id.camera_result_ok) {
             confirm();
+        } else if (id == R.id.camera_rotate) {
+            mCropBitmap = ImageUtils.rotateBitmapByDegree(mCropBitmap, 90);
+            /*设置成手动裁剪模式*/
+            runOnUiThread(() -> mCropImageView.setImageBitmap(mCropBitmap));
         } else if (id == R.id.camera_result_cancel) {
             mCameraPreview.setEnabled(true);
             mCameraPreview.addCallback();
             mCameraPreview.startPreview();
-            mFlashView.setImageResource(R.mipmap.camera_flash_off);
+            mFlashView.setImageResource(R.drawable.ic_flashlight_off);
             setTakePhotoLayout();
         }
     }
@@ -281,24 +313,18 @@ public class CameraActivity extends Activity implements View.OnClickListener {
      */
     private void takePhoto() {
         mCameraPreview.setEnabled(false);
-        CameraUtils.getCamera().setOneShotPreviewCallback(new Camera.PreviewCallback() {
-            @Override
-            public void onPreviewFrame(final byte[] bytes, Camera camera) {
-                final Camera.Size size = camera.getParameters().getPreviewSize(); //获取预览大小
-                camera.stopPreview();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        final int w = size.width;
-                        final int h = size.height;
-                        Bitmap bitmap = ImageUtils.getBitmapFromByte(bytes, w, h);
-                        if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
-                            bitmap = ImageUtils.rotateBitmapByDegree(bitmap, 90);
-                        }
-                        cropImage(bitmap);
-                    }
-                }).start();
-            }
+        CameraUtils.getCamera().setOneShotPreviewCallback((bytes, camera) -> {
+            final Camera.Size size = camera.getParameters().getPreviewSize(); //获取预览大小
+            camera.stopPreview();
+            new Thread(() -> {
+                final int w = size.width;
+                final int h = size.height;
+                Bitmap bitmap = ImageUtils.getBitmapFromByte(bytes, w, h);
+                if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
+                    bitmap = ImageUtils.rotateBitmapByDegree(bitmap, 90);
+                }
+                cropImage(bitmap);
+            }).start();
         });
     }
 
@@ -328,14 +354,11 @@ public class CameraActivity extends Activity implements View.OnClickListener {
                 (int) ((bottom - top) * (float) bitmap.getHeight()));
 
         /*设置成手动裁剪模式*/
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //将手动裁剪区域设置成与扫描框一样大
-                mCropImageView.setLayoutParams(new LinearLayout.LayoutParams(mCropView.getWidth(), mCropView.getHeight()));
-                setCropLayout();
-                mCropImageView.setImageBitmap(mCropBitmap);
-            }
+        runOnUiThread(() -> {
+            //将手动裁剪区域设置成与扫描框一样大
+            mCropImageView.setLayoutParams(new LinearLayout.LayoutParams(mCropView.getWidth(), mCropView.getHeight()));
+            setCropLayout();
+            mCropImageView.setImageBitmap(mCropBitmap);
         });
     }
 
@@ -369,23 +392,20 @@ public class CameraActivity extends Activity implements View.OnClickListener {
      */
     private void confirm() {
         /*手动裁剪图片*/
-        mCropImageView.crop(new CropListener() {
-            @Override
-            public void onFinish(Bitmap bitmap) {
-                if (bitmap == null) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.crop_fail), Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+        mCropImageView.crop(bitmap -> {
+            if (bitmap == null) {
+                Toast.makeText(getApplicationContext(), getString(R.string.crop_fail), Toast.LENGTH_SHORT).show();
+                finish();
+            }
 
-                /*保存图片到sdcard并返回图片路径*/
-                if (FileUtils.createOrExistsDir(Constant.DIR_ROOT)) {
-                    String imagePath = getFileName();
-                    if (ImageUtils.save(bitmap, imagePath, Bitmap.CompressFormat.JPEG)) {
-                        Intent intent = new Intent();
-                        intent.putExtra(CameraActivity.IMAGE_PATH, imagePath);
-                        setResult(RESULT_CODE, intent);
-                        finish();
-                    }
+            /*保存图片到sdcard并返回图片路径*/
+            if (FileUtils.createOrExistsDir(Constant.DIR_ROOT)) {
+                String imagePath = getFileName();
+                if (ImageUtils.save(bitmap, imagePath, Bitmap.CompressFormat.JPEG)) {
+                    Intent intent = new Intent();
+                    intent.putExtra(CameraActivity.IMAGE_PATH, imagePath);
+                    setResult(RESULT_CODE, intent);
+                    finish();
                 }
             }
         }, true);
