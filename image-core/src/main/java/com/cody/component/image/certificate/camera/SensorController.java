@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：SensorControler.java  模块：image-pick  项目：component
+ * 文件：SensorController.java  模块：image-pick  项目：component
  * 当前修改时间：2019年04月21日 10:45:25
  * 上次修改时间：2019年04月21日 10:45:25
  * 作者：Cody.yi   https://github.com/codyer
@@ -25,16 +25,16 @@ import java.util.Calendar;
 /**
  * Desc ${加速度控制器，用来控制对焦}
  */
-public class SensorControler implements SensorEventListener {
-    public static final String TAG = "SensorControler";
+public class SensorController implements SensorEventListener {
+    public static final String TAG = "SensorController";
     private SensorManager mSensorManager;
     private Sensor mSensor;
     private int           mX, mY, mZ;
     private long lastStaticStamp = 0;
     Calendar mCalendar;
     public static final int DELEY_DURATION = 500;
-    private static SensorControler mInstance;
-    private int foucsing = 1;  //1 表示没有被锁定 0表示被锁定
+    private static SensorController mInstance;
+    private int focusing = 1;  //1 表示没有被锁定 0表示被锁定
 
     boolean isFocusing = false;
     boolean canFocusIn = false;  //内部是否能够对焦控制机制
@@ -45,14 +45,14 @@ public class SensorControler implements SensorEventListener {
     public static final int STATUS_MOVE   = 2;
     private             int STATUE        = STATUS_NONE;
 
-    private SensorControler(Context context) {
+    private SensorController(Context context) {
         mSensorManager = (SensorManager) context.getSystemService(Activity.SENSOR_SERVICE);
         mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);// TYPE_GRAVITY
     }
 
-    public static SensorControler getInstance(Context context) {
+    public static SensorController getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new SensorControler(context);
+            mInstance = new SensorController(context);
         }
         return mInstance;
     }
@@ -159,7 +159,7 @@ public class SensorControler implements SensorEventListener {
      */
     public boolean isFocusLocked() {
         if (canFocus) {
-            return foucsing <= 0;
+            return focusing <= 0;
         }
         return false;
     }
@@ -169,7 +169,7 @@ public class SensorControler implements SensorEventListener {
      */
     public void lockFocus() {
         isFocusing = true;
-        foucsing--;
+        focusing--;
         Log.i(TAG, "lockFocus");
     }
 
@@ -178,12 +178,12 @@ public class SensorControler implements SensorEventListener {
      */
     public void unlockFocus() {
         isFocusing = false;
-        foucsing++;
+        focusing++;
         Log.i(TAG, "unlockFocus");
     }
 
     public void restFoucs() {
-        foucsing = 1;
+        focusing = 1;
     }
 
 

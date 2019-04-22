@@ -79,7 +79,7 @@
                     android:background="@color/uiColorMask"
                     android:gravity="center"
                     android:text="@string/touch_to_focus"
-                    android:textColor="@color/uiColorGray9"
+                    android:textColor="@color/uiColorPrimaryText"
                     android:textSize="@dimen/ui_font_normal" />
 
             </LinearLayout>
@@ -118,6 +118,15 @@
                     android:src="@drawable/ic_flashlight_off" />
 
                 <ImageView
+                    android:id="@+id/camera_take"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@null"
+                    android:padding="@dimen/dimen_normal"
+                    android:src="@drawable/ic_shoot" />
+
+                <ImageView
                     android:id="@+id/camera_gallery"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
@@ -125,24 +134,6 @@
                     android:contentDescription="@null"
                     android:padding="@dimen/dimen_normal"
                     android:src="@drawable/ic_gallery" />
-
-                <ImageView
-                    android:id="@+id/camera_take"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/dimen_normal"
-                    android:src="@drawable/ic_photo" />
-
-                <ImageView
-                    android:id="@+id/camera_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:contentDescription="@null"
-                    android:padding="@dimen/dimen_normal"
-                    android:src="@drawable/ic_close" />
 
             </LinearLayout>
 
@@ -166,7 +157,7 @@
                     android:layout_weight="2"
                     android:contentDescription="@null"
                     android:padding="@dimen/dimen_normal"
-                    android:src="@drawable/ic_check" />
+                    android:src="@drawable/ic_choose" />
 
                 <ImageView
                     android:id="@+id/camera_rotate"
@@ -184,10 +175,18 @@
                     android:layout_weight="2"
                     android:contentDescription="@null"
                     android:padding="@dimen/dimen_normal"
-                    android:src="@drawable/ic_close" />
+                    android:src="@drawable/ic_cancel" />
 
             </LinearLayout>
         </FrameLayout>
 
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/camera_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@null"
+        android:padding="@dimen/dimen_normal"
+        android:src="@drawable/ic_arrow_back" />
 </RelativeLayout>
