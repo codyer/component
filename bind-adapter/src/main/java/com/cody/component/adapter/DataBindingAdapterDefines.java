@@ -13,11 +13,16 @@
 package com.cody.component.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.KeyListener;
+import android.text.method.TextKeyListener;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
@@ -98,5 +103,14 @@ public class DataBindingAdapterDefines {
         ViewGroup.LayoutParams params = view.getLayoutParams();
         params.height = (int) height;
         view.setLayoutParams(params);
+    }
+
+    @BindingAdapter({"strike"})
+    public static void setStrike(TextView view, boolean strike) {
+        if (strike) {
+            view.setPaintFlags(view.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            view.setPaintFlags(view.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+        }
     }
 }
