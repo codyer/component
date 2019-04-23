@@ -24,10 +24,19 @@ import com.cody.component.list.define.RequestStatus;
  */
 public class ItemFooterOrHeaderData extends ViewData {
     private static final long serialVersionUID = 6101620960031035326L;
+    private boolean mShowFooter = true;
     final private BooleanLiveData mNoMoreItem = new BooleanLiveData(false);
     final private BooleanLiveData mError = new BooleanLiveData(false);
     final private BooleanLiveData mLoading = new BooleanLiveData(false);
     final private StringLiveData mErrorMessage = new StringLiveData("");
+
+    public boolean isShowFooter() {
+        return mShowFooter;
+    }
+
+    public void setShowFooter(final boolean showFooter) {
+        mShowFooter = showFooter;
+    }
 
     public BooleanLiveData getNoMoreItem() {
         return mNoMoreItem;

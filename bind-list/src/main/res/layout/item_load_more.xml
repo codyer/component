@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-            android:visibility="@{(viewData.noMoreItem || viewData.error)?View.VISIBLE:View.GONE}"
+            android:visibility="@{((viewData.noMoreItem &amp;&amp; viewData.showFooter) || viewData.error)?View.VISIBLE:View.GONE}"
             android:weightSum="4"
             tools:visibility="visible">
 

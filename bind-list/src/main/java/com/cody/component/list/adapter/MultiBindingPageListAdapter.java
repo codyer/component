@@ -57,6 +57,15 @@ public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter
     }
 
     /**
+     * 设置是否显示没有更多了
+     */
+    final public void setShowFooter(boolean showFooter) {
+        if (mItemHolderFooterOrHeader.getItemData() != null && mItemHolderFooterOrHeader.getItemData() instanceof ItemFooterOrHeaderData) {
+            ((ItemFooterOrHeaderData) mItemHolderFooterOrHeader.getItemData()).setShowFooter(showFooter);
+        }
+    }
+
+    /**
      * 操作改变通知adapter
      */
     final public void setOperation(Operation operation) {
