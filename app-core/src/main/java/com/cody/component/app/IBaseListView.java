@@ -13,7 +13,6 @@
 package com.cody.component.app;
 
 import com.cody.component.list.adapter.MultiBindingPageListAdapter;
-import com.cody.component.list.data.ItemMultiViewData;
 import com.cody.component.list.listener.OnRetryListener;
 import com.cody.component.list.viewmodel.MultiListViewModel;
 
@@ -23,13 +22,13 @@ import androidx.annotation.NonNull;
  * Created by xu.yi. on 2019/4/10.
  * 列表绑定需要实现的接口
  */
-public interface IBaseListView<IVD extends ItemMultiViewData> extends OnRetryListener {
+public interface IBaseListView extends OnRetryListener {
     @NonNull
-    <VM extends MultiListViewModel<IVD, ?>> Class<VM> getVMClass();
+    Class<? extends MultiListViewModel<?>> getVMClass();
 
     @NonNull
-    <VM extends MultiListViewModel<IVD, ?>> VM getListViewModel();
+    MultiListViewModel<?> getListViewModel();
 
     @NonNull
-    MultiBindingPageListAdapter<IVD> getListAdapter();
+    MultiBindingPageListAdapter getListAdapter();
 }

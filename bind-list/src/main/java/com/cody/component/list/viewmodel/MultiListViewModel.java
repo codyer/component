@@ -13,7 +13,7 @@
 package com.cody.component.list.viewmodel;
 
 import com.cody.component.handler.BaseViewModel;
-import com.cody.component.list.data.ItemMultiViewData;
+import com.cody.component.lib.data.ItemViewDataHolder;
 import com.cody.component.list.data.MaskViewData;
 import com.cody.component.list.define.Operation;
 import com.cody.component.list.define.PageInfo;
@@ -35,21 +35,21 @@ import androidx.paging.PagedList;
  * Created by xu.yi. on 2019/4/8.
  * 数据仓库，获取列表数据
  */
-public abstract class MultiListViewModel<IVD extends ItemMultiViewData, ItemBean> extends BaseViewModel
-        implements OnRequestPageListener<ItemBean>, Function<ItemBean, IVD>, OnListListener {
+public abstract class MultiListViewModel<ItemBean> extends BaseViewModel
+        implements OnRequestPageListener<ItemBean>, Function<ItemBean, ItemViewDataHolder>, OnListListener {
     private MaskViewData mMaskViewData = new MaskViewData();
-    private MultiDataSourceFactory<IVD, ItemBean> mSourceFactory = new MultiDataSourceFactory<>(this, this);
+    private MultiDataSourceFactory<ItemBean> mSourceFactory = new MultiDataSourceFactory<>(this, this);
     private DataSourceWrapper<ItemBean> mWrapper = new DataSourceWrapper<>(Transformations.switchMap(mSourceFactory.getDataSource(), MultiPageKeyedDataSource::getRequestStatus),
             Transformations.switchMap(mSourceFactory.getDataSource(), MultiPageKeyedDataSource::getOperation),
             mSourceFactory.getDataSource());
 
-    private LiveData<PagedList<IVD>> mPagedList = new LivePagedListBuilder<>(mSourceFactory.map(), initPageListConfig()).build();
+    private LiveData<PagedList<ItemViewDataHolder>> mPagedList = new LivePagedListBuilder<>(mSourceFactory.map(), initPageListConfig()).build();
 
     public MaskViewData getMaskViewData() {
         return mMaskViewData;
     }
 
-    public LiveData<PagedList<IVD>> getPagedList() {
+    public LiveData<PagedList<ItemViewDataHolder>> getPagedList() {
         return mPagedList;
     }
 

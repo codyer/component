@@ -12,16 +12,19 @@
 
 package com.cody.http.cat.viewmodel;
 
-import androidx.lifecycle.LiveData;
-
-import java.util.List;
-
 import com.cody.component.handler.BaseViewModel;
+import com.cody.component.lib.data.ItemViewDataHolder;
 import com.cody.component.lib.safe.SafeMutableLiveData;
 import com.cody.http.cat.HttpCat;
 import com.cody.http.cat.db.HttpCatDatabase;
 import com.cody.http.cat.db.data.ItemHttpData;
 import com.cody.http.cat.notification.NotificationManagement;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Transformations;
 
 /**
  * Created by xu.yi. on 2019/3/31.
@@ -29,14 +32,23 @@ import com.cody.http.cat.notification.NotificationManagement;
  */
 public class CatViewModel extends BaseViewModel {
 
-    private final LiveData<List<ItemHttpData>> mAllRecordLiveData;
+    private final LiveData<List<ItemViewDataHolder>> mAllRecordLiveData;
 
     private LiveData<ItemHttpData> mRecordLiveData = new SafeMutableLiveData<>();
 
     private static final int LIMIT = 300;
 
     public CatViewModel() {
-        mAllRecordLiveData = HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().queryAllRecordObservable(LIMIT);
+        mAllRecordLiveData = Transformations.map(
+                HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().queryAllRecordObservable(LIMIT),
+                input -> {
+                    List<ItemViewDataHolder> list = new ArrayList<>();
+                    for (int i = 0; i < input.size(); i++) {
+                        list.add(new ItemViewDataHolder(1, input.get(i)));
+                    }
+                    return list;
+                }
+        );
     }
 
     public void clearAllCache() {
@@ -56,7 +68,7 @@ public class CatViewModel extends BaseViewModel {
         mRecordLiveData = HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().queryRecordObservable(id);
     }
 
-    public LiveData<List<ItemHttpData>> getAllRecordLiveData() {
+    public LiveData<List<ItemViewDataHolder>> getAllRecordLiveData() {
         return mAllRecordLiveData;
     }
 

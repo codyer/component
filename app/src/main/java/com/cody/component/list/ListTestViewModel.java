@@ -12,6 +12,7 @@
 
 package com.cody.component.list;
 
+import com.cody.component.lib.data.ItemViewDataHolder;
 import com.cody.component.list.callback.PageDataCallBack;
 import com.cody.component.list.define.PageInfo;
 import com.cody.component.list.viewmodel.MultiListViewModel;
@@ -22,10 +23,10 @@ import java.util.ArrayList;
  * Created by xu.yi. on 2019/4/14.
  * component
  */
-public class ListTestViewModel extends MultiListViewModel<ItemTestViewData, String> {
+public class ListTestViewModel extends MultiListViewModel<String> {
     @Override
-    public ItemTestViewData apply(final String input) {
-        return new ItemTestViewData(input);
+    public ItemViewDataHolder apply(final String input) {
+        return new ItemViewDataHolder(new ItemTestViewData(input));
     }
 
     @Override

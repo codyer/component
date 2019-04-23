@@ -23,7 +23,7 @@
 
         <variable
             name="viewData"
-            type="com.cody.component.list.data.ItemMultiViewData" />
+            type="com.cody.component.list.data.ItemFooterOrHeaderData" />
     </data>
 
     <LinearLayout

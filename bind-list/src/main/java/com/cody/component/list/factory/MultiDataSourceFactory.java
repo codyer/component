@@ -12,15 +12,14 @@
 
 package com.cody.component.list.factory;
 
+import com.cody.component.lib.data.ItemViewDataHolder;
 import com.cody.component.lib.safe.SafeMutableLiveData;
-import com.cody.component.list.data.ItemMultiViewData;
 import com.cody.component.list.define.PageInfo;
 import com.cody.component.list.listener.OnRequestPageListener;
 import com.cody.component.list.source.MultiPageKeyedDataSource;
 
 import androidx.annotation.NonNull;
 import androidx.arch.core.util.Function;
-import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 
 /**
@@ -28,18 +27,18 @@ import androidx.paging.DataSource;
  * 根据接口返回的信息进行分页加载数据工厂基类
  * 泛型为分页Item的类类型
  */
-public class MultiDataSourceFactory<IVD extends ItemMultiViewData, ItemBean> extends DataSource.Factory<PageInfo, ItemBean> {
+public class MultiDataSourceFactory<ItemBean> extends DataSource.Factory<PageInfo, ItemBean> {
     private SafeMutableLiveData<MultiPageKeyedDataSource<ItemBean>> mDataSource = new SafeMutableLiveData<>();
     private OnRequestPageListener<ItemBean> mOnRequestPageListener;
-    private Function<ItemBean, IVD> mModelMapper;
+    private Function<ItemBean, ItemViewDataHolder> mModelMapper;
 
-    public MultiDataSourceFactory(OnRequestPageListener<ItemBean> onRequestPageListener, Function<ItemBean, IVD> modelMapper) {
+    public MultiDataSourceFactory(OnRequestPageListener<ItemBean> onRequestPageListener, Function<ItemBean, ItemViewDataHolder> modelMapper) {
         mOnRequestPageListener = onRequestPageListener;
         mModelMapper = modelMapper;
     }
 
     @NonNull
-    public DataSource.Factory<PageInfo, IVD> map() {
+    public DataSource.Factory<PageInfo, ItemViewDataHolder> map() {
         return super.map(mModelMapper);
     }
 

@@ -12,7 +12,7 @@
 
 package com.cody.component.adapter.list;
 
-import com.cody.component.lib.data.ItemViewData;
+import com.cody.component.lib.data.ItemViewDataHolder;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -21,14 +21,14 @@ import androidx.recyclerview.widget.DiffUtil;
  * Created by xu.yi. on 2019/4/4.
  * component
  */
-public class BindingItemDiffCallback <Item extends ItemViewData> extends DiffUtil.ItemCallback<Item> {
+public class BindingItemDiffCallback extends DiffUtil.ItemCallback<ItemViewDataHolder> {
     @Override
-    public boolean areItemsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
+    public boolean areItemsTheSame(@NonNull ItemViewDataHolder oldItem, @NonNull ItemViewDataHolder newItem) {
         return oldItem.areItemsTheSame(newItem);
     }
 
     @Override
-    public boolean areContentsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
+    public boolean areContentsTheSame(@NonNull ItemViewDataHolder oldItem, @NonNull ItemViewDataHolder newItem) {
         return oldItem.areContentsTheSame(newItem);
     }
 }

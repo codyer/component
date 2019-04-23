@@ -26,6 +26,6 @@ public class ViewData implements IViewData {
 
     @Override
     public boolean areContentsTheSame(IViewData newBind) {
-        return false;
+        return this.equals(newBind);
     }
 }

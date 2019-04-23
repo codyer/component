@@ -16,7 +16,8 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.annotation.NonNull;
 
-import com.cody.component.lib.data.ItemViewData;
+import com.cody.component.lib.data.ItemViewDataHolder;
+import com.cody.component.lib.data.ViewData;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import okhttp3.Headers;
  * cat data
  */
 @Entity(tableName = "http_cat_table")
-public class ItemHttpData extends ItemViewData {
+public class ItemHttpData extends ViewData {
     private static final long serialVersionUID = -5435259574495140581L;
     private static final int DEFAULT_RESPONSE_CODE = -100;
 

@@ -18,9 +18,9 @@ import android.widget.AdapterView;
 
 import com.cody.component.adapter.list.BindingListAdapter;
 import com.cody.component.adapter.list.OnBindingItemClickListener;
-import com.cody.component.banner.R;
 import com.cody.component.banner.BR;
-import com.cody.component.banner.data.BannerViewData;
+import com.cody.component.banner.R;
+import com.cody.component.lib.data.ItemViewDataHolder;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by cody.yi on 2017/4/26.
  * RecyclerView适配器，假无限循环列表
  */
-public class BindingBannerAdapter extends BindingListAdapter<BannerViewData> {
+public class BindingBannerAdapter extends BindingListAdapter {
 
     public BindingBannerAdapter(LifecycleOwner lifecycleOwner) {
         super(lifecycleOwner);
@@ -77,7 +77,7 @@ public class BindingBannerAdapter extends BindingListAdapter<BannerViewData> {
     }
 
     @Override
-    public BannerViewData getItem(int position) {
+    public ItemViewDataHolder getItem(int position) {
         return super.getItem(getPosition(position));
     }
 

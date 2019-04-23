@@ -17,28 +17,21 @@ import android.os.Bundle;
 import com.cody.component.adapter.list.OnBindingItemClickListener;
 import com.cody.component.app.IBaseListView;
 import com.cody.component.app.R;
-import com.cody.component.list.data.MaskViewData;
 import com.cody.component.app.databinding.FragmentBindListBinding;
 import com.cody.component.list.adapter.MultiBindingPageListAdapter;
-import com.cody.component.list.data.ItemMultiViewData;
+import com.cody.component.list.data.MaskViewData;
 import com.cody.component.list.viewmodel.MultiListViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public abstract class BindListFragment<IVD extends ItemMultiViewData> extends SingleBindFragment<FragmentBindListBinding, MaskViewData> implements IBaseListView<IVD>, OnBindingItemClickListener {
-    protected MultiBindingPageListAdapter<IVD> mListAdapter;
-
-/*    @Override
-    public MultiBindingPageListAdapter<IVD> getListAdapter() {
-        return new MultiBindingPageListAdapter<IVD>(this, this) {
-        };
-    }*/
+public abstract class BindListFragment extends SingleBindFragment<FragmentBindListBinding, MaskViewData> implements IBaseListView, OnBindingItemClickListener {
+    protected MultiBindingPageListAdapter mListAdapter;
 
     @NonNull
     @Override
-    final public <VM extends MultiListViewModel<IVD, ?>> VM getListViewModel() {
+    public MultiListViewModel<?> getListViewModel() {
         return getViewModel(getVMClass());
     }
 

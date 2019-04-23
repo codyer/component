@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cody.component.lib.data.ItemViewData;
+import com.cody.component.lib.data.ItemViewDataHolder;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
@@ -30,7 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by xu.yi. on 2019/3/28.
  * 分页抽象列表adapter
  */
-public abstract class BindingPageListAdapter<VD extends ItemViewData> extends PagedListAdapter<VD, BindingViewHolder<VD>> implements IBindingAdapter {
+public abstract class BindingPageListAdapter extends PagedListAdapter<ItemViewDataHolder, BindingViewHolder> implements IBindingAdapter {
 
     private RecyclerView mRecyclerView;
     private OnBindingItemClickListener mItemClickListener;//item 事件监听
@@ -48,7 +48,7 @@ public abstract class BindingPageListAdapter<VD extends ItemViewData> extends Pa
     }
 
     protected BindingPageListAdapter(LifecycleOwner lifecycleOwner) {
-        super(new BindingItemDiffCallback<>());
+        super(new BindingItemDiffCallback());
         mLifecycleOwner = lifecycleOwner;
     }
 
@@ -64,13 +64,13 @@ public abstract class BindingPageListAdapter<VD extends ItemViewData> extends Pa
     }
 
     @Override
-    public VD getItem(int position) {
+    public ItemViewDataHolder getItem(int position) {
         return super.getItem(position);
     }
 
     @Override
     public int getItemViewType(int position) {
-        VD item = getItem(position);
+        ItemViewDataHolder item = getItem(position);
         if (item != null) {
             return item.getItemType();
         }
@@ -79,16 +79,16 @@ public abstract class BindingPageListAdapter<VD extends ItemViewData> extends Pa
 
     @NonNull
     @Override
-    public BindingViewHolder<VD> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BindingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ViewDataBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), getItemLayoutId(viewType), parent, false);
         binding.setLifecycleOwner(mLifecycleOwner);
-        return new BindingViewHolder<>(binding.getRoot());
+        return new BindingViewHolder(binding.getRoot());
     }
 
     @CallSuper
     @Override
-    public void onBindViewHolder(@NonNull BindingViewHolder<VD> holder, int position) {
-        VD item = getItem(position);
+    public void onBindViewHolder(@NonNull BindingViewHolder holder, int position) {
+        ItemViewDataHolder item = getItem(position);
         if (item != null) {
             holder.bindTo(item, getViewDataId(), getOnClickListenerId(), mRecyclerView, mItemLongClickListener, mItemClickListener);
         } else {

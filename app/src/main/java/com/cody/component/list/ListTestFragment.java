@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListTestFragment extends BindListFragment<ItemTestViewData> {
+public class ListTestFragment extends BindListFragment {
 
 
     public ListTestFragment() {
@@ -51,20 +51,14 @@ public class ListTestFragment extends BindListFragment<ItemTestViewData> {
 
     @NonNull
     @Override
-    public MultiBindingPageListAdapter<ItemTestViewData> getListAdapter() {
-        return new MultiBindingPageListAdapter<ItemTestViewData>(this, this) {
+    public MultiBindingPageListAdapter getListAdapter() {
+        return new MultiBindingPageListAdapter(this, this) {
             @Override
             public int getItemLayoutId(final int viewType) {
                 if (viewType == 0){
                     return R.layout.item_test_list;
                 }
                 return super.getItemLayoutId(viewType);
-            }
-
-            @NonNull
-            @Override
-            protected ItemTestViewData initHeaderOrFooterViewData() {
-                return new ItemTestViewData("header");
             }
         };
     }

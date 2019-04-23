@@ -12,11 +12,10 @@
 
 package com.cody.component.adapter.list;
 
-import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.cody.component.lib.data.ItemViewData;
+import com.cody.component.lib.data.ItemViewDataHolder;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -27,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by xu.yi. on 2019/4/4.
  * component
  */
-public class BindingViewHolder<VD extends ItemViewData> extends RecyclerView.ViewHolder {
+public class BindingViewHolder extends RecyclerView.ViewHolder {
     private int mViewDataId;
     private int mOnClickListenerId;
     private View.OnCreateContextMenuListener mContextMenuListener;
@@ -42,29 +41,23 @@ public class BindingViewHolder<VD extends ItemViewData> extends RecyclerView.Vie
         return DataBindingUtil.bind(itemView);
     }
 
-    void bindTo(VD item, int viewDataId, int onClickListenerId, RecyclerView recyclerView, View.OnCreateContextMenuListener contextMenuListener, OnBindingItemClickListener clickListener) {
+    void bindTo(ItemViewDataHolder item, int viewDataId, int onClickListenerId, RecyclerView recyclerView, View.OnCreateContextMenuListener contextMenuListener, OnBindingItemClickListener clickListener) {
         mViewDataId = viewDataId;
         mOnClickListenerId = onClickListenerId;
         mContextMenuListener = contextMenuListener;
         mClickListener = clickListener;
         mParentView = recyclerView;
-        itemView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                menuInfo = new AdapterView.AdapterContextMenuInfo(v, getAdapterPosition(), v.getId());
-                if (mContextMenuListener != null) {
-                    mContextMenuListener.onCreateContextMenu(menu, v, menuInfo);
-                }
+        itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
+            menuInfo = new AdapterView.AdapterContextMenuInfo(v, getAdapterPosition(), v.getId());
+            if (mContextMenuListener != null) {
+                mContextMenuListener.onCreateContextMenu(menu, v, menuInfo);
             }
         });
-        getItemBinding().setVariable(mViewDataId, item);
+        getItemBinding().setVariable(mViewDataId, item.getItemData());
         //分发点击事件
-        getItemBinding().setVariable(mOnClickListenerId, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mClickListener != null) {
-                    mClickListener.onItemClick(mParentView, v, getAdapterPosition(), v.getId());
-                }
+        getItemBinding().setVariable(mOnClickListenerId, (View.OnClickListener) v -> {
+            if (mClickListener != null) {
+                mClickListener.onItemClick(mParentView, v, getAdapterPosition(), v.getId());
             }
         });
         getItemBinding().executePendingBindings();

@@ -18,27 +18,21 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cody.component.adapter.list.BindingListAdapter;
-import com.cody.component.adapter.list.OnBindingItemClickListener;
 import com.cody.component.app.activity.EmptyBindActivity;
-import com.cody.http.cat.R;
 import com.cody.http.cat.BR;
+import com.cody.http.cat.R;
 import com.cody.http.cat.databinding.CatActivityMainBinding;
 import com.cody.http.cat.db.data.ItemHttpData;
 import com.cody.http.cat.viewmodel.CatViewModel;
 
-import java.util.List;
-
-import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by xu.yi. on 2019/3/26.
  * http 监视器
  */
 public class CatMainActivity extends EmptyBindActivity<CatActivityMainBinding> {
-    private final BindingListAdapter<ItemHttpData> mListAdapter = new BindingListAdapter<ItemHttpData>(this) {
+    private final BindingListAdapter mListAdapter = new BindingListAdapter(this) {
 
         @Override
         public int getViewDataId() {
@@ -66,19 +60,10 @@ public class CatMainActivity extends EmptyBindActivity<CatActivityMainBinding> {
         super.onBaseReady(savedInstanceState);
         setSupportActionBar(getBinding().toolbar);
         getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mListAdapter.setItemClickListener(new OnBindingItemClickListener() {
-            @Override
-            public void onItemClick(RecyclerView parent, View view, int position, long id) {
-                CatDetailsActivity.openActivity(CatMainActivity.this, mListAdapter.getItem(position));
-            }
-        });
+        mListAdapter.setItemClickListener((parent, view, position, id) ->
+                CatDetailsActivity.openActivity(CatMainActivity.this, (ItemHttpData) mListAdapter.getItem(position).getItemData()));
         getBinding().recyclerView.setAdapter(mListAdapter);
-        getViewModel(CatViewModel.class).getAllRecordLiveData().observe(this, new Observer<List<ItemHttpData>>() {
-            @Override
-            public void onChanged(@Nullable List<ItemHttpData> itemHttpDataList) {
-                mListAdapter.submitList(itemHttpDataList);
-            }
-        });
+        getViewModel(CatViewModel.class).getAllRecordLiveData().observe(this, mListAdapter::submitList);
     }
 
     @Override

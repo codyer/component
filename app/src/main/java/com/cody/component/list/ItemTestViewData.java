@@ -15,13 +15,13 @@ package com.cody.component.list;
 import android.text.TextUtils;
 
 import com.cody.component.lib.data.IViewData;
-import com.cody.component.list.data.ItemMultiViewData;
+import com.cody.component.lib.data.ViewData;
 
 /**
  * Created by xu.yi. on 2019/4/14.
  * component
  */
-public class ItemTestViewData extends ItemMultiViewData {
+public class ItemTestViewData extends ViewData {
     private static final long serialVersionUID = -9198367211217170445L;
     private String test;
 
@@ -52,11 +52,11 @@ public class ItemTestViewData extends ItemMultiViewData {
         this.test = test;
     }
 
-//    @Override
-//    public boolean areItemsTheSame(final IViewData newBind) {
-//        return TextUtils.equals(test, ((ItemTestViewData) newBind).getTest());
-//    }
-//
+    @Override
+    public boolean areItemsTheSame(final IViewData newBind) {
+        return TextUtils.equals(test, ((ItemTestViewData) newBind).getTest());
+    }
+
 //    @Override
 //    public boolean areContentsTheSame(final IViewData newBind) {
 //        return TextUtils.equals(test, ((ItemTestViewData) newBind).getTest());

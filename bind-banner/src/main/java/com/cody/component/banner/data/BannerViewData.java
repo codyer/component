@@ -15,13 +15,13 @@ package com.cody.component.banner.data;
 import android.text.TextUtils;
 
 import com.cody.component.lib.data.IViewData;
-import com.cody.component.lib.data.ItemViewData;
+import com.cody.component.lib.data.ViewData;
 
 /**
  * Created by cody.yi on 2019/4/4.
  * banner viewData
  */
-public class BannerViewData extends ItemViewData {
+public class BannerViewData extends ViewData {
     private static final long serialVersionUID = 4802021333332679648L;
     private String mImgId;
     private String mImgDesc;
@@ -42,11 +42,6 @@ public class BannerViewData extends ItemViewData {
             return TextUtils.equals(this.mImgId, (((BannerViewData) newBind).mImgId));
         }
         return super.areItemsTheSame(newBind);
-    }
-
-    @Override
-    public boolean areContentsTheSame(IViewData newBind) {
-        return this.equals(newBind);
     }
 
     public String getImgId() {
