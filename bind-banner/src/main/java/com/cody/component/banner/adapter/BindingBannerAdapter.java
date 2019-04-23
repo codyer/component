@@ -1,8 +1,8 @@
 /*
  * ************************************************************
  * 文件：BindingBannerAdapter.java  模块：bind-banner  项目：component
- * 当前修改时间：2019年04月13日 08:43:55
- * 上次修改时间：2019年04月12日 15:52:45
+ * 当前修改时间：2019年04月23日 18:23:20
+ * 上次修改时间：2019年04月23日 14:08:23
  * 作者：Cody.yi   https://github.com/codyer
  *
  * 描述：bind-banner
@@ -18,8 +18,8 @@ import android.widget.AdapterView;
 
 import com.cody.component.adapter.list.BindingListAdapter;
 import com.cody.component.adapter.list.OnBindingItemClickListener;
-import com.cody.component.banner.BR;
 import com.cody.component.banner.R;
+import com.cody.component.lib.CoreBR;
 import com.cody.component.lib.data.ItemViewDataHolder;
 
 import androidx.lifecycle.LifecycleOwner;
@@ -33,16 +33,6 @@ public class BindingBannerAdapter extends BindingListAdapter {
 
     public BindingBannerAdapter(LifecycleOwner lifecycleOwner) {
         super(lifecycleOwner);
-    }
-
-    @Override
-    public int getViewDataId() {
-        return BR.viewData;
-    }
-
-    @Override
-    public int getOnClickListenerId() {
-        return BR.onClickListener;
     }
 
     public int getItemLayoutId(int viewType) {

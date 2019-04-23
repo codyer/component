@@ -13,7 +13,6 @@
             <option value="$PROJECT_DIR$/app-core" />
             <option value="$PROJECT_DIR$/bind-adapter" />
             <option value="$PROJECT_DIR$/bind-banner" />
-            <option value="$PROJECT_DIR$/bind-list" />
             <option value="$PROJECT_DIR$/bus-compiler" />
             <option value="$PROJECT_DIR$/bus-core" />
             <option value="$PROJECT_DIR$/bus-lib" />

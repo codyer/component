@@ -1,8 +1,8 @@
 /*
  * ************************************************************
  * 文件：CatMainActivity.java  模块：http-cat  项目：component
- * 当前修改时间：2019年04月13日 08:43:54
- * 上次修改时间：2019年04月12日 15:52:45
+ * 当前修改时间：2019年04月23日 18:23:19
+ * 上次修改时间：2019年04月23日 14:08:23
  * 作者：Cody.yi   https://github.com/codyer
  *
  * 描述：http-cat
@@ -19,7 +19,7 @@ import android.view.View;
 
 import com.cody.component.adapter.list.BindingListAdapter;
 import com.cody.component.app.activity.EmptyBindActivity;
-import com.cody.http.cat.BR;
+import com.cody.component.lib.CoreBR;
 import com.cody.http.cat.R;
 import com.cody.http.cat.databinding.CatActivityMainBinding;
 import com.cody.http.cat.db.data.ItemHttpData;
@@ -33,17 +33,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
  */
 public class CatMainActivity extends EmptyBindActivity<CatActivityMainBinding> {
     private final BindingListAdapter mListAdapter = new BindingListAdapter(this) {
-
-        @Override
-        public int getViewDataId() {
-            return BR.viewData;
-        }
-
-        @Override
-        public int getOnClickListenerId() {
-            return BR.onClickListener;
-        }
-
         @Override
         public int getItemLayoutId(int viewType) {
             return R.layout.cat_item_main;

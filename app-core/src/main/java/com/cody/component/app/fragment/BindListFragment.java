@@ -1,8 +1,8 @@
 /*
  * ************************************************************
  * 文件：BindListFragment.java  模块：app-core  项目：component
- * 当前修改时间：2019年04月13日 08:43:54
- * 上次修改时间：2019年04月12日 15:52:45
+ * 当前修改时间：2019年04月23日 18:23:19
+ * 上次修改时间：2019年04月23日 18:16:18
  * 作者：Cody.yi   https://github.com/codyer
  *
  * 描述：app-core
@@ -18,9 +18,9 @@ import com.cody.component.adapter.list.OnBindingItemClickListener;
 import com.cody.component.app.IBaseListView;
 import com.cody.component.app.R;
 import com.cody.component.app.databinding.FragmentBindListBinding;
-import com.cody.component.list.adapter.MultiBindingPageListAdapter;
-import com.cody.component.list.data.MaskViewData;
-import com.cody.component.list.viewmodel.MultiListViewModel;
+import com.cody.component.adapter.list.MultiBindingPageListAdapter;
+import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.viewmodel.MultiListViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
