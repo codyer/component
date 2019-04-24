@@ -13,22 +13,20 @@
 package com.cody.component.list;
 
 
-import android.app.Fragment;
 import android.view.View;
 
 import com.cody.component.R;
 import com.cody.component.app.fragment.PageListBindFragment;
 import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.handler.data.MaskViewData;
-import com.cody.component.handler.viewmodel.FriendlyViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- * A simple {@link Fragment} subclass.
+ * test
  */
-public class PageListTestBindFragment extends PageListBindFragment {
+public class PageListTestBindFragment extends PageListBindFragment<ListTestViewModel> {
 
 
     public PageListTestBindFragment() {
@@ -42,18 +40,18 @@ public class PageListTestBindFragment extends PageListBindFragment {
 
     @Override
     public void onItemClick(final RecyclerView recyclerView, final View view, final int i, final long l) {
-
-    }
-
-    @Override
-    public FriendlyViewModel buildFriendlyViewModel() {
-        return new ListTestViewModel(new MaskViewData());
+        getFriendlyViewModel().test();
     }
 
     @NonNull
     @Override
     public Class<ListTestViewModel> getVMClass() {
         return ListTestViewModel.class;
+    }
+
+    @Override
+    public ListTestViewModel buildFriendlyViewModel() {
+        return new ListTestViewModel(new MaskViewData());
     }
 
     @NonNull

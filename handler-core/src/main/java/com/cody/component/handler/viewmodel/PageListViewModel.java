@@ -38,10 +38,6 @@ public abstract class PageListViewModel<VD extends MaskViewData, ItemBean> exten
     private DataSourceWrapper<ItemBean> mWrapper;
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
 
-    public PageListViewModel() {
-        super();
-    }
-
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
     }

@@ -26,22 +26,13 @@ import androidx.lifecycle.MutableLiveData;
  * 包含刷新，重试，出错默认提示页面
  */
 public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseViewModel implements OnFriendlyListener {
-    private MaskViewData mFriendlyViewData;
+    final private MaskViewData mFriendlyViewData;
     protected MutableLiveData<Operation> mOperation;
     protected MutableLiveData<RequestStatus> mRequestStatus;
-
-    public FriendlyViewModel() {
-        mFriendlyViewData = new MaskViewData();
-        initFriendly();
-    }
 
     public FriendlyViewModel(final VD friendlyViewData) {
         mFriendlyViewData = friendlyViewData;
         initFriendly();
-    }
-
-    public void setFriendlyViewData(final MaskViewData friendlyViewData) {
-        mFriendlyViewData = friendlyViewData;
     }
 
     public MaskViewData getFriendlyViewData() {

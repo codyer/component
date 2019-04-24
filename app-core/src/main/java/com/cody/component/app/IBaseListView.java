@@ -25,8 +25,5 @@ import androidx.annotation.NonNull;
  */
 public interface IBaseListView extends OnRetryListener {
     @NonNull
-    PageListViewModel<? extends MaskViewData, ?> getListViewModel();
-
-    @NonNull
     MultiBindingPageListAdapter buildListAdapter();
 }

@@ -21,28 +21,20 @@ import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.viewmodel.FriendlyViewModel;
 import com.cody.component.handler.viewmodel.PageListViewModel;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
  *
  */
-public abstract class PageListBindFragment extends FriendlyBindFragment<FragmentPageListBinding, MaskViewData> implements IBaseListView, OnBindingItemClickListener {
+public abstract class PageListBindFragment<VM extends PageListViewModel<MaskViewData, ?>> extends FriendlyBindFragment<FragmentPageListBinding, VM, MaskViewData> implements IBaseListView, OnBindingItemClickListener {
     protected MultiBindingPageListAdapter mListAdapter;
 
     @Override
     protected int getLayoutID() {
         return R.layout.fragment_page_list;
-    }
-
-    @NonNull
-    @Override
-    public PageListViewModel<?, ?> getListViewModel() {
-        return (PageListViewModel<?, ?>) getFriendlyViewModel();
     }
 
     @Override
@@ -54,9 +46,9 @@ public abstract class PageListBindFragment extends FriendlyBindFragment<Fragment
         getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         getBinding().recyclerView.setAdapter(mListAdapter);
         getBinding().swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
-        getBinding().swipeRefreshLayout.setOnRefreshListener(() -> getListViewModel().refresh());
-        getListViewModel().getOperation().observe(this, operation -> mListAdapter.setOperation(operation));
-        getListViewModel().getPagedList().observe(this, items -> mListAdapter.submitList(items));
+        getBinding().swipeRefreshLayout.setOnRefreshListener(() -> getFriendlyViewModel().refresh());
+        getFriendlyViewModel().getOperation().observe(this, operation -> mListAdapter.setOperation(operation));
+        getFriendlyViewModel().getPagedList().observe(this, items -> mListAdapter.submitList(items));
     }
 
     @Override

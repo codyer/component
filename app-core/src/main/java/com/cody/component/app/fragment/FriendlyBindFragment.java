@@ -36,21 +36,21 @@ import androidx.lifecycle.ViewModelProvider;
  * bind:onClickListener="@{onClickListener}"
  * bind:viewData="@{viewData}" />
  */
-public abstract class FriendlyBindFragment<B extends ViewDataBinding, VD extends MaskViewData> extends SingleBindFragment<B, VD> implements Refreshable, OnRetryListener {
+public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends FriendlyViewModel<VD>, VD extends MaskViewData> extends SingleBindFragment<B, VD> implements Refreshable, OnRetryListener {
 
     /**
      * 创建 viewModel 实例，注意初始化 viewData
      */
-    public abstract FriendlyViewModel buildFriendlyViewModel();
+    public abstract VM buildFriendlyViewModel();
 
     @NonNull
-    public abstract Class<? extends FriendlyViewModel<VD>> getVMClass();
+    public abstract Class<VM> getVMClass();
 
-    @SuppressWarnings("unchecked")
-    public <VM extends FriendlyViewModel<MaskViewData>> VM getFriendlyViewModel() {
-        return (VM) getViewModel(getVMClass(), new ViewModelProvider.Factory() {
+    public VM getFriendlyViewModel() {
+        return getViewModel(getVMClass(), new ViewModelProvider.Factory() {
             @NonNull
             @Override
+            @SuppressWarnings("unchecked")
             public <T extends ViewModel> T create(@NonNull final Class<T> modelClass) {
                 return (T) buildFriendlyViewModel();
             }

@@ -16,8 +16,11 @@ import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.RequestStatus;
+import com.cody.component.handler.interfaces.OnRequestListener;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
+import com.cody.component.handler.livedata.SafeMutableLiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.arch.core.util.Function;
@@ -29,13 +32,9 @@ import androidx.lifecycle.MutableLiveData;
  * 获取列表数据
  */
 public abstract class ListViewModel<VD extends MaskViewData, ItemBean> extends SingleViewModel<VD>
-        implements OnRequestPageListener<ItemBean>, Function<ItemBean, ItemViewDataHolder> {
+        implements OnRequestListener, Function<ItemBean, ItemViewDataHolder> {
 
     private LiveData<List<ItemViewDataHolder>> mItems;
-
-    public ListViewModel() {
-        super();
-    }
 
     public ListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
@@ -44,7 +43,7 @@ public abstract class ListViewModel<VD extends MaskViewData, ItemBean> extends S
     @Override
     public void initFriendly() {
         super.initFriendly();
-        mItems = new MutableLiveData<>();
+        mItems = new SafeMutableLiveData<>(new ArrayList<>());
     }
 
     public LiveData<List<ItemViewDataHolder>> getItems() {

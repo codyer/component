@@ -29,6 +29,9 @@ public class ListTestViewModel extends PageListViewModel<MaskViewData, String> {
         super(maskViewData);
     }
 
+    public void test() {
+    }
+
     @Override
     public ItemViewDataHolder apply(final String input) {
         return new ItemViewDataHolder(new ItemTestViewData(input));

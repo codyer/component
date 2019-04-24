@@ -28,10 +28,6 @@ import androidx.lifecycle.MutableLiveData;
  */
 public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> implements OnRequestListener {
 
-    public SingleViewModel() {
-        super();
-    }
-
     public SingleViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
     }
