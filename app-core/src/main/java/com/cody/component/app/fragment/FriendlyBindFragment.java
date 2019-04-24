@@ -16,13 +16,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cody.component.app.R;
-import com.cody.component.bind.CoreBR;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnRetryListener;
 import com.cody.component.handler.interfaces.Refreshable;
+import com.cody.component.handler.viewmodel.BaseViewModel;
 import com.cody.component.handler.viewmodel.FriendlyViewModel;
-import com.cody.component.handler.viewmodel.PageListViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
@@ -46,6 +45,13 @@ public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends
 
     @NonNull
     public abstract Class<VM> getVMClass();
+
+    @SuppressWarnings("unchecked")
+    @Deprecated
+    @Override
+    public <D extends BaseViewModel> D getViewModel(@NonNull final Class<D> viewModelClass) {
+        return (D) getFriendlyViewModel();
+    }
 
     public VM getFriendlyViewModel() {
         return getViewModel(getVMClass(), new ViewModelProvider.Factory() {

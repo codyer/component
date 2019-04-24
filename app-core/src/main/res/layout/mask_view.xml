@@ -30,6 +30,7 @@
         android:id="@+id/friendlyRetry"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/uiColorPrimaryBackground"
         android:onClick="@{onClickListener::onClick}"
         android:visibility="@{viewData.visibility?View.VISIBLE:View.GONE}">
 
