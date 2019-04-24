@@ -17,6 +17,8 @@ import com.cody.component.handler.livedata.BooleanLiveData;
 import com.cody.component.handler.livedata.IntegerLiveData;
 import com.cody.component.handler.livedata.StringLiveData;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by xu.yi. on 2019/4/9.
  * 页面出错、无网络、无数据等布局需要的数据
@@ -26,6 +28,7 @@ public class MaskViewData extends ViewData {
     private final BooleanLiveData mVisibility = new BooleanLiveData(false);
     private final IntegerLiveData mInfoId = new IntegerLiveData(R.string.ui_str_no_content);
     private final StringLiveData mMessage = new StringLiveData("");
+    final private BooleanLiveData mLoading = new BooleanLiveData(false);
     private final IntegerLiveData mImageId = new IntegerLiveData(R.drawable.ic_no_content);
 
     public void hideMaskView() {
@@ -34,14 +37,22 @@ public class MaskViewData extends ViewData {
 
     public void noContentView() {
         mVisibility.postValue(true);
+        mLoading.postValue(false);
         mInfoId.postValue(R.string.ui_str_no_content);
         mImageId.postValue(R.drawable.ic_no_content);
     }
 
     public void badNetWorkView() {
         mVisibility.postValue(true);
+        mLoading.postValue(false);
         mInfoId.postValue(R.string.ui_str_bad_network_view_tip);
         mImageId.postValue(R.drawable.ic_bad_network);
+    }
+
+    public void startLoading() {
+        mVisibility.postValue(true);
+        mLoading.postValue(true);
+        mInfoId.postValue(R.string.ui_str_loading);
     }
 
     public void failedView(String message) {
@@ -51,6 +62,7 @@ public class MaskViewData extends ViewData {
 
     public void failedView() {
         mVisibility.postValue(true);
+        mLoading.postValue(false);
         mInfoId.postValue(R.string.ui_str_load_failed_click_to_reload);
         mImageId.postValue(R.drawable.ic_load_failed);
     }
@@ -58,6 +70,11 @@ public class MaskViewData extends ViewData {
     public MaskViewData() {
     }
 
+    public BooleanLiveData getLoading() {
+        return mLoading;
+    }
+
+    @NonNull
     public BooleanLiveData getVisibility() {
         return mVisibility;
     }

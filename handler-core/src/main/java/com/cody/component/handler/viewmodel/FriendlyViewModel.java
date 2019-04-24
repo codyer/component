@@ -26,13 +26,17 @@ import androidx.lifecycle.MutableLiveData;
  * component 用户友好的view model
  * 包含刷新，重试，出错默认提示页面
  */
-public abstract class FriendlyViewModel extends BaseViewModel implements OnRequestListener, OnFriendlyListener {
-    final private MaskViewData mMaskViewData = new MaskViewData();
+public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseViewModel implements OnRequestListener, OnFriendlyListener {
+    private VD mFriendlyViewData;
     final private MutableLiveData<Operation> mOperation = new MutableLiveData<>();
     final private MutableLiveData<RequestStatus> mRequestStatus = new MutableLiveData<>();
 
-    public MaskViewData getMaskViewData() {
-        return mMaskViewData;
+    public FriendlyViewModel(final VD friendlyViewData) {
+        mFriendlyViewData = friendlyViewData;
+    }
+
+    public VD getFriendlyViewData() {
+        return mFriendlyViewData;
     }
 
     @Override

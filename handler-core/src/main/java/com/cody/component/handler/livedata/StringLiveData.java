@@ -20,4 +20,12 @@ public class StringLiveData extends SafeMutableLiveData<String> {
     public StringLiveData(final String value) {
         super(value);
     }
+
+    public String get() {
+        String old = getValue();
+        if (old != null) {
+            return old;
+        }
+        return "";
+    }
 }

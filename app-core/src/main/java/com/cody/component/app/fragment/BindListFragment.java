@@ -31,13 +31,13 @@ public abstract class BindListFragment extends SingleBindFragment<FragmentBindLi
 
     @NonNull
     @Override
-    public MultiListViewModel<?> getListViewModel() {
+    public MultiListViewModel<?, ?> getListViewModel() {
         return getViewModel(getVMClass());
     }
 
     @Override
     protected MaskViewData getViewData() {
-        return getListViewModel().getMaskViewData();
+        return getListViewModel().getFriendlyViewData();
     }
 
     @Override

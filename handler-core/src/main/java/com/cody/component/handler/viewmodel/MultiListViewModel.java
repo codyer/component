@@ -34,18 +34,26 @@ import androidx.paging.PagedList;
  * Created by xu.yi. on 2019/4/8.
  * 数据仓库，获取列表数据
  */
-public abstract class MultiListViewModel<ItemBean> extends BaseViewModel
+public abstract class MultiListViewModel<VD extends MaskViewData, ItemBean> extends BaseViewModel
         implements OnRequestPageListener<ItemBean>, Function<ItemBean, ItemViewDataHolder>, OnFriendlyListener {
-    private MaskViewData mMaskViewData = new MaskViewData();
+    private MaskViewData mFriendlyViewData;
     private MultiDataSourceFactory<ItemBean> mSourceFactory = new MultiDataSourceFactory<>(this, this);
     private DataSourceWrapper<ItemBean> mWrapper = new DataSourceWrapper<>(Transformations.switchMap(mSourceFactory.getDataSource(), MultiPageKeyedDataSource::getRequestStatus),
             Transformations.switchMap(mSourceFactory.getDataSource(), MultiPageKeyedDataSource::getOperation),
             mSourceFactory.getDataSource());
 
+    public MultiListViewModel() {
+        mFriendlyViewData = new MaskViewData();
+    }
+
+    public MultiListViewModel(final VD friendlyViewData) {
+        mFriendlyViewData = friendlyViewData;
+    }
+
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList = new LivePagedListBuilder<>(mSourceFactory.map(), initPageListConfig()).build();
 
-    public MaskViewData getMaskViewData() {
-        return mMaskViewData;
+    public MaskViewData getFriendlyViewData() {
+        return mFriendlyViewData;
     }
 
     public LiveData<PagedList<ItemViewDataHolder>> getPagedList() {

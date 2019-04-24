@@ -27,4 +27,12 @@ public class BooleanLiveData extends SafeMutableLiveData<Boolean> {
             postValue(!old);
         }
     }
+
+    public boolean get() {
+        Boolean old = getValue();
+        if (old != null) {
+            return old;
+        }
+        return false;
+    }
 }

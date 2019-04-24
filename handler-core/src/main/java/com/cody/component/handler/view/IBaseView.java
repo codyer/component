@@ -24,9 +24,9 @@ import androidx.lifecycle.ViewModelProvider;
  * component
  */
 public interface IBaseView extends IView {
-    default <T extends BaseViewModel> T getViewModel(@NonNull Class<T> viewModelClass) {
+    default <VM extends BaseViewModel> VM getViewModel(@NonNull Class<VM> viewModelClass) {
         return getViewModel(viewModelClass, null);
     }
 
-    <T extends BaseViewModel> T getViewModel(@NonNull Class<T> viewModelClass, @Nullable ViewModelProvider.Factory factory);
+    <VM extends BaseViewModel> VM getViewModel(@NonNull Class<VM> viewModelClass, @Nullable ViewModelProvider.Factory factory);
 }

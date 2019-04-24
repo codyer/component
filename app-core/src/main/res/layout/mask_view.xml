@@ -27,6 +27,7 @@
     </data>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/friendlyRetry"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:onClick="@{onClickListener::onClick}"
@@ -38,15 +39,22 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-            <TextView
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleLarge"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawableTop="@{viewData.imageId}"
-                android:drawablePadding="@dimen/dimen_normal"
-                android:gravity="center"
-                android:text="@{viewData.infoId}"
-                tools:drawableTop="@drawable/ic_load_failed"
-                tools:text="@string/ui_str_load_failed_click_to_reload" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="@{viewData.loading?View.VISIBLE:View.GONE}"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:src="@{viewData.imageId}"
+                android:visibility="@{viewData.loading?View.GONE:View.VISIBLE}"
+                tools:src="@drawable/ic_load_failed" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -54,7 +62,17 @@
                 android:layout_marginTop="@dimen/dimen_normal"
                 android:gravity="center"
                 android:text="@{viewData.message}"
+                android:visibility="@{viewData.loading?View.GONE:View.VISIBLE}"
                 tools:text="@string/ui_str_bad_network_view_tip" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dimen_normal"
+                android:gravity="center"
+                android:text="@{viewData.infoId}"
+                tools:text="@string/ui_str_load_failed_click_to_reload" />
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

@@ -20,4 +20,12 @@ public class IntegerLiveData extends SafeMutableLiveData<Integer> {
     public IntegerLiveData(final Integer value) {
         super(value);
     }
+
+    public int get() {
+        Integer old = getValue();
+        if (old != null) {
+            return old;
+        }
+        return 0;
+    }
 }
