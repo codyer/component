@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cody.component.app.R;
+import com.cody.component.bind.CoreBR;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnRetryListener;
@@ -36,8 +37,12 @@ import androidx.lifecycle.ViewModelProvider;
  * bind:onClickListener="@{onClickListener}"
  * bind:viewData="@{viewData}" />
  */
-public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends FriendlyViewModel<VD>, VD extends MaskViewData> extends SingleBindFragment<B, VD> implements Refreshable, OnRetryListener {
+public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends FriendlyViewModel<VD>, VD extends MaskViewData> extends BaseBindFragment<B> implements Refreshable, OnRetryListener {
 
+    @Override
+    protected void bindViewData() {
+        bindViewData(CoreBR.viewData, getViewData());
+    }
     /**
      * 创建 viewModel 实例，注意初始化 viewData
      */
@@ -58,7 +63,6 @@ public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends
     }
 
     @SuppressWarnings("unchecked")
-    @Override
     protected VD getViewData() {
         return (VD) getFriendlyViewModel().getFriendlyViewData();
     }

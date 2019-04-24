@@ -33,7 +33,7 @@ import androidx.databinding.ViewDataBinding;
  * Created by xu.yi. on 2019/3/25.
  * dataBinding 基类
  */
-public abstract class BaseBindFragment<B extends ViewDataBinding> extends BaseFragment implements IBinding, View.OnClickListener {
+public abstract class BaseBindFragment<B extends ViewDataBinding> extends BaseLazyFragment implements IBinding, View.OnClickListener {
     private B mBinding;
 
     /**
@@ -75,6 +75,7 @@ public abstract class BaseBindFragment<B extends ViewDataBinding> extends BaseFr
     protected void onBaseReady(Bundle savedInstanceState) {
         // The same thing as activity has been done in onCreateView
     }
+
     /**
      * @param variableId the CoreBR id of the variable to be set. For example, if the variable is
      *                   <code>x</code>, then variableId will be <code>CoreBR.x</code>.

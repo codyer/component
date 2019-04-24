@@ -13,10 +13,10 @@
 package com.cody.http.cat.ui;
 
 import android.os.Bundle;
-
 import android.view.View;
 
-import com.cody.component.app.fragment.SingleBindFragment;
+import com.cody.component.app.fragment.BaseBindFragment;
+import com.cody.component.bind.CoreBR;
 import com.cody.http.cat.R;
 import com.cody.http.cat.databinding.CatFragmentOverviewBinding;
 import com.cody.http.cat.db.data.ItemHttpData;
@@ -25,7 +25,7 @@ import com.cody.http.cat.db.data.ItemHttpData;
  * Created by xu.yi. on 2019/4/5.
  * CatOverviewFragment
  */
-public class CatOverviewFragment extends SingleBindFragment<CatFragmentOverviewBinding, ItemHttpData> {
+public class CatOverviewFragment extends BaseBindFragment<CatFragmentOverviewBinding> {
     private static final String ITEM_VIEW_DATA = "itemHttpData";
     private ItemHttpData mItemHttpData;
 
@@ -35,6 +35,11 @@ public class CatOverviewFragment extends SingleBindFragment<CatFragmentOverviewB
         bundle.putSerializable(ITEM_VIEW_DATA, itemHttpData);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    protected void bindViewData() {
+        bindViewData(CoreBR.viewData, getViewData());
     }
 
     public CatOverviewFragment() {
@@ -49,7 +54,6 @@ public class CatOverviewFragment extends SingleBindFragment<CatFragmentOverviewB
     public void onClick(View v) {
     }
 
-    @Override
     protected ItemHttpData getViewData() {
         Bundle bundle = getArguments();
         if (bundle != null) {

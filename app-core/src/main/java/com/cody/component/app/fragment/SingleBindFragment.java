@@ -13,8 +13,8 @@
 package com.cody.component.app.fragment;
 
 
-import com.cody.component.bind.CoreBR;
-import com.cody.component.handler.data.IViewData;
+import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.viewmodel.SingleViewModel;
 
 import androidx.databinding.ViewDataBinding;
 
@@ -22,11 +22,10 @@ import androidx.databinding.ViewDataBinding;
  * Created by xu.yi. on 2019/3/25.
  * 一个页面只绑定一个viewModel
  */
-public abstract class SingleBindFragment<B extends ViewDataBinding, VD extends IViewData> extends BaseBindFragment<B> {
-    protected abstract VD getViewData();
-
+public abstract class SingleBindFragment<B extends ViewDataBinding, VM extends SingleViewModel<VD>, VD extends MaskViewData> extends FriendlyBindFragment<B, VM, VD> {
     @Override
-    protected void bindViewData() {
-        bindViewData(CoreBR.viewData, getViewData());
+    protected void onFirstUserVisible() {
+        super.onFirstUserVisible();
+        getFriendlyViewModel().OnInit();
     }
 }

@@ -23,7 +23,10 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 
-import com.cody.component.app.fragment.SingleBindFragment;
+import com.cody.component.app.fragment.BaseBindFragment;
+import com.cody.component.bind.CoreBR;
+import com.cody.component.handler.interfaces.Refreshable;
+import com.cody.component.handler.interfaces.Scrollable;
 import com.cody.component.hybrid.JsBridge;
 import com.cody.component.hybrid.R;
 import com.cody.component.hybrid.core.JsWebChromeClient;
@@ -32,8 +35,6 @@ import com.cody.component.hybrid.databinding.FragmentHtmlBinding;
 import com.cody.component.hybrid.handler.JsHandlerCommonImpl;
 import com.cody.component.image.ImageViewDelegate;
 import com.cody.component.image.OnImageViewListener;
-import com.cody.component.handler.interfaces.Refreshable;
-import com.cody.component.handler.interfaces.Scrollable;
 import com.cody.component.util.LogUtil;
 import com.lzy.imagepicker.bean.ImageItem;
 
@@ -45,7 +46,7 @@ import androidx.annotation.NonNull;
 /**
  * Html 页面具体实现
  */
-public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlViewData>
+public class HtmlFragment extends BaseBindFragment<FragmentHtmlBinding>
         implements OnImageViewListener, JsWebChromeClient.OpenFileChooserCallBack, Scrollable, Refreshable {
     private static final String HTML_URL = "html_url";
     private HtmlViewData mHtmlViewData;
@@ -63,6 +64,11 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
         bundle.putString(HTML_URL, url);
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    protected void bindViewData() {
+        bindViewData(CoreBR.viewData, getViewData());
     }
 
     @Override
@@ -90,7 +96,6 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
         }
     }
 
-    @Override
     protected HtmlViewData getViewData() {
         if (mHtmlViewData != null) return mHtmlViewData;
         mHtmlViewData = new HtmlViewData();
