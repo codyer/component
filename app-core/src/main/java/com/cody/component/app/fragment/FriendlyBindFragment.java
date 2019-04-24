@@ -37,12 +37,8 @@ import androidx.lifecycle.ViewModelProvider;
  * bind:onClickListener="@{onClickListener}"
  * bind:viewData="@{viewData}" />
  */
-public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends FriendlyViewModel<VD>, VD extends MaskViewData> extends BaseBindFragment<B> implements Refreshable, OnRetryListener {
+public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends FriendlyViewModel<VD>, VD extends MaskViewData> extends SimpleBindFragment<B, VD> implements Refreshable, OnRetryListener {
 
-    @Override
-    protected void bindViewData() {
-        bindViewData(CoreBR.viewData, getViewData());
-    }
     /**
      * 创建 viewModel 实例，注意初始化 viewData
      */
@@ -62,6 +58,7 @@ public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends
         });
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     protected VD getViewData() {
         return (VD) getFriendlyViewModel().getFriendlyViewData();

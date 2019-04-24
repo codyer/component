@@ -23,8 +23,7 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 
-import com.cody.component.app.fragment.BaseBindFragment;
-import com.cody.component.bind.CoreBR;
+import com.cody.component.app.fragment.SimpleBindFragment;
 import com.cody.component.handler.interfaces.Refreshable;
 import com.cody.component.handler.interfaces.Scrollable;
 import com.cody.component.hybrid.JsBridge;
@@ -46,7 +45,7 @@ import androidx.annotation.NonNull;
 /**
  * Html 页面具体实现
  */
-public class HtmlFragment extends BaseBindFragment<FragmentHtmlBinding>
+public class HtmlFragment extends SimpleBindFragment<FragmentHtmlBinding, HtmlViewData>
         implements OnImageViewListener, JsWebChromeClient.OpenFileChooserCallBack, Scrollable, Refreshable {
     private static final String HTML_URL = "html_url";
     private HtmlViewData mHtmlViewData;
@@ -64,11 +63,6 @@ public class HtmlFragment extends BaseBindFragment<FragmentHtmlBinding>
         bundle.putString(HTML_URL, url);
         fragment.setArguments(bundle);
         return fragment;
-    }
-
-    @Override
-    protected void bindViewData() {
-        bindViewData(CoreBR.viewData, getViewData());
     }
 
     @Override
@@ -96,6 +90,7 @@ public class HtmlFragment extends BaseBindFragment<FragmentHtmlBinding>
         }
     }
 
+    @Override
     protected HtmlViewData getViewData() {
         if (mHtmlViewData != null) return mHtmlViewData;
         mHtmlViewData = new HtmlViewData();
