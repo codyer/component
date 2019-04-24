@@ -13,8 +13,8 @@
 package com.cody.component.handler.viewmodel;
 
 
-import com.cody.component.handler.action.ViewAction;
-import com.cody.component.lib.safe.SafeMutableLiveData;
+import com.cody.component.handler.define.ViewAction;
+import com.cody.component.handler.livedata.SafeMutableLiveData;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModel;

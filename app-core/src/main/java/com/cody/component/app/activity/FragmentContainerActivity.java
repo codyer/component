@@ -19,11 +19,10 @@ import android.view.View;
 
 import com.cody.component.app.R;
 import com.cody.component.app.databinding.ActivityFragmentContainerBinding;
-import com.cody.component.lib.view.Scrollable;
+import com.cody.component.handler.interfaces.Scrollable;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 public abstract class FragmentContainerActivity extends EmptyBindActivity<ActivityFragmentContainerBinding> implements Scrollable {
     public abstract Fragment getFragment();

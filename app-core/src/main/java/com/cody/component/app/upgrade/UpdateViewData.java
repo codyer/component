@@ -12,8 +12,8 @@
 
 package com.cody.component.app.upgrade;
 
-import com.cody.component.lib.data.ViewData;
-import com.cody.component.lib.safe.StringLiveData;
+import com.cody.component.handler.data.ViewData;
+import com.cody.component.handler.livedata.StringLiveData;
 
 /**
  * Created by cody.yi on 2017/5/8.

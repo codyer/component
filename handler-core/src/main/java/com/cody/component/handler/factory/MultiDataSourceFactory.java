@@ -12,10 +12,10 @@
 
 package com.cody.component.handler.factory;
 
-import com.cody.component.lib.data.ItemViewDataHolder;
-import com.cody.component.lib.safe.SafeMutableLiveData;
+import com.cody.component.handler.data.ItemViewDataHolder;
+import com.cody.component.handler.livedata.SafeMutableLiveData;
 import com.cody.component.handler.define.PageInfo;
-import com.cody.component.handler.listener.OnRequestPageListener;
+import com.cody.component.handler.interfaces.OnRequestPageListener;
 import com.cody.component.handler.source.MultiPageKeyedDataSource;
 
 import androidx.annotation.NonNull;

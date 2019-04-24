@@ -21,7 +21,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cody.component.R;
-import com.cody.component.adapter.list.OnBindingItemClickListener;
+import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
 import com.cody.component.app.activity.EmptyBindActivity;
 import com.cody.component.banner.adapter.BindingBannerAdapter;
 import com.cody.component.banner.data.BannerViewData;
@@ -33,7 +33,7 @@ import com.cody.component.databinding.ActivityMainBannerBinding;
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.image.certificate.camera.CameraActivity;
 import com.cody.component.image.scan.ScanActivity;
-import com.cody.component.lib.data.ItemViewDataHolder;
+import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.list.ListTestActivity;
 import com.cody.component.util.ActivityUtil;
 import com.cody.http.cat.HttpCat;

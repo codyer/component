@@ -13,8 +13,8 @@
 package com.cody.component.app.fragment;
 
 
-import com.cody.component.lib.CoreBR;
-import com.cody.component.lib.data.IViewData;
+import com.cody.component.bind.CoreBR;
+import com.cody.component.handler.data.IViewData;
 
 import androidx.databinding.ViewDataBinding;
 

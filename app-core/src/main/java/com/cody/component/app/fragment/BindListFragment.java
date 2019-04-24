@@ -14,11 +14,11 @@ package com.cody.component.app.fragment;
 
 import android.os.Bundle;
 
-import com.cody.component.adapter.list.OnBindingItemClickListener;
+import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
 import com.cody.component.app.IBaseListView;
 import com.cody.component.app.R;
 import com.cody.component.app.databinding.FragmentBindListBinding;
-import com.cody.component.adapter.list.MultiBindingPageListAdapter;
+import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.viewmodel.MultiListViewModel;
 

@@ -19,7 +19,7 @@ import android.view.View;
 
 import com.cody.component.app.R;
 import com.cody.component.app.databinding.ActivityFragmentContainerWithFabBinding;
-import com.cody.component.lib.view.Scrollable;
+import com.cody.component.handler.interfaces.Scrollable;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

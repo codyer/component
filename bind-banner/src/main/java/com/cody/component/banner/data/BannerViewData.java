@@ -14,8 +14,8 @@ package com.cody.component.banner.data;
 
 import android.text.TextUtils;
 
-import com.cody.component.lib.data.IViewData;
-import com.cody.component.lib.data.ViewData;
+import com.cody.component.handler.data.IViewData;
+import com.cody.component.handler.data.ViewData;
 
 /**
  * Created by cody.yi on 2019/4/4.

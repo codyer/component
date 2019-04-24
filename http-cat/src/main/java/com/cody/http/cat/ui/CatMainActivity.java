@@ -17,9 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.cody.component.adapter.list.BindingListAdapter;
+import com.cody.component.bind.adapter.list.BindingListAdapter;
 import com.cody.component.app.activity.EmptyBindActivity;
-import com.cody.component.lib.CoreBR;
 import com.cody.http.cat.R;
 import com.cody.http.cat.databinding.CatActivityMainBinding;
 import com.cody.http.cat.db.data.ItemHttpData;

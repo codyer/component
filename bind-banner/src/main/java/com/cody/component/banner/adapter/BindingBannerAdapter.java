@@ -16,11 +16,10 @@ import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 
-import com.cody.component.adapter.list.BindingListAdapter;
-import com.cody.component.adapter.list.OnBindingItemClickListener;
+import com.cody.component.bind.adapter.list.BindingListAdapter;
+import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
 import com.cody.component.banner.R;
-import com.cody.component.lib.CoreBR;
-import com.cody.component.lib.data.ItemViewDataHolder;
+import com.cody.component.handler.data.ItemViewDataHolder;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.RecyclerView;

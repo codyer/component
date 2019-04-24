@@ -17,7 +17,7 @@ import android.app.Fragment;
 import android.view.View;
 
 import com.cody.component.R;
-import com.cody.component.adapter.list.MultiBindingPageListAdapter;
+import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.app.fragment.BindListFragment;
 
 import androidx.annotation.NonNull;

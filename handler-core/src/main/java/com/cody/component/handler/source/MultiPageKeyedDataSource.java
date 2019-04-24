@@ -12,13 +12,13 @@
 
 package com.cody.component.handler.source;
 
-import com.cody.component.handler.callback.PageDataCallBack;
+import com.cody.component.handler.interfaces.PageDataCallBack;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.listener.OnFriendlyListener;
-import com.cody.component.handler.listener.OnRequestPageListener;
-import com.cody.component.handler.listener.OnRetryListener;
+import com.cody.component.handler.interfaces.OnFriendlyListener;
+import com.cody.component.handler.interfaces.OnRequestPageListener;
+import com.cody.component.handler.interfaces.OnRetryListener;
 
 import java.util.List;
 

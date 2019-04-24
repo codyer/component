@@ -16,8 +16,8 @@ package com.cody.component.handler.viewmodel;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.listener.OnFriendlyListener;
-import com.cody.component.handler.listener.OnRequestListener;
+import com.cody.component.handler.interfaces.OnFriendlyListener;
+import com.cody.component.handler.interfaces.OnRequestListener;
 
 import androidx.lifecycle.MutableLiveData;
 

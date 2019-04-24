@@ -19,9 +19,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
@@ -30,15 +27,13 @@ import com.cody.component.app.fragment.SingleBindFragment;
 import com.cody.component.hybrid.JsBridge;
 import com.cody.component.hybrid.R;
 import com.cody.component.hybrid.core.JsWebChromeClient;
-import com.cody.component.hybrid.core.UrlUtil;
-import com.cody.component.hybrid.data.HtmlConfig;
 import com.cody.component.hybrid.data.HtmlViewData;
 import com.cody.component.hybrid.databinding.FragmentHtmlBinding;
 import com.cody.component.hybrid.handler.JsHandlerCommonImpl;
 import com.cody.component.image.ImageViewDelegate;
 import com.cody.component.image.OnImageViewListener;
-import com.cody.component.lib.view.Refreshable;
-import com.cody.component.lib.view.Scrollable;
+import com.cody.component.handler.interfaces.Refreshable;
+import com.cody.component.handler.interfaces.Scrollable;
 import com.cody.component.util.LogUtil;
 import com.lzy.imagepicker.bean.ImageItem;
 
@@ -46,8 +41,6 @@ import java.io.File;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Html 页面具体实现

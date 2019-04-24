@@ -12,14 +12,14 @@
 
 package com.cody.component.handler.viewmodel;
 
-import com.cody.component.lib.data.ItemViewDataHolder;
+import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.factory.MultiDataSourceFactory;
-import com.cody.component.handler.listener.OnFriendlyListener;
-import com.cody.component.handler.listener.OnRequestPageListener;
+import com.cody.component.handler.interfaces.OnFriendlyListener;
+import com.cody.component.handler.interfaces.OnRequestPageListener;
 import com.cody.component.handler.source.DataSourceWrapper;
 import com.cody.component.handler.source.MultiPageKeyedDataSource;
 

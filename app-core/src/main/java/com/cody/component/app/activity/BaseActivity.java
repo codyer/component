@@ -31,7 +31,7 @@ import android.widget.Toast;
 import com.cody.component.app.R;
 import com.cody.component.handler.viewmodel.BaseViewModel;
 import com.cody.component.handler.viewmodel.IViewModel;
-import com.cody.component.handler.action.ViewAction;
+import com.cody.component.handler.define.ViewAction;
 import com.cody.component.handler.view.IBaseView;
 import com.cody.component.util.ActivityUtil;
 

@@ -13,8 +13,8 @@
 package com.cody.http.cat.viewmodel;
 
 import com.cody.component.handler.viewmodel.BaseViewModel;
-import com.cody.component.lib.data.ItemViewDataHolder;
-import com.cody.component.lib.safe.SafeMutableLiveData;
+import com.cody.component.handler.data.ItemViewDataHolder;
+import com.cody.component.handler.livedata.SafeMutableLiveData;
 import com.cody.http.cat.HttpCat;
 import com.cody.http.cat.db.HttpCatDatabase;
 import com.cody.http.cat.db.data.ItemHttpData;

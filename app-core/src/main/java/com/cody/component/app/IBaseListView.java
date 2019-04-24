@@ -12,8 +12,8 @@
 
 package com.cody.component.app;
 
-import com.cody.component.adapter.list.MultiBindingPageListAdapter;
-import com.cody.component.handler.listener.OnRetryListener;
+import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
+import com.cody.component.handler.interfaces.OnRetryListener;
 import com.cody.component.handler.viewmodel.MultiListViewModel;
 
 import androidx.annotation.NonNull;

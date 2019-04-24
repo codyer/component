@@ -12,11 +12,11 @@
 
 package com.cody.component.handler.source;
 
-import com.cody.component.lib.safe.SafeMutableLiveData;
+import com.cody.component.handler.livedata.SafeMutableLiveData;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.listener.OnRefreshListener;
-import com.cody.component.handler.listener.OnRetryListener;
+import com.cody.component.handler.interfaces.Refreshable;
+import com.cody.component.handler.interfaces.OnRetryListener;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -25,7 +25,7 @@ import androidx.lifecycle.MutableLiveData;
  * Created by xu.yi. on 2019/4/8.
  * dataSource wrapper
  */
-public class DataSourceWrapper<ItemBean> implements OnRefreshListener, OnRetryListener {
+public class DataSourceWrapper<ItemBean> implements Refreshable, OnRetryListener {
     final private MutableLiveData<RequestStatus> mRequestStatus;
     final private MutableLiveData<Operation> mOperation;
     final private SafeMutableLiveData<MultiPageKeyedDataSource<ItemBean>> mDataSource;
