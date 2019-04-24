@@ -1,0 +1,46 @@
+/*
+ * ************************************************************
+ * 文件：config-doc.gradle  模块：StudioProjects-component  项目：component
+ * 当前修改时间：2019年04月24日 22:56:35
+ * 上次修改时间：2019年04月24日 22:56:34
+ * 作者：Cody.yi   https://github.com/codyer
+ *
+ * 描述：StudioProjects-component
+ * Copyright (c) 2019
+ * ************************************************************
+ */
+
+//生成文档注释
+task androidJavadocs(type: Javadoc) {
+    failOnError = false
+    source = android.sourceSets.main.java.srcDirs
+    ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
+    classpath += files(ext.androidJar)
+}
+
+//防止生成的文档中文乱码
+tasks.withType(Javadoc) {
+    options{
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
+}
+
+//将文档打包成jar
+task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
+    classifier = 'javadoc'
+    from androidJavadocs.destinationDir
+}
+
+//将源码打包
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+
+//包含文档和源码的aar
+artifacts {
+    archives androidSourcesJar
+    archives androidJavadocsJar
+}
