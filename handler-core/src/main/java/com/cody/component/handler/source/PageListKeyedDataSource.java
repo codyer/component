@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：MultiPageKeyedDataSource.java  模块：handler-core  项目：component
+ * 文件：PageListKeyedDataSource.java  模块：handler-core  项目：component
  * 当前修改时间：2019年04月23日 18:23:20
  * 上次修改时间：2019年04月23日 18:16:18
  * 作者：Cody.yi   https://github.com/codyer
@@ -32,21 +32,28 @@ import androidx.paging.PageKeyedDataSource;
  * 根据接口返回的信息进行分页加载处理基类
  * 泛型为分页Item的类类型
  */
-public class MultiPageKeyedDataSource<ItemBean> extends PageKeyedDataSource<PageInfo, ItemBean>
+public class PageListKeyedDataSource<ItemBean> extends PageKeyedDataSource<PageInfo, ItemBean>
         implements OnFriendlyListener {
-    private MutableLiveData<RequestStatus> mRequestStatus = new MutableLiveData<>();
-    private MutableLiveData<Operation> mOperation = new MutableLiveData<>();
+    private MutableLiveData<RequestStatus> mRequestStatus;
+    private MutableLiveData<Operation> mOperation;
     private OnRequestPageListener<ItemBean> mOnRequestPageListener;
     private OnRetryListener mOnRetryListener;
 
-    public MultiPageKeyedDataSource(OnRequestPageListener<ItemBean> onRequestPageListener) {
+    public PageListKeyedDataSource(OnRequestPageListener<ItemBean> onRequestPageListener) {
         mOnRequestPageListener = onRequestPageListener;
+        initFriendly();
         setOperation(Operation.INIT);
     }
 
     @Override
     public MutableLiveData<RequestStatus> getRequestStatus() {
         return mRequestStatus;
+    }
+
+    @Override
+    public void initFriendly() {
+        mRequestStatus = new MutableLiveData<>();
+        mOperation = new MutableLiveData<>();
     }
 
     @Override

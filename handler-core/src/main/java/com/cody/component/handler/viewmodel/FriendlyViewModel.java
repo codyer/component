@@ -17,7 +17,6 @@ import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnFriendlyListener;
-import com.cody.component.handler.interfaces.OnRequestListener;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -26,16 +25,26 @@ import androidx.lifecycle.MutableLiveData;
  * component 用户友好的view model
  * 包含刷新，重试，出错默认提示页面
  */
-public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseViewModel implements OnRequestListener, OnFriendlyListener {
-    private VD mFriendlyViewData;
-    final private MutableLiveData<Operation> mOperation = new MutableLiveData<>();
-    final private MutableLiveData<RequestStatus> mRequestStatus = new MutableLiveData<>();
+public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseViewModel implements OnFriendlyListener {
+    private MaskViewData mFriendlyViewData;
+    protected MutableLiveData<Operation> mOperation;
+    protected MutableLiveData<RequestStatus> mRequestStatus;
+
+    public FriendlyViewModel() {
+        mFriendlyViewData = new MaskViewData();
+        initFriendly();
+    }
 
     public FriendlyViewModel(final VD friendlyViewData) {
         mFriendlyViewData = friendlyViewData;
+        initFriendly();
     }
 
-    public VD getFriendlyViewData() {
+    public void setFriendlyViewData(final MaskViewData friendlyViewData) {
+        mFriendlyViewData = friendlyViewData;
+    }
+
+    public MaskViewData getFriendlyViewData() {
         return mFriendlyViewData;
     }
 
@@ -47,31 +56,5 @@ public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseVie
     @Override
     public MutableLiveData<RequestStatus> getRequestStatus() {
         return mRequestStatus;
-    }
-
-    @Override
-    public void OnInit() {
-        setOperation(Operation.INIT);
-        OnRequestData();
-    }
-
-    @Override
-    public void refresh() {
-        setOperation(Operation.REFRESH);
-        OnRequestData();
-    }
-
-    @Override
-    public void retry() {
-        setOperation(Operation.RETRY);
-        OnRequestData();
-    }
-
-    /**
-     * 执行一个操作
-     */
-    private void setOperation(Operation operation) {
-        mOperation.postValue(operation);
-        mRequestStatus.postValue(RequestStatus.loading());
     }
 }

@@ -33,7 +33,7 @@
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragment.BindListFragment">
+        tools:context=".fragment.PageListBindFragment">
 
         <FrameLayout
             android:layout_width="match_parent"

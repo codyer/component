@@ -15,7 +15,7 @@ package com.cody.component.app;
 import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.interfaces.OnRetryListener;
-import com.cody.component.handler.viewmodel.MultiListViewModel;
+import com.cody.component.handler.viewmodel.PageListViewModel;
 
 import androidx.annotation.NonNull;
 
@@ -25,11 +25,8 @@ import androidx.annotation.NonNull;
  */
 public interface IBaseListView extends OnRetryListener {
     @NonNull
-    Class<? extends MultiListViewModel<? extends MaskViewData, ?>> getVMClass();
+    PageListViewModel<? extends MaskViewData, ?> getListViewModel();
 
     @NonNull
-    MultiListViewModel<? extends MaskViewData, ?> getListViewModel();
-
-    @NonNull
-    MultiBindingPageListAdapter getListAdapter();
+    MultiBindingPageListAdapter buildListAdapter();
 }

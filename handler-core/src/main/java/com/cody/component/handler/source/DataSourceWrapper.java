@@ -28,10 +28,10 @@ import androidx.lifecycle.MutableLiveData;
 public class DataSourceWrapper<ItemBean> implements Refreshable, OnRetryListener {
     final private MutableLiveData<RequestStatus> mRequestStatus;
     final private MutableLiveData<Operation> mOperation;
-    final private SafeMutableLiveData<MultiPageKeyedDataSource<ItemBean>> mDataSource;
+    final private SafeMutableLiveData<PageListKeyedDataSource<ItemBean>> mDataSource;
 
     public DataSourceWrapper(final LiveData<RequestStatus> requestStatus, final LiveData<Operation> operation,
-                             final SafeMutableLiveData<MultiPageKeyedDataSource<ItemBean>> dataSource) {
+                             final SafeMutableLiveData<PageListKeyedDataSource<ItemBean>> dataSource) {
         mRequestStatus = (MutableLiveData<RequestStatus>) requestStatus;
         mOperation = (MutableLiveData<Operation>) operation;
         mDataSource = dataSource;

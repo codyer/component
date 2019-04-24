@@ -25,10 +25,10 @@ import androidx.annotation.NonNull;
  */
 public class MaskViewData extends ViewData {
     private static final long serialVersionUID = -381194114860141421L;
-    private final BooleanLiveData mVisibility = new BooleanLiveData(false);
-    private final IntegerLiveData mInfoId = new IntegerLiveData(R.string.ui_str_no_content);
+    private final BooleanLiveData mVisibility = new BooleanLiveData(true);
+    private final IntegerLiveData mInfoId = new IntegerLiveData(R.string.ui_str_loading);
     private final StringLiveData mMessage = new StringLiveData("");
-    final private BooleanLiveData mLoading = new BooleanLiveData(false);
+    final private BooleanLiveData mLoading = new BooleanLiveData(true);
     private final IntegerLiveData mImageId = new IntegerLiveData(R.drawable.ic_no_content);
 
     public void hideMaskView() {

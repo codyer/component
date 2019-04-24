@@ -63,10 +63,10 @@ android {
 }
 
 dependencies {
-    if (isLocalMaven) {
-        implementation rootProject.ext.dependencies["local-component"]
-        annotationProcessor rootProject.ext.dependencies["local-compiler"]
-    } else if (isComponent) {
+//    if (isLocalMaven) {
+//        implementation rootProject.ext.dependencies["local-component"]
+//        annotationProcessor rootProject.ext.dependencies["local-compiler"]
+//    } else if (isComponent) {
         implementation project(":http-core")
         implementation project(":bus-core")
         implementation project(":bind-banner")
@@ -74,10 +74,10 @@ dependencies {
         implementation project(":hybrid-core")
         annotationProcessor project(":bus-compiler")
         annotationProcessor project(":http-compiler")
-    } else {//if (isApp || isJitPack)
-        implementation rootProject.ext.dependencies["component"]
-        annotationProcessor rootProject.ext.dependencies["compiler"]
-    }
+//    } else {//if (isApp || isJitPack)
+//        implementation rootProject.ext.dependencies["component"]
+//        annotationProcessor rootProject.ext.dependencies["compiler"]
+//    }
     implementation rootProject.ext.dependencies["constraintlayout"]
     implementation rootProject.ext.dependencies["material"]
 }

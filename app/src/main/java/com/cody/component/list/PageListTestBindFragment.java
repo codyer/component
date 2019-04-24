@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：ListTestFragment.java  模块：app  项目：component
+ * 文件：PageListTestBindFragment.java  模块：app  项目：component
  * 当前修改时间：2019年04月23日 18:23:19
  * 上次修改时间：2019年04月23日 12:42:32
  * 作者：Cody.yi   https://github.com/codyer
@@ -17,8 +17,10 @@ import android.app.Fragment;
 import android.view.View;
 
 import com.cody.component.R;
+import com.cody.component.app.fragment.PageListBindFragment;
 import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
-import com.cody.component.app.fragment.BindListFragment;
+import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.viewmodel.FriendlyViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,10 +28,10 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListTestFragment extends BindListFragment {
+public class PageListTestBindFragment extends PageListBindFragment {
 
 
-    public ListTestFragment() {
+    public PageListTestBindFragment() {
         // Required empty public constructor
     }
 
@@ -43,6 +45,11 @@ public class ListTestFragment extends BindListFragment {
 
     }
 
+    @Override
+    public FriendlyViewModel buildFriendlyViewModel() {
+        return new ListTestViewModel(new MaskViewData());
+    }
+
     @NonNull
     @Override
     public Class<ListTestViewModel> getVMClass() {
@@ -51,11 +58,11 @@ public class ListTestFragment extends BindListFragment {
 
     @NonNull
     @Override
-    public MultiBindingPageListAdapter getListAdapter() {
+    public MultiBindingPageListAdapter buildListAdapter() {
         return new MultiBindingPageListAdapter(this, this) {
             @Override
             public int getItemLayoutId(final int viewType) {
-                if (viewType == 0){
+                if (viewType == 0) {
                     return R.layout.item_test_list;
                 }
                 return super.getItemLayoutId(viewType);
