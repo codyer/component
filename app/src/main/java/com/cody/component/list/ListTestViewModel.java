@@ -12,10 +12,10 @@
 
 package com.cody.component.list;
 
+import com.cody.component.handler.callback.PageDataCallBack;
+import com.cody.component.handler.define.PageInfo;
+import com.cody.component.handler.viewmodel.MultiListViewModel;
 import com.cody.component.lib.data.ItemViewDataHolder;
-import com.cody.component.list.callback.PageDataCallBack;
-import com.cody.component.list.define.PageInfo;
-import com.cody.component.list.viewmodel.MultiListViewModel;
 
 import java.util.ArrayList;
 

@@ -14,10 +14,11 @@ package com.cody.component.handler.define;
 
 /**
  * Created by xu.yi. on 2019/4/8.
- * 对列表进行操作的状态
+ * 对进行操作的状态
  */
 public enum Operation {
     INIT,
+    RETRY,
     REFRESH,
     LOAD_BEFORE,
     LOAD_AFTER

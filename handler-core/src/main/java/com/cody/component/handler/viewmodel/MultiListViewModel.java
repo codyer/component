@@ -12,14 +12,13 @@
 
 package com.cody.component.handler.viewmodel;
 
-import com.cody.component.handler.BaseViewModel;
 import com.cody.component.lib.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.factory.MultiDataSourceFactory;
-import com.cody.component.handler.listener.OnListListener;
+import com.cody.component.handler.listener.OnFriendlyListener;
 import com.cody.component.handler.listener.OnRequestPageListener;
 import com.cody.component.handler.source.DataSourceWrapper;
 import com.cody.component.handler.source.MultiPageKeyedDataSource;
@@ -36,7 +35,7 @@ import androidx.paging.PagedList;
  * 数据仓库，获取列表数据
  */
 public abstract class MultiListViewModel<ItemBean> extends BaseViewModel
-        implements OnRequestPageListener<ItemBean>, Function<ItemBean, ItemViewDataHolder>, OnListListener {
+        implements OnRequestPageListener<ItemBean>, Function<ItemBean, ItemViewDataHolder>, OnFriendlyListener {
     private MaskViewData mMaskViewData = new MaskViewData();
     private MultiDataSourceFactory<ItemBean> mSourceFactory = new MultiDataSourceFactory<>(this, this);
     private DataSourceWrapper<ItemBean> mWrapper = new DataSourceWrapper<>(Transformations.switchMap(mSourceFactory.getDataSource(), MultiPageKeyedDataSource::getRequestStatus),

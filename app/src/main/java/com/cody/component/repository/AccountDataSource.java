@@ -13,7 +13,7 @@
 package com.cody.component.repository;
 
 
-import com.cody.component.handler.BaseViewModel;
+import com.cody.component.handler.viewmodel.BaseViewModel;
 import com.cody.http.core.BaseRemoteDataSource;
 import com.cody.http.core.callback.RequestCallback;
 import com.cody.component.lib.bean.Result;

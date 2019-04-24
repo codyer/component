@@ -12,7 +12,7 @@
 
 package com.cody.http.cat.viewmodel;
 
-import com.cody.component.handler.BaseViewModel;
+import com.cody.component.handler.viewmodel.BaseViewModel;
 import com.cody.component.lib.data.ItemViewDataHolder;
 import com.cody.component.lib.safe.SafeMutableLiveData;
 import com.cody.http.cat.HttpCat;

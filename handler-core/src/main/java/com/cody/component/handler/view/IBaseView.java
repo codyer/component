@@ -12,7 +12,7 @@
 
 package com.cody.component.handler.view;
 
-import com.cody.component.handler.BaseViewModel;
+import com.cody.component.handler.viewmodel.BaseViewModel;
 import com.cody.component.lib.view.IView;
 
 import androidx.annotation.NonNull;

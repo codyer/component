@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：OnListListener.java  模块：handler-core  项目：component
+ * 文件：OnFriendlyListener.java  模块：handler-core  项目：component
  * 当前修改时间：2019年04月23日 18:23:20
  * 上次修改时间：2019年04月23日 18:16:18
  * 作者：Cody.yi   https://github.com/codyer
@@ -20,9 +20,9 @@ import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by xu.yi. on 2019/4/9.
- * 列表通用监听
+ * 用户友好 通用监听
  */
-public interface OnListListener extends OnRefreshListener, OnRetryListener {
+public interface OnFriendlyListener extends OnRefreshListener, OnRetryListener {
     MutableLiveData<Operation> getOperation();
 
     MutableLiveData<RequestStatus> getRequestStatus();

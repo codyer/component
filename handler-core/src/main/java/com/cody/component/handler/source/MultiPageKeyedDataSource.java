@@ -16,7 +16,7 @@ import com.cody.component.handler.callback.PageDataCallBack;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.listener.OnListListener;
+import com.cody.component.handler.listener.OnFriendlyListener;
 import com.cody.component.handler.listener.OnRequestPageListener;
 import com.cody.component.handler.listener.OnRetryListener;
 
@@ -33,7 +33,7 @@ import androidx.paging.PageKeyedDataSource;
  * 泛型为分页Item的类类型
  */
 public class MultiPageKeyedDataSource<ItemBean> extends PageKeyedDataSource<PageInfo, ItemBean>
-        implements OnListListener {
+        implements OnFriendlyListener {
     private MutableLiveData<RequestStatus> mRequestStatus = new MutableLiveData<>();
     private MutableLiveData<Operation> mOperation = new MutableLiveData<>();
     private OnRequestPageListener<ItemBean> mOnRequestPageListener;

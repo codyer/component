@@ -61,7 +61,7 @@ import javax.lang.model.util.Elements;
 public class RemoteDataSourceProcessor extends AbstractProcessor {
     private static final String TAG = "[RemoteDataSourceProcessor]";
 
-    private static final String VIEW_MODEL_CLASS = "com.cody.component.handler.BaseViewModel";
+    private static final String VIEW_MODEL_CLASS = "com.cody.component.handler.viewmodel.BaseViewModel";
     private static final String BASE_DATA_SOURCE_CLASS = "com.cody.http.core.BaseRemoteDataSource";
     private static final String CALL_BACK_CLASS = "com.cody.http.core.callback.RequestCallback";
     private static final String CALL_BACK = "callback";
