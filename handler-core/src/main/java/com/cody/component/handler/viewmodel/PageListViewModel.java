@@ -34,9 +34,9 @@ import androidx.paging.PagedList;
  * 数据仓库，获取列表数据
  */
 public abstract class PageListViewModel<VD extends MaskViewData, ItemBean> extends FriendlyViewModel<VD>
-        implements OnRequestPageListener<ItemBean>, Function<ItemBean, ItemViewDataHolder> {
+        implements OnRequestPageListener<ItemBean>, Function<ItemBean, ItemViewDataHolder<?>> {
     private DataSourceWrapper<ItemBean> mWrapper;
-    private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
+    private LiveData<PagedList<ItemViewDataHolder<?>>> mPagedList;
 
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
@@ -51,7 +51,7 @@ public abstract class PageListViewModel<VD extends MaskViewData, ItemBean> exten
         mPagedList = new LivePagedListBuilder<>(sourceFactory.map(), initPageListConfig()).build();
     }
 
-    public LiveData<PagedList<ItemViewDataHolder>> getPagedList() {
+    public LiveData<PagedList<ItemViewDataHolder<?>>> getPagedList() {
         return mPagedList;
     }
 

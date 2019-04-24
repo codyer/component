@@ -19,3 +19,6 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+#不混淆所有类名中包含了“cody”的类及其成员
+-keep public class **.*cody*.** {*;}

@@ -16,20 +16,20 @@ package com.cody.component.handler.data;
  * Created by xu.yi. on 2019/3/28.
  * 和界面绑定的数据基类默认实现，并用于列表
  */
-public final class ItemViewDataHolder extends ViewData {
+public final class ItemViewDataHolder<VD extends ViewData> extends ViewData {
     private static final long serialVersionUID = -6368977380223902277L;
     private int mItemId = 0;
     private int mItemType = 0;//不要为负数
-    private ViewData mItemData;//真实数据
+    private VD mItemData;//真实数据
 
     public ItemViewDataHolder() {
     }
 
-    public ItemViewDataHolder(final ViewData itemData) {
+    public ItemViewDataHolder(final VD itemData) {
         mItemData = itemData;
     }
 
-    public ItemViewDataHolder(final int itemType, final ViewData itemData) {
+    public ItemViewDataHolder(final int itemType, final VD itemData) {
         mItemType = itemType;
         mItemData = itemData;
     }
@@ -50,11 +50,11 @@ public final class ItemViewDataHolder extends ViewData {
         mItemType = itemType;
     }
 
-    public ViewData getItemData() {
+    public VD getItemData() {
         return mItemData;
     }
 
-    public void setItemData(final ViewData itemData) {
+    public void setItemData(final VD itemData) {
         mItemData = itemData;
     }
 

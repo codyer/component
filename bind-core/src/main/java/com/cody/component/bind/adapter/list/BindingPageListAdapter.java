@@ -30,12 +30,12 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by xu.yi. on 2019/3/28.
  * 分页抽象列表adapter
  */
-public abstract class BindingPageListAdapter extends PagedListAdapter<ItemViewDataHolder, BindingViewHolder> implements IBindingAdapter {
+public abstract class BindingPageListAdapter extends PagedListAdapter<ItemViewDataHolder<?>, BindingViewHolder> implements IBindingAdapter {
 
-    private RecyclerView mRecyclerView;
-    private OnBindingItemClickListener mItemClickListener;//item 事件监听
-    private View.OnCreateContextMenuListener mItemLongClickListener;//item 长按事件监听
-    private final LifecycleOwner mLifecycleOwner;
+    protected RecyclerView mRecyclerView;
+    protected OnBindingItemClickListener mItemClickListener;//item 事件监听
+    protected View.OnCreateContextMenuListener mItemLongClickListener;//item 长按事件监听
+    protected final LifecycleOwner mLifecycleOwner;
 
     @Override
     public void setItemClickListener(OnBindingItemClickListener itemClickListener) {
@@ -64,7 +64,7 @@ public abstract class BindingPageListAdapter extends PagedListAdapter<ItemViewDa
     }
 
     @Override
-    public ItemViewDataHolder getItem(int position) {
+    public ItemViewDataHolder<?> getItem(int position) {
         return super.getItem(position);
     }
 
@@ -88,7 +88,7 @@ public abstract class BindingPageListAdapter extends PagedListAdapter<ItemViewDa
     @CallSuper
     @Override
     public void onBindViewHolder(@NonNull BindingViewHolder holder, int position) {
-        ItemViewDataHolder item = getItem(position);
+        ItemViewDataHolder<?> item = getItem(position);
         if (item != null) {
             holder.bindTo(item, getViewDataId(), getOnClickListenerId(), mRecyclerView, mItemLongClickListener, mItemClickListener);
         } else {

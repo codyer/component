@@ -30,15 +30,15 @@ import androidx.paging.DataSource;
 public class PageListDataSourceFactory<ItemBean> extends DataSource.Factory<PageInfo, ItemBean> {
     private SafeMutableLiveData<PageListKeyedDataSource<ItemBean>> mDataSource = new SafeMutableLiveData<>();
     private OnRequestPageListener<ItemBean> mOnRequestPageListener;
-    private Function<ItemBean, ItemViewDataHolder> mModelMapper;
+    private Function<ItemBean, ItemViewDataHolder<?>> mModelMapper;
 
-    public PageListDataSourceFactory(OnRequestPageListener<ItemBean> onRequestPageListener, Function<ItemBean, ItemViewDataHolder> modelMapper) {
+    public PageListDataSourceFactory(OnRequestPageListener<ItemBean> onRequestPageListener, Function<ItemBean, ItemViewDataHolder<?>> modelMapper) {
         mOnRequestPageListener = onRequestPageListener;
         mModelMapper = modelMapper;
     }
 
     @NonNull
-    public DataSource.Factory<PageInfo, ItemViewDataHolder> map() {
+    public DataSource.Factory<PageInfo, ItemViewDataHolder<?>> map() {
         return super.map(mModelMapper);
     }
 

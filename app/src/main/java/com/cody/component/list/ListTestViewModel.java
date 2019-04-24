@@ -33,8 +33,8 @@ public class ListTestViewModel extends PageListViewModel<MaskViewData, String> {
     }
 
     @Override
-    public ItemViewDataHolder apply(final String input) {
-        return new ItemViewDataHolder(new ItemTestViewData(input));
+    public ItemViewDataHolder<ItemTestViewData> apply(final String input) {
+        return new ItemViewDataHolder<>(new ItemTestViewData(input));
     }
 
     @Override
