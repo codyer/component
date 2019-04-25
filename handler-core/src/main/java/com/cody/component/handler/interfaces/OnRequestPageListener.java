@@ -18,6 +18,6 @@ import com.cody.component.handler.define.PageInfo;
  * Created by xu.yi. on 2019/4/8.
  * 请求分页数据,可以通过数据库或者网络加载方式实现
  */
-public interface OnRequestPageListener<ItemBean> {
-    void OnRequestPageData(PageInfo oldPageInfo, PageDataCallBack<ItemBean> callBack);
+public interface OnRequestPageListener {
+    void OnRequestPageData(PageInfo oldPageInfo, PageDataCallBack callBack);
 }

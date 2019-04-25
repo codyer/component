@@ -36,14 +36,14 @@ public class PageInfo {
         mPosition = position;
     }
 
-    public static <ItemBean> PageInfo getPrePageInfo(Result<ListBean<ItemBean>> result) {
+    public static PageInfo getPrePageInfo(Result<ListBean<?>> result) {
         if (result == null || result.getData() == null) {
             return null;
         }
         return getPageInfo(result.getData().getPrePosition());
     }
 
-    public static <ItemBean> PageInfo getNextPageInfo(Result<ListBean<ItemBean>> result) {
+    public static PageInfo getNextPageInfo(Result<ListBean<?>> result) {
         if (result == null || result.getData() == null) {
             return null;
         }

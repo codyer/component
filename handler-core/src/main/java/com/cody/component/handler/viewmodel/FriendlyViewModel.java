@@ -27,8 +27,6 @@ import androidx.lifecycle.MutableLiveData;
  */
 public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseViewModel implements OnFriendlyListener {
     final private MaskViewData mFriendlyViewData;
-    protected MutableLiveData<Operation> mOperation;
-    protected MutableLiveData<RequestStatus> mRequestStatus;
 
     public FriendlyViewModel(final VD friendlyViewData) {
         mFriendlyViewData = friendlyViewData;
@@ -37,15 +35,5 @@ public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseVie
 
     public MaskViewData getFriendlyViewData() {
         return mFriendlyViewData;
-    }
-
-    @Override
-    public MutableLiveData<Operation> getOperation() {
-        return mOperation;
-    }
-
-    @Override
-    public MutableLiveData<RequestStatus> getRequestStatus() {
-        return mRequestStatus;
     }
 }

@@ -20,7 +20,7 @@ public final class ItemViewDataHolder<VD extends ViewData> extends ViewData {
     private static final long serialVersionUID = -6368977380223902277L;
     private int mItemId = 0;
     private int mItemType = 0;//不要为负数
-    private VD mItemData;//真实数据
+    private ViewData mItemData;//真实数据
 
     public ItemViewDataHolder() {
     }
@@ -50,12 +50,27 @@ public final class ItemViewDataHolder<VD extends ViewData> extends ViewData {
         mItemType = itemType;
     }
 
+    @SuppressWarnings("unchecked")
     public VD getItemData() {
-        return mItemData;
+        if (mItemData == null) {
+            return null;
+        }
+        return (VD) mItemData;
     }
 
-    public void setItemData(final VD itemData) {
+    public void setItemData(final ViewData itemData) {
+        if (mItemData == itemData) {
+            return;
+        }
         mItemData = itemData;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = mItemId;
+        result = 31 * result + mItemType;
+        result = 31 * result + (mItemData != null ? mItemData.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -70,7 +85,7 @@ public final class ItemViewDataHolder<VD extends ViewData> extends ViewData {
     public boolean areContentsTheSame(final IViewData newData) {
         if (newData instanceof ItemViewDataHolder) {
             if (mItemData != null) {
-                return this.mItemData.areItemsTheSame(((ItemViewDataHolder) newData).mItemData);
+                return this.mItemData.areItemsTheSame(((ItemViewDataHolder) newData).mItemData) && this.mItemData.areContentsTheSame(((ItemViewDataHolder) newData).mItemData);
             }
         }
         return super.areContentsTheSame(newData);

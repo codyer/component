@@ -19,7 +19,6 @@ import com.cody.component.handler.interfaces.OnRequestPageListener;
 import com.cody.component.handler.source.PageListKeyedDataSource;
 
 import androidx.annotation.NonNull;
-import androidx.arch.core.util.Function;
 import androidx.paging.DataSource;
 
 /**
@@ -27,30 +26,23 @@ import androidx.paging.DataSource;
  * 根据接口返回的信息进行分页加载数据工厂基类
  * 泛型为分页Item的类类型
  */
-public class PageListDataSourceFactory<ItemBean> extends DataSource.Factory<PageInfo, ItemBean> {
-    private SafeMutableLiveData<PageListKeyedDataSource<ItemBean>> mDataSource = new SafeMutableLiveData<>();
-    private OnRequestPageListener<ItemBean> mOnRequestPageListener;
-    private Function<ItemBean, ItemViewDataHolder<?>> mModelMapper;
+public class PageListDataSourceFactory extends DataSource.Factory<PageInfo, ItemViewDataHolder<?>> {
+    private SafeMutableLiveData<PageListKeyedDataSource> mDataSource = new SafeMutableLiveData<>();
+    private OnRequestPageListener mOnRequestPageListener;
 
-    public PageListDataSourceFactory(OnRequestPageListener<ItemBean> onRequestPageListener, Function<ItemBean, ItemViewDataHolder<?>> modelMapper) {
+    public PageListDataSourceFactory(OnRequestPageListener onRequestPageListener) {
         mOnRequestPageListener = onRequestPageListener;
-        mModelMapper = modelMapper;
-    }
-
-    @NonNull
-    public DataSource.Factory<PageInfo, ItemViewDataHolder<?>> map() {
-        return super.map(mModelMapper);
     }
 
     @NonNull
     @Override
-    public DataSource<PageInfo, ItemBean> create() {
-        PageListKeyedDataSource<ItemBean> dataSource = new PageListKeyedDataSource<>(mOnRequestPageListener);
+    public DataSource<PageInfo, ItemViewDataHolder<?>> create() {
+        PageListKeyedDataSource dataSource = new PageListKeyedDataSource(mOnRequestPageListener);
         mDataSource.postValue(dataSource);
         return dataSource;
     }
 
-    public SafeMutableLiveData<PageListKeyedDataSource<ItemBean>> getDataSource() {
+    public SafeMutableLiveData<PageListKeyedDataSource> getDataSource() {
         return mDataSource;
     }
 }

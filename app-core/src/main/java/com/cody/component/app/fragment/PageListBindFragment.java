@@ -29,7 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 /**
  *
  */
-public abstract class PageListBindFragment<VM extends PageListViewModel<MaskViewData, ?>> extends FriendlyBindFragment<FragmentPageListBinding, VM, MaskViewData> implements IBaseListView, OnBindingItemClickListener {
+public abstract class PageListBindFragment<VM extends PageListViewModel<MaskViewData>> extends FriendlyBindFragment<FragmentPageListBinding, VM, MaskViewData> implements IBaseListView, OnBindingItemClickListener {
     protected MultiBindingPageListAdapter mListAdapter;
 
     @Override

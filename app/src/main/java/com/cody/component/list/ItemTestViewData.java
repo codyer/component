@@ -25,6 +25,9 @@ public class ItemTestViewData extends ViewData {
     private static final long serialVersionUID = -9198367211217170445L;
     private String test;
 
+    public ItemTestViewData() {
+    }
+
     public ItemTestViewData(final String test) {
         this.test = test;
     }

@@ -16,7 +16,6 @@ package com.cody.component.handler.viewmodel;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.interfaces.OnFriendlyListener;
 import com.cody.component.handler.interfaces.OnRequestListener;
 
 import androidx.lifecycle.MutableLiveData;
@@ -27,6 +26,9 @@ import androidx.lifecycle.MutableLiveData;
  * 包含刷新，重试，出错默认提示页面
  */
 public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> implements OnRequestListener {
+
+    private MutableLiveData<Operation> mOperation;
+    private MutableLiveData<RequestStatus> mRequestStatus;
 
     public SingleViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
@@ -53,6 +55,16 @@ public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyV
     public void retry() {
         setOperation(Operation.RETRY);
         OnRequestData();
+    }
+
+    @Override
+    public MutableLiveData<Operation> getOperation() {
+        return mOperation;
+    }
+
+    @Override
+    public MutableLiveData<RequestStatus> getRequestStatus() {
+        return mRequestStatus;
     }
 
     /**

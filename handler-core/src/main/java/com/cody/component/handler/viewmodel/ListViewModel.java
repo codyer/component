@@ -16,11 +16,11 @@ import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.interfaces.OnRequestListener;
 import com.cody.component.handler.livedata.SafeMutableLiveData;
+import com.cody.component.handler.mapper.IDataMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 
 /**
@@ -28,7 +28,7 @@ import androidx.lifecycle.LiveData;
  * 获取列表数据
  */
 public abstract class ListViewModel<VD extends MaskViewData, ItemBean> extends SingleViewModel<VD>
-        implements OnRequestListener, Function<ItemBean, ItemViewDataHolder<?>> {
+        implements OnRequestListener, IDataMapper {
 
     private LiveData<List<ItemViewDataHolder<?>>> mItems;
 

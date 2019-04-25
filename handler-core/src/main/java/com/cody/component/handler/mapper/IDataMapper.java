@@ -18,26 +18,23 @@ import com.cody.component.handler.data.ViewData;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
+import androidx.paging.PagedList;
 
 /**
  * Created by cody.yi on 2016/8/24.
  * 将 DataModel 映射到 ViewData
  * 当获取的数据和ViewData有差距时需要使用mapper
  */
-interface IDataMapper<BD> {
-    @NonNull
-    List<ItemViewDataHolder<?>> viewDataHolderList();
+public interface IDataMapper {
+    //下次数据开始的位置
+    default int getPosition(List<ItemViewDataHolder<?>> viewDataList) {
+        if (viewDataList != null) {
+            return viewDataList.size();
+        }
+        return 0;
+    }
 
-    ViewData newViewData();
-
-    /**
-     * 将beanData装饰成viewData
-     *
-     * @param beanData 数据模型，对应网络请求获取的bean或entity
-     * @return 视图模型，对应data binding中的viewData
-     */
-    ViewData mapper(ViewData viewData, BD beanData);
+    ViewData newItemViewData();
 
     /**
      * 将beanData装饰成viewData
@@ -45,8 +42,16 @@ interface IDataMapper<BD> {
      * @param beanData 数据模型，对应网络请求获取的bean或entity
      * @return 视图模型，对应data binding中的viewData
      */
-    default ViewData mapper(BD beanData) {
-        return mapper(newViewData(), beanData);
+    <ItemBean> ViewData mapper(ViewData viewData, ItemBean beanData, int position);
+
+    /**
+     * 将beanData装饰成viewData
+     *
+     * @param beanData 数据模型，对应网络请求获取的bean或entity
+     * @return 视图模型，对应data binding中的viewData
+     */
+    default <ItemBean> ViewData mapper(ItemBean beanData, int position) {
+        return mapper(newItemViewData(), beanData, position);
     }
 
     /**
@@ -55,12 +60,34 @@ interface IDataMapper<BD> {
      * @param beanData 数据模型，对应网络请求获取的bean或entity
      * @return 视图模型，对应data binding中的viewData
      */
-    default ViewData mapper(BD beanData, int position) {
-        if (position >= 0 && position < viewDataHolderList().size()) {
-            return mapper(viewDataHolderList().get(position), beanData);
+    default <ItemBean> ItemViewDataHolder<?> mapperItem(ItemViewDataHolder<?> itemViewDataHolder, ItemBean beanData, int position) {
+        if (itemViewDataHolder == null) {
+            itemViewDataHolder = new ItemViewDataHolder<>(mapper(newItemViewData(), beanData, position));
         } else {
-            return mapper(beanData);
+            itemViewDataHolder.setItemData(mapper(itemViewDataHolder.getItemData(), beanData, position));
         }
+        return itemViewDataHolder;
+    }
+
+    /**
+     * 将beanData装饰成viewData
+     *
+     * @param beanData 数据模型，对应网络请求获取的bean或entity
+     * @return 视图模型，对应data binding中的viewData
+     */
+    default <ItemBean> ItemViewDataHolder<?> mapperItem(ItemBean beanData, int position) {
+        return mapperItem(new ItemViewDataHolder<>(mapper(newItemViewData(), beanData, position)), beanData, position);
+    }
+
+    /**
+     * 将beanData装饰成viewData
+     * 加载新分页的时候使用此函数
+     *
+     * @param beanDataList 数据模型，对应网络请求获取的bean或entity, beanData最好是已经排好序的
+     * @return 视图模型，对应data binding中的viewData
+     */
+    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(List<ItemBean> beanDataList) {
+        return mapperList(null, beanDataList, 0);
     }
 
     /**
@@ -70,46 +97,57 @@ interface IDataMapper<BD> {
      * @param beanDataList 数据模型，对应网络请求获取的bean或entity, beanData最好是已经排好序的
      * @return 视图模型，对应data binding中的viewData
      */
-    default List<ItemViewDataHolder<?>> mapperList(List<BD> beanDataList) {
-        return mapperList(beanDataList, 0);
+    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(List<ItemViewDataHolder<?>> viewDataList, List<ItemBean> beanDataList) {
+        return mapperList(viewDataList, beanDataList, getPosition(viewDataList));
     }
 
     /**
      * 将beanData装饰成viewData
      *
      * @param beanDataList 数据模型，对应网络请求获取的bean或entity, beanData最好是已经排好序的
-     * @param start        viewDataHolderList 中需要mapper的开始的位置，默认从0开始
+     * @param start        viewDataHolderList 中需要mapper的开始的位置，默认从最后开始
      * @return 视图模型，对应data binding中的viewData
      */
-    default List<ItemViewDataHolder<?>> mapperList(List<BD> beanDataList, int start) {
+    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(List<ItemViewDataHolder<?>> viewDataList, List<ItemBean> beanDataList, int start) {
+
+        if (viewDataList == null) {
+            viewDataList = new ArrayList<>();
+        }
 
         if (beanDataList == null) {
             beanDataList = new ArrayList<>();
         }
-
-        int vdSize = viewDataHolderList().size();
+        if (viewDataList instanceof PagedList) {
+            viewDataList = new ArrayList<>(viewDataList);
+        }
+        int vdSize = viewDataList.size();
         int bdSize = beanDataList.size();// 新增的beanData
 
         //移除多余的项
         while (vdSize - start > bdSize) {
-            viewDataHolderList().remove(--vdSize + start);
+            viewDataList.remove(--vdSize + start);
         }
 
         for (int i = 0; i < bdSize; i++) {
             ItemViewDataHolder<?> itemViewDataHolder;
-            itemViewDataHolder = new ItemViewDataHolder<>(viewDataHolderList().get(i + start).getItemType(), mapper(beanDataList.get(i), i + start));
+            if (i + start < viewDataList.size() && i + start >= 0) {
+                itemViewDataHolder = viewDataList.get(i + start);
+            } else {
+                itemViewDataHolder = null;
+            }
+            itemViewDataHolder = mapperItem(itemViewDataHolder, beanDataList.get(i), i + start);
             itemViewDataHolder.setItemId(i + start);
 
             if (i + start < vdSize) {
-                if (itemViewDataHolder.areContentsTheSame(viewDataHolderList().get(i + start))) {
+                if (itemViewDataHolder.areItemsTheSame(viewDataList.get(i + start)) && itemViewDataHolder.areContentsTheSame(viewDataList.get(i + start))) {
                     continue;
                 }
-                viewDataHolderList().set(i + start, itemViewDataHolder);
+                viewDataList.set(i + start, itemViewDataHolder);
             } else {
-                viewDataHolderList().add(itemViewDataHolder);
+                viewDataList.add(itemViewDataHolder);
             }
         }
 
-        return viewDataHolderList();
+        return viewDataList;
     }
 }

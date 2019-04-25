@@ -25,13 +25,13 @@ import androidx.lifecycle.MutableLiveData;
  * Created by xu.yi. on 2019/4/8.
  * dataSource wrapper
  */
-public class DataSourceWrapper<ItemBean> implements Refreshable, OnRetryListener {
+public class DataSourceWrapper implements Refreshable, OnRetryListener {
     final private MutableLiveData<RequestStatus> mRequestStatus;
     final private MutableLiveData<Operation> mOperation;
-    final private SafeMutableLiveData<PageListKeyedDataSource<ItemBean>> mDataSource;
+    final private SafeMutableLiveData<PageListKeyedDataSource> mDataSource;
 
     public DataSourceWrapper(final LiveData<RequestStatus> requestStatus, final LiveData<Operation> operation,
-                             final SafeMutableLiveData<PageListKeyedDataSource<ItemBean>> dataSource) {
+                             final SafeMutableLiveData<PageListKeyedDataSource> dataSource) {
         mRequestStatus = (MutableLiveData<RequestStatus>) requestStatus;
         mOperation = (MutableLiveData<Operation>) operation;
         mDataSource = dataSource;

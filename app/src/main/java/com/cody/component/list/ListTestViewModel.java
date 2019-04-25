@@ -13,40 +13,52 @@
 package com.cody.component.list;
 
 import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.data.ViewData;
 import com.cody.component.handler.interfaces.PageDataCallBack;
 import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.viewmodel.PageListViewModel;
 import com.cody.component.handler.data.ItemViewDataHolder;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by xu.yi. on 2019/4/14.
  * component
  */
-public class ListTestViewModel extends PageListViewModel<MaskViewData, String> {
+public class ListTestViewModel extends PageListViewModel<MaskViewData> {
     public ListTestViewModel(final MaskViewData maskViewData) {
         super(maskViewData);
+    }
+
+    @Override
+    public <ItemBean> ViewData mapper(final ViewData viewData, final ItemBean beanData, final int position) {
+        if (viewData instanceof ItemTestViewData) {
+            ((ItemTestViewData) viewData).setTest((String) beanData);
+        }
+        return viewData;
     }
 
     public void test() {
     }
 
     @Override
-    public ItemViewDataHolder<ItemTestViewData> apply(final String input) {
-        return new ItemViewDataHolder<>(new ItemTestViewData(input));
-    }
-
-    @Override
-    public void OnRequestPageData(final PageInfo pageInfo, final PageDataCallBack<String> pageDataCallBack) {
+    public void OnRequestPageData(final PageInfo pageInfo, final PageDataCallBack pageDataCallBack) {
         ArrayList<String> items = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             items.add("item===" + i);
         }
-        if (pageInfo.getPageNo() == 4) {
+        if (pageInfo.getPageNo() == 3) {
             items.clear();
         }
         pageInfo.setPageNo(pageInfo.getPageNo() + 1);
-        pageDataCallBack.onSuccess(items, null, pageInfo);
+        pageDataCallBack.onSuccess(mapperList(items), null, pageInfo);
+    }
+
+    @Override
+    public ViewData newItemViewData() {
+        return new ItemTestViewData();
     }
 }

@@ -19,10 +19,12 @@ import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.factory.PageListDataSourceFactory;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
+import com.cody.component.handler.mapper.IDataMapper;
 import com.cody.component.handler.source.DataSourceWrapper;
 import com.cody.component.handler.source.PageListKeyedDataSource;
 
-import androidx.arch.core.util.Function;
+import java.util.List;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -33,9 +35,9 @@ import androidx.paging.PagedList;
  * Created by xu.yi. on 2019/4/8.
  * 数据仓库，获取列表数据
  */
-public abstract class PageListViewModel<VD extends MaskViewData, ItemBean> extends FriendlyViewModel<VD>
-        implements OnRequestPageListener<ItemBean>, Function<ItemBean, ItemViewDataHolder<?>> {
-    private DataSourceWrapper<ItemBean> mWrapper;
+public abstract class PageListViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD>
+        implements OnRequestPageListener, IDataMapper {
+    private DataSourceWrapper mWrapper;
     private LiveData<PagedList<ItemViewDataHolder<?>>> mPagedList;
 
     public PageListViewModel(final VD friendlyViewData) {
@@ -44,11 +46,11 @@ public abstract class PageListViewModel<VD extends MaskViewData, ItemBean> exten
 
     @Override
     public void initFriendly() {
-        final PageListDataSourceFactory<ItemBean> sourceFactory = new PageListDataSourceFactory<>(this, this);
-        mWrapper = new DataSourceWrapper<>(Transformations.switchMap(sourceFactory.getDataSource(), PageListKeyedDataSource::getRequestStatus),
+        final PageListDataSourceFactory sourceFactory = new PageListDataSourceFactory(this);
+        mWrapper = new DataSourceWrapper(Transformations.switchMap(sourceFactory.getDataSource(), PageListKeyedDataSource::getRequestStatus),
                 Transformations.switchMap(sourceFactory.getDataSource(), PageListKeyedDataSource::getOperation),
                 sourceFactory.getDataSource());
-        mPagedList = new LivePagedListBuilder<>(sourceFactory.map(), initPageListConfig()).build();
+        mPagedList = new LivePagedListBuilder<>(sourceFactory, initPageListConfig()).build();
     }
 
     public LiveData<PagedList<ItemViewDataHolder<?>>> getPagedList() {
@@ -73,6 +75,15 @@ public abstract class PageListViewModel<VD extends MaskViewData, ItemBean> exten
     @Override
     public void retry() {
         mWrapper.retry();
+    }
+
+    @Override
+    //下次数据开始的位置
+    public int getPosition(final List<ItemViewDataHolder<?>> viewDataList) {
+        if (viewDataList == null || getOperation().getValue() == Operation.REFRESH) {
+            return 0;
+        }
+        return viewDataList.size();
     }
 
     /**
