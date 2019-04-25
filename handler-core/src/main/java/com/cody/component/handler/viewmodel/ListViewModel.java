@@ -34,11 +34,6 @@ public abstract class ListViewModel<VD extends MaskViewData, ItemBean> extends S
 
     public ListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-    }
-
-    @Override
-    public void initFriendly() {
-        super.initFriendly();
         mItems = new SafeMutableLiveData<>(new ArrayList<>());
     }
 

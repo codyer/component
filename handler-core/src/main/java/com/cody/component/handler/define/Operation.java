@@ -18,8 +18,8 @@ package com.cody.component.handler.define;
  */
 public enum Operation {
     INIT,
-    RETRY,
     REFRESH,
+    RETRY,
     LOAD_BEFORE,
     LOAD_AFTER
 }

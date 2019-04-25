@@ -55,10 +55,10 @@ public class ItemTestViewData extends ViewData {
         this.test = test;
     }
 
-    @Override
-    public boolean areItemsTheSame(final IViewData newData) {
-        return TextUtils.equals(test, ((ItemTestViewData) newData).getTest());
-    }
+//    @Override
+//    public boolean areItemsTheSame(final IViewData newData) {
+//        return TextUtils.equals(test, ((ItemTestViewData) newData).getTest());
+//    }
 
 //    @Override
 //    public boolean areContentsTheSame(final IViewData newBind) {

@@ -12,17 +12,16 @@
 
 package com.cody.component.list;
 
+import android.util.Log;
+
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.data.ViewData;
-import com.cody.component.handler.interfaces.PageDataCallBack;
+import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
+import com.cody.component.handler.interfaces.PageDataCallBack;
 import com.cody.component.handler.viewmodel.PageListViewModel;
-import com.cody.component.handler.data.ItemViewDataHolder;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
 
 /**
  * Created by xu.yi. on 2019/4/14.
@@ -45,16 +44,16 @@ public class ListTestViewModel extends PageListViewModel<MaskViewData> {
     }
 
     @Override
-    public void OnRequestPageData(final PageInfo pageInfo, final PageDataCallBack pageDataCallBack) {
+    public void OnRequestPageData(Operation operation, final PageInfo pageInfo, final PageDataCallBack pageDataCallBack) {
         ArrayList<String> items = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            items.add("item===" + i);
+            items.add("item===" + (pageInfo.getPageNo() * pageInfo.getPageSize() + i));
         }
         if (pageInfo.getPageNo() == 3) {
             items.clear();
         }
         pageInfo.setPageNo(pageInfo.getPageNo() + 1);
-        pageDataCallBack.onSuccess(mapperList(items), null, pageInfo);
+        pageDataCallBack.onSuccess(mapperList(operation, items), null, pageInfo);
     }
 
     @Override

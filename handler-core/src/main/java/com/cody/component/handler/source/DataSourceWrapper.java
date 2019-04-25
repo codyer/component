@@ -30,10 +30,10 @@ public class DataSourceWrapper implements Refreshable, OnRetryListener {
     final private MutableLiveData<Operation> mOperation;
     final private SafeMutableLiveData<PageListKeyedDataSource> mDataSource;
 
-    public DataSourceWrapper(final LiveData<RequestStatus> requestStatus, final LiveData<Operation> operation,
+    public DataSourceWrapper(final MutableLiveData<RequestStatus> requestStatus, final MutableLiveData<Operation> operation,
                              final SafeMutableLiveData<PageListKeyedDataSource> dataSource) {
-        mRequestStatus = (MutableLiveData<RequestStatus>) requestStatus;
-        mOperation = (MutableLiveData<Operation>) operation;
+        mRequestStatus = requestStatus;
+        mOperation = operation;
         mDataSource = dataSource;
     }
 
@@ -47,6 +47,7 @@ public class DataSourceWrapper implements Refreshable, OnRetryListener {
 
     @Override
     public void refresh() {
+        mOperation.setValue(Operation.REFRESH);
         if (mDataSource != null && mDataSource.getValue() != null) {
             mDataSource.getValue().refresh();
         }

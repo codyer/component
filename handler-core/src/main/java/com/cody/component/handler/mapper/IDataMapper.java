@@ -12,13 +12,15 @@
 
 package com.cody.component.handler.mapper;
 
+import android.util.Log;
+
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.ViewData;
+import com.cody.component.handler.define.Operation;
 
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.paging.PagedList;
 
 /**
  * Created by cody.yi on 2016/8/24.
@@ -27,11 +29,15 @@ import androidx.paging.PagedList;
  */
 public interface IDataMapper {
     //下次数据开始的位置
-    default int getPosition(List<ItemViewDataHolder<?>> viewDataList) {
-        if (viewDataList != null) {
-            return viewDataList.size();
+    default int getPosition(Operation operation, List<ItemViewDataHolder<?>> viewDataList) {
+        if (viewDataList == null || isRefreshing(operation)) {
+            return 0;
         }
-        return 0;
+        return viewDataList.size();
+    }
+
+    default boolean isRefreshing(final Operation operation) {
+        return operation == Operation.INIT || operation == Operation.REFRESH;
     }
 
     ViewData newItemViewData();
@@ -62,8 +68,10 @@ public interface IDataMapper {
      */
     default <ItemBean> ItemViewDataHolder<?> mapperItem(ItemViewDataHolder<?> itemViewDataHolder, ItemBean beanData, int position) {
         if (itemViewDataHolder == null) {
+            Log.e("IDataMapper", "++++++++++++++++++mapperItem  5 = " + position);
             itemViewDataHolder = new ItemViewDataHolder<>(mapper(newItemViewData(), beanData, position));
         } else {
+            Log.e("IDataMapper", "++++++++++++++++++mapperItem  6 = " + position);
             itemViewDataHolder.setItemData(mapper(itemViewDataHolder.getItemData(), beanData, position));
         }
         return itemViewDataHolder;
@@ -86,8 +94,8 @@ public interface IDataMapper {
      * @param beanDataList 数据模型，对应网络请求获取的bean或entity, beanData最好是已经排好序的
      * @return 视图模型，对应data binding中的viewData
      */
-    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(List<ItemBean> beanDataList) {
-        return mapperList(null, beanDataList, 0);
+    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(Operation operation, List<ItemBean> beanDataList) {
+        return mapperList(operation, null, beanDataList, 0);
     }
 
     /**
@@ -97,8 +105,8 @@ public interface IDataMapper {
      * @param beanDataList 数据模型，对应网络请求获取的bean或entity, beanData最好是已经排好序的
      * @return 视图模型，对应data binding中的viewData
      */
-    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(List<ItemViewDataHolder<?>> viewDataList, List<ItemBean> beanDataList) {
-        return mapperList(viewDataList, beanDataList, getPosition(viewDataList));
+    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(Operation operation, List<ItemViewDataHolder<?>> viewDataList, List<ItemBean> beanDataList) {
+        return mapperList(operation, viewDataList, beanDataList, getPosition(operation, viewDataList));
     }
 
     /**
@@ -108,17 +116,14 @@ public interface IDataMapper {
      * @param start        viewDataHolderList 中需要mapper的开始的位置，默认从最后开始
      * @return 视图模型，对应data binding中的viewData
      */
-    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(List<ItemViewDataHolder<?>> viewDataList, List<ItemBean> beanDataList, int start) {
+    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(Operation operation, List<ItemViewDataHolder<?>> viewDataList, List<ItemBean> beanDataList, int start) {
 
-        if (viewDataList == null) {
+        if (viewDataList == null || !isRefreshing(operation)) {
             viewDataList = new ArrayList<>();
         }
 
         if (beanDataList == null) {
             beanDataList = new ArrayList<>();
-        }
-        if (viewDataList instanceof PagedList) {
-            viewDataList = new ArrayList<>(viewDataList);
         }
         int vdSize = viewDataList.size();
         int bdSize = beanDataList.size();// 新增的beanData
@@ -128,12 +133,14 @@ public interface IDataMapper {
             viewDataList.remove(--vdSize + start);
         }
 
+        if (Modifier.isAbstract(viewDataList.getClass().getModifiers())) {
+            viewDataList = new ArrayList<>(viewDataList);
+        }
+
         for (int i = 0; i < bdSize; i++) {
-            ItemViewDataHolder<?> itemViewDataHolder;
+            ItemViewDataHolder<?> itemViewDataHolder = null;
             if (i + start < viewDataList.size() && i + start >= 0) {
                 itemViewDataHolder = viewDataList.get(i + start);
-            } else {
-                itemViewDataHolder = null;
             }
             itemViewDataHolder = mapperItem(itemViewDataHolder, beanDataList.get(i), i + start);
             itemViewDataHolder.setItemId(i + start);

@@ -23,8 +23,6 @@ import androidx.lifecycle.MutableLiveData;
  * 用户友好 通用监听
  */
 public interface OnFriendlyListener extends Refreshable, OnRetryListener {
-    void initFriendly();
-
     MutableLiveData<Operation> getOperation();
 
     MutableLiveData<RequestStatus> getRequestStatus();

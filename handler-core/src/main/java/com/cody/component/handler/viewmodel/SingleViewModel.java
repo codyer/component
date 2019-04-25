@@ -32,9 +32,6 @@ public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyV
 
     public SingleViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-    }
-
-    public void initFriendly() {
         mOperation = new MutableLiveData<>();
         mRequestStatus = new MutableLiveData<>();
     }

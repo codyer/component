@@ -21,13 +21,13 @@ import com.cody.component.handler.factory.PageListDataSourceFactory;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
 import com.cody.component.handler.mapper.IDataMapper;
 import com.cody.component.handler.source.DataSourceWrapper;
-import com.cody.component.handler.source.PageListKeyedDataSource;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
@@ -39,18 +39,19 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
         implements OnRequestPageListener, IDataMapper {
     private DataSourceWrapper mWrapper;
     private LiveData<PagedList<ItemViewDataHolder<?>>> mPagedList;
+    protected List<ItemViewDataHolder<?>> mOldList;
 
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
+        final PageListDataSourceFactory sourceFactory = new PageListDataSourceFactory(this);
+        mWrapper = new DataSourceWrapper(sourceFactory.getRequestStatus(), sourceFactory.getOperation(), sourceFactory.getDataSource());
+        mPagedList = new LivePagedListBuilder<>(sourceFactory, initPageListConfig()).build();
     }
 
     @Override
-    public void initFriendly() {
-        final PageListDataSourceFactory sourceFactory = new PageListDataSourceFactory(this);
-        mWrapper = new DataSourceWrapper(Transformations.switchMap(sourceFactory.getDataSource(), PageListKeyedDataSource::getRequestStatus),
-                Transformations.switchMap(sourceFactory.getDataSource(), PageListKeyedDataSource::getOperation),
-                sourceFactory.getDataSource());
-        mPagedList = new LivePagedListBuilder<>(sourceFactory, initPageListConfig()).build();
+    public <T extends BaseViewModel> T setLifecycleOwner(final LifecycleOwner lifecycleOwner) {
+        mPagedList.observe(lifecycleOwner, itemViewDataHolders -> mOldList = new ArrayList<>(itemViewDataHolders));
+        return super.setLifecycleOwner(lifecycleOwner);
     }
 
     public LiveData<PagedList<ItemViewDataHolder<?>>> getPagedList() {
@@ -67,6 +68,10 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
         return mWrapper.getRequestStatus();
     }
 
+    public <ItemBean> List<ItemViewDataHolder<?>> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
+        return mapperList(operation, mOldList, beanDataList);
+    }
+
     @Override
     public void refresh() {
         mWrapper.refresh();
@@ -75,15 +80,6 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
     @Override
     public void retry() {
         mWrapper.retry();
-    }
-
-    @Override
-    //下次数据开始的位置
-    public int getPosition(final List<ItemViewDataHolder<?>> viewDataList) {
-        if (viewDataList == null || getOperation().getValue() == Operation.REFRESH) {
-            return 0;
-        }
-        return viewDataList.size();
     }
 
     /**

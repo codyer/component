@@ -24,30 +24,30 @@ public class ListBean<T> {
     /**
      * 上次分页请求结果位置，默认-1
      */
-    private String prePosition;
+    private int prePosition;
     /**
      * 上次分页请求结果位置，默认-1
      */
     @SerializedName(value = "nextPosition", alternate = {"nextPosition", "position"})
-    private String nextPosition;
+    private int nextPosition;
     /**
      * 列表请求结果
      */
     private List<T> items;
 
-    public String getPrePosition() {
+    public int getPrePosition() {
         return prePosition;
     }
 
-    public void setPrePosition(String prePosition) {
+    public void setPrePosition(int prePosition) {
         this.prePosition = prePosition;
     }
 
-    public String getNextPosition() {
+    public int getNextPosition() {
         return nextPosition;
     }
 
-    public void setNextPosition(String position) {
+    public void setNextPosition(int position) {
         this.nextPosition = position;
     }
 

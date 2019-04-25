@@ -12,8 +12,6 @@
 
 package com.cody.component.handler.define;
 
-import android.text.TextUtils;
-
 import com.cody.component.lib.bean.ListBean;
 import com.cody.component.lib.bean.Result;
 
@@ -25,7 +23,7 @@ public class PageInfo {
     public final static int DEFAULT_PAGE_NO = 0;
     public final static int DEFAULT_PAGE_SIZE = 20;
     public final static int DEFAULT_POSITION = -1;
-    public final static int DEFAULT_PREFETCH_DISTANCE = 5;
+    public final static int DEFAULT_PREFETCH_DISTANCE = 1;
     private int mPageNo;
     private int mPageSize;
     private int mPosition;
@@ -58,11 +56,8 @@ public class PageInfo {
         return lastPageInfo;
     }
 
-    public static PageInfo getPageInfo(String position) {
-        if (position == null || TextUtils.isDigitsOnly(position)) {
-            return null;
-        }
-        return new PageInfo(DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE, Integer.valueOf(position));
+    public static PageInfo getPageInfo(int position) {
+        return new PageInfo(DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE, position);
     }
 
     public static PageInfo defaultPageInfo() {
@@ -78,6 +73,13 @@ public class PageInfo {
     }
 
     public int getPosition() {
+        return mPosition;
+    }
+
+    public int getPositionByPageNo() {
+        if (mPosition == DEFAULT_POSITION) {
+            return mPageNo * mPageSize;
+        }
         return mPosition;
     }
 

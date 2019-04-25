@@ -12,6 +12,7 @@
 
 package com.cody.component.handler.interfaces;
 
+import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
 
 /**
@@ -19,5 +20,5 @@ import com.cody.component.handler.define.PageInfo;
  * 请求分页数据,可以通过数据库或者网络加载方式实现
  */
 public interface OnRequestPageListener {
-    void OnRequestPageData(PageInfo oldPageInfo, PageDataCallBack callBack);
+    void OnRequestPageData(Operation operation, PageInfo oldPageInfo, PageDataCallBack callBack);
 }

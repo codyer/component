@@ -30,7 +30,6 @@ public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseVie
 
     public FriendlyViewModel(final VD friendlyViewData) {
         mFriendlyViewData = friendlyViewData;
-        initFriendly();
     }
 
     public MaskViewData getFriendlyViewData() {
