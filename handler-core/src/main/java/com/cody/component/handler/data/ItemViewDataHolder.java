@@ -59,21 +59,20 @@ public final class ItemViewDataHolder<VD extends ViewData> extends ViewData {
     }
 
     @Override
-    public boolean areItemsTheSame(final IViewData newBind) {
-        if (newBind instanceof ItemViewDataHolder) {
-            return mItemId == ((ItemViewDataHolder) newBind).getItemId() && mItemType == ((ItemViewDataHolder) newBind).getItemType()
-                    && mItemData.areItemsTheSame(((ItemViewDataHolder) newBind).mItemData);
+    public boolean areItemsTheSame(final IViewData newData) {
+        if (newData instanceof ItemViewDataHolder) {
+            return mItemId == ((ItemViewDataHolder) newData).getItemId() && mItemType == ((ItemViewDataHolder) newData).getItemType();
         }
-        return super.areItemsTheSame(newBind);
+        return super.areItemsTheSame(newData);
     }
 
     @Override
-    public boolean areContentsTheSame(final IViewData newBind) {
-        if (newBind instanceof ItemViewDataHolder) {
+    public boolean areContentsTheSame(final IViewData newData) {
+        if (newData instanceof ItemViewDataHolder) {
             if (mItemData != null) {
-                return this.mItemData.areContentsTheSame(((ItemViewDataHolder) newBind).mItemData);
+                return this.mItemData.areItemsTheSame(((ItemViewDataHolder) newData).mItemData);
             }
         }
-        return super.areContentsTheSame(newBind);
+        return super.areContentsTheSame(newData);
     }
 }

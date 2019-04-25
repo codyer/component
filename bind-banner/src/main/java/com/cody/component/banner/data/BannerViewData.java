@@ -37,11 +37,11 @@ public class BannerViewData extends ViewData {
     }
 
     @Override
-    public boolean areItemsTheSame(IViewData newBind) {
-        if (newBind instanceof BannerViewData) {
-            return TextUtils.equals(this.mImgId, (((BannerViewData) newBind).mImgId));
+    public boolean areItemsTheSame(IViewData newData) {
+        if (newData instanceof BannerViewData) {
+            return TextUtils.equals(this.mImgId, (((BannerViewData) newData).mImgId));
         }
-        return super.areItemsTheSame(newBind);
+        return super.areItemsTheSame(newData);
     }
 
     public String getImgId() {

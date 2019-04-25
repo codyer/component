@@ -19,7 +19,7 @@ import java.io.Serializable;
  * 和界面绑定的数据基类接口
  */
 public interface IViewData extends Serializable {
-    boolean areItemsTheSame(IViewData newBind);
+    boolean areItemsTheSame(IViewData newData);
 
-    boolean areContentsTheSame(IViewData newBind);
+    boolean areContentsTheSame(IViewData newData);
 }

@@ -20,12 +20,12 @@ public class ViewData implements IViewData {
     private static final long serialVersionUID = 998314704089921211L;
 
     @Override
-    public boolean areItemsTheSame(IViewData newBind) {
-        return false;
+    public boolean areItemsTheSame(IViewData newData) {
+        return this == newData;
     }
 
     @Override
-    public boolean areContentsTheSame(IViewData newBind) {
-        return this.equals(newBind);
+    public boolean areContentsTheSame(IViewData newData) {
+        return this.equals(newData);
     }
 }
