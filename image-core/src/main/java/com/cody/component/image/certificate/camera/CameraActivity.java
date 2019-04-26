@@ -36,10 +36,10 @@ import com.cody.component.image.OnImageViewListener;
 import com.cody.component.image.R;
 import com.cody.component.image.certificate.cropper.CropImageView;
 import com.cody.component.image.certificate.global.Constant;
-import com.cody.component.image.utils.FileUtils;
-import com.cody.component.image.utils.ImageUtils;
-import com.cody.component.image.utils.PermissionUtils;
-import com.cody.component.image.utils.ScreenUtils;
+import com.cody.component.util.FileUtils;
+import com.cody.component.util.ImageUtils;
+import com.cody.component.util.PermissionUtils;
+import com.cody.component.util.ScreenUtils;
 import com.lzy.imagepicker.bean.ImageItem;
 
 import java.util.Date;

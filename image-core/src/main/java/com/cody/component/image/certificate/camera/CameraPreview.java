@@ -22,8 +22,8 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.cody.component.image.utils.CameraUtil;
-import com.cody.component.image.utils.DisplayUtil;
+import com.cody.component.util.CameraUtil;
+import com.cody.component.util.DisplayUtil;
 
 import java.io.IOException;
 import java.util.List;

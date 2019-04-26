@@ -68,10 +68,8 @@ public interface IDataMapper {
      */
     default <ItemBean> ItemViewDataHolder<?> mapperItem(ItemViewDataHolder<?> itemViewDataHolder, ItemBean beanData, int position) {
         if (itemViewDataHolder == null) {
-            Log.e("IDataMapper", "++++++++++++++++++mapperItem  5 = " + position);
             itemViewDataHolder = new ItemViewDataHolder<>(mapper(newItemViewData(), beanData, position));
         } else {
-            Log.e("IDataMapper", "++++++++++++++++++mapperItem  6 = " + position);
             itemViewDataHolder.setItemData(mapper(itemViewDataHolder.getItemData(), beanData, position));
         }
         return itemViewDataHolder;

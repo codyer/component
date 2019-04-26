@@ -68,6 +68,7 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
         return mWrapper.getRequestStatus();
     }
 
+    @Override
     public <ItemBean> List<ItemViewDataHolder<?>> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
         return mapperList(operation, mOldList, beanDataList);
     }

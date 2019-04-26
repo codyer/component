@@ -14,6 +14,7 @@ apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
     api project(':lib-core')
     api project(':lib-ui')
+    api project(":util-core")
     api rootProject.ext.dependencies["paging"]
     api(rootProject.ext.dependencies["glide"]) {
         exclude group: "com.android.support"

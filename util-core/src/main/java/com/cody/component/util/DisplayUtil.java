@@ -1,16 +1,16 @@
 /*
  * ************************************************************
- * 文件：DisplayUtil.java  模块：image-core  项目：component
- * 当前修改时间：2019年04月23日 18:23:20
- * 上次修改时间：2019年04月22日 12:00:37
+ * 文件：DisplayUtil.java  模块：util-core  项目：component
+ * 当前修改时间：2019年04月26日 13:33:35
+ * 上次修改时间：2019年04月23日 18:23:20
  * 作者：Cody.yi   https://github.com/codyer
  *
- * 描述：image-core
+ * 描述：util-core
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.component.image.utils;
+package com.cody.component.util;
 
 import android.content.Context;
 import android.graphics.Point;
