@@ -12,7 +12,6 @@
 
 package com.cody.component.list;
 
-import android.util.Log;
 
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.data.ViewData;
@@ -57,7 +56,7 @@ public class ListTestViewModel extends PageListViewModel<MaskViewData> {
     }
 
     @Override
-    public ViewData newItemViewData() {
+    public ViewData newItemViewData(int position) {
         return new ItemTestViewData();
     }
 }

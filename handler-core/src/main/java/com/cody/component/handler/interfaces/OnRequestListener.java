@@ -12,11 +12,13 @@
 
 package com.cody.component.handler.interfaces;
 
+import com.cody.component.handler.define.Operation;
+
 /**
  * Created by xu.yi. on 2019/4/8.
  * 请求数据,可以通过数据库或者网络加载方式实现
  */
 public interface OnRequestListener {
     void OnInit();
-    void OnRequestData();
+    void OnRequestData(Operation operation);
 }

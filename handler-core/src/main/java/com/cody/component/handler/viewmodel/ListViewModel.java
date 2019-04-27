@@ -12,32 +12,46 @@
 
 package com.cody.component.handler.viewmodel;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
-import com.cody.component.handler.interfaces.OnRequestListener;
+import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.livedata.SafeMutableLiveData;
 import com.cody.component.handler.mapper.IDataMapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.lifecycle.LiveData;
-
 /**
  * Created by xu.yi. on 2019/4/8.
  * 获取列表数据
  */
-public abstract class ListViewModel<VD extends MaskViewData, ItemBean> extends SingleViewModel<VD>
-        implements OnRequestListener, IDataMapper {
+public abstract class ListViewModel<VD extends MaskViewData> extends SingleViewModel<VD>
+        implements IDataMapper {
 
     private LiveData<List<ItemViewDataHolder<?>>> mItems;
+    protected List<ItemViewDataHolder<?>> mOldList;
 
     public ListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
         mItems = new SafeMutableLiveData<>(new ArrayList<>());
     }
 
+    @Override
+    public <T extends BaseViewModel> T setLifecycleOwner(final LifecycleOwner lifecycleOwner) {
+        mItems.observe(lifecycleOwner, itemViewDataHolders -> mOldList = new ArrayList<>(itemViewDataHolders));
+        return super.setLifecycleOwner(lifecycleOwner);
+    }
+
     public LiveData<List<ItemViewDataHolder<?>>> getItems() {
         return mItems;
     }
+
+    @Override
+    public <ItemBean> List<ItemViewDataHolder<?>> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
+        return mapperList(operation, mOldList, beanDataList);
+    }
+
 }

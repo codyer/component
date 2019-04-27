@@ -40,7 +40,8 @@ public interface IDataMapper {
         return operation == Operation.INIT || operation == Operation.REFRESH;
     }
 
-    ViewData newItemViewData();
+
+    ViewData newItemViewData(int position);
 
     /**
      * 将beanData装饰成viewData
@@ -57,7 +58,7 @@ public interface IDataMapper {
      * @return 视图模型，对应data binding中的viewData
      */
     default <ItemBean> ViewData mapper(ItemBean beanData, int position) {
-        return mapper(newItemViewData(), beanData, position);
+        return mapper(newItemViewData(position), beanData, position);
     }
 
     /**
@@ -68,7 +69,7 @@ public interface IDataMapper {
      */
     default <ItemBean> ItemViewDataHolder<?> mapperItem(ItemViewDataHolder<?> itemViewDataHolder, ItemBean beanData, int position) {
         if (itemViewDataHolder == null) {
-            itemViewDataHolder = new ItemViewDataHolder<>(mapper(newItemViewData(), beanData, position));
+            itemViewDataHolder = new ItemViewDataHolder<>(mapper(newItemViewData(position), beanData, position));
         } else {
             itemViewDataHolder.setItemData(mapper(itemViewDataHolder.getItemData(), beanData, position));
         }
@@ -82,7 +83,7 @@ public interface IDataMapper {
      * @return 视图模型，对应data binding中的viewData
      */
     default <ItemBean> ItemViewDataHolder<?> mapperItem(ItemBean beanData, int position) {
-        return mapperItem(new ItemViewDataHolder<>(mapper(newItemViewData(), beanData, position)), beanData, position);
+        return mapperItem(new ItemViewDataHolder<>(mapper(newItemViewData(position), beanData, position)), beanData, position);
     }
 
     /**

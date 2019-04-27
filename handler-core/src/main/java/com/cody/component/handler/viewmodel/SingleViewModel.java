@@ -39,19 +39,16 @@ public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyV
     @Override
     public void OnInit() {
         setOperation(Operation.INIT);
-        OnRequestData();
     }
 
     @Override
     public void refresh() {
         setOperation(Operation.REFRESH);
-        OnRequestData();
     }
 
     @Override
     public void retry() {
         setOperation(Operation.RETRY);
-        OnRequestData();
     }
 
     @Override
@@ -70,5 +67,6 @@ public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyV
     private void setOperation(Operation operation) {
         mOperation.postValue(operation);
         mRequestStatus.postValue(RequestStatus.loading());
+        OnRequestData(operation);
     }
 }
