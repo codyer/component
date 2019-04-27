@@ -12,8 +12,7 @@
 
 package com.cody.component.handler.mapper;
 
-import android.util.Log;
-
+import com.cody.component.handler.UnImplementException;
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.ViewData;
 import com.cody.component.handler.define.Operation;
@@ -41,7 +40,9 @@ public interface IDataMapper {
     }
 
 
-    ViewData newItemViewData(int position);
+    default ViewData newItemViewData(int position) {
+        throw new UnImplementException("please implement at least one mapping method !");
+    }
 
     /**
      * 将beanData装饰成viewData
@@ -49,7 +50,9 @@ public interface IDataMapper {
      * @param beanData 数据模型，对应网络请求获取的bean或entity
      * @return 视图模型，对应data binding中的viewData
      */
-    <ItemBean> ViewData mapper(ViewData viewData, ItemBean beanData, int position);
+    default <ItemBean> ViewData mapper(ViewData viewData, ItemBean beanData, int position) {
+        throw new UnImplementException("please implement at least one mapping method !");
+    }
 
     /**
      * 将beanData装饰成viewData
