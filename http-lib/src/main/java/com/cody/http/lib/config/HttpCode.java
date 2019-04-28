@@ -18,11 +18,11 @@ package com.cody.http.lib.config;
  */
 public class HttpCode {
 
-    public static final int CODE_SUCCESS = 0;
+    public static final int CODE_SUCCESS = 200;
 
     public static final int CODE_UNKNOWN = -1;
 
-    public static final int CODE_TOKEN_INVALID = -2;
+    public static final int CODE_TOKEN_INVALID = 401;
 
     public static final int CODE_ACCOUNT_INVALID = -3;
 

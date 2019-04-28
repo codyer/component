@@ -20,33 +20,30 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.cody.component.R;
-import com.cody.component.bean.HomeBean;
-import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
 import com.cody.component.app.activity.EmptyBindActivity;
 import com.cody.component.banner.adapter.BindingBannerAdapter;
 import com.cody.component.banner.data.BannerViewData;
 import com.cody.component.bean.TestDataBean;
+import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
 import com.cody.component.bus.BusDemoActivity;
 import com.cody.component.data.remote.CatApiOpen$DataSource;
 import com.cody.component.data.remote.CatHttpBin$DataSource;
 import com.cody.component.databinding.ActivityMainBannerBinding;
+import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.image.certificate.camera.CameraActivity;
 import com.cody.component.image.scan.ScanActivity;
-import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.list.ListTestActivity;
-import com.cody.component.repository.remote.Home$DataSource;
 import com.cody.component.util.ActivityUtil;
-import com.cody.component.util.LogUtil;
 import com.cody.http.cat.HttpCat;
 import com.cody.http.core.HttpCore;
 import com.cody.http.core.callback.RequestCallback;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.recyclerview.widget.RecyclerView;
 
 
 public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
@@ -169,15 +166,6 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
     }
 
     private void httpRequest1() {
-        Home$DataSource dataSource = new Home$DataSource(null);
-        dataSource.getHomeData(new RequestCallback<HomeBean>() {
-            @Override
-            public void onSuccess(final HomeBean homeBean) {
-                LogUtil.d(homeBean.toString());
-            }
-        });
-/*
-
         CatHttpBin$DataSource api = new CatHttpBin$DataSource(null);
         RequestCallback cb = new RequestCallback<Object>() {
             @Override
@@ -216,7 +204,7 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
         api.drip(512, 5, 1, 200, cb);
         api.deny(cb);
         api.cache("Mon", cb);
-        api.cache(30, cb);*/
+        api.cache(30, cb);
     }
 
     private void httpRequest2() {

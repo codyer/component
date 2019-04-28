@@ -24,6 +24,8 @@ import com.cody.http.lib.exception.ServerResultException;
 import com.cody.http.lib.exception.TokenInvalidException;
 import com.cody.http.core.interceptor.HeaderInterceptor;
 import com.cody.http.core.interceptor.HttpInterceptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -174,10 +176,13 @@ class RetrofitManagement {
             builder.addInterceptor(httpLoggingInterceptor);
         }
         OkHttpClient client = builder.build();
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();
         return new Retrofit.Builder()
                 .client(client)
                 .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
