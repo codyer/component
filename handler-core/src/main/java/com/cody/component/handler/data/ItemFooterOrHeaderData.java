@@ -21,13 +21,20 @@ import com.cody.component.handler.define.RequestStatus;
  * Created by xu.yi. on 2019/4/8.
  * 列表底部数据类
  */
-public class ItemFooterOrHeaderData extends ViewData {
+public class ItemFooterOrHeaderData extends ItemViewDataHolder {
     private static final long serialVersionUID = 6101620960031035326L;
     private boolean mShowFooter = true;
     final private BooleanLiveData mNoMoreItem = new BooleanLiveData(false);
     final private BooleanLiveData mError = new BooleanLiveData(false);
     final private BooleanLiveData mLoading = new BooleanLiveData(false);
     final private StringLiveData mErrorMessage = new StringLiveData("");
+
+    public ItemFooterOrHeaderData() {
+    }
+
+    public ItemFooterOrHeaderData(int itemType) {
+        super(itemType);
+    }
 
     public boolean isShowFooter() {
         return mShowFooter;

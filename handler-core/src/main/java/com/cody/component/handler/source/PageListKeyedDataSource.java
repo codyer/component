@@ -36,7 +36,7 @@ import androidx.paging.PageKeyedDataSource;
  * 根据接口返回的信息进行分页加载处理基类
  * 泛型为分页Item的类类型
  */
-public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemViewDataHolder<?>>
+public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemViewDataHolder>
         implements Refreshable, OnRetryListener {
     final private MutableLiveData<RequestStatus> mRequestStatus;
     final private MutableLiveData<Operation> mOperation;
@@ -62,14 +62,14 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
     }
 
     @Override
-    public void loadInitial(@NonNull LoadInitialParams<PageInfo> params, @NonNull LoadInitialCallback<PageInfo, ItemViewDataHolder<?>> callback) {
+    public void loadInitial(@NonNull LoadInitialParams<PageInfo> params, @NonNull LoadInitialCallback<PageInfo, ItemViewDataHolder> callback) {
         PageInfo pageInfo = new PageInfo(PageInfo.DEFAULT_PAGE_NO, params.requestedLoadSize, PageInfo.DEFAULT_POSITION);
         if (mOnRetryListener == null) {
             mOnRetryListener = () -> loadInitial(params, callback);
         }
         requestPageData(Operation.INIT, pageInfo, new PageDataCallBack() {
             @Override
-            public void onSuccess(@NonNull List<ItemViewDataHolder<?>> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
+            public void onSuccess(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
                 callback.onResult(data, prePageKey, nextPageKey);
                 mRequestStatus.postValue(data.isEmpty() ? RequestStatus.empty() : RequestStatus.loaded());
                 mOnRetryListener = null;
@@ -83,13 +83,13 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
     }
 
     @Override
-    public void loadBefore(@NonNull LoadParams<PageInfo> params, @NonNull LoadCallback<PageInfo, ItemViewDataHolder<?>> callback) {
+    public void loadBefore(@NonNull LoadParams<PageInfo> params, @NonNull LoadCallback<PageInfo, ItemViewDataHolder> callback) {
         if (mOnRetryListener == null) {
             mOnRetryListener = () -> loadBefore(params, callback);
         }
         requestPageData(Operation.LOAD_BEFORE, params.key, new PageDataCallBack() {
             @Override
-            public void onSuccess(@NonNull List<ItemViewDataHolder<?>> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
+            public void onSuccess(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
                 callback.onResult(data, prePageKey);
                 mRequestStatus.postValue(data.isEmpty() ? RequestStatus.empty() : RequestStatus.loaded());
                 mOnRetryListener = null;
@@ -103,13 +103,13 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
     }
 
     @Override
-    public void loadAfter(@NonNull LoadParams<PageInfo> params, @NonNull LoadCallback<PageInfo, ItemViewDataHolder<?>> callback) {
+    public void loadAfter(@NonNull LoadParams<PageInfo> params, @NonNull LoadCallback<PageInfo, ItemViewDataHolder> callback) {
         if (mOnRetryListener == null) {
             mOnRetryListener = () -> loadAfter(params, callback);
         }
         requestPageData(Operation.LOAD_AFTER, params.key, new PageDataCallBack() {
             @Override
-            public void onSuccess(@NonNull List<ItemViewDataHolder<?>> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
+            public void onSuccess(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
                 if (nextPageKey != null && data.size() > nextPageKey.getPositionByPageNo()) {
                     callback.onResult(data.subList(nextPageKey.getPositionByPageNo(), data.size()), nextPageKey);
                 } else {

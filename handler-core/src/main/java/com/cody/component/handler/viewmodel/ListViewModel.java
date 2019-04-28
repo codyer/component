@@ -31,8 +31,8 @@ import androidx.lifecycle.MutableLiveData;
 public abstract class ListViewModel<VD extends MaskViewData> extends SingleViewModel<VD>
         implements IDataMapper {
 
-    private MutableLiveData<List<ItemViewDataHolder<?>>> mItems = new SafeMutableLiveData<>(new ArrayList<>());
-    protected List<ItemViewDataHolder<?>> mOldList = new ArrayList<>();
+    private MutableLiveData<List<ItemViewDataHolder>> mItems = new SafeMutableLiveData<>(new ArrayList<>());
+    protected List<ItemViewDataHolder> mOldList = new ArrayList<>();
 
     public ListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
@@ -44,12 +44,12 @@ public abstract class ListViewModel<VD extends MaskViewData> extends SingleViewM
         return super.setLifecycleOwner(lifecycleOwner);
     }
 
-    public MutableLiveData<List<ItemViewDataHolder<?>>> getItems() {
+    public MutableLiveData<List<ItemViewDataHolder>> getItems() {
         return mItems;
     }
 
     @Override
-    public <ItemBean> List<ItemViewDataHolder<?>> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
+    public <ItemBean> List<ItemViewDataHolder> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
         mItems.postValue(mapperList(operation, mOldList, beanDataList));
         return mOldList;
     }

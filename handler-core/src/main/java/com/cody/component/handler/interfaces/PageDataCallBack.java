@@ -31,12 +31,12 @@ public interface PageDataCallBack {
     /**
      * eg: callBack.onSuccess(listResult.getData().getItems(), PageInfo.getPrePageInfo(listResult), PageInfo.getNextPageInfo(listResult));
      */
-    void onSuccess(@NonNull List<ItemViewDataHolder<?>> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey);
+    void onSuccess(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey);
 
     /**
      * eg: callBack.onSuccess(result);
      */
-    default void onSuccess(List<ItemViewDataHolder<?>> data, @NonNull Result<ListBean<?>> result) {
+    default void onSuccess(List<ItemViewDataHolder> data, @NonNull Result<ListBean<?>> result) {
         onSuccess(data, PageInfo.getPrePageInfo(result), PageInfo.getNextPageInfo(result));
     }
 

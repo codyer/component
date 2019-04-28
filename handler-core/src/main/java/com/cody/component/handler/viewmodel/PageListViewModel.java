@@ -38,8 +38,8 @@ import androidx.paging.PagedList;
 public abstract class PageListViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD>
         implements OnRequestPageListener, IDataMapper {
     private DataSourceWrapper mWrapper;
-    private LiveData<PagedList<ItemViewDataHolder<?>>> mPagedList;
-    protected List<ItemViewDataHolder<?>> mOldList = new ArrayList<>();
+    private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
+    protected List<ItemViewDataHolder> mOldList = new ArrayList<>();
 
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
@@ -59,7 +59,7 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
         return super.setLifecycleOwner(lifecycleOwner);
     }
 
-    public LiveData<PagedList<ItemViewDataHolder<?>>> getPagedList() {
+    public LiveData<PagedList<ItemViewDataHolder>> getPagedList() {
         return mPagedList;
     }
 
@@ -74,7 +74,7 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
     }
 
     @Override
-    public <ItemBean> List<ItemViewDataHolder<?>> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
+    public <ItemBean> List<ItemViewDataHolder> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
         return mapperList(operation, mOldList, beanDataList);
     }
 

@@ -53,7 +53,7 @@ public class BindingViewHolder extends RecyclerView.ViewHolder {
                 mContextMenuListener.onCreateContextMenu(menu, v, menuInfo);
             }
         });
-        getItemBinding().setVariable(mViewDataId, item.getItemData());
+        getItemBinding().setVariable(mViewDataId, item);
         //分发点击事件
         getItemBinding().setVariable(mOnClickListenerId, (View.OnClickListener) v -> {
             if (mClickListener != null) {

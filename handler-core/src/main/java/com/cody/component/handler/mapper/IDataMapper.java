@@ -28,7 +28,7 @@ import java.util.List;
  */
 public interface IDataMapper {
     //下次数据开始的位置
-    default int getPosition(Operation operation, List<ItemViewDataHolder<?>> viewDataList) {
+    default int getPosition(Operation operation, List<ItemViewDataHolder> viewDataList) {
         if (viewDataList == null || isRefreshing(operation)) {
             return 0;
         }
@@ -40,7 +40,7 @@ public interface IDataMapper {
     }
 
 
-    default ViewData newItemViewData(int position) {
+    default ItemViewDataHolder newItemViewData(int position) {
         throw new UnImplementException("please implement at least one mapping method !");
     }
 
@@ -50,31 +50,11 @@ public interface IDataMapper {
      * @param beanData 数据模型，对应网络请求获取的bean或entity
      * @return 视图模型，对应data binding中的viewData
      */
-    default <ItemBean> ViewData mapper(ViewData viewData, ItemBean beanData, int position) {
-        throw new UnImplementException("please implement at least one mapping method !");
-    }
-
-    /**
-     * 将beanData装饰成viewData
-     *
-     * @param beanData 数据模型，对应网络请求获取的bean或entity
-     * @return 视图模型，对应data binding中的viewData
-     */
-    default <ItemBean> ViewData mapper(ItemBean beanData, int position) {
-        return mapper(newItemViewData(position), beanData, position);
-    }
-
-    /**
-     * 将beanData装饰成viewData
-     *
-     * @param beanData 数据模型，对应网络请求获取的bean或entity
-     * @return 视图模型，对应data binding中的viewData
-     */
-    default <ItemBean> ItemViewDataHolder<?> mapperItem(ItemViewDataHolder<?> itemViewDataHolder, ItemBean beanData, int position) {
+    default <ItemBean> ItemViewDataHolder mapperItem(ItemViewDataHolder itemViewDataHolder, ItemBean beanData, int position) {
         if (itemViewDataHolder == null) {
-            itemViewDataHolder = new ItemViewDataHolder<>(mapper(newItemViewData(position), beanData, position));
+            itemViewDataHolder = mapperItem(beanData, position);
         } else {
-            itemViewDataHolder.setItemData(mapper(itemViewDataHolder.getItemData(), beanData, position));
+            throw new UnImplementException("please implement at least one mapping method !");
         }
         return itemViewDataHolder;
     }
@@ -85,8 +65,8 @@ public interface IDataMapper {
      * @param beanData 数据模型，对应网络请求获取的bean或entity
      * @return 视图模型，对应data binding中的viewData
      */
-    default <ItemBean> ItemViewDataHolder<?> mapperItem(ItemBean beanData, int position) {
-        return mapperItem(new ItemViewDataHolder<>(mapper(newItemViewData(position), beanData, position)), beanData, position);
+    default <ItemBean> ItemViewDataHolder mapperItem(ItemBean beanData, int position) {
+        return mapperItem(newItemViewData(position), beanData, position);
     }
 
     /**
@@ -96,7 +76,7 @@ public interface IDataMapper {
      * @param beanDataList 数据模型，对应网络请求获取的bean或entity, beanData最好是已经排好序的
      * @return 视图模型，对应data binding中的viewData
      */
-    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(Operation operation, List<ItemBean> beanDataList) {
+    default <ItemBean> List<ItemViewDataHolder> mapperList(Operation operation, List<ItemBean> beanDataList) {
         return mapperList(operation, null, beanDataList, 0);
     }
 
@@ -107,7 +87,7 @@ public interface IDataMapper {
      * @param beanDataList 数据模型，对应网络请求获取的bean或entity, beanData最好是已经排好序的
      * @return 视图模型，对应data binding中的viewData
      */
-    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(Operation operation, List<ItemViewDataHolder<?>> viewDataList, List<ItemBean> beanDataList) {
+    default <ItemBean> List<ItemViewDataHolder> mapperList(Operation operation, List<ItemViewDataHolder> viewDataList, List<ItemBean> beanDataList) {
         return mapperList(operation, viewDataList, beanDataList, getPosition(operation, viewDataList));
     }
 
@@ -118,7 +98,7 @@ public interface IDataMapper {
      * @param start        viewDataHolderList 中需要mapper的开始的位置，默认从最后开始
      * @return 视图模型，对应data binding中的viewData
      */
-    default <ItemBean> List<ItemViewDataHolder<?>> mapperList(Operation operation, List<ItemViewDataHolder<?>> viewDataList, List<ItemBean> beanDataList, int start) {
+    default <ItemBean> List<ItemViewDataHolder> mapperList(Operation operation, List<ItemViewDataHolder> viewDataList, List<ItemBean> beanDataList, int start) {
 
         if (viewDataList == null || !isRefreshing(operation)) {
             viewDataList = new ArrayList<>();
@@ -140,7 +120,7 @@ public interface IDataMapper {
         }
 
         for (int i = 0; i < bdSize; i++) {
-            ItemViewDataHolder<?> itemViewDataHolder = null;
+            ItemViewDataHolder itemViewDataHolder = null;
             if (i + start < viewDataList.size() && i + start >= 0) {
                 itemViewDataHolder = viewDataList.get(i + start);
             }
