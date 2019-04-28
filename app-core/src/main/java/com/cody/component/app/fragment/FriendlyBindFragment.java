@@ -46,6 +46,12 @@ public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends
     @NonNull
     public abstract Class<VM> getVMClass();
 
+    @Override
+    protected void onFirstUserVisible() {
+        super.onFirstUserVisible();
+        getFriendlyViewModel().OnInit();
+    }
+
     @SuppressWarnings("unchecked")
     @Deprecated
     @Override

@@ -22,7 +22,7 @@ import androidx.lifecycle.MutableLiveData;
  * Created by xu.yi. on 2019/4/9.
  * 用户友好 通用监听
  */
-public interface OnFriendlyListener extends Refreshable, OnRetryListener {
+public interface OnFriendlyListener extends Refreshable, OnRetryListener, OnInitListener {
     MutableLiveData<Operation> getOperation();
 
     MutableLiveData<RequestStatus> getRequestStatus();

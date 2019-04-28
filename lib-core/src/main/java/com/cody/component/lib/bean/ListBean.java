@@ -28,7 +28,7 @@ public class ListBean<T> {
     /**
      * 上次分页请求结果位置，默认-1
      */
-    @SerializedName(value = "nextPosition", alternate = {"nextPosition", "position"})
+    @SerializedName(value = "nextPosition", alternate = {"position"})
     private int nextPosition;
     /**
      * 列表请求结果

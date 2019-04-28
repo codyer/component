@@ -41,7 +41,7 @@
     <color name="uiColorGray9">#999999</color>
     <color name="uiColorTransparent">#00000000</color>
     <color name="uiColorTransparentWhite">#00FFFFFF</color>
-    <color name="uiColorTransparentMask">#FF000000</color>
+    <color name="uiColorTransparentMask">#7F000000</color>
     <color name="uiColorMask">#60000000</color>
     <color name="uiColorLine">#F5F5F5</color>
 </resources>

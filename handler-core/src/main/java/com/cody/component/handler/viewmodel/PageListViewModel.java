@@ -49,6 +49,11 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
     }
 
     @Override
+    public void OnInit() {
+        // do nothing
+    }
+
+    @Override
     public <T extends BaseViewModel> T setLifecycleOwner(final LifecycleOwner lifecycleOwner) {
         mPagedList.observe(lifecycleOwner, itemViewDataHolders -> mOldList = new ArrayList<>(itemViewDataHolders));
         return super.setLifecycleOwner(lifecycleOwner);

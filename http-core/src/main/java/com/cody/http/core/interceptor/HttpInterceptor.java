@@ -50,7 +50,7 @@ public class HttpInterceptor implements Interceptor {
         String byteString = "";
         if (originalResponse.body() != null) {
             BufferedSource source = originalResponse.body().source();
-            source.request(Integer.MAX_VALUE);
+            source.request(Long.MAX_VALUE);
             byteString = source.buffer().snapshot().utf8();
         }
         ResponseBody responseBody = ResponseBody.create(null, byteString);

@@ -50,7 +50,7 @@ public abstract class ListViewModel<VD extends MaskViewData> extends SingleViewM
 
     @Override
     public <ItemBean> List<ItemViewDataHolder<?>> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
-        return mapperList(operation, mOldList, beanDataList);
+        mItems.postValue(mapperList(operation, mOldList, beanDataList));
+        return mOldList;
     }
-
 }
