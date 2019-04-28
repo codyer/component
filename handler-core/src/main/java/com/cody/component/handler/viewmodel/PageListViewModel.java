@@ -39,7 +39,7 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
         implements OnRequestPageListener, IDataMapper {
     private DataSourceWrapper mWrapper;
     private LiveData<PagedList<ItemViewDataHolder<?>>> mPagedList;
-    protected List<ItemViewDataHolder<?>> mOldList;
+    protected List<ItemViewDataHolder<?>> mOldList = new ArrayList<>();
 
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
