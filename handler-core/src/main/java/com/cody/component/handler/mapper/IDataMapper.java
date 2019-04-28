@@ -21,6 +21,8 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by cody.yi on 2016/8/24.
  * 将 DataModel 映射到 ViewData
@@ -39,7 +41,7 @@ public interface IDataMapper {
         return operation == Operation.INIT || operation == Operation.REFRESH;
     }
 
-
+    @NonNull
     default ItemViewDataHolder newItemViewData(int position) {
         throw new UnImplementException("please implement at least one mapping method !");
     }
@@ -50,13 +52,8 @@ public interface IDataMapper {
      * @param beanData 数据模型，对应网络请求获取的bean或entity
      * @return 视图模型，对应data binding中的viewData
      */
-    default <ItemBean> ItemViewDataHolder mapperItem(ItemViewDataHolder itemViewDataHolder, ItemBean beanData, int position) {
-        if (itemViewDataHolder == null) {
-            itemViewDataHolder = mapperItem(beanData, position);
-        } else {
-            throw new UnImplementException("please implement at least one mapping method !");
-        }
-        return itemViewDataHolder;
+    default <ItemBean> ItemViewDataHolder mapperItem(@NonNull ItemViewDataHolder itemViewDataHolder, ItemBean beanData, int position) {
+        throw new UnImplementException("please implement at least one mapping method !");
     }
 
     /**
@@ -124,7 +121,11 @@ public interface IDataMapper {
             if (i + start < viewDataList.size() && i + start >= 0) {
                 itemViewDataHolder = viewDataList.get(i + start);
             }
-            itemViewDataHolder = mapperItem(itemViewDataHolder, beanDataList.get(i), i + start);
+            if (itemViewDataHolder == null) {
+                itemViewDataHolder = mapperItem(beanDataList.get(i), i + start);
+            } else {
+                itemViewDataHolder = mapperItem(itemViewDataHolder, beanDataList.get(i), i + start);
+            }
             itemViewDataHolder.setItemId(i + start);
 
             if (i + start < vdSize) {

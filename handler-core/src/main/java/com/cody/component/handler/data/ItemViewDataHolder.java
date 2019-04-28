@@ -12,8 +12,6 @@
 
 package com.cody.component.handler.data;
 
-import com.cody.component.handler.livedata.BooleanLiveData;
-
 /**
  * Created by xu.yi. on 2019/3/28.
  * 和界面绑定的数据基类默认实现，并用于列表
@@ -22,7 +20,6 @@ public class ItemViewDataHolder extends ViewData {
     private static final long serialVersionUID = -6368977380223902277L;
     private int mItemId = 0;
     private int mItemType = 0;//不要为负数
-    final private BooleanLiveData mValid = new BooleanLiveData(true);//是否有效，可以控制显示不显示
 
     public ItemViewDataHolder() {
     }
@@ -47,15 +44,10 @@ public class ItemViewDataHolder extends ViewData {
         mItemType = itemType;
     }
 
-    public BooleanLiveData getValid() {
-        return mValid;
-    }
-
     @Override
     public int hashCode() {
         int result = mItemId;
         result = 31 * result + mItemType;
-        result = 31 * result + (mValid.getValue() != null ? mValid.getValue().hashCode() : 0);
         return result;
     }
 
@@ -63,8 +55,7 @@ public class ItemViewDataHolder extends ViewData {
     public boolean areItemsTheSame(final IViewData newData) {
         if (newData instanceof ItemViewDataHolder) {
             return mItemId == ((ItemViewDataHolder) newData).getItemId() &&
-                    mItemType == ((ItemViewDataHolder) newData).getItemType() &&
-                    mValid.get() == ((ItemViewDataHolder) newData).getValid().get();
+                    mItemType == ((ItemViewDataHolder) newData).getItemType();
         }
         return super.areItemsTheSame(newData);
     }

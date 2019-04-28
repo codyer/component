@@ -12,16 +12,13 @@
 
 package com.cody.component.list;
 
-import android.text.TextUtils;
-
-import com.cody.component.handler.data.IViewData;
-import com.cody.component.handler.data.ViewData;
+import com.cody.component.handler.data.ItemViewDataHolder;
 
 /**
  * Created by xu.yi. on 2019/4/14.
  * component
  */
-public class ItemTestViewData extends ViewData {
+public class ItemTestViewData extends ItemViewDataHolder {
     private static final long serialVersionUID = -9198367211217170445L;
     private String test;
 
