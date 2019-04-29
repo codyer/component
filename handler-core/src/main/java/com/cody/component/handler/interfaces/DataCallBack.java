@@ -19,9 +19,9 @@ package com.cody.component.handler.interfaces;
  */
 public interface DataCallBack {
     /**
-     * eg: callBack.onSuccess();
+     * eg: callBack.onComplete();
      */
-    void onSuccess();
+    void onComplete();
 
     /**
      * eg: callBack.onFailure(message);

@@ -16,7 +16,7 @@ package com.cody.http.core.callback;
  * Created by xu.yi. on 2019/4/6.
  * 页面自己处理loading，无需框架处理
  */
-public interface RequestFriendlyCallback<T> extends RequestCallback<T> {
+public interface RequestFriendlyCallback<T> extends RequestMultiplyCallback<T> {
 
     @Override
     default boolean startWithLoading() {

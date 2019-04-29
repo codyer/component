@@ -49,8 +49,8 @@ public abstract class ListViewModel<VD extends MaskViewData> extends SingleViewM
     }
 
     @Override
-    public void onSuccess() {
-        super.onSuccess();
+    public void onComplete() {
+        super.onComplete();
         mItems.postValue(mOldList);
     }
 

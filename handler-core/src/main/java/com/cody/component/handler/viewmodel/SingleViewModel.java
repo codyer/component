@@ -64,7 +64,7 @@ public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyV
     }
 
     @Override
-    public void onSuccess() {
+    public void onComplete() {
         getRequestStatusLive().postValue(mRequestStatus = mRequestStatus.loaded());
     }
 

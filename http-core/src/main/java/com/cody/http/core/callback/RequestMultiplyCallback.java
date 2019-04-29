@@ -21,5 +21,4 @@ import com.cody.http.lib.exception.base.BaseException;
 public interface RequestMultiplyCallback<T> extends RequestCallback<T> {
 
     void onFail(BaseException e);
-
 }

@@ -91,7 +91,7 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
     }
 
     @Override
-    public void onSuccess() {
+    public void onComplete() {
         mWrapper.onSuccess();
         getRequestStatusLive().postValue(getRequestStatus().loaded());
     }
