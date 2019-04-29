@@ -45,7 +45,6 @@
                 android:layout_height="match_parent" />
 
             <include
-                android:id="@+id/friendlyRetry"
                 layout="@layout/mask_view"
                 bind:onClickListener="@{onClickListener}"
                 bind:viewData="@{viewData}" />

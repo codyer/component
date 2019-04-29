@@ -16,6 +16,7 @@ package com.cody.component.handler.viewmodel;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.RequestStatus;
+import com.cody.component.handler.interfaces.DataCallBack;
 import com.cody.component.handler.interfaces.OnFriendlyListener;
 
 import androidx.lifecycle.MutableLiveData;
@@ -25,7 +26,7 @@ import androidx.lifecycle.MutableLiveData;
  * component 用户友好的view model
  * 包含刷新，重试，出错默认提示页面
  */
-public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseViewModel implements OnFriendlyListener {
+public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseViewModel implements OnFriendlyListener, DataCallBack {
     final private MaskViewData mFriendlyViewData;
 
     public FriendlyViewModel(final VD friendlyViewData) {
