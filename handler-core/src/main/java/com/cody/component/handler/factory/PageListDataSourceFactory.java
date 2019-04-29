@@ -31,7 +31,7 @@ import androidx.paging.DataSource;
  * 根据接口返回的信息进行分页加载数据工厂基类
  * 泛型为分页Item的类类型
  */
-public class PageListDataSourceFactory extends DataSource.Factory<PageInfo, ItemViewDataHolder<?>> {
+public class PageListDataSourceFactory extends DataSource.Factory<PageInfo, ItemViewDataHolder> {
     private SafeMutableLiveData<PageListKeyedDataSource> mDataSource = new SafeMutableLiveData<>();
     private OnRequestPageListener mOnRequestPageListener;
     private MutableLiveData<RequestStatus> mRequestStatus;
@@ -45,7 +45,7 @@ public class PageListDataSourceFactory extends DataSource.Factory<PageInfo, Item
 
     @NonNull
     @Override
-    public DataSource<PageInfo, ItemViewDataHolder<?>> create() {
+    public DataSource<PageInfo, ItemViewDataHolder> create() {
         PageListKeyedDataSource dataSource = new PageListKeyedDataSource(mOnRequestPageListener, mRequestStatus, mOperation);
         mDataSource.postValue(dataSource);
         return dataSource;

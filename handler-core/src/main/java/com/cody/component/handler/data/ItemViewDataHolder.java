@@ -12,29 +12,20 @@
 
 package com.cody.component.handler.data;
 
-import com.cody.component.handler.livedata.BooleanLiveData;
-
 /**
  * Created by xu.yi. on 2019/3/28.
  * 和界面绑定的数据基类默认实现，并用于列表
  */
-public final class ItemViewDataHolder<VD extends ViewData> extends ViewData {
+public class ItemViewDataHolder extends ViewData {
     private static final long serialVersionUID = -6368977380223902277L;
     private int mItemId = 0;
     private int mItemType = 0;//不要为负数
-    private ViewData mItemData;//真实数据
-    final private BooleanLiveData mValid = new BooleanLiveData(true);//是否有效，可以控制显示不显示
 
     public ItemViewDataHolder() {
     }
 
-    public ItemViewDataHolder(final VD itemData) {
-        mItemData = itemData;
-    }
-
-    public ItemViewDataHolder(final int itemType, final VD itemData) {
+    public ItemViewDataHolder(final int itemType) {
         mItemType = itemType;
-        mItemData = itemData;
     }
 
     public int getItemId() {
@@ -53,31 +44,10 @@ public final class ItemViewDataHolder<VD extends ViewData> extends ViewData {
         mItemType = itemType;
     }
 
-    @SuppressWarnings("unchecked")
-    public VD getItemData() {
-        if (mItemData == null) {
-            return null;
-        }
-        return (VD) mItemData;
-    }
-
-    public void setItemData(final ViewData itemData) {
-        if (mItemData == itemData) {
-            return;
-        }
-        mItemData = itemData;
-    }
-
-    public BooleanLiveData getValid() {
-        return mValid;
-    }
-
     @Override
     public int hashCode() {
         int result = mItemId;
         result = 31 * result + mItemType;
-        result = 31 * result + (mItemData != null ? mItemData.hashCode() : 0);
-        result = 31 * result + (mValid.getValue() != null ? mValid.getValue().hashCode() : 0);
         return result;
     }
 
@@ -85,19 +55,13 @@ public final class ItemViewDataHolder<VD extends ViewData> extends ViewData {
     public boolean areItemsTheSame(final IViewData newData) {
         if (newData instanceof ItemViewDataHolder) {
             return mItemId == ((ItemViewDataHolder) newData).getItemId() &&
-                    mItemType == ((ItemViewDataHolder) newData).getItemType() &&
-                    mValid.get() == ((ItemViewDataHolder) newData).getValid().get();
+                    mItemType == ((ItemViewDataHolder) newData).getItemType();
         }
         return super.areItemsTheSame(newData);
     }
 
     @Override
     public boolean areContentsTheSame(final IViewData newData) {
-        if (newData instanceof ItemViewDataHolder) {
-            if (mItemData != null) {
-                return this.mItemData.areItemsTheSame(((ItemViewDataHolder) newData).mItemData) && this.mItemData.areContentsTheSame(((ItemViewDataHolder) newData).mItemData);
-            }
-        }
-        return super.areContentsTheSame(newData);
+        return this.equals(newData);
     }
 }

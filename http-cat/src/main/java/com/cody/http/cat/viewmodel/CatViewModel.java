@@ -32,7 +32,7 @@ import androidx.lifecycle.Transformations;
  */
 public class CatViewModel extends BaseViewModel {
 
-    private final LiveData<List<ItemViewDataHolder<?>>> mAllRecordLiveData;
+    private final LiveData<List<ItemViewDataHolder>> mAllRecordLiveData;
 
     private LiveData<ItemHttpData> mRecordLiveData = new SafeMutableLiveData<>();
 
@@ -41,13 +41,7 @@ public class CatViewModel extends BaseViewModel {
     public CatViewModel() {
         mAllRecordLiveData = Transformations.map(
                 HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().queryAllRecordObservable(LIMIT),
-                input -> {
-                    List<ItemViewDataHolder<?>> list = new ArrayList<>();
-                    for (int i = 0; i < input.size(); i++) {
-                        list.add(new ItemViewDataHolder<>(1, input.get(i)));
-                    }
-                    return list;
-                }
+                input -> new ArrayList<>(input)
         );
     }
 
@@ -68,7 +62,7 @@ public class CatViewModel extends BaseViewModel {
         mRecordLiveData = HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().queryRecordObservable(id);
     }
 
-    public LiveData<List<ItemViewDataHolder<?>>> getAllRecordLiveData() {
+    public LiveData<List<ItemViewDataHolder>> getAllRecordLiveData() {
         return mAllRecordLiveData;
     }
 

@@ -105,11 +105,11 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
     protected void onBaseReady(Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
 
-        final List<ItemViewDataHolder<?>> banners = new ArrayList<>();
-        banners.add(new ItemViewDataHolder<>(1, new BannerViewData("http://img.zcool.cn/community/01c98059093a88a801214550cd0853.jpg")));
-        banners.add(new ItemViewDataHolder<>(1, new BannerViewData("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554377914890&di=7ab78e69f3fec25509f88cd70171db38&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a82c5711fd566ac7251343a63c56.jpg%40900w_1l_2o_100sh.jpg")));
-        banners.add(new ItemViewDataHolder<>(1, new BannerViewData("http://img.zcool.cn/community/01c98059093a88a801214550cd0853.jpg")));
-        banners.add(new ItemViewDataHolder<>(1, new BannerViewData("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554377856503&di=eddca6d3c83a95e183dfb7c073d14b69&imgtype=0&src=http%3A%2F%2Fpic23.nipic.com%2F20120814%2F8758059_141413668315_2.jpg")));
+        final List<ItemViewDataHolder> banners = new ArrayList<>();
+        banners.add(new BannerViewData("http://img.zcool.cn/community/01c98059093a88a801214550cd0853.jpg"));
+        banners.add(new BannerViewData("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554377914890&di=7ab78e69f3fec25509f88cd70171db38&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a82c5711fd566ac7251343a63c56.jpg%40900w_1l_2o_100sh.jpg"));
+        banners.add(new BannerViewData("http://img.zcool.cn/community/01c98059093a88a801214550cd0853.jpg"));
+        banners.add(new BannerViewData("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554377856503&di=eddca6d3c83a95e183dfb7c073d14b69&imgtype=0&src=http%3A%2F%2Fpic23.nipic.com%2F20120814%2F8758059_141413668315_2.jpg"));
         BindingBannerAdapter bannerAdapter = new BindingBannerAdapter(this);
         bannerAdapter.setItemClickListener(new OnBindingItemClickListener() {
             @Override

@@ -49,7 +49,7 @@ public class CatMainActivity extends EmptyBindActivity<CatActivityMainBinding> {
         setSupportActionBar(getBinding().toolbar);
         getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mListAdapter.setItemClickListener((parent, view, position, id) ->
-                CatDetailsActivity.openActivity(CatMainActivity.this, (ItemHttpData) mListAdapter.getItem(position).getItemData()));
+                CatDetailsActivity.openActivity(CatMainActivity.this, (ItemHttpData) mListAdapter.getItem(position)));
         getBinding().recyclerView.setAdapter(mListAdapter);
         getViewModel(CatViewModel.class).getAllRecordLiveData().observe(this, mListAdapter::submitList);
     }

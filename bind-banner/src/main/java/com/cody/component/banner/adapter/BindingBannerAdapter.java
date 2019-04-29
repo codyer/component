@@ -66,7 +66,7 @@ public class BindingBannerAdapter extends BindingListAdapter {
     }
 
     @Override
-    public ItemViewDataHolder<?> getItem(int position) {
+    public ItemViewDataHolder getItem(int position) {
         return super.getItem(getPosition(position));
     }
 

@@ -13,6 +13,7 @@
 package com.cody.component.list;
 
 
+import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.data.ViewData;
 import com.cody.component.handler.define.Operation;
@@ -21,6 +22,8 @@ import com.cody.component.handler.interfaces.PageDataCallBack;
 import com.cody.component.handler.viewmodel.PageListViewModel;
 
 import java.util.ArrayList;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by xu.yi. on 2019/4/14.
@@ -32,11 +35,11 @@ public class ListTestViewModel extends PageListViewModel<MaskViewData> {
     }
 
     @Override
-    public <ItemBean> ViewData mapper(final ViewData viewData, final ItemBean beanData, final int position) {
-        if (viewData instanceof ItemTestViewData) {
-            ((ItemTestViewData) viewData).setTest((String) beanData);
+    public <ItemBean> ItemViewDataHolder mapperItem(@NonNull ItemViewDataHolder itemViewDataHolder, ItemBean beanData, int position) {
+        if (itemViewDataHolder instanceof ItemTestViewData) {
+         ((ItemTestViewData)itemViewDataHolder).setTest((String) beanData);
         }
-        return viewData;
+        return itemViewDataHolder;
     }
 
     public void test() {
@@ -56,7 +59,7 @@ public class ListTestViewModel extends PageListViewModel<MaskViewData> {
     }
 
     @Override
-    public ViewData newItemViewData(int position) {
+    public ItemTestViewData newItemViewData(int position) {
         return new ItemTestViewData();
     }
 }

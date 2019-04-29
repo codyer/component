@@ -33,7 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by xu.yi. on 2019/3/28.
  * 抽象列表adapter
  */
-public abstract class BindingListAdapter extends ListAdapter<ItemViewDataHolder<?>, BindingViewHolder> implements IBindingAdapter {
+public abstract class BindingListAdapter extends ListAdapter<ItemViewDataHolder, BindingViewHolder> implements IBindingAdapter {
 
     protected RecyclerView mRecyclerView;
     protected OnBindingItemClickListener mItemClickListener;//item 事件监听
@@ -67,13 +67,13 @@ public abstract class BindingListAdapter extends ListAdapter<ItemViewDataHolder<
     }
 
     @Override
-    public ItemViewDataHolder<?> getItem(int position) {
+    public ItemViewDataHolder getItem(int position) {
         return super.getItem(position);
     }
 
     @Override
     public int getItemViewType(int position) {
-        ItemViewDataHolder<?> item = getItem(position);
+        ItemViewDataHolder item = getItem(position);
         if (item != null) {
             return item.getItemType();
         }
@@ -91,7 +91,7 @@ public abstract class BindingListAdapter extends ListAdapter<ItemViewDataHolder<
     @CallSuper
     @Override
     public void onBindViewHolder(@NonNull BindingViewHolder holder, int position) {
-        ItemViewDataHolder<?> item = getItem(position);
+        ItemViewDataHolder item = getItem(position);
         if (item != null) {
             holder.bindTo(item, getViewDataId(), getOnClickListenerId(), mRecyclerView, mItemLongClickListener, mItemClickListener);
         } else {

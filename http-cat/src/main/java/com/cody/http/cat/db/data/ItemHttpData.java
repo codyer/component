@@ -12,19 +12,18 @@
 
 package com.cody.http.cat.db.data;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.annotation.NonNull;
-
-import com.cody.component.handler.data.ViewData;
+import com.cody.component.handler.data.ItemViewDataHolder;
+import com.cody.http.cat.utils.FormatUtils;
+import com.cody.http.cat.utils.JsonConverter;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.cody.http.cat.utils.FormatUtils;
-import com.cody.http.cat.utils.JsonConverter;
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import okhttp3.Headers;
 
 /**
@@ -32,7 +31,7 @@ import okhttp3.Headers;
  * cat data
  */
 @Entity(tableName = "http_cat_table")
-public class ItemHttpData extends ViewData {
+public class ItemHttpData extends ItemViewDataHolder {
     private static final long serialVersionUID = -5435259574495140581L;
     private static final int DEFAULT_RESPONSE_CODE = -100;
 

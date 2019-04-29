@@ -29,7 +29,7 @@ import androidx.lifecycle.LifecycleOwner;
  */
 public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter {
     final private static int HEADER_OR_FOOTER_VIEW_TYPE = -1;
-    final private ItemViewDataHolder<ItemFooterOrHeaderData> mItemHolderFooterOrHeader = new ItemViewDataHolder<>(HEADER_OR_FOOTER_VIEW_TYPE, new ItemFooterOrHeaderData());
+    final private ItemFooterOrHeaderData mItemHolderFooterOrHeader = new ItemFooterOrHeaderData(HEADER_OR_FOOTER_VIEW_TYPE);
 
     private Operation mOperation;
     private RequestStatus mRequestStatus;
@@ -57,9 +57,7 @@ public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter
      * 设置是否显示没有更多了
      */
     final public void setShowFooter(boolean showFooter) {
-        if (mItemHolderFooterOrHeader.getItemData() != null) {
-            mItemHolderFooterOrHeader.getItemData().setShowFooter(showFooter);
-        }
+        mItemHolderFooterOrHeader.setShowFooter(showFooter);
     }
 
     /**
@@ -74,9 +72,7 @@ public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter
      */
     final public void setRequestStatus(RequestStatus newState) {
         RequestStatus oldState = mRequestStatus;
-        if (mItemHolderFooterOrHeader.getItemData() != null) {
-            mItemHolderFooterOrHeader.getItemData().setRequestStatus(newState);
-        }
+        mItemHolderFooterOrHeader.setRequestStatus(newState);
         boolean hadHeader = hasHeaderItem();
         boolean hadFooter = hasFooterItem();
         mRequestStatus = newState;
@@ -122,7 +118,7 @@ public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter
     }
 
     @Override
-    public ItemViewDataHolder<?> getItem(final int position) {
+    public ItemViewDataHolder getItem(final int position) {
         if ((hasFooterItem() && position == super.getItemCount()) || (hasHeaderItem() && position == 0)) {
             return mItemHolderFooterOrHeader;
         }

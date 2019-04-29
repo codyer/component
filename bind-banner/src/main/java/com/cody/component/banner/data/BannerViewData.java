@@ -15,13 +15,14 @@ package com.cody.component.banner.data;
 import android.text.TextUtils;
 
 import com.cody.component.handler.data.IViewData;
+import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.ViewData;
 
 /**
  * Created by cody.yi on 2019/4/4.
  * banner viewData
  */
-public class BannerViewData extends ViewData {
+public class BannerViewData extends ItemViewDataHolder {
     private static final long serialVersionUID = 4802021333332679648L;
     private String mImgId;
     private String mImgDesc;
