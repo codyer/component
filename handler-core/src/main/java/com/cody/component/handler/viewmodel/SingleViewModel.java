@@ -13,10 +13,10 @@
 package com.cody.component.handler.viewmodel;
 
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cody.component.handler.data.MaskViewData;
-import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnRequestListener;
 
@@ -27,46 +27,57 @@ import com.cody.component.handler.interfaces.OnRequestListener;
  */
 public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> implements OnRequestListener {
 
-    private MutableLiveData<Operation> mOperation;
-    private MutableLiveData<RequestStatus> mRequestStatus;
+    private MutableLiveData<RequestStatus> mRequestStatusLive;
+    private RequestStatus mRequestStatus;
 
     public SingleViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-        mOperation = new MutableLiveData<>();
-        mRequestStatus = new MutableLiveData<>();
     }
 
     @Override
     public void OnInit() {
-        setOperation(Operation.INIT);
+        mRequestStatus = new RequestStatus();
+        mRequestStatusLive = new MutableLiveData<>(mRequestStatus);
+        setOperation(mRequestStatus);
     }
 
     @Override
     public void refresh() {
-        setOperation(Operation.REFRESH);
+        setOperation(mRequestStatus.refresh());
     }
 
     @Override
     public void retry() {
-        setOperation(Operation.RETRY);
+        setOperation(mRequestStatus.retry());
     }
 
+    @NonNull
     @Override
-    public MutableLiveData<Operation> getOperation() {
-        return mOperation;
-    }
-
-    @Override
-    public MutableLiveData<RequestStatus> getRequestStatus() {
+    public RequestStatus getRequestStatus() {
         return mRequestStatus;
+    }
+
+    @NonNull
+    @Override
+    public MutableLiveData<RequestStatus> getRequestStatusLive() {
+        return mRequestStatusLive;
+    }
+
+    @Override
+    public void onSuccess() {
+        getRequestStatusLive().postValue(mRequestStatus = mRequestStatus.loaded());
+    }
+
+    @Override
+    public void onFailure(final String message) {
+        getRequestStatusLive().postValue(mRequestStatus = mRequestStatus.error(message));
     }
 
     /**
      * 执行一个操作
      */
-    private void setOperation(Operation operation) {
-        mOperation.postValue(operation);
-        mRequestStatus.postValue(RequestStatus.loading());
-        OnRequestData(operation, this);
+    private void setOperation(RequestStatus requestStatus) {
+        mRequestStatusLive.setValue(mRequestStatus = requestStatus);
+        OnRequestData(requestStatus.getOperation(), this);
     }
 }

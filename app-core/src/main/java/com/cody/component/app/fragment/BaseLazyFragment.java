@@ -29,10 +29,13 @@ public abstract class BaseLazyFragment extends BaseFragment {
     private boolean mIsFirstVisible = true;
     private boolean mIsPrepared = false;
 
+    protected abstract void onBaseReady(Bundle savedInstanceState);
+
     /**
      * when fragment is visible for the first time, here we can do some initialized work or refresh data only once
      */
-    protected void onFirstUserVisible() {
+    protected void onFirstUserVisible(@Nullable Bundle savedInstanceState) {
+        onBaseReady(savedInstanceState);
     }
 
     /**
@@ -57,7 +60,7 @@ public abstract class BaseLazyFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initPrepare();
+        initPrepare(savedInstanceState);
     }
 
     @Override
@@ -66,18 +69,18 @@ public abstract class BaseLazyFragment extends BaseFragment {
         if (isVisibleToUser && mIsPrepared) {
             if (mIsFirstVisible) {
                 mIsFirstVisible = false;
-                onFirstUserVisible();
+                onFirstUserVisible(null);
             } else {
                 onUserVisible();
             }
         }
     }
 
-    private void initPrepare() {
+    private void initPrepare(Bundle savedInstanceState) {
         if (getUserVisibleHint()) {
             if (mIsFirstVisible) {
                 mIsFirstVisible = false;
-                onFirstUserVisible();
+                onFirstUserVisible(savedInstanceState);
             } else {
                 onUserVisible();
             }

@@ -12,24 +12,21 @@
 
 package com.cody.component.handler.source;
 
-import android.util.Log;
-
-import com.cody.component.handler.data.ItemViewDataHolder;
-import com.cody.component.handler.interfaces.PageDataCallBack;
-import com.cody.component.handler.define.Operation;
-import com.cody.component.handler.define.PageInfo;
-import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.interfaces.OnFriendlyListener;
-import com.cody.component.handler.interfaces.OnRequestPageListener;
-import com.cody.component.handler.interfaces.OnRetryListener;
-import com.cody.component.handler.interfaces.Refreshable;
-
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
+
+import com.cody.component.handler.data.ItemViewDataHolder;
+import com.cody.component.handler.define.Operation;
+import com.cody.component.handler.define.PageInfo;
+import com.cody.component.handler.define.RequestStatus;
+import com.cody.component.handler.interfaces.OnRequestPageListener;
+import com.cody.component.handler.interfaces.OnRetryListener;
+import com.cody.component.handler.interfaces.PageDataCallBack;
+import com.cody.component.handler.interfaces.Refreshable;
+
+import java.util.List;
 
 /**
  * Created by xu.yi. on 2019/4/8.
@@ -38,15 +35,15 @@ import androidx.paging.PageKeyedDataSource;
  */
 public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemViewDataHolder>
         implements Refreshable, OnRetryListener {
-    final private MutableLiveData<RequestStatus> mRequestStatus;
-    final private MutableLiveData<Operation> mOperation;
+    final private MutableLiveData<RequestStatus> mRequestStatusLive;
+    private RequestStatus mRequestStatus;
     final private OnRequestPageListener mOnRequestPageListener;
     private OnRetryListener mOnRetryListener;
 
-    public PageListKeyedDataSource(final OnRequestPageListener onRequestPageListener, final MutableLiveData<RequestStatus> requestStatus, final MutableLiveData<Operation> operation) {
+    public PageListKeyedDataSource(final OnRequestPageListener onRequestPageListener, final MutableLiveData<RequestStatus> operationStatusLive) {
         mOnRequestPageListener = onRequestPageListener;
-        mRequestStatus = requestStatus;
-        mOperation = operation;
+        mRequestStatusLive = operationStatusLive;
+        mRequestStatus = mRequestStatusLive.getValue();
     }
 
     @Override
@@ -67,17 +64,17 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
         if (mOnRetryListener == null) {
             mOnRetryListener = () -> loadInitial(params, callback);
         }
-        requestPageData(Operation.INIT, pageInfo, new PageDataCallBack() {
+        requestPageData(mRequestStatus.getOperation(), pageInfo, new PageDataCallBack() {
             @Override
             public void onSuccess(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
                 callback.onResult(data, prePageKey, nextPageKey);
-                mRequestStatus.postValue(data.isEmpty() ? RequestStatus.empty() : RequestStatus.loaded());
+                mRequestStatusLive.postValue(mRequestStatus = data.isEmpty() ? mRequestStatus.empty() : mRequestStatus.loaded());
                 mOnRetryListener = null;
             }
 
             @Override
             public void onFailure(String message) {
-                mRequestStatus.postValue(RequestStatus.error(message));
+                mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.error(message));
             }
         });
     }
@@ -91,13 +88,13 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
             @Override
             public void onSuccess(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
                 callback.onResult(data, prePageKey);
-                mRequestStatus.postValue(data.isEmpty() ? RequestStatus.empty() : RequestStatus.loaded());
+                mRequestStatusLive.postValue(mRequestStatus = data.isEmpty() ? mRequestStatus.empty() : mRequestStatus.loaded());
                 mOnRetryListener = null;
             }
 
             @Override
             public void onFailure(String message) {
-                mRequestStatus.postValue(RequestStatus.error(message));
+                mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.error(message));
             }
         });
     }
@@ -115,13 +112,13 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
                 } else {
                     callback.onResult(data, nextPageKey);
                 }
-                mRequestStatus.postValue(data.isEmpty() ? RequestStatus.empty() : RequestStatus.loaded());
+                mRequestStatusLive.postValue(mRequestStatus = data.isEmpty() ? mRequestStatus.empty() : mRequestStatus.loaded());
                 mOnRetryListener = null;
             }
 
             @Override
             public void onFailure(String message) {
-                mRequestStatus.postValue(RequestStatus.error(message));
+                mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.error(message));
             }
         });
     }
@@ -130,17 +127,10 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
      * 请求一页数据
      */
     private void requestPageData(Operation operation, PageInfo pageInfo, PageDataCallBack callBack) {
-        setOperation(operation);
+        mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.setOperation(operation));
         if (mOnRequestPageListener != null) {
             mOnRequestPageListener.OnRequestPageData(operation, pageInfo, callBack);
         }
     }
 
-    /**
-     * 执行一个操作
-     */
-    private void setOperation(Operation operation) {
-        mOperation.postValue(operation);
-        mRequestStatus.postValue(RequestStatus.loading());
-    }
 }

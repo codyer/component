@@ -19,34 +19,68 @@ import androidx.annotation.NonNull;
  * 请求数据的的状态
  */
 public class RequestStatus {
-
-    public static RequestStatus error(@NonNull String message) {
-        return new RequestStatus(Status.FAILED, message);
-    }
-
-    public static RequestStatus loaded() {
-        return new RequestStatus(Status.SUCCESS);
-    }
-
-    public static RequestStatus empty() {
-        return new RequestStatus(Status.EMPTY);
-    }
-
-    public static RequestStatus loading() {
-        return new RequestStatus(Status.RUNNING);
-    }
-
     private Status mStatus;
-    @NonNull
     private String mMessage;
+    private Operation mOperation;
 
-    public RequestStatus(Status status) {
+    public RequestStatus() {
+        mStatus = Status.RUNNING;
+        mOperation = Operation.INIT;
+    }
+
+    private RequestStatus(Operation operation, Status status) {
+        mOperation = operation;
         mStatus = status;
     }
 
-    public RequestStatus(Status status, @NonNull String message) {
+    private RequestStatus(Operation operation, Status status, String message) {
+        mOperation = operation;
         mStatus = status;
         mMessage = message;
+    }
+
+    public Operation getOperation() {
+        return mOperation;
+    }
+
+    public RequestStatus setOperation(final Operation operation) {
+        return new RequestStatus(operation, Status.RUNNING);
+    }
+
+    public RequestStatus refresh() {
+        return setOperation(Operation.REFRESH);
+    }
+
+    public RequestStatus init() {
+        return new RequestStatus();
+    }
+
+    public RequestStatus retry() {
+        return setOperation(Operation.RETRY);
+    }
+
+    public RequestStatus loadAfter() {
+        return setOperation(Operation.LOAD_AFTER);
+    }
+
+    public RequestStatus loadABefore() {
+        return setOperation(Operation.LOAD_BEFORE);
+    }
+
+    public RequestStatus error(@NonNull String message) {
+        return new RequestStatus(mOperation, Status.FAILED, message);
+    }
+
+    public RequestStatus loaded() {
+        return new RequestStatus(mOperation, Status.SUCCESS);
+    }
+
+    public RequestStatus empty() {
+        return new RequestStatus(mOperation, Status.EMPTY);
+    }
+
+    public RequestStatus loading() {
+        return new RequestStatus(mOperation, Status.RUNNING);
     }
 
     @NonNull
@@ -80,5 +114,25 @@ public class RequestStatus {
 
     public boolean isEmpty() {
         return mStatus == Status.EMPTY;
+    }
+
+    public boolean isIniting() {
+        return mOperation == Operation.INIT && isLoading();
+    }
+
+    public boolean isRetrying() {
+        return mOperation == Operation.RETRY && isLoading();
+    }
+
+    public boolean isRefreshing() {
+        return mOperation == Operation.REFRESH && isLoading();
+    }
+
+    public boolean isLoadingBefore() {
+        return mOperation == Operation.LOAD_BEFORE && !isLoaded();
+    }
+
+    public boolean isLoadingAfter() {
+        return mOperation == Operation.LOAD_AFTER && !isLoaded();
     }
 }

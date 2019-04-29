@@ -30,9 +30,7 @@ import androidx.lifecycle.LifecycleOwner;
 public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter {
     final private static int HEADER_OR_FOOTER_VIEW_TYPE = -1;
     final private ItemFooterOrHeaderData mItemHolderFooterOrHeader = new ItemFooterOrHeaderData(HEADER_OR_FOOTER_VIEW_TYPE);
-
-    private Operation mOperation;
-    private RequestStatus mRequestStatus;
+    private RequestStatus mRequestStatus = new RequestStatus();
     private OnRetryListener mOnRetryListener;
 
     protected MultiBindingPageListAdapter(LifecycleOwner lifecycleOwner, OnRetryListener onRetryListener) {
@@ -58,13 +56,6 @@ public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter
      */
     final public void setShowFooter(boolean showFooter) {
         mItemHolderFooterOrHeader.setShowFooter(showFooter);
-    }
-
-    /**
-     * 操作改变通知adapter
-     */
-    final public void setOperation(Operation operation) {
-        mOperation = operation;
     }
 
     /**
@@ -135,10 +126,10 @@ public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter
     }
 
     private boolean hasHeaderItem() {
-        return (mOperation == Operation.LOAD_BEFORE) && mRequestStatus != null && (!mRequestStatus.isLoaded());
+        return mRequestStatus.isLoadingBefore();
     }
 
     private boolean hasFooterItem() {
-        return (mOperation == Operation.LOAD_AFTER) && mRequestStatus != null && (!mRequestStatus.isLoaded());
+        return mRequestStatus.isLoadingAfter();
     }
 }

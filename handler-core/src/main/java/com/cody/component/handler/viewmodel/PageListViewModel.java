@@ -25,6 +25,7 @@ import com.cody.component.handler.source.DataSourceWrapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -37,25 +38,25 @@ import androidx.paging.PagedList;
  */
 public abstract class PageListViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD>
         implements OnRequestPageListener, IDataMapper {
+    private final PageListDataSourceFactory mSourceFactory;
     private DataSourceWrapper mWrapper;
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
     protected List<ItemViewDataHolder> mOldList = new ArrayList<>();
 
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-        final PageListDataSourceFactory sourceFactory = new PageListDataSourceFactory(this);
-        mWrapper = new DataSourceWrapper(sourceFactory.getRequestStatus(), sourceFactory.getOperation(), sourceFactory.getDataSource());
-        mPagedList = new LivePagedListBuilder<>(sourceFactory, initPageListConfig()).build();
+        mSourceFactory = new PageListDataSourceFactory(this);
+        mWrapper = new DataSourceWrapper(mSourceFactory.getRequestStatusLive(), mSourceFactory.getDataSource());
     }
 
     @Override
     public void OnInit() {
-        // do nothing
+        mPagedList = new LivePagedListBuilder<>(mSourceFactory, initPageListConfig()).build();
+        mPagedList.observe(mLifecycleOwner, itemViewDataHolders -> mOldList = new ArrayList<>(itemViewDataHolders));
     }
 
     @Override
     public <T extends BaseViewModel> T setLifecycleOwner(final LifecycleOwner lifecycleOwner) {
-        mPagedList.observe(lifecycleOwner, itemViewDataHolders -> mOldList = new ArrayList<>(itemViewDataHolders));
         return super.setLifecycleOwner(lifecycleOwner);
     }
 
@@ -63,14 +64,15 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
         return mPagedList;
     }
 
+    @NonNull
     @Override
-    public MutableLiveData<Operation> getOperation() {
-        return mWrapper.getOperation();
+    public RequestStatus getRequestStatus() {
+        return mWrapper.getRequestStatus();
     }
 
     @Override
-    public MutableLiveData<RequestStatus> getRequestStatus() {
-        return mWrapper.getRequestStatus();
+    public MutableLiveData<RequestStatus> getRequestStatusLive() {
+        return mWrapper.getRequestStatusLive();
     }
 
     @Override
@@ -86,6 +88,18 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
     @Override
     public void retry() {
         mWrapper.retry();
+    }
+
+    @Override
+    public void onSuccess() {
+        mWrapper.onSuccess();
+        getRequestStatusLive().postValue(getRequestStatus().loaded());
+    }
+
+    @Override
+    public void onFailure(final String message) {
+        mWrapper.onFailure(message);
+        getRequestStatusLive().postValue(getRequestStatus().error(message));
     }
 
     /**

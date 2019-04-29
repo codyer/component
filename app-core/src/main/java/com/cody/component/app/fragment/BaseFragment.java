@@ -49,18 +49,10 @@ public abstract class BaseFragment extends Fragment implements IBaseView, Dialog
     private Toast mToast;
     protected String TAG = null;
 
-    protected abstract void onBaseReady(Bundle savedInstanceState);
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         TAG = this.getClass().getSimpleName();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        onBaseReady(savedInstanceState);
     }
 
     @Override

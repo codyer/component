@@ -12,42 +12,40 @@
 
 package com.cody.component.handler.source;
 
-import com.cody.component.handler.livedata.SafeMutableLiveData;
-import com.cody.component.handler.define.Operation;
-import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.interfaces.Refreshable;
-import com.cody.component.handler.interfaces.OnRetryListener;
-
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+
+import com.cody.component.handler.define.RequestStatus;
+import com.cody.component.handler.interfaces.OnRetryListener;
+import com.cody.component.handler.interfaces.Refreshable;
+import com.cody.component.handler.livedata.SafeMutableLiveData;
 
 /**
  * Created by xu.yi. on 2019/4/8.
  * dataSource wrapper
  */
 public class DataSourceWrapper implements Refreshable, OnRetryListener {
-    final private MutableLiveData<RequestStatus> mRequestStatus;
-    final private MutableLiveData<Operation> mOperation;
+    final private MutableLiveData<RequestStatus> mRequestStatusLive;
     final private SafeMutableLiveData<PageListKeyedDataSource> mDataSource;
+    private RequestStatus mRequestStatus;
 
-    public DataSourceWrapper(final MutableLiveData<RequestStatus> requestStatus, final MutableLiveData<Operation> operation,
+    public DataSourceWrapper(final MutableLiveData<RequestStatus> operationStatusLive,
                              final SafeMutableLiveData<PageListKeyedDataSource> dataSource) {
-        mRequestStatus = requestStatus;
-        mOperation = operation;
+        mRequestStatusLive = operationStatusLive;
         mDataSource = dataSource;
+        mRequestStatus = mRequestStatusLive.getValue();
     }
 
-    public MutableLiveData<RequestStatus> getRequestStatus() {
+    public MutableLiveData<RequestStatus> getRequestStatusLive() {
+        return mRequestStatusLive;
+    }
+
+    public RequestStatus getRequestStatus() {
         return mRequestStatus;
-    }
-
-    public MutableLiveData<Operation> getOperation() {
-        return mOperation;
     }
 
     @Override
     public void refresh() {
-        mOperation.setValue(Operation.REFRESH);
+        mRequestStatusLive.setValue(mRequestStatus = mRequestStatus.refresh());
         if (mDataSource != null && mDataSource.getValue() != null) {
             mDataSource.getValue().refresh();
         }
@@ -55,8 +53,18 @@ public class DataSourceWrapper implements Refreshable, OnRetryListener {
 
     @Override
     public void retry() {
+        // TODO 暂时不需要判断是不是重试，保留原来的操作状态不覆盖
+//        mRequestStatusLive.setValue(mRequestStatus.setOperation(Operation.RETRY));
         if (mDataSource != null && mDataSource.getValue() != null) {
             mDataSource.getValue().retry();
         }
+    }
+
+    public void onSuccess() {
+        mRequestStatusLive.postValue(mRequestStatus = getRequestStatus().loaded());
+    }
+
+    public void onFailure(final String message) {
+        mRequestStatusLive.postValue(mRequestStatus = getRequestStatus().error(message));
     }
 }

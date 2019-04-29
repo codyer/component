@@ -12,19 +12,17 @@
 
 package com.cody.component.handler.factory;
 
-import android.util.Log;
-
-import com.cody.component.handler.data.ItemViewDataHolder;
-import com.cody.component.handler.define.Operation;
-import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.livedata.SafeMutableLiveData;
-import com.cody.component.handler.define.PageInfo;
-import com.cody.component.handler.interfaces.OnRequestPageListener;
-import com.cody.component.handler.source.PageListKeyedDataSource;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
+
+import com.cody.component.handler.data.ItemViewDataHolder;
+import com.cody.component.handler.define.Operation;
+import com.cody.component.handler.define.PageInfo;
+import com.cody.component.handler.define.RequestStatus;
+import com.cody.component.handler.interfaces.OnRequestPageListener;
+import com.cody.component.handler.livedata.SafeMutableLiveData;
+import com.cody.component.handler.source.PageListKeyedDataSource;
 
 /**
  * Created by xu.yi. on 2019/4/8.
@@ -34,19 +32,17 @@ import androidx.paging.DataSource;
 public class PageListDataSourceFactory extends DataSource.Factory<PageInfo, ItemViewDataHolder> {
     private SafeMutableLiveData<PageListKeyedDataSource> mDataSource = new SafeMutableLiveData<>();
     private OnRequestPageListener mOnRequestPageListener;
-    private MutableLiveData<RequestStatus> mRequestStatus;
-    private MutableLiveData<Operation> mOperation;
+    final private MutableLiveData<RequestStatus> mRequestStatusLive;
 
     public PageListDataSourceFactory(OnRequestPageListener onRequestPageListener) {
         mOnRequestPageListener = onRequestPageListener;
-        mRequestStatus = new MutableLiveData<>(RequestStatus.loading());
-        mOperation = new MutableLiveData<>(Operation.INIT);
+        mRequestStatusLive = new MutableLiveData<>(new RequestStatus());
     }
 
     @NonNull
     @Override
     public DataSource<PageInfo, ItemViewDataHolder> create() {
-        PageListKeyedDataSource dataSource = new PageListKeyedDataSource(mOnRequestPageListener, mRequestStatus, mOperation);
+        PageListKeyedDataSource dataSource = new PageListKeyedDataSource(mOnRequestPageListener, mRequestStatusLive);
         mDataSource.postValue(dataSource);
         return dataSource;
     }
@@ -55,11 +51,7 @@ public class PageListDataSourceFactory extends DataSource.Factory<PageInfo, Item
         return mDataSource;
     }
 
-    public MutableLiveData<RequestStatus> getRequestStatus() {
-        return mRequestStatus;
-    }
-
-    public MutableLiveData<Operation> getOperation() {
-        return mOperation;
+    public MutableLiveData<RequestStatus> getRequestStatusLive() {
+        return mRequestStatusLive;
     }
 }

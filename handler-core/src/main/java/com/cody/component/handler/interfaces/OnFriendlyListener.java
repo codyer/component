@@ -12,10 +12,10 @@
 
 package com.cody.component.handler.interfaces;
 
-import com.cody.component.handler.define.Operation;
-import com.cody.component.handler.define.RequestStatus;
-
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
+
+import com.cody.component.handler.define.RequestStatus;
 
 
 /**
@@ -23,7 +23,9 @@ import androidx.lifecycle.MutableLiveData;
  * 用户友好 通用监听
  */
 public interface OnFriendlyListener extends Refreshable, OnRetryListener, OnInitListener {
-    MutableLiveData<Operation> getOperation();
+    @NonNull
+    RequestStatus getRequestStatus();
 
-    MutableLiveData<RequestStatus> getRequestStatus();
+    @NonNull
+    MutableLiveData<RequestStatus> getRequestStatusLive();
 }
