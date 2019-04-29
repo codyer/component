@@ -36,4 +36,14 @@ public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseVie
     public MaskViewData getFriendlyViewData() {
         return mFriendlyViewData;
     }
+
+    @Override
+    public void onSuccess() {
+        getRequestStatus().postValue(RequestStatus.loaded());
+    }
+
+    @Override
+    public void onFailure(final String message) {
+        getRequestStatus().postValue(RequestStatus.error(message));
+    }
 }

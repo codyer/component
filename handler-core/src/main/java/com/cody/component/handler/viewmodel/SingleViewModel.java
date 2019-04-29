@@ -13,20 +13,19 @@
 package com.cody.component.handler.viewmodel;
 
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.interfaces.DataCallBack;
 import com.cody.component.handler.interfaces.OnRequestListener;
-
-import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by xu.yi. on 2019/4/23.
  * component 用户友好的view model
  * 包含刷新，重试，出错默认提示页面
  */
-public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> implements OnRequestListener{
+public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> implements OnRequestListener {
 
     private MutableLiveData<Operation> mOperation;
     private MutableLiveData<RequestStatus> mRequestStatus;
@@ -60,16 +59,6 @@ public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyV
     @Override
     public MutableLiveData<RequestStatus> getRequestStatus() {
         return mRequestStatus;
-    }
-
-    @Override
-    public void onSuccess() {
-        mRequestStatus.postValue(RequestStatus.loaded());
-    }
-
-    @Override
-    public void onFailure(final String message) {
-        mRequestStatus.postValue(RequestStatus.error(message));
     }
 
     /**

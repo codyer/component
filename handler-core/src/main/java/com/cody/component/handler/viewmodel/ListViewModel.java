@@ -57,7 +57,6 @@ public abstract class ListViewModel<VD extends MaskViewData> extends SingleViewM
     @Override
     public void onFailure(final String message) {
         super.onFailure(message);
-        mItems.postValue(mOldList);
     }
 
     @Override
