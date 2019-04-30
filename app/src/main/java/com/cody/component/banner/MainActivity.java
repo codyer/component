@@ -29,8 +29,8 @@ import com.cody.component.banner.data.BannerViewData;
 import com.cody.component.bean.TestDataBean;
 import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
 import com.cody.component.bus.BusDemoActivity;
-import com.cody.component.data.remote.CatApiOpen$DataSource;
-import com.cody.component.data.remote.CatHttpBin$DataSource;
+import com.cody.component.data.remote.CatApiOpen$RemoteDataSource;
+import com.cody.component.data.remote.CatHttpBin$RemoteDataSource;
 import com.cody.component.databinding.ActivityMainBannerBinding;
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.hybrid.activity.HtmlActivity;
@@ -171,7 +171,7 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
     }
 
     private void httpRequest1() {
-        CatHttpBin$DataSource api = new CatHttpBin$DataSource(null);
+        CatHttpBin$RemoteDataSource api = new CatHttpBin$RemoteDataSource(null);
         RequestCallback cb = new RequestCallback<Object>() {
             @Override
             public void showToast(String message) {
@@ -213,7 +213,7 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
     }
 
     private void httpRequest2() {
-        CatApiOpen$DataSource api = new CatApiOpen$DataSource(null);
+        CatApiOpen$RemoteDataSource api = new CatApiOpen$RemoteDataSource(null);
         RequestCallback<String> cb = new RequestCallback<String>() {
             @Override
             public void onSuccess(String s) {

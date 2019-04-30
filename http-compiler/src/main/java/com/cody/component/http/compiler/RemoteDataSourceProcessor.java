@@ -68,7 +68,7 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
 
     private static final String GEN_PKG = ".remote";
     private static final String INTERFACE_NAME_PREFIX = "I";
-    private static final String CLASS_NAME_SUFFIX = "$DataSource";
+    private static final String CLASS_NAME_SUFFIX = "$RemoteDataSource";
 
     private static final String FILE_DESCRIPTION = "\nRemoteDataSource class auto generate. don't modify !!!\n";
     private Elements mElementUtils;
