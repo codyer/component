@@ -66,7 +66,7 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
     private static final String CALL_BACK_CLASS = "com.cody.http.core.callback.RequestCallback";
     private static final String CALL_BACK = "callback";
 
-    private static final String GEN_PKG = ".remote";
+    private static final String GEN_PKG = ".generate";
     private static final String INTERFACE_NAME_PREFIX = "I";
     private static final String CLASS_NAME_SUFFIX = "$RemoteDataSource";
 
