@@ -15,6 +15,8 @@ package com.cody.component.repository;
 import com.cody.http.lib.annotation.Domain;
 import com.cody.component.lib.bean.Result;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -33,6 +35,9 @@ public interface Account {
 
     @GET("toutiao/index")
     Observable<Result<NewsPack>> getNews();
+
+    @GET("toutiao/index")
+    Observable<Result<List<NewsPack>>> getNewList();
 
     @GET("leavesC/test1")
     Observable<Result<String>> test1();

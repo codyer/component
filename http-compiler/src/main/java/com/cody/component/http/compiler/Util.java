@@ -113,6 +113,27 @@ final class Util {
     }
 
     /**
+     * 外层类
+     */
+    public static String outTypeToString(String result) {
+        int end = result.indexOf("<");
+        if (end != -1) {
+            return result.substring(0, end);
+        }
+        return result;
+    }
+
+    public static TypeName getTypeName(String type) {
+        if (!type.contains("<")) {
+            return ClassName.bestGuess(type);
+        }
+        //Result 还包含范型
+        ClassName outTypeName = ClassName.bestGuess(Util.outTypeToString(type));
+        TypeName innerTypeName = getTypeName(Util.innerTypeToString(type));
+        return ParameterizedTypeName.get(outTypeName, innerTypeName);
+    }
+
+    /**
      * Returns a string for {@code type}. Primitive types are always boxed.
      */
     public static String innerTypeToString(String result) {

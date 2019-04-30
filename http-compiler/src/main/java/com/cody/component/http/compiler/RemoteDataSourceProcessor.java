@@ -168,6 +168,7 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
         } else {
             methodBean.setOriginal(true);
         }
+
         methodBean.setType(type);
         List<? extends VariableElement> parameters = methodElement.getParameters();
         if (parameters != null && parameters.size() > 0) {
@@ -277,7 +278,7 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
         if (resultBeanType == null || resultBeanType.length() == 0) {
             parameterType = ParameterizedTypeName.get(callbackClassName, ClassName.get(Object.class));
         } else {
-            TypeName callbackType = ClassName.bestGuess(resultBeanType);
+            TypeName callbackType = Util.getTypeName(resultBeanType);
             if (callbackType != null) {
                 parameterType = ParameterizedTypeName.get(callbackClassName, callbackType);
             } else {
