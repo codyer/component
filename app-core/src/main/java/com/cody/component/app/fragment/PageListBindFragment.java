@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
- *
+ * 使用pageList 做列表页面，自动分页，刷新，初始化，加载更多，出错提示，重试，下拉刷新
  */
 public abstract class PageListBindFragment<VM extends PageListViewModel<MaskViewData>> extends FriendlyBindFragment<FragmentPageListBinding, VM, MaskViewData> implements IBaseListView, OnBindingItemClickListener {
     protected MultiBindingPageListAdapter mListAdapter;

@@ -16,7 +16,6 @@ import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Message;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.webkit.ClientCertRequest;
 import android.webkit.HttpAuthHandler;
@@ -29,9 +28,7 @@ import android.webkit.WebViewClient;
 
 import androidx.annotation.RequiresApi;
 
-import com.cody.component.hybrid.activity.HtmlActivity;
-import com.cody.component.hybrid.data.HtmlViewData;
-import com.cody.component.util.ActivityUtil;
+import com.cody.component.hybrid.HtmlViewModel;
 
 
 /**
@@ -39,27 +36,27 @@ import com.cody.component.util.ActivityUtil;
  * JsWebViewClient
  */
 public class JsWebViewClient extends WebViewClient {
-    private HtmlViewData mViewData;
+    private HtmlViewModel mHtmlViewModel;
 
-    public JsWebViewClient(HtmlViewData viewData) {
-        mViewData = viewData;
+    public JsWebViewClient(HtmlViewModel htmlViewModel) {
+        mHtmlViewModel = htmlViewModel;
     }
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        return shouldOverrideUrl(view, url);
+        return mHtmlViewModel.shouldOverrideUrl(url);
     }
 
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        mViewData.setUrl(url);
+        mHtmlViewModel.onPageStarted(url);
     }
 
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
-        mViewData.setUrl(url);
+        mHtmlViewModel.onPageFinished(url);
         JsLifeCycle.onStart(view);
     }
 
@@ -90,9 +87,7 @@ public class JsWebViewClient extends WebViewClient {
 
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-        if (!mViewData.isIgnoreError()) {
-            mViewData.failedView(failingUrl + ":" + description);
-        }
+        mHtmlViewModel.onPageFailure(failingUrl + ":" + description);
     }
 
     @Override
@@ -113,9 +108,7 @@ public class JsWebViewClient extends WebViewClient {
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
         super.onReceivedSslError(view, handler, error);
-        if (!mViewData.isIgnoreError()) {
-            mViewData.failedView(view.getUrl() + ":\n" + error.toString());
-        }
+        mHtmlViewModel.onPageFailure(view.getUrl() + ":\n" + error.toString());
     }
 
     @Override
@@ -151,33 +144,13 @@ public class JsWebViewClient extends WebViewClient {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-        return shouldOverrideUrl(view, request.getUrl().toString());
+        return mHtmlViewModel.shouldOverrideUrl(request.getUrl().toString());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
         super.onReceivedError(view, request, error);
-        if (!mViewData.isIgnoreError()) {
-            mViewData.failedView(request.getUrl() + ":\n" + error.getDescription().toString());
-        }
-    }
-
-    private boolean shouldOverrideUrl(WebView view, String url) {
-        if (TextUtils.isEmpty(url)) return true;
-        if (url.contains("tel:") || url.contains("phone:")) {
-            url = url.replace("phone:", "").replace("tel:", "");
-            ActivityUtil.openDialPage(url);
-            return true;
-        }
-        //从内部链接跳到外部链接打开新的html页面
-        if (UrlUtil.isInnerLink(mViewData.getUrl().getValue())
-                && !UrlUtil.isInnerLink(url)) {
-            HtmlActivity.startHtml(mViewData.getHeader().getValue(), url);
-        } else {
-            mViewData.setUrl(url);
-            view.loadUrl(url);
-        }
-        return true;
+        mHtmlViewModel.onPageFailure(request.getUrl() + ":\n" + error.getDescription().toString());
     }
 }

@@ -24,9 +24,9 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
+import com.cody.component.hybrid.HtmlViewModel;
 import com.cody.component.hybrid.JsBridge;
 import com.cody.component.hybrid.R;
-import com.cody.component.hybrid.data.HtmlViewData;
 import com.cody.component.util.ActivityUtil;
 import com.cody.component.util.LogUtil;
 
@@ -35,14 +35,14 @@ import com.cody.component.util.LogUtil;
  * JsWebChromeClient
  */
 public class JsWebChromeClient extends WebChromeClient {
-    private HtmlViewData mViewData;
+    private HtmlViewModel mHtmlViewModel;
     private View mCustomView;
     private WebView mWebView;
     private OpenFileChooserCallBack mOpenFileChooserCallBack;
 
-    public JsWebChromeClient(WebView webView, HtmlViewData viewData, OpenFileChooserCallBack chooserCallBack) {
+    public JsWebChromeClient(WebView webView, HtmlViewModel htmlViewModel, OpenFileChooserCallBack chooserCallBack) {
         mWebView = webView;
-        mViewData = viewData;
+        mHtmlViewModel = htmlViewModel;
         mOpenFileChooserCallBack = chooserCallBack;
     }
 
@@ -70,7 +70,7 @@ public class JsWebChromeClient extends WebChromeClient {
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
         super.onProgressChanged(view, newProgress);
-        mViewData.setProgress(newProgress);
+        mHtmlViewModel.getFriendlyViewData().setProgress(newProgress);
     }
 
     @Override

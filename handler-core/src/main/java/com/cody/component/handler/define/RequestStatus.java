@@ -116,7 +116,7 @@ public class RequestStatus {
         return mStatus == Status.EMPTY;
     }
 
-    public boolean isIniting() {
+    public boolean isInitializing() {
         return mOperation == Operation.INIT && isLoading();
     }
 

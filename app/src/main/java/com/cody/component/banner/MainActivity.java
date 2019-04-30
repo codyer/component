@@ -34,6 +34,7 @@ import com.cody.component.data.remote.CatHttpBin$DataSource;
 import com.cody.component.databinding.ActivityMainBannerBinding;
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.hybrid.activity.HtmlActivity;
+import com.cody.component.hybrid.core.UrlUtil;
 import com.cody.component.image.certificate.camera.CameraActivity;
 import com.cody.component.image.scan.ScanActivity;
 import com.cody.component.list.ListTestActivity;
@@ -161,7 +162,11 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
         }
         String result = ScanActivity.getScanResult(requestCode, resultCode, data);
         if (!TextUtils.isEmpty(result)) {
-            showToast(result);
+            if (UrlUtil.isHttpUrl(result)) {
+                HtmlActivity.startHtml("扫码打开", result);
+            }else {
+                showToast(result);
+            }
         }
     }
 

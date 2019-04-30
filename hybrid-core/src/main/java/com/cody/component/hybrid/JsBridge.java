@@ -215,7 +215,7 @@ public class JsBridge {
      * 构建已经注册的处理类
      */
     @SuppressLint("SetJavaScriptEnabled")
-    public void build(WebView webView, HtmlViewData viewData) {
+    public void build(WebView webView, HtmlViewModel viewModel) {
         if (webView == null) {
             throw new NullPointerException("webView is null,can't build js handler!");
         }
@@ -243,11 +243,11 @@ public class JsBridge {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        if (viewData == null) {
-            viewData = new HtmlViewData();
+        if (viewModel == null) {
+            viewModel = new HtmlViewModel(new HtmlViewData());
         }
-        webView.setWebViewClient(new JsWebViewClient(viewData));
-        webView.setWebChromeClient(new JsWebChromeClient(webView, viewData, mFileChooserCallBack));
+        webView.setWebViewClient(new JsWebViewClient(viewModel));
+        webView.setWebChromeClient(new JsWebChromeClient(webView, viewModel, mFileChooserCallBack));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG);
         }

@@ -71,9 +71,8 @@ public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     protected VD getViewData() {
-        return (VD) getFriendlyViewModel().getFriendlyViewData();
+        return getFriendlyViewModel().getFriendlyViewData();
     }
 
     @Override

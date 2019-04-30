@@ -58,7 +58,7 @@
             android:paddingBottom="@dimen/dimen_tiniest"
             android:text="@string/ui_str_ignore"
             android:textColor="@color/uiColorSecondaryText"
-            android:visibility="@{viewData.visibility?View.VISIBLE:View.GONE}" />
+            android:visibility="@{(viewData.visibility &amp;&amp; !viewData.loading)?View.VISIBLE:View.GONE}" />
 
         <ProgressBar
             android:id="@+id/progressBar"

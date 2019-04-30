@@ -110,13 +110,10 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
                 // TODO syncCookie
 //                .syncCookie(this, mHtmlViewData.getUrl().getValue(), Repository.getLocalMap(BaseLocalKey.X_TOKEN))
                 .setFileChooseCallBack(this)
-                .build(getBinding().webView, getViewData());
+                .build(getBinding().webView, getFriendlyViewModel());
 
         if (null != savedInstanceState) {
             getBinding().webView.restoreState(savedInstanceState);
-        } else {
-            getViewData().setProgress(0);
-            getBinding().webView.loadUrl(getViewData().getUrl().getValue());
         }
 
         if (getActivity() instanceof OnUrlListener) {
@@ -131,7 +128,9 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
         switch (action.getAction()) {
             case ViewAction.DEFAULT:
                 getViewData().setProgress(0);
-                getBinding().webView.loadUrl(getViewData().getUrl().getValue());
+                if (getFriendlyViewModel().getRequestStatus().isInitializing()) {
+                    getBinding().webView.loadUrl(getViewData().getUrl().getValue());
+                }
                 break;
         }
     }

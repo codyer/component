@@ -76,7 +76,7 @@ public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyV
     /**
      * 执行一个操作
      */
-    private void setOperation(RequestStatus requestStatus) {
+    protected void setOperation(RequestStatus requestStatus) {
         mRequestStatusLive.setValue(mRequestStatus = requestStatus);
         OnRequestData(requestStatus.getOperation(), this);
     }

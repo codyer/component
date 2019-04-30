@@ -174,11 +174,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView, Dialog
      */
     private void observeAction(IViewModel viewModel) {
         if (viewModel == null) return;
-        viewModel.getActionLiveData().observe(this, new Observer<ViewAction>() {
-            @Override
-            public void onChanged(@Nullable ViewAction action) {
-                onExecuteAction(action);
-            }
-        });
+        viewModel.getActionLiveData().observe(this, action -> onExecuteAction(action));
     }
 }

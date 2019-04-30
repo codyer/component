@@ -61,6 +61,5 @@ public class HtmlViewData extends MaskViewData {
 
     public void setProgress(final int progress) {
         mProgress.setValue(progress);
-        getLoading().setValue(progress < MAX_PROGRESS);
     }
 }
