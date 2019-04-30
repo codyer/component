@@ -30,6 +30,15 @@ public class MaskViewData extends ViewData {
     private final StringLiveData mMessage = new StringLiveData("");
     final private BooleanLiveData mLoading = new BooleanLiveData(true);
     private final IntegerLiveData mImageId = new IntegerLiveData(R.drawable.ic_no_content);
+    private int loadingResId = R.drawable.ic_loading_gif;
+
+    public int getLoadingResId() {
+        return loadingResId;
+    }
+
+    public void setLoadingResId(final int loadingResId) {
+        this.loadingResId = loadingResId;
+    }
 
     public void hideMaskView() {
         mVisibility.postValue(false);

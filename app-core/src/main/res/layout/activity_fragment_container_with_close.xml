@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：activity_fragment_container_with_close.xml  模块：app-core  项目：component
+  ~ 当前修改时间：2019年04月30日 13:01:00
+  ~ 上次修改时间：2019年04月26日 22:46:37
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：app-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:onClick="@{onClickListener::onClick}"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            tools:background="@color/uiColorPrimary"
+            tools:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@null"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:paddingLeft="@dimen/dimen_tiny"
+                    android:paddingRight="@dimen/dimen_tiny"
+                    android:src="@drawable/ic_back" />
+
+                <ImageView
+                    android:id="@+id/quickClose"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@null"
+                    android:onClick="@{onClickListener::onClick}"
+                    android:paddingStart="@dimen/dimen_super_tiny"
+                    android:paddingEnd="@dimen/dimen_tiny"
+                    android:src="@drawable/ic_close" />
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dimen_normal"
+                    android:gravity="center_vertical"
+                    tools:layout_height="wrap_content"
+                    tools:text="SecondActivity" />
+
+            </LinearLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".activity.FragmentContainerActivity" />
+
+    </LinearLayout>
+</layout>

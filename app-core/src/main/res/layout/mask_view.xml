@@ -11,6 +11,7 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -38,16 +39,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:onClick="@{onClickListener::onClick}"
             android:orientation="vertical">
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleLarge"
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:maxHeight="100dp"
+                android:minHeight="50dp"
                 android:visibility="@{viewData.loading?View.VISIBLE:View.GONE}"
-                tools:visibility="visible" />
+                bind:gifSrc="@{viewData.loadingResId}" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -61,7 +64,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dimen_normal"
+                android:ellipsize="end"
                 android:gravity="center"
+                android:maxLines="5"
                 android:text="@{viewData.message}"
                 android:visibility="@{viewData.loading?View.GONE:View.VISIBLE}"
                 tools:text="@string/ui_str_bad_network_view_tip" />

@@ -24,10 +24,15 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 
 import com.cody.component.app.fragment.SimpleBindFragment;
+import com.cody.component.app.fragment.SingleBindFragment;
+import com.cody.component.handler.define.ViewAction;
 import com.cody.component.handler.interfaces.Refreshable;
 import com.cody.component.handler.interfaces.Scrollable;
+import com.cody.component.hybrid.HtmlViewModel;
 import com.cody.component.hybrid.JsBridge;
+import com.cody.component.hybrid.OnUrlListener;
 import com.cody.component.hybrid.R;
+import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.hybrid.core.JsWebChromeClient;
 import com.cody.component.hybrid.data.HtmlViewData;
 import com.cody.component.hybrid.databinding.FragmentHtmlBinding;
@@ -45,10 +50,9 @@ import androidx.annotation.NonNull;
 /**
  * Html 页面具体实现
  */
-public class HtmlFragment extends SimpleBindFragment<FragmentHtmlBinding, HtmlViewData>
+public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlViewModel, HtmlViewData>
         implements OnImageViewListener, JsWebChromeClient.OpenFileChooserCallBack, Scrollable, Refreshable {
     private static final String HTML_URL = "html_url";
-    private HtmlViewData mHtmlViewData;
     private ImageViewDelegate mImageViewDelegate;
     private ValueCallback<Uri[]> mFilePathCallback;
     private ValueCallback<Uri> mUploadMsg;
@@ -71,6 +75,32 @@ public class HtmlFragment extends SimpleBindFragment<FragmentHtmlBinding, HtmlVi
     }
 
     @Override
+    public HtmlViewModel buildFriendlyViewModel() {
+        HtmlViewData htmlViewData = new HtmlViewData();
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            String url = bundle.getString(HTML_URL);
+            if (url != null) {
+                htmlViewData.setUrl(url);
+            } else {
+                finish();
+            }
+        }
+        return new HtmlViewModel(htmlViewData);
+    }
+
+    @Override
+    public HtmlViewData getViewData() {
+        return super.getViewData();
+    }
+
+    @NonNull
+    @Override
+    public Class<HtmlViewModel> getVMClass() {
+        return HtmlViewModel.class;
+    }
+
+    @Override
     protected void onBaseReady(final Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
         if (!isBound()) return;
@@ -88,23 +118,22 @@ public class HtmlFragment extends SimpleBindFragment<FragmentHtmlBinding, HtmlVi
             getViewData().setProgress(0);
             getBinding().webView.loadUrl(getViewData().getUrl().getValue());
         }
+
+        if (getActivity() instanceof OnUrlListener) {
+            getViewData().getUrl().observe(this, url -> ((OnUrlListener) getActivity()).onUrlChange(canGoBack()));
+        }
     }
 
     @Override
-    protected HtmlViewData getViewData() {
-        if (mHtmlViewData != null) return mHtmlViewData;
-        mHtmlViewData = new HtmlViewData();
-
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            String url = bundle.getString(HTML_URL);
-            if (url != null) {
-                mHtmlViewData.setUrl(url);
-            } else {
-                finish();
-            }
+    protected void onExecuteAction(final ViewAction action) {
+        super.onExecuteAction(action);
+        if (action == null) return;
+        switch (action.getAction()) {
+            case ViewAction.DEFAULT:
+                getViewData().setProgress(0);
+                getBinding().webView.loadUrl(getViewData().getUrl().getValue());
+                break;
         }
-        return mHtmlViewData;
     }
 
     @Override
@@ -208,11 +237,10 @@ public class HtmlFragment extends SimpleBindFragment<FragmentHtmlBinding, HtmlVi
      */
     @Override
     public void onClick(View v) {
-        int i = v.getId();
-        if (i == R.id.refresh) {
-            refresh();
-        } else if (i == R.id.ignore) {
+        super.onClick(v);
+        if (v.getId() == R.id.ignore) {
             getViewData().setIgnoreError(true);
+            getViewData().hideMaskView();
         }
     }
 
@@ -236,6 +264,10 @@ public class HtmlFragment extends SimpleBindFragment<FragmentHtmlBinding, HtmlVi
     }
 
     public boolean canGoBack() {
+        return getBinding().webView.canGoBack();
+    }
+
+    public boolean goBack() {
         if (getBinding().webView.canGoBack()) {
             getBinding().webView.goBack();
             return true;
@@ -246,12 +278,5 @@ public class HtmlFragment extends SimpleBindFragment<FragmentHtmlBinding, HtmlVi
     @Override
     public void scrollToTop() {
         getBinding().webView.scrollTo(0, 0);
-    }
-
-    @Override
-    public void refresh() {
-        getViewData().setError(false);
-        getViewData().setProgress(0);
-        getBinding().webView.loadUrl(getViewData().getUrl().getValue());
     }
 }

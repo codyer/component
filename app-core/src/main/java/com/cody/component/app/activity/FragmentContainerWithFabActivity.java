@@ -24,6 +24,9 @@ import com.cody.component.handler.interfaces.Scrollable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+/**
+ * 包含返回键和头部和底部FAB按钮
+ */
 public abstract class FragmentContainerWithFabActivity extends EmptyBindActivity<ActivityFragmentContainerWithFabBinding> implements Scrollable {
     public abstract Fragment getFragment();
 
@@ -38,6 +41,22 @@ public abstract class FragmentContainerWithFabActivity extends EmptyBindActivity
 
     protected boolean isShowTitle() {
         return true;
+    }
+
+    @Override
+    public void setTitle(final int title) {
+        super.setTitle(title);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
+    }
+
+    @Override
+    public void setTitle(final CharSequence title) {
+        super.setTitle(title);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(title);
+        }
     }
 
     @Override

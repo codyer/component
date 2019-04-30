@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.cody.component.app.activity.FragmentContainerActivity;
+import com.cody.component.app.activity.FragmentContainerWithCloseActivity;
+import com.cody.component.hybrid.OnUrlListener;
 import com.cody.component.hybrid.R;
 import com.cody.component.hybrid.core.UrlUtil;
 import com.cody.component.hybrid.data.HtmlConfig;
@@ -37,7 +39,7 @@ import androidx.fragment.app.Fragment;
 /**
  * Html 页面
  */
-public class HtmlActivity extends FragmentContainerActivity {
+public class HtmlActivity extends FragmentContainerWithCloseActivity implements OnUrlListener {
     public static final String HTML_WITH_CONFIG = "html_with_config";
     private HtmlFragment mHtmlFragment;
     private static Boolean isExit = false;
@@ -84,7 +86,7 @@ public class HtmlActivity extends FragmentContainerActivity {
                 mIsRoot = config.isRoot();
                 mHtmlFragment = HtmlFragment.getInstance(config.getUrl());
                 if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(config.getTitle());
+                    setTitle(config.getTitle());
                     getSupportActionBar().setSubtitle(config.getDescription());
                     if (!TextUtils.isEmpty(config.getUrl())) {
                         if (!UrlUtil.isInnerLink(config.getUrl()) || !TextUtils.isEmpty(config.getTitle())) {
@@ -100,6 +102,11 @@ public class HtmlActivity extends FragmentContainerActivity {
             }
         }
         return mHtmlFragment;
+    }
+
+    @Override
+    public void onUrlChange(boolean canGoBack) {
+        getQuickClose().setValue(canGoBack);
     }
 
     @Override
@@ -119,13 +126,22 @@ public class HtmlActivity extends FragmentContainerActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             if (mHtmlFragment.canGoBack()) {
-                return true;
+                return mHtmlFragment.goBack();
             }
         } else if (item.getItemId() == R.id.action_share) {
             showToast("share");
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mHtmlFragment.canGoBack()) {
+            mHtmlFragment.goBack();
+            return;
+        }
+        super.onBackPressed();
     }
 
     @Override
@@ -142,7 +158,7 @@ public class HtmlActivity extends FragmentContainerActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == android.view.KeyEvent.KEYCODE_BACK) {
             if (mHtmlFragment.canGoBack()) {
-                return true;
+                return mHtmlFragment.goBack();
             } else if (mIsRoot) {
                 exitByDoubleClick(); //调用双击退出函数
                 return false;

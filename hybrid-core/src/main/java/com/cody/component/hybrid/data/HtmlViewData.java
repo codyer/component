@@ -12,9 +12,7 @@
 
 package com.cody.component.hybrid.data;
 
-import com.cody.component.hybrid.R;
-import com.cody.component.lib.BuildConfig;
-import com.cody.component.handler.data.ViewData;
+import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.livedata.BooleanLiveData;
 import com.cody.component.handler.livedata.IntegerLiveData;
 import com.cody.component.handler.livedata.StringLiveData;
@@ -23,53 +21,25 @@ import com.cody.component.handler.livedata.StringLiveData;
  * Created by xu.yi. on 2019/4/11.
  * html页面数据
  */
-public class HtmlViewData extends ViewData {
+public class HtmlViewData extends MaskViewData {
     private static final long serialVersionUID = -5654022087355170345L;
     public final static int MAX_PROGRESS = 100;
     private boolean mIgnoreError = false;
-    final private BooleanLiveData mLoading = new BooleanLiveData(true);
     final private BooleanLiveData mShowHeader = new BooleanLiveData(true);
-    final private BooleanLiveData mError = new BooleanLiveData(false);
-    final private BooleanLiveData mDebug = new BooleanLiveData(BuildConfig.DEBUG);
     final private IntegerLiveData mProgress = new IntegerLiveData(0);
     final private StringLiveData mHeader = new StringLiveData("");
-    final private StringLiveData mMessage = new StringLiveData("");
     final private StringLiveData mUrl = new StringLiveData("");
-    private int loadingResId = R.drawable.ic_loading_gif;
-
-    public int getLoadingResId() {
-        return loadingResId;
-    }
-
-    public void setLoadingResId(final int loadingResId) {
-        this.loadingResId = loadingResId;
-    }
-
-    public BooleanLiveData getLoading() {
-        return mLoading;
-    }
 
     public BooleanLiveData getShowHeader() {
         return mShowHeader;
     }
 
-    public void setError(boolean error) {
-        if (!mIgnoreError || !error) {
-            mError.setValue(error);
-        }
-    }
-
     public void setIgnoreError(final boolean ignoreError) {
         mIgnoreError = ignoreError;
-        setError(false);
     }
 
-    public BooleanLiveData getError() {
-        return mError;
-    }
-
-    public BooleanLiveData getDebug() {
-        return mDebug;
+    public boolean isIgnoreError() {
+        return mIgnoreError;
     }
 
     public IntegerLiveData getProgress() {
@@ -78,10 +48,6 @@ public class HtmlViewData extends ViewData {
 
     public StringLiveData getHeader() {
         return mHeader;
-    }
-
-    public StringLiveData getMessage() {
-        return mMessage;
     }
 
     public void setUrl(String url) {
@@ -95,6 +61,6 @@ public class HtmlViewData extends ViewData {
 
     public void setProgress(final int progress) {
         mProgress.setValue(progress);
-        mLoading.setValue(progress < MAX_PROGRESS);
+        getLoading().setValue(progress < MAX_PROGRESS);
     }
 }

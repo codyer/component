@@ -37,70 +37,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <LinearLayout
-            android:id="@+id/loadingMaskView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/uiColorPrimaryBackground"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="@{viewData.loading?View.VISIBLE:View.GONE}">
+        <include
+            layout="@layout/mask_view"
+            bind:onClickListener="@{onClickListener}"
+            bind:viewData="@{viewData}"
+            tools:visibility="gone" />
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:contentDescription="@null"
-                bind:gifSrc="@{viewData.loadingResId}" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/ui_str_loading" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/errorMaskView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/uiColorPrimaryBackground"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="@{viewData.error?View.VISIBLE:View.GONE}"
-            tools:visibility="visible">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_load_failed"
-                android:drawablePadding="@dimen/dimen_normal"
-                android:ellipsize="end"
-                android:maxLines="5"
-                android:text="@{viewData.message}"
-                tools:text="@string/ui_str_bad_network_view_tip" />
-
-            <Button
-                android:id="@+id/refresh"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_bigger"
-                android:onClick="@{onClickListener::onClick}"
-                android:text="@string/ui_str_refresh" />
-
-            <Button
-                android:id="@+id/ignore"
-                style="?android:attr/buttonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_bigger"
-                android:onClick="@{onClickListener::onClick}"
-                android:text="@string/ui_str_ignore"
-                android:visibility="@{viewData.debug?View.VISIBLE:View.GONE}"
-                tools:visibility="visible" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/ignore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/dimen_bigger"
+            android:background="@drawable/bg_secondary_round_touch_selector"
+            android:onClick="@{onClickListener::onClick}"
+            android:paddingLeft="@dimen/dimen_smaller"
+            android:paddingTop="@dimen/dimen_tiniest"
+            android:paddingRight="@dimen/dimen_smaller"
+            android:paddingBottom="@dimen/dimen_tiniest"
+            android:text="@string/ui_str_ignore"
+            android:textColor="@color/uiColorSecondaryText"
+            android:visibility="@{viewData.visibility?View.VISIBLE:View.GONE}" />
 
         <ProgressBar
             android:id="@+id/progressBar"
