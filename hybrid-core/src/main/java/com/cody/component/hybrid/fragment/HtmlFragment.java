@@ -25,6 +25,7 @@ import android.webkit.WebChromeClient;
 
 import com.cody.component.app.fragment.SimpleBindFragment;
 import com.cody.component.app.fragment.SingleBindFragment;
+import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.define.ViewAction;
 import com.cody.component.handler.interfaces.Refreshable;
 import com.cody.component.handler.interfaces.Scrollable;
@@ -118,6 +119,19 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
 
         if (getActivity() instanceof OnUrlListener) {
             getViewData().getUrl().observe(this, url -> ((OnUrlListener) getActivity()).onUrlChange(canGoBack()));
+        }
+    }
+
+    @Override
+    protected void onRequestStatus(RequestStatus requestStatus) {
+        if (requestStatus.isError()) {
+            getViewData().failedView(requestStatus.getMessage());
+        } else if (requestStatus.isEmpty()) {
+            getViewData().noContentView();
+        } else if (requestStatus.isLoading()) {
+            getViewData().startLoading();
+        } else {
+            getViewData().hideMaskView();
         }
     }
 
