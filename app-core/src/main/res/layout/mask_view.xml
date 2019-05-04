@@ -32,54 +32,48 @@
         android:layout_height="match_parent"
         android:visibility="@{viewData.visibility?View.VISIBLE:View.GONE}">
 
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:id="@+id/friendlyRetry"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:background="@color/uiColorPrimaryBackground"
+            android:gravity="center"
             android:onClick="@{onClickListener::onClick}"
+            android:orientation="vertical"
             android:visibility="@{viewData.loading?View.GONE:View.VISIBLE}">
 
-            <LinearLayout
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:onClick="@{onClickListener::onClick}"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:contentDescription="@null"
+                android:src="@{viewData.imageId}"
+                tools:src="@drawable/ic_load_failed" />
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@null"
-                    android:src="@{viewData.imageId}"
-                    tools:src="@drawable/ic_load_failed" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_normal"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="5"
+                android:text="@{viewData.message}"
+                tools:text="@string/ui_str_bad_network_view_tip" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dimen_normal"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:maxLines="5"
-                    android:text="@{viewData.message}"
-                    tools:text="@string/ui_str_bad_network_view_tip" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_normal"
+                android:gravity="center"
+                android:text="@string/ui_str_load_failed_click_to_reload" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/dimen_normal"
-                    android:gravity="center"
-                    android:text="@string/ui_str_load_failed_click_to_reload" />
-
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/loadingMaskView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/uiColorTransparentWhite"
+            android:background="@color/uiColorPrimaryBackground"
             android:gravity="center"
             android:orientation="vertical"
             android:visibility="@{viewData.loading?View.VISIBLE:View.GONE}">
