@@ -42,6 +42,7 @@ public class MaskViewData extends ViewData {
 
     public void hideMaskView() {
         mVisibility.postValue(false);
+        mLoading.postValue(false);
     }
 
     public void noContentView() {
