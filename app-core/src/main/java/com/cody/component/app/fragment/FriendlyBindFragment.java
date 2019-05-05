@@ -77,12 +77,16 @@ public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends
 
     @Override
     public void retry() {
-        getFriendlyViewModel().retry();
+        if (isAdded()) {
+            getFriendlyViewModel().retry();
+        }
     }
 
     @Override
     public void refresh() {
-        getFriendlyViewModel().refresh();
+        if (isAdded()) {
+            getFriendlyViewModel().refresh();
+        }
     }
 
     @Override

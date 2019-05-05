@@ -135,7 +135,12 @@ public class BindingBanner extends FrameLayout {
         }
         a.recycle();
 
-        mRecyclerView = new RecyclerView(context);
+        mRecyclerView = new RecyclerView(context){
+            @Override
+            public boolean canScrollHorizontally(final int direction) {
+                return true;//解决滑动冲突 https://www.jianshu.com/p/43befa4224c9
+            }
+        };
         mLinearLayout = new LinearLayout(context);
 
         new PagerSnapHelper().attachToRecyclerView(mRecyclerView);

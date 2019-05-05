@@ -44,9 +44,13 @@ public class DataBindingAdapterDefines {
     @BindingAdapter({"gifSrc"})
     public static void setGifSrc(ImageView view, int gif) {
         RequestOptions options = new RequestOptions()
-                .centerCrop()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .priority(Priority.HIGH);
+        if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
+            options = options.fitCenter();
+        } else {
+            options = options.centerCrop();
+        }
         Glide.with(view.getContext()).asGif().load(gif).apply(options).into(view);
     }
 
@@ -54,12 +58,16 @@ public class DataBindingAdapterDefines {
     public static void setRoundImageUrl(ImageView view, String roundImageUrl, Drawable error, Drawable placeholder) {
         Context context = view.getContext();
         RequestOptions options = new RequestOptions()
-                .centerCrop()
                 .transform(new CircleCrop())
                 .placeholder(placeholder)
                 .error(error)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
+        if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
+            options = options.fitCenter();
+        } else {
+            options = options.centerCrop();
+        }
         if (!TextUtils.isEmpty(roundImageUrl) && !roundImageUrl.startsWith("http")) {
             Glide.with(context).load(roundImageUrl).apply(options).into(view);
             return;
@@ -74,11 +82,15 @@ public class DataBindingAdapterDefines {
     public static void setRectImageUrl(ImageView view, String rectImageUrl, Drawable error, Drawable placeholder) {
         Context context = view.getContext();
         RequestOptions options = new RequestOptions()
-                .centerCrop()
                 .placeholder(placeholder)
                 .error(error)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
+        if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
+            options = options.fitCenter();
+        } else {
+            options = options.centerCrop();
+        }
         if (!TextUtils.isEmpty(rectImageUrl) && !rectImageUrl.startsWith("http")) {
             Glide.with(context).load(rectImageUrl).apply(options).into(view);
             return;
