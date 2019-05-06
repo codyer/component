@@ -25,6 +25,8 @@ import android.webkit.WebChromeClient;
 
 import com.cody.component.app.fragment.SimpleBindFragment;
 import com.cody.component.app.fragment.SingleBindFragment;
+import com.cody.component.app.local.BaseLocalKey;
+import com.cody.component.app.local.Repository;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.define.ViewAction;
 import com.cody.component.handler.interfaces.Refreshable;
@@ -109,7 +111,7 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
         JsBridge.getInstance()
                 .addJsHandler(JsHandlerCommonImpl.class.getSimpleName(), JsHandlerCommonImpl.class)
                 // TODO syncCookie
-//                .syncCookie(this, mHtmlViewData.getUrl().getValue(), Repository.getLocalMap(BaseLocalKey.X_TOKEN))
+                .syncCookie(getActivity(), getViewData().getUrl().getValue(), Repository.getLocalMap(BaseLocalKey.COOKIE))
                 .setFileChooseCallBack(this)
                 .build(getBinding().webView, getFriendlyViewModel());
 

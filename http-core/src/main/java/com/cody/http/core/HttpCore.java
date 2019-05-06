@@ -75,6 +75,14 @@ public class HttpCore {
         return this;
     }
 
+    /**
+     * 默认关闭log
+     */
+    public HttpCore withHttpHeader(Interceptor interceptor) {
+        RetrofitManagement.getInstance().addInterceptor(interceptor);
+        return this;
+    }
+
     public void done() {
         // do nothing
     }
