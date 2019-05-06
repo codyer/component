@@ -159,7 +159,7 @@ class RetrofitManagement {
                 .readTimeout(TimeConfig.READ_TIMEOUT, TimeUnit.MILLISECONDS)
                 .writeTimeout(TimeConfig.WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(TimeConfig.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
-                .addInterceptor(new HttpInterceptor())
+//                .addInterceptor(new HttpInterceptor())
                 .addInterceptor(new HeaderInterceptor())
                 .retryOnConnectionFailure(true);
         if (mInterceptors != null) {
