@@ -20,7 +20,7 @@ import java.io.Serializable;
  */
 public class HtmlConfig implements Serializable {
     private static final long serialVersionUID = 5525877332573712886L;
-    private String mTitle;
+    private String mTitle = "";
     private String mDescription;
     private String mUrl;
     private boolean mIsRoot;

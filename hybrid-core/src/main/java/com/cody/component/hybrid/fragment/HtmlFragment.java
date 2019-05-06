@@ -120,6 +120,7 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
         }
 
         if (getActivity() instanceof OnUrlListener) {
+            getViewData().getHeader().observe(this, title -> ((OnUrlListener) getActivity()).onTitleChange(title));
             getViewData().getUrl().observe(this, url -> ((OnUrlListener) getActivity()).onUrlChange(canGoBack()));
         }
     }

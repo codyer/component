@@ -68,6 +68,12 @@ public class JsWebChromeClient extends WebChromeClient {
     }
 
     @Override
+    public void onReceivedTitle(final WebView view, final String title) {
+        super.onReceivedTitle(view, title);
+        mHtmlViewModel.getFriendlyViewData().getHeader().setValue(title);
+    }
+
+    @Override
     public void onProgressChanged(WebView view, int newProgress) {
         super.onProgressChanged(view, newProgress);
         mHtmlViewModel.getFriendlyViewData().setProgress(newProgress);

@@ -105,6 +105,11 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     }
 
     @Override
+    public void onTitleChange(String title) {
+        setTitle(title);
+    }
+
+    @Override
     public void onUrlChange(boolean canGoBack) {
         getQuickClose().setValue(canGoBack);
     }

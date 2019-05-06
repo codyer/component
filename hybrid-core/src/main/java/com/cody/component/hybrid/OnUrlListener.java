@@ -17,5 +17,6 @@ package com.cody.component.hybrid;
  * url 变化监听
  */
 public interface OnUrlListener {
+    void onTitleChange(String title);
     void onUrlChange(boolean canGoBack);
 }
