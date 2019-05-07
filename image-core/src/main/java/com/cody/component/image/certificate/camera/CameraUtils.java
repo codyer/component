@@ -15,6 +15,10 @@ package com.cody.component.image.certificate.camera;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.view.Surface;
+import android.view.WindowManager;
+
+import com.isseiaoki.simplecropview.util.Logger;
 
 /**
  * Desc	 ${相机工具类}
@@ -56,5 +60,65 @@ public class CameraUtils {
 
     public static Camera getCamera() {
         return camera;
+    }
+
+    /**
+     * 适配相机旋转
+     */
+    public static int getCameraDisplayOrientation(Context context) {
+        Camera.CameraInfo info = new Camera.CameraInfo();
+        Camera.getCameraInfo(getDefaultCameraId(), info);
+        int rotation = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                degrees = 0;
+                break;
+            case Surface.ROTATION_90:
+                degrees = 90;
+                break;
+            case Surface.ROTATION_180:
+                degrees = 180;
+                break;
+            case Surface.ROTATION_270:
+                degrees = 270;
+                break;
+        }
+        int result;
+        //前置
+        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            result = (info.orientation + degrees) % 360;
+            result = (360 - result) % 360;
+        }
+        //后置
+        else {
+            result = (info.orientation - degrees + 360) % 360;
+        }
+        return result;
+    }
+
+    /**
+     * 获取摄像头ID
+     */
+    private static int getDefaultCameraId() {
+        int defaultId = -1;
+        int numberOfCameras = Camera.getNumberOfCameras();
+
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        for (int i = 0; i < numberOfCameras; i++) {
+            Camera.getCameraInfo(i, cameraInfo);
+            if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
+                defaultId = i;
+            }
+        }
+        if (defaultId == -1) {
+            if (numberOfCameras > 0) {
+                //没有后置摄像头
+                defaultId = 0;
+            } else {
+                Logger.e("没有摄像头");
+            }
+        }
+        return defaultId;
     }
 }

@@ -29,6 +29,7 @@
     <application>
         <activity
             android:name=".certificate.camera.CameraActivity"
+            android:configChanges="orientation|keyboard|layoutDirection|screenSize"
             android:screenOrientation="landscape"
             android:theme="@style/FullscreenTheme" />
         <activity

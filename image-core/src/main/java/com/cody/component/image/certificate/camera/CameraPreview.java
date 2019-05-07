@@ -13,17 +13,21 @@
 package com.cody.component.image.certificate.camera;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 
 import com.cody.component.util.CameraUtil;
 import com.cody.component.util.DisplayUtil;
+import com.isseiaoki.simplecropview.util.Logger;
 
 import java.io.IOException;
 import java.util.List;
@@ -87,15 +91,15 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             Camera.Size previewSize = CameraUtil.getInstance()
                     .getBestSize(parameters.getSupportedPreviewSizes(), previewRate, 800);
             parameters.setPreviewSize(previewSize.width, previewSize.height);
-
-            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                //竖屏拍照时，需要设置旋转90度，否者看到的相机预览方向和界面方向不相同
-                mCamera.setDisplayOrientation(90);
-                parameters.setRotation(90);
-            } else {
-                mCamera.setDisplayOrientation(0);
-                parameters.setRotation(0);
-            }
+            int degree = CameraUtils.getCameraDisplayOrientation(mContext);
+//            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            //竖屏拍照时，需要设置旋转90度，否者看到的相机预览方向和界面方向不相同
+            mCamera.setDisplayOrientation(degree);
+            parameters.setRotation(degree);
+//            } else {
+//                mCamera.setDisplayOrientation(0);
+//                parameters.setRotation(0);
+//            }
 
             CameraUtil.getInstance().printSupportFocusMode(parameters);
             List<String> focusModes = parameters.getSupportedFocusModes();

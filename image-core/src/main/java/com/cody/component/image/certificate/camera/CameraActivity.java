@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 
 
 /**
@@ -106,6 +108,12 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         activity.startActivityForResult(intent, REQUEST_CODE);
     }
 
+    public static void openCameraActivity(Fragment fragment, int type) {
+        Intent intent = new Intent(fragment.getContext(), CameraActivity.class);
+        intent.putExtra(TAKE_TYPE, type);
+        fragment.startActivityForResult(intent, REQUEST_CODE);
+    }
+
     /**
      * 获取图片路径
      */
@@ -118,6 +126,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void onBaseReady(Bundle savedInstanceState) {
+        mType = getIntent().getIntExtra(TAKE_TYPE, 0);
         /*动态请求需要的权限*/
         //权限请求码
         final int PERMISSION_CODE_FIRST = 0x13;
@@ -129,6 +138,21 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
 
         mImageViewDelegate = new ImageViewDelegate(this);
         mImageViewDelegate.setCanDelete(false);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mType = TYPE_BUSINESS_LICENSE_LANDSCAPE;
+            init();
+            Toast.makeText(getApplicationContext(), "横屏", Toast.LENGTH_SHORT).show();
+        } else {
+            mType = TYPE_BUSINESS_LICENSE_PORTRAIT;
+            Toast.makeText(getApplicationContext(), "竖屏", Toast.LENGTH_SHORT).show();
+            init();
+        }
     }
 
     /**
@@ -164,9 +188,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void init() {
-        mType = getIntent().getIntExtra(TAKE_TYPE, 0);
-        if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT || mType == TYPE_BUSINESS_LICENSE_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         }
@@ -263,10 +286,9 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     public void onPickImage(int id, List<ImageItem> images) {
         if (images == null || images.size() == 0) return;
         if (id == R.id.action_gallery) {
-            mCropBitmap = ImageUtils.getBitmap(images.get(0).path,800,800);
-            if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
-                mCropBitmap = ImageUtils.rotateBitmapByDegree(mCropBitmap, 90);
-            }
+            mCropBitmap = ImageUtils.getBitmap(images.get(0).path, 800, 800);
+            int degree = CameraUtils.getCameraDisplayOrientation(this);
+            mCropBitmap = ImageUtils.rotateBitmapByDegree(mCropBitmap, degree);
             /*设置成手动裁剪模式*/
             runOnUiThread(() -> {
                 //将手动裁剪区域设置成与扫描框一样大
@@ -320,9 +342,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                 final int w = size.width;
                 final int h = size.height;
                 Bitmap bitmap = ImageUtils.getBitmapFromByte(bytes, w, h);
-                if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
-                    bitmap = ImageUtils.rotateBitmapByDegree(bitmap, 90);
-                }
+                int degree = CameraUtils.getCameraDisplayOrientation(this);
+                bitmap = ImageUtils.rotateBitmapByDegree(bitmap, degree);
                 cropImage(bitmap);
             }).start();
         });
