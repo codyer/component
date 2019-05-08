@@ -12,11 +12,15 @@
 
 package com.cody.component.handler.livedata;
 
+import java.io.Serializable;
+
 /**
  * Created by xu.yi. on 2019/4/15.
  * component
  */
-public class IntegerLiveData extends SafeMutableLiveData<Integer> {
+public class IntegerLiveData extends SafeMutableLiveData<Integer> implements Serializable {
+    private static final long serialVersionUID = 3568666499604236628L;
+
     public IntegerLiveData(final Integer value) {
         super(value);
     }

@@ -12,11 +12,15 @@
 
 package com.cody.component.handler.livedata;
 
+import java.io.Serializable;
+
 /**
  * Created by xu.yi. on 2019/4/15.
  * component
  */
-public class BooleanLiveData extends SafeMutableLiveData<Boolean> {
+public class BooleanLiveData extends SafeMutableLiveData<Boolean> implements Serializable {
+    private static final long serialVersionUID = -1433487897818877363L;
+
     public BooleanLiveData(final Boolean value) {
         super(value);
     }

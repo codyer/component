@@ -141,16 +141,14 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             mType = TYPE_BUSINESS_LICENSE_LANDSCAPE;
             init();
-            Toast.makeText(getApplicationContext(), "横屏", Toast.LENGTH_SHORT).show();
         } else {
             mType = TYPE_BUSINESS_LICENSE_PORTRAIT;
-            Toast.makeText(getApplicationContext(), "竖屏", Toast.LENGTH_SHORT).show();
             init();
         }
     }

@@ -14,11 +14,15 @@ package com.cody.component.handler.livedata;
 
 import androidx.lifecycle.MutableLiveData;
 
+import java.io.Serializable;
+
 /**
  * Created by xu.yi. on 2019/4/11.
  * 防止空指针
  */
-public class SafeMutableLiveData<T> extends MutableLiveData<T> {
+public class SafeMutableLiveData<T> extends MutableLiveData<T> implements Serializable {
+    private static final long serialVersionUID = -9215514811144283329L;
+
     public SafeMutableLiveData(final T value) {
         super(value);
     }
