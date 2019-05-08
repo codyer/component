@@ -43,6 +43,10 @@ public abstract class BaseRemoteDataSource {
         return RetrofitManagement.getInstance().getService(clz);
     }
 
+    protected <T> T getService(String url, Class<T> clz) {
+        return RetrofitManagement.getInstance().getService(url, clz);
+    }
+
     public void clear() {
         if (mCompositeDisposable != null) {
             mCompositeDisposable.clear();

@@ -65,6 +65,7 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
     private static final String BASE_DATA_SOURCE_CLASS = "com.cody.http.core.BaseRemoteDataSource";
     private static final String CALL_BACK_CLASS = "com.cody.http.core.callback.RequestCallback";
     private static final String CALL_BACK = "callback";
+    private static final String BASE_URL = "baseUrl";
 
     private static final String GEN_PKG = ".generate";
     private static final String INTERFACE_NAME_PREFIX = "I";
@@ -195,10 +196,15 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc(infoBean.getDomainBean().getHost())
                 .addJavadoc(FILE_DESCRIPTION);
+        boolean noHost = infoBean.getDomainBean().getHost().isEmpty();
         for (MethodBean method : infoBean.getMethodBeans()) {
             TypeName parameterType = getCallBackTypeName(method);
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(method.getName())
                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
+            if (noHost) {
+                TypeName typeName = ClassName.get(String.class);
+                methodBuilder = methodBuilder.addParameter(typeName, BASE_URL);
+            }
             for (ParameterBean parameter : method.getParameters()) {
                 methodBuilder = methodBuilder.addParameter(parameter.getType(), parameter.getName());
             }
@@ -233,13 +239,18 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
             builder.addMethod(MethodSpec.constructorBuilder()
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(viewModelTypeName, "baseViewModel")
-                    .addStatement("super($N);", "baseViewModel")
+                    .addStatement("super($N)", "baseViewModel")
                     .build());
         }
+        boolean noHost = infoBean.getDomainBean().getHost().isEmpty();
         for (MethodBean method : infoBean.getMethodBeans()) {
             TypeName callBackTypeName = getCallBackTypeName(method);
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(method.getName())
                     .addModifiers(Modifier.PUBLIC);
+            if (noHost) {
+                TypeName typeName = ClassName.get(String.class);
+                methodBuilder = methodBuilder.addParameter(typeName, BASE_URL);
+            }
             for (ParameterBean parameter : method.getParameters()) {
                 methodBuilder = methodBuilder.addParameter(parameter.getType(), parameter.getName());
             }
@@ -247,16 +258,18 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
             TypeName serviceTypeName = ClassName.get(infoBean.getPackageName(), infoBean.getClassName());
             methodBuilder.addParameter(callBackTypeName, CALL_BACK)
                     .addAnnotation(Override.class)
-                    .addCode("$N(getService($T.class)."/*execute,service*/, methodExecute, serviceTypeName)
+                    .addCode(noHost ?
+                            "$N(getService(" + BASE_URL + ", $T.class)." :
+                            "$N(getService($T.class)."/*execute,service*/, methodExecute, serviceTypeName)
                     .addCode("$L("/*invoke*/, method.getName());
             int i = 0;
             if (method.getParameters() != null && method.getParameters().size() > 0) {
                 for (; i < method.getParameters().size() - 1; i++) {
                     methodBuilder.addCode("$N,"/**/, method.getParameters().get(i).getName());
                 }
-                methodBuilder.addCode("$N),$N);", method.getParameters().get(i).getName(), CALL_BACK);
+                methodBuilder.addCode("$N) ,$N);\n", method.getParameters().get(i).getName(), CALL_BACK);
             } else {
-                methodBuilder.addCode("),$N);", CALL_BACK);
+                methodBuilder.addCode(") ,$N);\n", CALL_BACK);
             }
             methodBuilder.returns(TypeName.VOID);
             builder.addMethod(methodBuilder.build());

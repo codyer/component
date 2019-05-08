@@ -101,28 +101,13 @@ class RetrofitManagement {
         });
     }
 
-    @SuppressWarnings("unchecked")
     <T> T getService(Class<T> clz) {
         Domain domain = clz.getAnnotation(Domain.class);
         if (domain == null || !URLUtil.isNetworkUrl(domain.value())) {
             throw new DomainInvalidException();
         }
         String baseUrl = domain.value();
-        String key = baseUrl + clz.getCanonicalName();
-        T value;
-        if (mRetrofitServices.containsKey(key)) {
-            Object obj = mRetrofitServices.get(key);
-            if (obj == null) {
-                value = createRetrofit(baseUrl).create(clz);
-                mRetrofitServices.put(key, value);
-            } else {
-                value = (T) obj;
-            }
-        } else {
-            value = createRetrofit(baseUrl).create(clz);
-            mRetrofitServices.put(key, value);
-        }
-        return value;
+        return getService(baseUrl, clz);
     }
 
     public void setLog(boolean log) {
@@ -154,37 +139,23 @@ class RetrofitManagement {
         mRetrofitServices.clear();
     }
 
-    public <T> T getService(String url, Class<T> clz) {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .readTimeout(TimeConfig.READ_TIMEOUT, TimeUnit.MILLISECONDS)
-                .writeTimeout(TimeConfig.WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
-                .connectTimeout(TimeConfig.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
-//                .addInterceptor(new HttpInterceptor())
-//                .addInterceptor(new HeaderInterceptor())
-                .retryOnConnectionFailure(true);
-        if (mInterceptors != null) {
-            for (Interceptor interceptor : mInterceptors) {
-                builder.addInterceptor(interceptor);
+    @SuppressWarnings("unchecked")
+    <T> T getService(String baseUrl, Class<T> clz) {
+        String key = baseUrl + clz.getCanonicalName();
+        T value;
+        if (mRetrofitServices.containsKey(key)) {
+            Object obj = mRetrofitServices.get(key);
+            if (obj == null) {
+                value = createRetrofit(baseUrl).create(clz);
+                mRetrofitServices.put(key, value);
+            } else {
+                value = (T) obj;
             }
+        } else {
+            value = createRetrofit(baseUrl).create(clz);
+            mRetrofitServices.put(key, value);
         }
-        if (mHttpCatInterceptor != null) {
-            builder.addInterceptor(mHttpCatInterceptor);
-        }
-        if (mLog) {
-            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-            builder.addInterceptor(httpLoggingInterceptor);
-        }
-        OkHttpClient client = builder.build();
-        /*Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();*/
-        return new Retrofit.Builder()
-                .client(client)
-                .baseUrl(url)
-//                .addConverterFactory(GsonConverterFactory.create(gson))
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build().create(clz);
+        return value;
     }
 
     private Retrofit createRetrofit(String baseUrl) {
