@@ -154,6 +154,39 @@ class RetrofitManagement {
         mRetrofitServices.clear();
     }
 
+    public <T> T getService(String url, Class<T> clz) {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+                .readTimeout(TimeConfig.READ_TIMEOUT, TimeUnit.MILLISECONDS)
+                .writeTimeout(TimeConfig.WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
+                .connectTimeout(TimeConfig.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
+//                .addInterceptor(new HttpInterceptor())
+//                .addInterceptor(new HeaderInterceptor())
+                .retryOnConnectionFailure(true);
+        if (mInterceptors != null) {
+            for (Interceptor interceptor : mInterceptors) {
+                builder.addInterceptor(interceptor);
+            }
+        }
+        if (mHttpCatInterceptor != null) {
+            builder.addInterceptor(mHttpCatInterceptor);
+        }
+        if (mLog) {
+            HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
+            httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(httpLoggingInterceptor);
+        }
+        OkHttpClient client = builder.build();
+        /*Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();*/
+        return new Retrofit.Builder()
+                .client(client)
+                .baseUrl(url)
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build().create(clz);
+    }
+
     private Retrofit createRetrofit(String baseUrl) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .readTimeout(TimeConfig.READ_TIMEOUT, TimeUnit.MILLISECONDS)

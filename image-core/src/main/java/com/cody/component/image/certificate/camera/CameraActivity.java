@@ -117,6 +117,17 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     /**
      * 获取图片路径
      */
+    public static boolean getImageTypeVertical(Intent data) {
+        if (data != null) {
+            int type = data.getIntExtra(TAKE_TYPE, -1);
+            return type == TYPE_BUSINESS_LICENSE_PORTRAIT;
+        }
+        return false;
+    }
+
+    /**
+     * 获取图片路径
+     */
     public static String getImagePath(Intent data) {
         if (data != null) {
             return data.getStringExtra(IMAGE_PATH);
@@ -364,15 +375,16 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             right = (float) mContainerView.getRight() / (float) mCameraPreview.getWidth();
             bottom = (float) mCropView.getBottom() / (float) mCameraPreview.getHeight();
         }
-
-        //裁剪及保存到文件
-        mCropBitmap = Bitmap.createBitmap(bitmap,
-                (int) (left * (float) bitmap.getWidth()),
-                (int) (top * (float) bitmap.getHeight()),
-                (int) ((right - left) * (float) bitmap.getWidth()),
-                (int) ((bottom - top) * (float) bitmap.getHeight()));
-
-        /*设置成手动裁剪模式*/
+        try {
+            //裁剪及保存到文件
+            mCropBitmap = Bitmap.createBitmap(bitmap,
+                    (int) (left * (float) bitmap.getWidth()),
+                    (int) (top * (float) bitmap.getHeight()),
+                    (int) ((right - left) * (float) bitmap.getWidth()),
+                    (int) ((bottom - top) * (float) bitmap.getHeight()));
+        } catch (Exception e) {
+            return;
+        }
         runOnUiThread(() -> {
             //将手动裁剪区域设置成与扫描框一样大
             mCropImageView.setLayoutParams(new LinearLayout.LayoutParams(mCropView.getWidth(), mCropView.getHeight()));
@@ -422,6 +434,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                 String imagePath = getFileName();
                 if (ImageUtils.save(bitmap, imagePath, Bitmap.CompressFormat.JPEG)) {
                     Intent intent = new Intent();
+                    intent.putExtra(CameraActivity.TAKE_TYPE, mType);
                     intent.putExtra(CameraActivity.IMAGE_PATH, imagePath);
                     setResult(RESULT_CODE, intent);
                     finish();

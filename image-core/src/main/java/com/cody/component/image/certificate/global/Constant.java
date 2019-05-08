@@ -20,7 +20,7 @@ import java.io.File;
  * Desc	${常量}
  */
 public class Constant {
-    public static final String APP_NAME = "ComponentCamera";//app名称
-    public static final String BASE_DIR = APP_NAME + File.separator;//ComponentCamera/
-    public static final String DIR_ROOT = FileUtils.getRootPath() + File.separator + Constant.BASE_DIR;//文件夹根目录 /storage/emulated/0/ComponentCamera/
+    public static final String APP_NAME = "Camera";//app名称
+    public static final String BASE_DIR = APP_NAME + File.separator;//Camera/
+    public static final String DIR_ROOT = FileUtils.getRootPath() + File.separator + Constant.BASE_DIR;//文件夹根目录 /storage/emulated/0/Camera/
 }
