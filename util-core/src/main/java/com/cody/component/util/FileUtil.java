@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：FileUtils.java  模块：util-core  项目：component
+ * 文件：FileUtil.java  模块：util-core  项目：component
  * 当前修改时间：2019年04月26日 13:33:35
  * 上次修改时间：2019年04月23日 18:23:20
  * 作者：Cody.yi   https://github.com/codyer
@@ -21,7 +21,38 @@ import java.io.IOException;
 /**
  * Desc ${文件相关工具类}
  */
-public final class FileUtils {
+public final class FileUtil {
+
+    public static long getFolderSize(File file) {
+        long size = 0;
+        try {
+            File[] fileList = file.listFiles();
+            for (int i = 0; i < fileList.length; i++) {
+                // 如果下面还有文件
+                if (fileList[i].isDirectory()) {
+                    size = size + getFolderSize(fileList[i]);
+                } else {
+                    size = size + fileList[i].length();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return size;
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
+    }
 
     /**
      * 得到SD卡根目录，SD卡不可用则获取内部存储的根目录

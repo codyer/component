@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：PermissionUtils.java  模块：util-core  项目：component
+ * 文件：PermissionUtil.java  模块：util-core  项目：component
  * 当前修改时间：2019年04月26日 13:33:35
  * 上次修改时间：2019年04月23日 18:23:20
  * 作者：Cody.yi   https://github.com/codyer
@@ -28,7 +28,7 @@ import androidx.core.app.ActivityCompat;
  * Desc ${权限工具类}
  */
 
-public class PermissionUtils {
+public class PermissionUtil {
 
     /**
      * 第一次检查权限，用在打开应用的时候请求应用需要的所有权限

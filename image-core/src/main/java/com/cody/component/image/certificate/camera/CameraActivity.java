@@ -37,10 +37,10 @@ import com.cody.component.image.OnImageViewListener;
 import com.cody.component.image.R;
 import com.cody.component.image.certificate.cropper.CropImageView;
 import com.cody.component.image.certificate.global.Constant;
-import com.cody.component.util.FileUtils;
-import com.cody.component.util.ImageUtils;
-import com.cody.component.util.PermissionUtils;
-import com.cody.component.util.ScreenUtils;
+import com.cody.component.util.FileUtil;
+import com.cody.component.util.ImageUtil;
+import com.cody.component.util.PermissionUtil;
+import com.cody.component.util.ScreenUtil;
 import com.lzy.imagepicker.bean.ImageItem;
 
 import java.util.Date;
@@ -141,7 +141,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         /*动态请求需要的权限*/
         //权限请求码
         final int PERMISSION_CODE_FIRST = 0x13;
-        boolean checkPermissionFirst = PermissionUtils.checkPermissionFirst(this, PERMISSION_CODE_FIRST,
+        boolean checkPermissionFirst = PermissionUtil.checkPermissionFirst(this, PERMISSION_CODE_FIRST,
                 new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA});
         if (checkPermissionFirst) {
             init();
@@ -216,8 +216,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         mContainerView = findViewById(R.id.camera_crop_container);
         mCropView = findViewById(R.id.camera_crop);
         mTouchHint = findViewById(R.id.touch_hint);
-        float screenMinSize = Math.min(ScreenUtils.getScreenWidth(this), ScreenUtils.getScreenHeight(this));
-        float screenMaxSize = Math.max(ScreenUtils.getScreenWidth(this), ScreenUtils.getScreenHeight(this));
+        float screenMinSize = Math.min(ScreenUtil.getScreenWidth(this), ScreenUtil.getScreenHeight(this));
+        float screenMaxSize = Math.max(ScreenUtil.getScreenWidth(this), ScreenUtil.getScreenHeight(this));
         RelativeLayout.LayoutParams layoutParams;
         if (mType == TYPE_BUSINESS_LICENSE_PORTRAIT) {
             layoutParams = new RelativeLayout.LayoutParams((int) screenMinSize, (int) screenMaxSize);
@@ -295,9 +295,9 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     public void onPickImage(int id, List<ImageItem> images) {
         if (images == null || images.size() == 0) return;
         if (id == R.id.action_gallery) {
-            mCropBitmap = ImageUtils.getBitmap(images.get(0).path, 800, 800);
+            mCropBitmap = ImageUtil.getBitmap(images.get(0).path, 800, 800);
             int degree = CameraUtils.getCameraDisplayOrientation(this);
-            mCropBitmap = ImageUtils.rotateBitmapByDegree(mCropBitmap, degree);
+            mCropBitmap = ImageUtil.rotateBitmapByDegree(mCropBitmap, degree);
             /*设置成手动裁剪模式*/
             runOnUiThread(() -> {
                 //将手动裁剪区域设置成与扫描框一样大
@@ -327,7 +327,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
         } else if (id == R.id.camera_result_ok) {
             confirm();
         } else if (id == R.id.camera_rotate) {
-            mCropBitmap = ImageUtils.rotateBitmapByDegree(mCropBitmap, 90);
+            mCropBitmap = ImageUtil.rotateBitmapByDegree(mCropBitmap, 90);
             /*设置成手动裁剪模式*/
             runOnUiThread(() -> mCropImageView.setImageBitmap(mCropBitmap));
         } else if (id == R.id.camera_result_cancel) {
@@ -350,9 +350,9 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             new Thread(() -> {
                 final int w = size.width;
                 final int h = size.height;
-                Bitmap bitmap = ImageUtils.getBitmapFromByte(bytes, w, h);
+                Bitmap bitmap = ImageUtil.getBitmapFromByte(bytes, w, h);
                 int degree = CameraUtils.getCameraDisplayOrientation(this);
-                bitmap = ImageUtils.rotateBitmapByDegree(bitmap, degree);
+                bitmap = ImageUtil.rotateBitmapByDegree(bitmap, degree);
                 cropImage(bitmap);
             }).start();
         });
@@ -430,9 +430,9 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             }
 
             /*保存图片到sdcard并返回图片路径*/
-            if (FileUtils.createOrExistsDir(Constant.DIR_ROOT)) {
+            if (FileUtil.createOrExistsDir(Constant.DIR_ROOT)) {
                 String imagePath = getFileName();
-                if (ImageUtils.save(bitmap, imagePath, Bitmap.CompressFormat.JPEG)) {
+                if (ImageUtil.save(bitmap, imagePath, Bitmap.CompressFormat.JPEG)) {
                     Intent intent = new Intent();
                     intent.putExtra(CameraActivity.TAKE_TYPE, mType);
                     intent.putExtra(CameraActivity.IMAGE_PATH, imagePath);

@@ -12,7 +12,7 @@
 
 package com.cody.component.image.certificate.global;
 
-import com.cody.component.util.FileUtils;
+import com.cody.component.util.FileUtil;
 
 import java.io.File;
 
@@ -22,5 +22,5 @@ import java.io.File;
 public class Constant {
     public static final String APP_NAME = "Camera";//app名称
     public static final String BASE_DIR = APP_NAME + File.separator;//Camera/
-    public static final String DIR_ROOT = FileUtils.getRootPath() + File.separator + Constant.BASE_DIR;//文件夹根目录 /storage/emulated/0/Camera/
+    public static final String DIR_ROOT = FileUtil.getRootPath() + File.separator + Constant.BASE_DIR;//文件夹根目录 /storage/emulated/0/Camera/
 }

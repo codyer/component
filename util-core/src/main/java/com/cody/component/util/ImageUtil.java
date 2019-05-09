@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：ImageUtils.java  模块：util-core  项目：component
+ * 文件：ImageUtil.java  模块：util-core  项目：component
  * 当前修改时间：2019年04月26日 13:33:35
  * 上次修改时间：2019年04月23日 18:23:20
  * 作者：Cody.yi   https://github.com/codyer
@@ -38,7 +38,7 @@ import java.io.OutputStream;
  * Desc ${图片相关工具类}
  */
 
-public class ImageUtils {
+public class ImageUtil {
 
     /**
      * 保存图片
@@ -49,7 +49,7 @@ public class ImageUtils {
      * @return {@code true}: 成功<br>{@code false}: 失败
      */
     public static boolean save(Bitmap src, String filePath, CompressFormat format) {
-        return save(src, FileUtils.getFileByPath(filePath), format, false);
+        return save(src, FileUtil.getFileByPath(filePath), format, false);
     }
 
     /**
@@ -74,7 +74,7 @@ public class ImageUtils {
      * @return {@code true}: 成功<br>{@code false}: 失败
      */
     public static boolean save(Bitmap src, String filePath, CompressFormat format, boolean recycle) {
-        return save(src, FileUtils.getFileByPath(filePath), format, recycle);
+        return save(src, FileUtil.getFileByPath(filePath), format, recycle);
     }
 
     /**
@@ -87,7 +87,7 @@ public class ImageUtils {
      * @return {@code true}: 成功<br>{@code false}: 失败
      */
     public static boolean save(Bitmap src, File file, CompressFormat format, boolean recycle) {
-        if (isEmptyBitmap(src) || !FileUtils.createOrExistsFile(file)) {
+        if (isEmptyBitmap(src) || !FileUtil.createOrExistsFile(file)) {
             return false;
         }
         System.out.println(src.getWidth() + ", " + src.getHeight());
@@ -102,7 +102,7 @@ public class ImageUtils {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            FileUtils.closeIO(os);
+            FileUtil.closeIO(os);
         }
         return ret;
     }
