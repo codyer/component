@@ -12,6 +12,8 @@
 
 package com.cody.component.handler.data;
 
+import android.os.Parcel;
+
 import com.cody.component.handler.livedata.BooleanLiveData;
 
 /**
@@ -19,8 +21,7 @@ import com.cody.component.handler.livedata.BooleanLiveData;
  * 和界面绑定的数据基类默认实现，并用于列表
  */
 public class ItemViewData extends ItemViewDataHolder {
-    private static final long serialVersionUID = -1457260658295437405L;
-    final private BooleanLiveData mValid = new BooleanLiveData(true);//是否有效，可以控制显示不显示
+    private BooleanLiveData mValid = new BooleanLiveData(true);//是否有效，可以控制显示不显示
 
     public ItemViewData() {
     }
@@ -59,4 +60,32 @@ public class ItemViewData extends ItemViewDataHolder {
     public boolean areContentsTheSame(final IViewData newData) {
         return this.equals(newData);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeParcelable(this.mValid, flags);
+    }
+
+    protected ItemViewData(Parcel in) {
+        super(in);
+        this.mValid = in.readParcelable(BooleanLiveData.class.getClassLoader());
+    }
+
+    public static final Creator<ItemViewData> CREATOR = new Creator<ItemViewData>() {
+        @Override
+        public ItemViewData createFromParcel(Parcel source) {
+            return new ItemViewData(source);
+        }
+
+        @Override
+        public ItemViewData[] newArray(int size) {
+            return new ItemViewData[size];
+        }
+    };
 }

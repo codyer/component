@@ -12,14 +12,14 @@
 
 package com.cody.component.hybrid.data;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by xu.yi. on 2019/4/11.
  * 打开 html 需要的配置参数保存类
  */
-public class HtmlConfig implements Serializable {
-    private static final long serialVersionUID = 5525877332573712886L;
+public class HtmlConfig implements Parcelable {
     private String mTitle = "";
     private String mDescription;
     private String mUrl;
@@ -70,4 +70,41 @@ public class HtmlConfig implements Serializable {
         mCanShare = canShare;
         return this;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.mTitle);
+        dest.writeString(this.mDescription);
+        dest.writeString(this.mUrl);
+        dest.writeByte(this.mIsRoot ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.mCanShare ? (byte) 1 : (byte) 0);
+    }
+
+    public HtmlConfig() {
+    }
+
+    protected HtmlConfig(Parcel in) {
+        this.mTitle = in.readString();
+        this.mDescription = in.readString();
+        this.mUrl = in.readString();
+        this.mIsRoot = in.readByte() != 0;
+        this.mCanShare = in.readByte() != 0;
+    }
+
+    public static final Creator<HtmlConfig> CREATOR = new Creator<HtmlConfig>() {
+        @Override
+        public HtmlConfig createFromParcel(Parcel source) {
+            return new HtmlConfig(source);
+        }
+
+        @Override
+        public HtmlConfig[] newArray(int size) {
+            return new HtmlConfig[size];
+        }
+    };
 }

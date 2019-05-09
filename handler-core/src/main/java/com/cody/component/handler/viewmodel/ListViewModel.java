@@ -12,17 +12,16 @@
 
 package com.cody.component.handler.viewmodel;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.MutableLiveData;
+
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
-import com.cody.component.handler.livedata.SafeMutableLiveData;
 import com.cody.component.handler.mapper.IDataMapper;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MutableLiveData;
 
 /**
  * Created by xu.yi. on 2019/4/8.
@@ -31,7 +30,7 @@ import androidx.lifecycle.MutableLiveData;
 public abstract class ListViewModel<VD extends MaskViewData> extends SingleViewModel<VD>
         implements IDataMapper {
 
-    private MutableLiveData<List<ItemViewDataHolder>> mItems = new SafeMutableLiveData<>(new ArrayList<>());
+    private MutableLiveData<List<ItemViewDataHolder>> mItems = new MutableLiveData<>(new ArrayList<>());
     protected List<ItemViewDataHolder> mOldList = new ArrayList<>();
 
     public ListViewModel(final VD friendlyViewData) {

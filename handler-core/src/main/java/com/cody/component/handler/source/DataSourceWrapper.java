@@ -17,7 +17,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnRetryListener;
 import com.cody.component.handler.interfaces.Refreshable;
-import com.cody.component.handler.livedata.SafeMutableLiveData;
 
 /**
  * Created by xu.yi. on 2019/4/8.
@@ -25,11 +24,11 @@ import com.cody.component.handler.livedata.SafeMutableLiveData;
  */
 public class DataSourceWrapper implements Refreshable, OnRetryListener {
     final private MutableLiveData<RequestStatus> mRequestStatusLive;
-    final private SafeMutableLiveData<PageListKeyedDataSource> mDataSource;
+    final private MutableLiveData<PageListKeyedDataSource> mDataSource;
     private RequestStatus mRequestStatus;
 
     public DataSourceWrapper(final MutableLiveData<RequestStatus> operationStatusLive,
-                             final SafeMutableLiveData<PageListKeyedDataSource> dataSource) {
+                             final MutableLiveData<PageListKeyedDataSource> dataSource) {
         mRequestStatusLive = operationStatusLive;
         mDataSource = dataSource;
         mRequestStatus = mRequestStatusLive.getValue();

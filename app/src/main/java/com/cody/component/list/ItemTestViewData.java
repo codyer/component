@@ -12,14 +12,17 @@
 
 package com.cody.component.list;
 
+import android.os.Parcel;
+
 import com.cody.component.handler.data.ItemViewDataHolder;
+
+import java.util.Objects;
 
 /**
  * Created by xu.yi. on 2019/4/14.
  * component
  */
 public class ItemTestViewData extends ItemViewDataHolder {
-    private static final long serialVersionUID = -9198367211217170445L;
     private String test;
 
     public ItemTestViewData() {
@@ -33,15 +36,13 @@ public class ItemTestViewData extends ItemViewDataHolder {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         final ItemTestViewData that = (ItemTestViewData) o;
-
-        return test != null ? test.equals(that.test) : that.test == null;
+        return Objects.equals(test, that.test);
     }
 
     @Override
     public int hashCode() {
-        return test != null ? test.hashCode() : 0;
+        return Objects.hash(super.hashCode(), test);
     }
 
     public String getTest() {
@@ -52,13 +53,35 @@ public class ItemTestViewData extends ItemViewDataHolder {
         this.test = test;
     }
 
-//    @Override
-//    public boolean areItemsTheSame(final IViewData newData) {
-//        return TextUtils.equals(test, ((ItemTestViewData) newData).getTest());
-//    }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-//    @Override
-//    public boolean areContentsTheSame(final IViewData newBind) {
-//        return TextUtils.equals(test, ((ItemTestViewData) newBind).getTest());
-//    }
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.test);
+        dest.writeInt(this.mItemId);
+        dest.writeInt(this.mItemType);
+    }
+
+    protected ItemTestViewData(Parcel in) {
+        super(in);
+        this.test = in.readString();
+        this.mItemId = in.readInt();
+        this.mItemType = in.readInt();
+    }
+
+    public static final Creator<ItemTestViewData> CREATOR = new Creator<ItemTestViewData>() {
+        @Override
+        public ItemTestViewData createFromParcel(Parcel source) {
+            return new ItemTestViewData(source);
+        }
+
+        @Override
+        public ItemTestViewData[] newArray(int size) {
+            return new ItemTestViewData[size];
+        }
+    };
 }

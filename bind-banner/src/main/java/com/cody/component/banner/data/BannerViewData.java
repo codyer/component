@@ -12,17 +12,19 @@
 
 package com.cody.component.banner.data;
 
+import android.os.Parcel;
 import android.text.TextUtils;
 
 import com.cody.component.handler.data.IViewData;
 import com.cody.component.handler.data.ItemViewDataHolder;
+
+import java.util.Objects;
 
 /**
  * Created by cody.yi on 2019/4/4.
  * banner viewData
  */
 public class BannerViewData extends ItemViewDataHolder {
-    private static final long serialVersionUID = 4802021333332679648L;
     private String mImgId;
     private String mImgDesc;
     private String mImgUrl;
@@ -85,26 +87,55 @@ public class BannerViewData extends ItemViewDataHolder {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        BannerViewData that = (BannerViewData) o;
-
-        if (mImgId != null ? !mImgId.equals(that.mImgId) : that.mImgId != null) return false;
-        if (mImgDesc != null ? !mImgDesc.equals(that.mImgDesc) : that.mImgDesc != null) return false;
-        if (mImgUrl != null ? !mImgUrl.equals(that.mImgUrl) : that.mImgUrl != null) return false;
-        if (mImgSize != null ? !mImgSize.equals(that.mImgSize) : that.mImgSize != null) return false;
-        return mLinkUrl != null ? mLinkUrl.equals(that.mLinkUrl) : that.mLinkUrl == null;
+        final BannerViewData that = (BannerViewData) o;
+        return Objects.equals(mImgId, that.mImgId) &&
+                Objects.equals(mImgDesc, that.mImgDesc) &&
+                Objects.equals(mImgUrl, that.mImgUrl) &&
+                Objects.equals(mImgSize, that.mImgSize) &&
+                Objects.equals(mLinkUrl, that.mLinkUrl);
     }
 
     @Override
     public int hashCode() {
-        int result = mImgId != null ? mImgId.hashCode() : 0;
-        result = 31 * result + (mImgDesc != null ? mImgDesc.hashCode() : 0);
-        result = 31 * result + (mImgUrl != null ? mImgUrl.hashCode() : 0);
-        result = 31 * result + (mImgSize != null ? mImgSize.hashCode() : 0);
-        result = 31 * result + (mLinkUrl != null ? mLinkUrl.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), mImgId, mImgDesc, mImgUrl, mImgSize, mLinkUrl);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.mImgId);
+        dest.writeString(this.mImgDesc);
+        dest.writeString(this.mImgUrl);
+        dest.writeString(this.mImgSize);
+        dest.writeString(this.mLinkUrl);
+    }
+
+    protected BannerViewData(Parcel in) {
+        super(in);
+        this.mImgId = in.readString();
+        this.mImgDesc = in.readString();
+        this.mImgUrl = in.readString();
+        this.mImgSize = in.readString();
+        this.mLinkUrl = in.readString();
+    }
+
+    public static final Creator<BannerViewData> CREATOR = new Creator<BannerViewData>() {
+        @Override
+        public BannerViewData createFromParcel(Parcel source) {
+            return new BannerViewData(source);
+        }
+
+        @Override
+        public BannerViewData[] newArray(int size) {
+            return new BannerViewData[size];
+        }
+    };
 }

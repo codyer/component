@@ -12,6 +12,8 @@
 
 package com.cody.component.app.upgrade;
 
+import android.os.Parcel;
+
 import com.cody.component.handler.data.ViewData;
 import com.cody.component.handler.livedata.StringLiveData;
 
@@ -20,8 +22,7 @@ import com.cody.component.handler.livedata.StringLiveData;
  * 更新
  */
 public class UpdateViewData extends ViewData {
-    private static final long serialVersionUID = -2157233147924647191L;
-    private final StringLiveData mCountTime = new StringLiveData("3s");
+    private StringLiveData mCountTime = new StringLiveData("3s");
     private boolean mVersionChecked = false;
     private boolean mForceUpdate = false;
     private boolean mOptionalUpdate = false;
@@ -89,4 +90,49 @@ public class UpdateViewData extends ViewData {
     public void setDownloaded(boolean downloaded) {
         mIsDownloaded = downloaded;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeParcelable(this.mCountTime, flags);
+        dest.writeByte(this.mVersionChecked ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.mForceUpdate ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.mOptionalUpdate ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.mIsDownloaded ? (byte) 1 : (byte) 0);
+        dest.writeString(this.mApkUrl);
+        dest.writeString(this.mUpdateInfo);
+        dest.writeString(this.mApkName);
+    }
+
+    public UpdateViewData() {
+    }
+
+    protected UpdateViewData(Parcel in) {
+        super(in);
+        this.mCountTime = in.readParcelable(StringLiveData.class.getClassLoader());
+        this.mVersionChecked = in.readByte() != 0;
+        this.mForceUpdate = in.readByte() != 0;
+        this.mOptionalUpdate = in.readByte() != 0;
+        this.mIsDownloaded = in.readByte() != 0;
+        this.mApkUrl = in.readString();
+        this.mUpdateInfo = in.readString();
+        this.mApkName = in.readString();
+    }
+
+    public static final Creator<UpdateViewData> CREATOR = new Creator<UpdateViewData>() {
+        @Override
+        public UpdateViewData createFromParcel(Parcel source) {
+            return new UpdateViewData(source);
+        }
+
+        @Override
+        public UpdateViewData[] newArray(int size) {
+            return new UpdateViewData[size];
+        }
+    };
 }

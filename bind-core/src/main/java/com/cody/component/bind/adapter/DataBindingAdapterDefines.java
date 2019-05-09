@@ -18,17 +18,16 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
-
-import androidx.databinding.BindingAdapter;
 
 /**
  * Created by xu.yi. on 2019/4/4.
@@ -58,9 +57,9 @@ public class DataBindingAdapterDefines {
     public static void setRoundImageUrl(ImageView view, String roundImageUrl, Drawable error, Drawable placeholder) {
         Context context = view.getContext();
         RequestOptions options = new RequestOptions()
-                .transform(new CircleCrop())
                 .placeholder(placeholder)
                 .error(error)
+                .circleCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
         if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {

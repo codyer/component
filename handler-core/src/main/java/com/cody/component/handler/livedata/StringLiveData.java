@@ -12,14 +12,13 @@
 
 package com.cody.component.handler.livedata;
 
-import java.io.Serializable;
+import android.os.Parcel;
 
 /**
  * Created by xu.yi. on 2019/4/15.
  * component
  */
-public class StringLiveData extends SafeMutableLiveData<String> implements Serializable {
-    private static final long serialVersionUID = 902635524502200186L;
+public class StringLiveData extends SafeMutableLiveData<String> {
 
     public StringLiveData(final String value) {
         super(value);
@@ -32,4 +31,30 @@ public class StringLiveData extends SafeMutableLiveData<String> implements Seria
         }
         return "";
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+    }
+
+    protected StringLiveData(Parcel in) {
+        super(in);
+    }
+
+    public static final Creator<StringLiveData> CREATOR = new Creator<StringLiveData>() {
+        @Override
+        public StringLiveData createFromParcel(Parcel source) {
+            return new StringLiveData(source);
+        }
+
+        @Override
+        public StringLiveData[] newArray(int size) {
+            return new StringLiveData[size];
+        }
+    };
 }

@@ -31,7 +31,7 @@ public class CatOverviewFragment extends SimpleBindFragment<CatFragmentOverviewB
     public static CatOverviewFragment newInstance(ItemHttpData itemHttpData) {
         CatOverviewFragment fragment = new CatOverviewFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ITEM_VIEW_DATA, itemHttpData);
+        bundle.putParcelable(ITEM_VIEW_DATA, itemHttpData);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -52,7 +52,7 @@ public class CatOverviewFragment extends SimpleBindFragment<CatFragmentOverviewB
     protected ItemHttpData getViewData() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mItemHttpData = (ItemHttpData) bundle.getSerializable(ITEM_VIEW_DATA);
+            mItemHttpData = bundle.getParcelable(ITEM_VIEW_DATA);
         }
         return mItemHttpData;
     }

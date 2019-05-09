@@ -12,9 +12,12 @@
 
 package com.cody.http.cat.viewmodel;
 
-import com.cody.component.handler.viewmodel.BaseViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
+
 import com.cody.component.handler.data.ItemViewDataHolder;
-import com.cody.component.handler.livedata.SafeMutableLiveData;
+import com.cody.component.handler.viewmodel.BaseViewModel;
 import com.cody.http.cat.HttpCat;
 import com.cody.http.cat.db.HttpCatDatabase;
 import com.cody.http.cat.db.data.ItemHttpData;
@@ -22,9 +25,6 @@ import com.cody.http.cat.notification.NotificationManagement;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Transformations;
 
 /**
  * Created by xu.yi. on 2019/3/31.
@@ -34,7 +34,7 @@ public class CatViewModel extends BaseViewModel {
 
     private final LiveData<List<ItemViewDataHolder>> mAllRecordLiveData;
 
-    private LiveData<ItemHttpData> mRecordLiveData = new SafeMutableLiveData<>();
+    private LiveData<ItemHttpData> mRecordLiveData = new MutableLiveData<>();
 
     private static final int LIMIT = 300;
 

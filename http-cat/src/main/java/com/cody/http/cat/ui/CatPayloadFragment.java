@@ -38,7 +38,7 @@ public class CatPayloadFragment extends EmptyBindFragment<CatFragmentPayloadBind
         CatPayloadFragment fragment = new CatPayloadFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(TYPE_KEY, type);
-        bundle.putSerializable(ITEM_VIEW_DATA, itemHttpData);
+        bundle.putParcelable(ITEM_VIEW_DATA, itemHttpData);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -69,7 +69,7 @@ public class CatPayloadFragment extends EmptyBindFragment<CatFragmentPayloadBind
         Bundle bundle = getArguments();
         if (bundle != null) {
             mType = bundle.getInt(TYPE_KEY);
-            mItemHttpData = (ItemHttpData) bundle.getSerializable(ITEM_VIEW_DATA);
+            mItemHttpData = bundle.getParcelable(ITEM_VIEW_DATA);
         }
         if (mItemHttpData != null) {
             switch (mType) {

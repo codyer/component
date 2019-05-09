@@ -12,6 +12,7 @@
 
 package com.cody.component;
 
+import com.cody.component.app.local.Repository;
 import com.cody.component.image.ImagePicker;
 import com.cody.http.cat.HttpCat;
 import com.cody.http.core.HttpCore;
@@ -26,6 +27,7 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        Repository.install(this);
         ImagePicker.init();
         HttpCore.init(this)
                 .withLog(true)

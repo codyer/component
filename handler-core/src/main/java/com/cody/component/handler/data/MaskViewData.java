@@ -12,6 +12,8 @@
 
 package com.cody.component.handler.data;
 
+import android.os.Parcel;
+
 import com.cody.component.handler.R;
 import com.cody.component.handler.livedata.BooleanLiveData;
 import com.cody.component.handler.livedata.IntegerLiveData;
@@ -24,12 +26,11 @@ import androidx.annotation.NonNull;
  * 页面出错、无网络、无数据等布局需要的数据
  */
 public class MaskViewData extends ViewData {
-    private static final long serialVersionUID = -381194114860141421L;
-    private final BooleanLiveData mVisibility = new BooleanLiveData(true);
-    private final IntegerLiveData mInfoId = new IntegerLiveData(R.string.ui_str_loading);
-    private final StringLiveData mMessage = new StringLiveData("");
-    final private BooleanLiveData mLoading = new BooleanLiveData(true);
-    private final IntegerLiveData mImageId = new IntegerLiveData(R.drawable.ic_no_content);
+    private BooleanLiveData mVisibility = new BooleanLiveData(true);
+    private IntegerLiveData mInfoId = new IntegerLiveData(R.string.ui_str_loading);
+    private StringLiveData mMessage = new StringLiveData("");
+    private BooleanLiveData mLoading = new BooleanLiveData(true);
+    private IntegerLiveData mImageId = new IntegerLiveData(R.drawable.ic_no_content);
     private int loadingResId = R.drawable.ic_loading_gif;
 
     public int getLoadingResId() {
@@ -100,4 +101,31 @@ public class MaskViewData extends ViewData {
     public IntegerLiveData getImageId() {
         return mImageId;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeParcelable(this.mVisibility, flags);
+        dest.writeParcelable(this.mInfoId, flags);
+        dest.writeParcelable(this.mMessage, flags);
+        dest.writeParcelable(this.mLoading, flags);
+        dest.writeParcelable(this.mImageId, flags);
+        dest.writeInt(this.loadingResId);
+    }
+
+    protected MaskViewData(Parcel in) {
+        super(in);
+        this.mVisibility = in.readParcelable(BooleanLiveData.class.getClassLoader());
+        this.mInfoId = in.readParcelable(IntegerLiveData.class.getClassLoader());
+        this.mMessage = in.readParcelable(StringLiveData.class.getClassLoader());
+        this.mLoading = in.readParcelable(BooleanLiveData.class.getClassLoader());
+        this.mImageId = in.readParcelable(IntegerLiveData.class.getClassLoader());
+        this.loadingResId = in.readInt();
+    }
+
 }

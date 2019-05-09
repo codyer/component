@@ -63,7 +63,7 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
      */
     public static void startHtml(HtmlConfig config) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(HTML_WITH_CONFIG, config);
+        bundle.putParcelable(HTML_WITH_CONFIG, config);
         ActivityUtil.navigateTo(HtmlActivity.class, bundle);
     }
 
@@ -81,7 +81,7 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     public Fragment getFragment() {
         Intent intent = getIntent();
         if (intent != null && intent.getExtras() != null) {
-            HtmlConfig config = (HtmlConfig) intent.getExtras().getSerializable(HTML_WITH_CONFIG);
+            HtmlConfig config = intent.getExtras().getParcelable(HTML_WITH_CONFIG);
             if (config != null) {
                 mIsRoot = config.isRoot();
                 mHtmlFragment = HtmlFragment.getInstance(config.getUrl());

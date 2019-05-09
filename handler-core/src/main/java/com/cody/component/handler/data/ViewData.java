@@ -12,12 +12,13 @@
 
 package com.cody.component.handler.data;
 
+import android.os.Parcel;
+
 /**
  * Created by xu.yi. on 2019/3/26.
  * 和界面绑定的数据基类默认实现
  */
 public class ViewData implements IViewData {
-    private static final long serialVersionUID = 998314704089921211L;
 
     @Override
     public boolean areItemsTheSame(IViewData newData) {
@@ -28,4 +29,20 @@ public class ViewData implements IViewData {
     public boolean areContentsTheSame(IViewData newData) {
         return this.equals(newData);
     }
+
+    public ViewData() {
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    protected ViewData(Parcel in) {
+    }
+
 }

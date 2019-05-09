@@ -12,6 +12,8 @@
 
 package com.cody.http.cat.db.data;
 
+import android.os.Parcel;
+
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.http.cat.utils.FormatUtils;
 import com.cody.http.cat.utils.JsonConverter;
@@ -20,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
@@ -32,7 +35,6 @@ import okhttp3.Headers;
  */
 @Entity(tableName = "http_cat_table")
 public class ItemHttpData extends ItemViewDataHolder {
-    private static final long serialVersionUID = -5435259574495140581L;
     private static final int DEFAULT_RESPONSE_CODE = -100;
 
     public enum Status {Requested, Complete, Failed}
@@ -107,7 +109,7 @@ public class ItemHttpData extends ItemViewDataHolder {
             case Requested:
                 return " . . .  " + mPath;
             default:
-                return String.valueOf(mResponseCode) + " " + mPath;
+                return mResponseCode + " " + mPath;
         }
     }
 
@@ -118,7 +120,7 @@ public class ItemHttpData extends ItemViewDataHolder {
             case Requested:
                 return null;
             default:
-                return String.valueOf(mResponseCode) + " " + mResponseMessage;
+                return mResponseCode + " " + mResponseMessage;
         }
     }
 
@@ -377,71 +379,118 @@ public class ItemHttpData extends ItemViewDataHolder {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ItemHttpData that = (ItemHttpData) o;
-        if (id != that.id) return false;
-        if (mDuration != that.mDuration) return false;
-        if (mRequestContentLength != that.mRequestContentLength) return false;
-        if (mRequestBodyIsPlainText != that.mRequestBodyIsPlainText) return false;
-        if (mResponseCode != that.mResponseCode) return false;
-        if (mResponseContentLength != that.mResponseContentLength) return false;
-        if (mResponseBodyIsPlainText != that.mResponseBodyIsPlainText) return false;
-        if (mRequestDate != null ? !mRequestDate.equals(that.mRequestDate) : that.mRequestDate != null)
-            return false;
-        if (mResponseDate != null ? !mResponseDate.equals(that.mResponseDate) : that.mResponseDate != null)
-            return false;
-        if (mMethod != null ? !mMethod.equals(that.mMethod) : that.mMethod != null) return false;
-        if (mUrl != null ? !mUrl.equals(that.mUrl) : that.mUrl != null) return false;
-        if (mHost != null ? !mHost.equals(that.mHost) : that.mHost != null) return false;
-        if (mPath != null ? !mPath.equals(that.mPath) : that.mPath != null) return false;
-        if (mScheme != null ? !mScheme.equals(that.mScheme) : that.mScheme != null) return false;
-        if (mProtocol != null ? !mProtocol.equals(that.mProtocol) : that.mProtocol != null)
-            return false;
-        if (mRequestHeaders != null ? !mRequestHeaders.equals(that.mRequestHeaders) : that.mRequestHeaders != null)
-            return false;
-        if (mRequestBody != null ? !mRequestBody.equals(that.mRequestBody) : that.mRequestBody != null)
-            return false;
-        if (mRequestContentType != null ? !mRequestContentType.equals(that.mRequestContentType) : that.mRequestContentType != null)
-            return false;
-        if (mResponseHeaders != null ? !mResponseHeaders.equals(that.mResponseHeaders) : that.mResponseHeaders != null)
-            return false;
-        if (mResponseBody != null ? !mResponseBody.equals(that.mResponseBody) : that.mResponseBody != null)
-            return false;
-        if (mResponseMessage != null ? !mResponseMessage.equals(that.mResponseMessage) : that.mResponseMessage != null)
-            return false;
-        if (mResponseContentType != null ? !mResponseContentType.equals(that.mResponseContentType) : that.mResponseContentType != null)
-            return false;
-        return mError != null ? mError.equals(that.mError) : that.mError == null;
+        final ItemHttpData that = (ItemHttpData) o;
+        return id == that.id &&
+                mDuration == that.mDuration &&
+                mRequestContentLength == that.mRequestContentLength &&
+                mRequestBodyIsPlainText == that.mRequestBodyIsPlainText &&
+                mResponseCode == that.mResponseCode &&
+                mResponseContentLength == that.mResponseContentLength &&
+                mResponseBodyIsPlainText == that.mResponseBodyIsPlainText &&
+                Objects.equals(mRequestDate, that.mRequestDate) &&
+                Objects.equals(mResponseDate, that.mResponseDate) &&
+                Objects.equals(mMethod, that.mMethod) &&
+                Objects.equals(mUrl, that.mUrl) &&
+                Objects.equals(mHost, that.mHost) &&
+                Objects.equals(mPath, that.mPath) &&
+                Objects.equals(mScheme, that.mScheme) &&
+                Objects.equals(mProtocol, that.mProtocol) &&
+                Objects.equals(mRequestHeaders, that.mRequestHeaders) &&
+                Objects.equals(mRequestBody, that.mRequestBody) &&
+                Objects.equals(mRequestContentType, that.mRequestContentType) &&
+                Objects.equals(mResponseHeaders, that.mResponseHeaders) &&
+                Objects.equals(mResponseBody, that.mResponseBody) &&
+                Objects.equals(mResponseMessage, that.mResponseMessage) &&
+                Objects.equals(mResponseContentType, that.mResponseContentType) &&
+                Objects.equals(mError, that.mError);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + (mRequestDate != null ? mRequestDate.hashCode() : 0);
-        result = 31 * result + (mResponseDate != null ? mResponseDate.hashCode() : 0);
-        result = 31 * result + (int) (mDuration ^ (mDuration >>> 32));
-        result = 31 * result + (mMethod != null ? mMethod.hashCode() : 0);
-        result = 31 * result + (mUrl != null ? mUrl.hashCode() : 0);
-        result = 31 * result + (mHost != null ? mHost.hashCode() : 0);
-        result = 31 * result + (mPath != null ? mPath.hashCode() : 0);
-        result = 31 * result + (mScheme != null ? mScheme.hashCode() : 0);
-        result = 31 * result + (mProtocol != null ? mProtocol.hashCode() : 0);
-        result = 31 * result + (mRequestHeaders != null ? mRequestHeaders.hashCode() : 0);
-        result = 31 * result + (mRequestBody != null ? mRequestBody.hashCode() : 0);
-        result = 31 * result + (mRequestContentType != null ? mRequestContentType.hashCode() : 0);
-        result = 31 * result + (int) (mRequestContentLength ^ (mRequestContentLength >>> 32));
-        result = 31 * result + (mRequestBodyIsPlainText ? 1 : 0);
-        result = 31 * result + mResponseCode;
-        result = 31 * result + (mResponseHeaders != null ? mResponseHeaders.hashCode() : 0);
-        result = 31 * result + (mResponseBody != null ? mResponseBody.hashCode() : 0);
-        result = 31 * result + (mResponseMessage != null ? mResponseMessage.hashCode() : 0);
-        result = 31 * result + (mResponseContentType != null ? mResponseContentType.hashCode() : 0);
-        result = 31 * result + (int) (mResponseContentLength ^ (mResponseContentLength >>> 32));
-        result = 31 * result + (mResponseBodyIsPlainText ? 1 : 0);
-        result = 31 * result + (mError != null ? mError.hashCode() : 0);
-        return result;
+        return Objects.hash(super.hashCode(), id, mRequestDate, mResponseDate, mDuration, mMethod, mUrl, mHost, mPath, mScheme, mProtocol, mRequestHeaders, mRequestBody, mRequestContentType, mRequestContentLength, mRequestBodyIsPlainText, mResponseCode, mResponseHeaders, mResponseBody, mResponseMessage, mResponseContentType, mResponseContentLength, mResponseBodyIsPlainText, mError);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeLong(this.id);
+        dest.writeLong(this.mRequestDate != null ? this.mRequestDate.getTime() : -1);
+        dest.writeLong(this.mResponseDate != null ? this.mResponseDate.getTime() : -1);
+        dest.writeLong(this.mDuration);
+        dest.writeString(this.mMethod);
+        dest.writeString(this.mUrl);
+        dest.writeString(this.mHost);
+        dest.writeString(this.mPath);
+        dest.writeString(this.mScheme);
+        dest.writeString(this.mProtocol);
+        dest.writeString(this.mRequestHeaders);
+        dest.writeString(this.mRequestBody);
+        dest.writeString(this.mRequestContentType);
+        dest.writeLong(this.mRequestContentLength);
+        dest.writeByte(this.mRequestBodyIsPlainText ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.mResponseCode);
+        dest.writeString(this.mResponseHeaders);
+        dest.writeString(this.mResponseBody);
+        dest.writeString(this.mResponseMessage);
+        dest.writeString(this.mResponseContentType);
+        dest.writeLong(this.mResponseContentLength);
+        dest.writeByte(this.mResponseBodyIsPlainText ? (byte) 1 : (byte) 0);
+        dest.writeString(this.mError);
+        dest.writeInt(this.mItemId);
+        dest.writeInt(this.mItemType);
+    }
+
+    public ItemHttpData() {
+    }
+
+    protected ItemHttpData(Parcel in) {
+        super(in);
+        this.id = in.readLong();
+        long tmpMRequestDate = in.readLong();
+        this.mRequestDate = tmpMRequestDate == -1 ? null : new Date(tmpMRequestDate);
+        long tmpMResponseDate = in.readLong();
+        this.mResponseDate = tmpMResponseDate == -1 ? null : new Date(tmpMResponseDate);
+        this.mDuration = in.readLong();
+        this.mMethod = in.readString();
+        this.mUrl = in.readString();
+        this.mHost = in.readString();
+        this.mPath = in.readString();
+        this.mScheme = in.readString();
+        this.mProtocol = in.readString();
+        this.mRequestHeaders = in.readString();
+        this.mRequestBody = in.readString();
+        this.mRequestContentType = in.readString();
+        this.mRequestContentLength = in.readLong();
+        this.mRequestBodyIsPlainText = in.readByte() != 0;
+        this.mResponseCode = in.readInt();
+        this.mResponseHeaders = in.readString();
+        this.mResponseBody = in.readString();
+        this.mResponseMessage = in.readString();
+        this.mResponseContentType = in.readString();
+        this.mResponseContentLength = in.readLong();
+        this.mResponseBodyIsPlainText = in.readByte() != 0;
+        this.mError = in.readString();
+        this.mItemId = in.readInt();
+        this.mItemType = in.readInt();
+    }
+
+    public static final Creator<ItemHttpData> CREATOR = new Creator<ItemHttpData>() {
+        @Override
+        public ItemHttpData createFromParcel(Parcel source) {
+            return new ItemHttpData(source);
+        }
+
+        @Override
+        public ItemHttpData[] newArray(int size) {
+            return new ItemHttpData[size];
+        }
+    };
 }

@@ -12,14 +12,13 @@
 
 package com.cody.component.handler.livedata;
 
-import java.io.Serializable;
+import android.os.Parcel;
 
 /**
  * Created by xu.yi. on 2019/4/15.
  * component
  */
-public class BooleanLiveData extends SafeMutableLiveData<Boolean> implements Serializable {
-    private static final long serialVersionUID = -1433487897818877363L;
+public class BooleanLiveData extends SafeMutableLiveData<Boolean>{
 
     public BooleanLiveData(final Boolean value) {
         super(value);
@@ -39,4 +38,30 @@ public class BooleanLiveData extends SafeMutableLiveData<Boolean> implements Ser
         }
         return false;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+    }
+
+    protected BooleanLiveData(Parcel in) {
+        super(in);
+    }
+
+    public static final Creator<BooleanLiveData> CREATOR = new Creator<BooleanLiveData>() {
+        @Override
+        public BooleanLiveData createFromParcel(Parcel source) {
+            return new BooleanLiveData(source);
+        }
+
+        @Override
+        public BooleanLiveData[] newArray(int size) {
+            return new BooleanLiveData[size];
+        }
+    };
 }

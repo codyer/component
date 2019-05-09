@@ -21,7 +21,6 @@ import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
-import com.cody.component.handler.livedata.SafeMutableLiveData;
 import com.cody.component.handler.source.PageListKeyedDataSource;
 
 /**
@@ -30,7 +29,7 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
  * 泛型为分页Item的类类型
  */
 public class PageListDataSourceFactory extends DataSource.Factory<PageInfo, ItemViewDataHolder> {
-    private SafeMutableLiveData<PageListKeyedDataSource> mDataSource = new SafeMutableLiveData<>();
+    private MutableLiveData<PageListKeyedDataSource> mDataSource = new MutableLiveData<>();
     private OnRequestPageListener mOnRequestPageListener;
     final private MutableLiveData<RequestStatus> mRequestStatusLive;
 
@@ -47,7 +46,7 @@ public class PageListDataSourceFactory extends DataSource.Factory<PageInfo, Item
         return dataSource;
     }
 
-    public SafeMutableLiveData<PageListKeyedDataSource> getDataSource() {
+    public MutableLiveData<PageListKeyedDataSource> getDataSource() {
         return mDataSource;
     }
 

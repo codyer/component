@@ -12,14 +12,15 @@
 
 package com.cody.component.handler.data;
 
+import android.os.Parcel;
+
 /**
  * Created by xu.yi. on 2019/3/28.
  * 和界面绑定的数据基类默认实现，并用于列表
  */
 public class ItemViewDataHolder extends ViewData {
-    private static final long serialVersionUID = -6368977380223902277L;
-    private int mItemId = 0;
-    private int mItemType = 0;//不要为负数
+    protected int mItemId = 0;
+    protected int mItemType = 0;//不要为负数
 
     public ItemViewDataHolder() {
     }
@@ -64,4 +65,23 @@ public class ItemViewDataHolder extends ViewData {
     public boolean areContentsTheSame(final IViewData newData) {
         return this.equals(newData);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(this.mItemId);
+        dest.writeInt(this.mItemType);
+    }
+
+    protected ItemViewDataHolder(Parcel in) {
+        super(in);
+        this.mItemId = in.readInt();
+        this.mItemType = in.readInt();
+    }
+
 }
