@@ -45,4 +45,15 @@ public class ViewData implements IViewData {
     protected ViewData(Parcel in) {
     }
 
+    public static final Creator<ViewData> CREATOR = new Creator<ViewData>() {
+        @Override
+        public ViewData createFromParcel(Parcel source) {
+            return new ViewData(source);
+        }
+
+        @Override
+        public ViewData[] newArray(int size) {
+            return new ViewData[size];
+        }
+    };
 }

@@ -62,15 +62,11 @@ public class ItemTestViewData extends ItemViewDataHolder {
     public void writeToParcel(Parcel dest, int flags) {
         super.writeToParcel(dest, flags);
         dest.writeString(this.test);
-        dest.writeInt(this.mItemId);
-        dest.writeInt(this.mItemType);
     }
 
     protected ItemTestViewData(Parcel in) {
         super(in);
         this.test = in.readString();
-        this.mItemId = in.readInt();
-        this.mItemType = in.readInt();
     }
 
     public static final Creator<ItemTestViewData> CREATOR = new Creator<ItemTestViewData>() {

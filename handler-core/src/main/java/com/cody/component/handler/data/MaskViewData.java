@@ -128,4 +128,15 @@ public class MaskViewData extends ViewData {
         this.loadingResId = in.readInt();
     }
 
+    public static final Creator<MaskViewData> CREATOR = new Creator<MaskViewData>() {
+        @Override
+        public MaskViewData createFromParcel(Parcel source) {
+            return new MaskViewData(source);
+        }
+
+        @Override
+        public MaskViewData[] newArray(int size) {
+            return new MaskViewData[size];
+        }
+    };
 }

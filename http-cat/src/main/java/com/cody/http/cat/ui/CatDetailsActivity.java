@@ -71,7 +71,7 @@ public class CatDetailsActivity extends EmptyBindActivity<CatActivityDetailsBind
     }
 
     private void initView() {
-        mItemHttpData = (ItemHttpData) getIntent().getSerializableExtra(ITEM_HTTP_DATA);
+        mItemHttpData = getIntent().getParcelableExtra(ITEM_HTTP_DATA);
         PagerAdapter fragmentPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         fragmentPagerAdapter.addFragment(CatOverviewFragment.newInstance(mItemHttpData), "overview");
         fragmentPagerAdapter.addFragment(CatPayloadFragment.newInstanceRequest(mItemHttpData), "request");

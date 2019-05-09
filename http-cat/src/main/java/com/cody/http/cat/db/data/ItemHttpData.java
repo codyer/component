@@ -444,8 +444,6 @@ public class ItemHttpData extends ItemViewDataHolder {
         dest.writeLong(this.mResponseContentLength);
         dest.writeByte(this.mResponseBodyIsPlainText ? (byte) 1 : (byte) 0);
         dest.writeString(this.mError);
-        dest.writeInt(this.mItemId);
-        dest.writeInt(this.mItemType);
     }
 
     public ItemHttpData() {
@@ -478,8 +476,6 @@ public class ItemHttpData extends ItemViewDataHolder {
         this.mResponseContentLength = in.readLong();
         this.mResponseBodyIsPlainText = in.readByte() != 0;
         this.mError = in.readString();
-        this.mItemId = in.readInt();
-        this.mItemType = in.readInt();
     }
 
     public static final Creator<ItemHttpData> CREATOR = new Creator<ItemHttpData>() {

@@ -19,8 +19,8 @@ import android.os.Parcel;
  * 和界面绑定的数据基类默认实现，并用于列表
  */
 public class ItemViewDataHolder extends ViewData {
-    protected int mItemId = 0;
-    protected int mItemType = 0;//不要为负数
+    private int mItemId = 0;
+    private int mItemType = 0;//不要为负数
 
     public ItemViewDataHolder() {
     }
@@ -84,4 +84,15 @@ public class ItemViewDataHolder extends ViewData {
         this.mItemType = in.readInt();
     }
 
+    public static final Creator<ItemViewDataHolder> CREATOR = new Creator<ItemViewDataHolder>() {
+        @Override
+        public ItemViewDataHolder createFromParcel(Parcel source) {
+            return new ItemViewDataHolder(source);
+        }
+
+        @Override
+        public ItemViewDataHolder[] newArray(int size) {
+            return new ItemViewDataHolder[size];
+        }
+    };
 }
