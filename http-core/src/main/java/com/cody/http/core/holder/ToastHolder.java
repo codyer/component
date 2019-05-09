@@ -22,11 +22,21 @@ import com.cody.http.core.HttpCore;
  */
 public class ToastHolder {
 
+    private static void showToast(Context context, int message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
     private static void showToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
     public static void showToast(String message) {
+        if (HttpCore.getInstance().getContext() != null) {
+            showToast(HttpCore.getInstance().getContext(), message);
+        }
+    }
+
+    public static void showToast(int message) {
         if (HttpCore.getInstance().getContext() != null) {
             showToast(HttpCore.getInstance().getContext(), message);
         }

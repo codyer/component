@@ -24,12 +24,12 @@ public class ListBean<T> {
     /**
      * 上次分页请求结果位置，默认-1
      */
-    private int prePosition;
+    private int prePosition = -1;
     /**
      * 上次分页请求结果位置，默认-1
      */
     @SerializedName(value = "nextPosition", alternate = {"position"})
-    private int nextPosition;
+    private int nextPosition = -1;
     /**
      * 列表请求结果
      */

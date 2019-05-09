@@ -117,6 +117,21 @@ public abstract class BaseFragment extends Fragment implements IBaseView, Dialog
         }
     }
 
+    @SuppressLint("ShowToast")
+    @Override
+    public void showToast(int message) {
+        if (!isAdded()) return;
+        if (message > 0 && getActivity() != null) {
+            if (mToast == null) {
+                mToast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+                mToast.setGravity(Gravity.CENTER, 0, 0);
+            } else {
+                mToast.setText(message);
+            }
+            mToast.show();
+        }
+    }
+
     @Override
     public void finish() {
         if (getActivity() != null) {
@@ -143,7 +158,11 @@ public abstract class BaseFragment extends Fragment implements IBaseView, Dialog
                 hideLoading();
                 break;
             case ViewAction.SHOW_TOAST:
-                showToast(action.getMessage());
+                if (action.getData() instanceof Integer) {
+                    showToast((Integer) action.getData());
+                } else {
+                    showToast(action.getMessage());
+                }
                 break;
             case ViewAction.FINISH:
                 finish();

@@ -46,6 +46,11 @@ public class ViewAction {
         mMessage = message;
     }
 
+    public ViewAction(int action, int message) {
+        mAction = action;
+        mData = message;
+    }
+
     public int getAction() {
         return mAction;
     }

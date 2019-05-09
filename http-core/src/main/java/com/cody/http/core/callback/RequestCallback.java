@@ -32,4 +32,8 @@ public interface RequestCallback<T> {
     default void showToast(String message) {
         ToastHolder.showToast(message);
     }
+
+    default void showToast(int message) {
+        ToastHolder.showToast(message);
+    }
 }

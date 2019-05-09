@@ -195,6 +195,20 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         }
     }
 
+    @SuppressLint("ShowToast")
+    @Override
+    public void showToast(int message) {
+        if (message > 0) {
+            if (mToast == null) {
+                mToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+                mToast.setGravity(Gravity.CENTER, 0, 0);
+            } else {
+                mToast.setText(message);
+            }
+            mToast.show();
+        }
+    }
+
     @Override
     public void finishWithResultOk() {
         setResult(RESULT_OK);
@@ -212,7 +226,11 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
                 hideLoading();
                 break;
             case ViewAction.SHOW_TOAST:
-                showToast(action.getMessage());
+                if (action.getData() instanceof Integer) {
+                    showToast((Integer) action.getData());
+                } else {
+                    showToast(action.getMessage());
+                }
                 break;
             case ViewAction.FINISH:
                 finish();

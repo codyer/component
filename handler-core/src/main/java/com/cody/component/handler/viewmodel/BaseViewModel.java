@@ -58,6 +58,11 @@ public class BaseViewModel extends ViewModel implements IViewModel {
     }
 
     @Override
+    final public void showToast(int message) {
+        setAction(ViewAction.SHOW_TOAST, message);
+    }
+
+    @Override
     final public void finish() {
         setAction(ViewAction.FINISH);
     }
@@ -78,7 +83,7 @@ public class BaseViewModel extends ViewModel implements IViewModel {
     }
 
     @Override
-    public  <T extends BaseViewModel> T setLifecycleOwner(LifecycleOwner lifecycleOwner) {
+    public <T extends BaseViewModel> T setLifecycleOwner(LifecycleOwner lifecycleOwner) {
         this.mLifecycleOwner = lifecycleOwner;
         //noinspection unchecked
         return (T) this;
@@ -89,6 +94,10 @@ public class BaseViewModel extends ViewModel implements IViewModel {
     }
 
     final protected void setAction(int action, String message) {
+        executeAction(new ViewAction(action, message));
+    }
+
+    final protected void setAction(int action, int message) {
         executeAction(new ViewAction(action, message));
     }
 }

@@ -43,6 +43,13 @@ public interface IView {
     void showToast(String message);
 
     /**
+     * show toast message
+     *
+     * @param message 需要显示的消息：正在加载。。。
+     */
+    void showToast(int message);
+
+    /**
      * 关闭当前activity
      */
     void finish();
