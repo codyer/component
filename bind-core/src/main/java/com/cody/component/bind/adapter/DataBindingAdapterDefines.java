@@ -62,11 +62,6 @@ public class DataBindingAdapterDefines {
                 .circleCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
-        if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
-            options = options.fitCenter();
-        } else {
-            options = options.centerCrop();
-        }
         if (!TextUtils.isEmpty(roundImageUrl) && !roundImageUrl.startsWith("http")) {
             Glide.with(context).load(roundImageUrl).apply(options).into(view);
             return;
