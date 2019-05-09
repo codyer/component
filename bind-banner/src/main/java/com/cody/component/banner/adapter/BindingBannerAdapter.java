@@ -42,7 +42,7 @@ public class BindingBannerAdapter extends BindingListAdapter {
     public void setItemClickListener(final OnBindingItemClickListener itemClickListener) {
         super.setItemClickListener(new OnBindingItemClickListener() {
             @Override
-            public void onItemClick(RecyclerView parent, View view, int position, long id) {
+            public void onItemClick(RecyclerView parent, View view, int position, int id) {
                 if (itemClickListener != null) {
                     itemClickListener.onItemClick(parent, view, getPosition(position), id);
                 }

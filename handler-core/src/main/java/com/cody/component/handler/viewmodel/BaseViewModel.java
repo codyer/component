@@ -74,7 +74,7 @@ public class BaseViewModel extends ViewModel implements IViewModel {
 
     @Override
     final public void executeAction(ViewAction action) {
-        mViewActionLiveData.setValue(action);
+        mViewActionLiveData.postValue(action);
     }
 
     @Override

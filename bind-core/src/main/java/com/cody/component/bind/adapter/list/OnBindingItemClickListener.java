@@ -35,5 +35,5 @@ public interface OnBindingItemClickListener {
      * @param position The position of the view in the adapter.
      * @param id       The row id of the item that was clicked.
      */
-    void onItemClick(RecyclerView parent, View view, int position, long id);
+    void onItemClick(RecyclerView parent, View view, int position, int id);
 }

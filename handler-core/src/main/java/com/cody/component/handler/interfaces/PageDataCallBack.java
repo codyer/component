@@ -36,8 +36,8 @@ public interface PageDataCallBack {
     /**
      * eg: callBack.onComplete(result);
      */
-    default void onSuccess(List<ItemViewDataHolder> data, @NonNull Result<ListBean<?>> result) {
-        onSuccess(data, PageInfo.getPrePageInfo(result), PageInfo.getNextPageInfo(result));
+    default void onSuccess(List<ItemViewDataHolder> data, @NonNull ListBean<?> listBean) {
+        onSuccess(data, PageInfo.getPrePageInfo(listBean), PageInfo.getNextPageInfo(listBean));
     }
 
     /**

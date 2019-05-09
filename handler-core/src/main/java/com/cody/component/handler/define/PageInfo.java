@@ -34,18 +34,18 @@ public class PageInfo {
         mPosition = position;
     }
 
-    public static PageInfo getPrePageInfo(Result<ListBean<?>> result) {
-        if (result == null || result.getData() == null) {
+    public static PageInfo getPrePageInfo(ListBean<?> listBean) {
+        if (listBean == null) {
             return null;
         }
-        return getPageInfo(result.getData().getPrePosition());
+        return getPageInfo(listBean.getPrePosition());
     }
 
-    public static PageInfo getNextPageInfo(Result<ListBean<?>> result) {
-        if (result == null || result.getData() == null) {
+    public static PageInfo getNextPageInfo(ListBean<?> listBean) {
+        if (listBean == null) {
             return null;
         }
-        return getPageInfo(result.getData().getNextPosition());
+        return getPageInfo(listBean.getNextPosition());
     }
 
     public static PageInfo getNextPageInfo(PageInfo lastPageInfo) {
