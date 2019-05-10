@@ -34,29 +34,17 @@ public class PageInfo {
     }
 
     public static PageInfo getPrePageInfo(PageInfo prePageKey, ListBean<?> listBean) {
-        if (listBean == null || listBean.getItems() == null || listBean.getItems().size() < prePageKey.getPageSize()) {
+        if (listBean == null || prePageKey == null) {
             return null;
         }
-        return getPageInfo(listBean.getPrePosition());
+        return new PageInfo(--prePageKey.mPageNo, prePageKey.mPageSize, listBean.getPrePosition());
     }
 
     public static PageInfo getNextPageInfo(PageInfo prePageKey, ListBean<?> listBean) {
-        if (listBean == null || listBean.getItems() == null || listBean.getItems().size() < prePageKey.getPageSize()) {
+        if (listBean == null || prePageKey == null) {
             return null;
         }
-        return getPageInfo(listBean.getNextPosition());
-    }
-
-    public static PageInfo getNextPageInfo(PageInfo lastPageInfo) {
-        if (lastPageInfo == null) {
-            return defaultPageInfo();
-        }
-        lastPageInfo.mPageNo++;
-        return lastPageInfo;
-    }
-
-    public static PageInfo getPageInfo(int position) {
-        return new PageInfo(DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE, position);
+        return new PageInfo(++prePageKey.mPageNo, prePageKey.mPageSize, listBean.getNextPosition());
     }
 
     public static PageInfo defaultPageInfo() {

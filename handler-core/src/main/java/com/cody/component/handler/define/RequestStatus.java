@@ -79,6 +79,10 @@ public class RequestStatus {
         return new RequestStatus(mOperation, Status.EMPTY);
     }
 
+    public RequestStatus end() {
+        return new RequestStatus(mOperation, Status.END);
+    }
+
     public RequestStatus loading() {
         return new RequestStatus(mOperation, Status.RUNNING);
     }
@@ -110,6 +114,10 @@ public class RequestStatus {
 
     public boolean isLoaded() {
         return mStatus == Status.SUCCESS;
+    }
+
+    public boolean isEnd() {
+        return mStatus == Status.END || isEmpty();
     }
 
     public boolean isEmpty() {

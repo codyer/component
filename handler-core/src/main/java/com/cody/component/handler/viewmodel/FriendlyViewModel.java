@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnFriendlyListener;
 import com.cody.component.lib.bean.ListBean;
@@ -90,7 +91,12 @@ public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseVie
                     (result instanceof List && ((List) result).isEmpty()) ||
                     result instanceof ListBean && (((ListBean) result).getItems() == null ||
                             ((ListBean) result).getItems().isEmpty());
-            mRequestStatusLive.postValue(mRequestStatus = empty ? mRequestStatus.empty() : mRequestStatus.loaded());
+            mRequestStatus = empty ? mRequestStatus.empty() : mRequestStatus.loaded();
+            if (result instanceof ListBean) {
+                boolean end = empty || !((ListBean) result).isMore();
+                mRequestStatus = end ? mRequestStatus.end() : mRequestStatus;
+            }
+            mRequestStatusLive.postValue(mRequestStatus);
         }
     }
 

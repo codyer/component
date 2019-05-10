@@ -21,6 +21,9 @@ import java.util.List;
  * 返回列表结果
  */
 public class ListBean<T> {
+
+    @SerializedName(value = "more", alternate = {"hasNext"})
+    private boolean more;
     /**
      * 上次分页请求结果位置，默认-1
      */
@@ -34,6 +37,14 @@ public class ListBean<T> {
      * 列表请求结果
      */
     private List<T> items;
+
+    public boolean isMore() {
+        return more;
+    }
+
+    public void setMore(final boolean more) {
+        this.more = more;
+    }
 
     public int getPrePosition() {
         return prePosition;
@@ -62,6 +73,7 @@ public class ListBean<T> {
     @Override
     public String toString() {
         return "{" +
+                "more=" + more +
                 "prePosition=" + prePosition +
                 "nextPosition=" + nextPosition +
                 ", items=" + items +

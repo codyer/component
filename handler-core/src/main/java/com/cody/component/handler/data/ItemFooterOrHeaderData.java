@@ -62,7 +62,7 @@ public class ItemFooterOrHeaderData extends ItemViewDataHolder {
     }
 
     public void setRequestStatus(final RequestStatus status) {
-        mNoMoreItem.postValue(status.isEmpty());
+        mNoMoreItem.postValue(status.isEnd());
         mError.postValue(status.isError());
         mLoading.postValue(status.isLoading());
         mErrorMessage.postValue(status.getMessage());

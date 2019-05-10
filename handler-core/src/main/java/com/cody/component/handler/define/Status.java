@@ -20,5 +20,6 @@ public enum  Status {
     RUNNING,
     SUCCESS,
     FAILED,
-    EMPTY
+    EMPTY,
+    END
 }
