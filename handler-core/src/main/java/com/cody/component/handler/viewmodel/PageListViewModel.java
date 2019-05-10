@@ -12,6 +12,13 @@
 
 package com.cody.component.handler.viewmodel;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
+
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
@@ -20,33 +27,29 @@ import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.factory.PageListDataSourceFactory;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
 import com.cody.component.handler.mapper.IDataMapper;
-import com.cody.component.handler.source.DataSourceWrapper;
+import com.cody.component.handler.source.PageListKeyedDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
 
 /**
  * Created by xu.yi. on 2019/4/8.
  * 数据仓库，获取列表数据
  */
-public abstract class PageListViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD>
-        implements OnRequestPageListener, IDataMapper {
+public abstract class PageListViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> implements OnRequestPageListener, IDataMapper {
     private final PageListDataSourceFactory mSourceFactory;
-    private DataSourceWrapper mWrapper;
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
     protected LiveData<PagedList<ItemViewDataHolder>> mSourcePageList;
 
+    private MutableLiveData<PageListKeyedDataSource> mDataSource;
+
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-        mSourceFactory = new PageListDataSourceFactory(this);
-        mWrapper = new DataSourceWrapper(mSourceFactory.getRequestStatusLive(), mSourceFactory.getDataSource());
+        mSourceFactory = new PageListDataSourceFactory((operation, oldPageInfo, callBack) -> {
+            mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.isRefreshing() ? mRequestStatus.refresh() : mRequestStatus.setOperation(operation));
+            PageListViewModel.this.onRequestPageData(mRequestStatus.isRefreshing() ? Operation.REFRESH : operation, oldPageInfo, callBack);
+        });
+        mDataSource = mSourceFactory.getDataSource();
     }
 
     @Override
@@ -72,17 +75,6 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
         return mPagedList;
     }
 
-    @NonNull
-    @Override
-    public RequestStatus getRequestStatus() {
-        return mWrapper.getRequestStatus();
-    }
-
-    @Override
-    public MutableLiveData<RequestStatus> getRequestStatusLive() {
-        return mWrapper.getRequestStatusLive();
-    }
-
     @Override
     public <ItemBean> List<ItemViewDataHolder> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
         return mapperList(operation, (mPagedList == null || mPagedList.getValue() == null) ? null : new ArrayList<>(mPagedList.getValue()), beanDataList);
@@ -92,25 +84,16 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
      * 执行一个操作
      */
     @Override
-    public void refresh() {
-        mWrapper.refresh();
-    }
+    protected void setOperation(RequestStatus requestStatus) {
+        super.setOperation(requestStatus);
 
-    @Override
-    public void retry() {
-        mWrapper.retry();
-    }
-
-    @Override
-    public void onComplete() {
-        mWrapper.onSuccess();
-        getRequestStatusLive().postValue(getRequestStatus().loaded());
-    }
-
-    @Override
-    public void onFailure(final String message) {
-        mWrapper.onFailure(message);
-        getRequestStatusLive().postValue(getRequestStatus().error(message));
+        if (requestStatus != null && mDataSource != null && mDataSource.getValue() != null) {
+            if (requestStatus.isRefreshing()) {
+                mDataSource.getValue().refresh();
+            } else if (requestStatus.isRetrying()) {
+                mDataSource.getValue().retry();
+            }
+        }
     }
 
     /**

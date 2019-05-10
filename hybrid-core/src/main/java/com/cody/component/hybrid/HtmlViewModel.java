@@ -16,7 +16,6 @@ import android.text.TextUtils;
 
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.ViewAction;
-import com.cody.component.handler.interfaces.DataCallBack;
 import com.cody.component.handler.viewmodel.SingleViewModel;
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.hybrid.core.UrlUtil;
@@ -67,7 +66,7 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
     }
 
     @Override
-    public void OnRequestData(final Operation operation, final DataCallBack callBack) {
+    public void onRequestData(final Operation operation) {
         setAction(ViewAction.DEFAULT);
     }
 }

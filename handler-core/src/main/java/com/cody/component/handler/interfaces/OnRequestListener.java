@@ -19,5 +19,5 @@ import com.cody.component.handler.define.Operation;
  * 请求数据,可以通过数据库或者网络加载方式实现
  */
 public interface OnRequestListener {
-    void OnRequestData(Operation operation, DataCallBack callBack);
+    void onRequestData(Operation operation);
 }

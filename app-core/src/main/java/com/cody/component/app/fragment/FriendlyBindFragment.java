@@ -49,7 +49,7 @@ public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends
 
     @Override
     protected void onFirstUserVisible(Bundle savedInstanceState) {
-        getFriendlyViewModel().OnInit();
+        getFriendlyViewModel().onInit();
         super.onFirstUserVisible(savedInstanceState);
     }
 

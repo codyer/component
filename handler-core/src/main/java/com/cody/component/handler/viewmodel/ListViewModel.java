@@ -54,11 +54,6 @@ public abstract class ListViewModel<VD extends MaskViewData> extends SingleViewM
     }
 
     @Override
-    public void onFailure(final String message) {
-        super.onFailure(message);
-    }
-
-    @Override
     public <ItemBean> List<ItemViewDataHolder> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
         mItems.postValue(mapperList(operation, mOldList, beanDataList));
         return mOldList;

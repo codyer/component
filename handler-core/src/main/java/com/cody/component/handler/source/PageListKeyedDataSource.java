@@ -90,11 +90,9 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
     /**
      * 请求一页数据
      */
-    private void requestPageData(Operation operation, PageInfo pageInfo, PageDataCallBack callBack) {
-        mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.setOperation(operation));
+    private void requestPageData(Operation operation, PageInfo pageInfo, PageResultCallBack callBack) {
         if (mOnRequestPageListener != null) {
-            mOnRequestPageListener.OnRequestPageData(operation, pageInfo, callBack);
+            mOnRequestPageListener.onRequestPageData(operation, pageInfo, callBack);
         }
     }
-
 }

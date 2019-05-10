@@ -15,10 +15,9 @@ package com.cody.component.list;
 
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
-import com.cody.component.handler.data.ViewData;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
-import com.cody.component.handler.interfaces.PageDataCallBack;
+import com.cody.component.handler.interfaces.PageResultCallBack;
 import com.cody.component.handler.viewmodel.PageListViewModel;
 
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class ListTestViewModel extends PageListViewModel<MaskViewData> {
     }
 
     @Override
-    public void OnRequestPageData(Operation operation, final PageInfo pageInfo, final PageDataCallBack pageDataCallBack) {
+    public void onRequestPageData(Operation operation, final PageInfo pageInfo, final PageResultCallBack result) {
         ArrayList<String> items = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             items.add("item===" + (pageInfo.getPageNo() * pageInfo.getPageSize() + i));

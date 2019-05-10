@@ -17,5 +17,5 @@ package com.cody.component.handler.interfaces;
  * 请求数据,可以通过数据库或者网络加载方式实现
  */
 public interface OnInitListener {
-    void OnInit();
+    void onInit();
 }

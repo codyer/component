@@ -53,7 +53,9 @@ public abstract class PageListBindFragment<VM extends PageListViewModel<MaskView
     @Override
     protected void onRequestStatus(final RequestStatus requestStatus) {
         super.onRequestStatus(requestStatus);
-        getBinding().swipeRefreshLayout.setRefreshing(requestStatus.isLoading());
+        if (getBinding().swipeRefreshLayout.isRefreshing()) {
+            getBinding().swipeRefreshLayout.setRefreshing(requestStatus.isLoading());
+        }
         mListAdapter.setRequestStatus(requestStatus);
     }
 }

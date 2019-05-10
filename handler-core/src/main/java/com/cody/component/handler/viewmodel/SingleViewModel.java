@@ -13,9 +13,6 @@
 package com.cody.component.handler.viewmodel;
 
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
-
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnRequestListener;
@@ -27,61 +24,16 @@ import com.cody.component.handler.interfaces.OnRequestListener;
  */
 public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> implements OnRequestListener {
 
-    private MutableLiveData<RequestStatus> mRequestStatusLive;
-    private RequestStatus mRequestStatus;
-
     public SingleViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-    }
-
-    @Override
-    public void OnInit() {
-        mRequestStatus = new RequestStatus();
-        mRequestStatusLive = new MutableLiveData<>(mRequestStatus);
-        setOperation(mRequestStatus);
-    }
-
-    @Override
-    public void refresh() {
-        setOperation(mRequestStatus.refresh());
-    }
-
-    @Override
-    public void retry() {
-        setOperation(mRequestStatus.retry());
-    }
-
-    @NonNull
-    @Override
-    public RequestStatus getRequestStatus() {
-        return mRequestStatus;
-    }
-
-    @NonNull
-    @Override
-    public MutableLiveData<RequestStatus> getRequestStatusLive() {
-        return mRequestStatusLive;
-    }
-
-    @Override
-    public void onComplete() {
-        if (mRequestStatus.isLoading()) {
-            getRequestStatusLive().postValue(mRequestStatus = mRequestStatus.loaded());
-        }
-    }
-
-    @Override
-    public void onFailure(final String message) {
-        if (mRequestStatus.isLoading()) {
-            getRequestStatusLive().postValue(mRequestStatus = mRequestStatus.error(message));
-        }
     }
 
     /**
      * 执行一个操作
      */
+    @Override
     protected void setOperation(RequestStatus requestStatus) {
-        mRequestStatusLive.setValue(mRequestStatus = requestStatus);
-        OnRequestData(requestStatus.getOperation(), this);
+        super.setOperation(requestStatus);
+        onRequestData(requestStatus.getOperation());
     }
 }

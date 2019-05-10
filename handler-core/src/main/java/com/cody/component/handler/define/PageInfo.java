@@ -13,7 +13,6 @@
 package com.cody.component.handler.define;
 
 import com.cody.component.lib.bean.ListBean;
-import com.cody.component.lib.bean.Result;
 
 /**
  * Created by xu.yi. on 2019/4/8.
@@ -22,8 +21,8 @@ import com.cody.component.lib.bean.Result;
 public class PageInfo {
     public final static int DEFAULT_PAGE_NO = 0;
     public final static int DEFAULT_PAGE_SIZE = 20;
-    public final static int DEFAULT_POSITION = -1;
-    public final static int DEFAULT_PREFETCH_DISTANCE = 1;
+    public final static int DEFAULT_POSITION = 0;
+    public final static int DEFAULT_PREFETCH_DISTANCE = 5;
     private int mPageNo;
     private int mPageSize;
     private int mPosition;
