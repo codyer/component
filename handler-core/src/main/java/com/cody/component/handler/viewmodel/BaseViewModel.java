@@ -24,11 +24,13 @@ import androidx.lifecycle.ViewModel;
  * 封装基本逻辑
  */
 public class BaseViewModel extends ViewModel implements IViewModel {
-    private final MutableLiveData<ViewAction> mViewActionLiveData;
+    private MutableLiveData<ViewAction> mViewActionLiveData;
     protected LifecycleOwner mLifecycleOwner;
 
     @Override
     protected void onCleared() {
+        mViewActionLiveData.removeObservers(mLifecycleOwner);
+        mViewActionLiveData = null;
         super.onCleared();
         //cancel http request
     }
@@ -74,11 +76,16 @@ public class BaseViewModel extends ViewModel implements IViewModel {
 
     @Override
     final public void executeAction(ViewAction action) {
-        mViewActionLiveData.postValue(action);
+        if (mViewActionLiveData != null) {
+            mViewActionLiveData.postValue(action);
+        }
     }
 
     @Override
     final public MutableLiveData<ViewAction> getActionLiveData() {
+        if (mViewActionLiveData == null){
+            mViewActionLiveData = new MutableLiveData<>();
+        }
         return mViewActionLiveData;
     }
 

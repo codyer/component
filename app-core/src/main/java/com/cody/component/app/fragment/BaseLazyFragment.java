@@ -25,7 +25,10 @@ import androidx.annotation.Nullable;
  * 懒加载
  */
 public abstract class BaseLazyFragment extends BaseFragment {
-
+    /**
+     * 第一次onResume中的调用onUserVisible避免操作与onFirstUserVisible操作重复
+     */
+    private boolean mIsFirstResume = true;
     private boolean mIsFirstVisible = true;
     private boolean mIsPrepared = false;
 
@@ -61,6 +64,26 @@ public abstract class BaseLazyFragment extends BaseFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initPrepare(savedInstanceState);
+    }
+
+    @Override
+    public void onHiddenChanged(final boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            onUserVisible();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mIsFirstResume) {
+            mIsFirstResume = false;
+            return;
+        }
+        if (getUserVisibleHint()) {
+            onUserVisible();
+        }
     }
 
     @Override

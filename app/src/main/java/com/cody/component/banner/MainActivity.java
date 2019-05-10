@@ -114,7 +114,7 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
         BindingBannerAdapter bannerAdapter = new BindingBannerAdapter(this);
         bannerAdapter.setItemClickListener(new OnBindingItemClickListener() {
             @Override
-            public void onItemClick(RecyclerView parent, View view, int position, long id) {
+            public void onItemClick(RecyclerView parent, View view, int position, int id) {
                 Toast.makeText(MainActivity.this, "position=" + position, Toast.LENGTH_SHORT).show();
             }
         });

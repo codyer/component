@@ -34,15 +34,15 @@ public class PageInfo {
         mPosition = position;
     }
 
-    public static PageInfo getPrePageInfo(ListBean<?> listBean) {
-        if (listBean == null) {
+    public static PageInfo getPrePageInfo(PageInfo prePageKey, ListBean<?> listBean) {
+        if (listBean == null || listBean.getItems() == null || listBean.getItems().size() < prePageKey.getPageSize()) {
             return null;
         }
         return getPageInfo(listBean.getPrePosition());
     }
 
-    public static PageInfo getNextPageInfo(ListBean<?> listBean) {
-        if (listBean == null) {
+    public static PageInfo getNextPageInfo(PageInfo prePageKey, ListBean<?> listBean) {
+        if (listBean == null || listBean.getItems() == null || listBean.getItems().size() < prePageKey.getPageSize()) {
             return null;
         }
         return getPageInfo(listBean.getNextPosition());

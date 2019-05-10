@@ -23,6 +23,7 @@ import com.cody.component.handler.interfaces.Refreshable;
 import com.cody.component.handler.viewmodel.BaseViewModel;
 import com.cody.component.handler.viewmodel.FriendlyViewModel;
 
+import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.ViewModel;
@@ -114,6 +115,7 @@ public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends
         }
     }
 
+    @CallSuper
     @Override
     public void onClick(final View v) {
         if (v.getId() == R.id.friendlyRetry) {

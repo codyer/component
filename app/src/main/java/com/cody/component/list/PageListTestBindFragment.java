@@ -39,7 +39,7 @@ public class PageListTestBindFragment extends PageListBindFragment<ListTestViewM
     }
 
     @Override
-    public void onItemClick(final RecyclerView recyclerView, final View view, final int i, final long l) {
+    public void onItemClick(final RecyclerView recyclerView, final View view, final int i, final int l) {
         getFriendlyViewModel().test();
     }
 
