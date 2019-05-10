@@ -35,7 +35,7 @@ public class PageListTestBindFragment extends PageListBindFragment<ListTestViewM
 
     @Override
     public void onClick(final View v) {
-
+        super.onClick(v);
     }
 
     @Override

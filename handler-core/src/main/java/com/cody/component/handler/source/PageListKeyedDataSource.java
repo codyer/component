@@ -13,20 +13,15 @@
 package com.cody.component.handler.source;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.MutableLiveData;
 import androidx.paging.PageKeyedDataSource;
 
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
-import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
 import com.cody.component.handler.interfaces.OnRetryListener;
-import com.cody.component.handler.interfaces.PageDataCallBack;
+import com.cody.component.handler.interfaces.PageResultCallBack;
 import com.cody.component.handler.interfaces.Refreshable;
-
-import java.util.List;
 
 /**
  * Created by xu.yi. on 2019/4/8.
@@ -35,15 +30,11 @@ import java.util.List;
  */
 public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemViewDataHolder>
         implements Refreshable, OnRetryListener {
-    final private MutableLiveData<RequestStatus> mRequestStatusLive;
-    private RequestStatus mRequestStatus;
     final private OnRequestPageListener mOnRequestPageListener;
     private OnRetryListener mOnRetryListener;
 
-    public PageListKeyedDataSource(final OnRequestPageListener onRequestPageListener, final MutableLiveData<RequestStatus> operationStatusLive) {
+    public PageListKeyedDataSource(final OnRequestPageListener onRequestPageListener) {
         mOnRequestPageListener = onRequestPageListener;
-        mRequestStatusLive = operationStatusLive;
-        mRequestStatus = mRequestStatusLive.getValue();
     }
 
     @Override
@@ -64,18 +55,9 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
         if (mOnRetryListener == null) {
             mOnRetryListener = () -> loadInitial(params, callback);
         }
-        requestPageData(mRequestStatus.getOperation(), pageInfo, new PageDataCallBack() {
-            @Override
-            public void onSuccess(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
-                callback.onResult(data, prePageKey, nextPageKey);
-                mRequestStatusLive.postValue(mRequestStatus = data.isEmpty() ? mRequestStatus.empty() : mRequestStatus.loaded());
-                mOnRetryListener = null;
-            }
-
-            @Override
-            public void onFailure(String message) {
-                mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.error(message));
-            }
+        requestPageData(Operation.INIT, pageInfo, (data, prePageKey, nextPageKey) -> {
+            callback.onResult(data, prePageKey, nextPageKey);
+            mOnRetryListener = null;
         });
     }
 
@@ -84,18 +66,9 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
         if (mOnRetryListener == null) {
             mOnRetryListener = () -> loadBefore(params, callback);
         }
-        requestPageData(Operation.LOAD_BEFORE, params.key, new PageDataCallBack() {
-            @Override
-            public void onSuccess(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
-                callback.onResult(data, prePageKey);
-                mRequestStatusLive.postValue(mRequestStatus = data.isEmpty() ? mRequestStatus.empty() : mRequestStatus.loaded());
-                mOnRetryListener = null;
-            }
-
-            @Override
-            public void onFailure(String message) {
-                mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.error(message));
-            }
+        requestPageData(Operation.LOAD_BEFORE, params.key, (data, prePageKey, nextPageKey) -> {
+            callback.onResult(data, prePageKey);
+            mOnRetryListener = null;
         });
     }
 
@@ -104,22 +77,13 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
         if (mOnRetryListener == null) {
             mOnRetryListener = () -> loadAfter(params, callback);
         }
-        requestPageData(Operation.LOAD_AFTER, params.key, new PageDataCallBack() {
-            @Override
-            public void onSuccess(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey) {
-                if (nextPageKey != null && data.size() > nextPageKey.getPositionByPageNo()) {
-                    callback.onResult(data.subList(nextPageKey.getPositionByPageNo(), data.size()), nextPageKey);
-                } else {
-                    callback.onResult(data, nextPageKey);
-                }
-                mRequestStatusLive.postValue(mRequestStatus = data.isEmpty() ? mRequestStatus.empty() : mRequestStatus.loaded());
-                mOnRetryListener = null;
+        requestPageData(Operation.LOAD_AFTER, params.key, (data, prePageKey, nextPageKey) -> {
+            if (nextPageKey != null && data.size() > nextPageKey.getPositionByPageNo()) {
+                callback.onResult(data.subList(nextPageKey.getPositionByPageNo(), data.size()), nextPageKey);
+            } else {
+                callback.onResult(data, nextPageKey);
             }
-
-            @Override
-            public void onFailure(String message) {
-                mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.error(message));
-            }
+            mOnRetryListener = null;
         });
     }
 

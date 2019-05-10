@@ -41,7 +41,7 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
     private final PageListDataSourceFactory mSourceFactory;
     private DataSourceWrapper mWrapper;
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
-    protected List<ItemViewDataHolder> mOldList = new ArrayList<>();
+    protected LiveData<PagedList<ItemViewDataHolder>> mSourcePageList;
 
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
@@ -50,9 +50,17 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
     }
 
     @Override
-    public void OnInit() {
-        mPagedList = new LivePagedListBuilder<>(mSourceFactory, initPageListConfig()).build();
-        mPagedList.observe(mLifecycleOwner, itemViewDataHolders -> mOldList = new ArrayList<>(itemViewDataHolders));
+    public void onInit() {
+        super.onInit();
+        mSourcePageList = new LivePagedListBuilder<>(mSourceFactory, initPageListConfig()).build();
+        mPagedList = Transformations.map(mSourcePageList, input -> {
+            if (mRequestStatus.isRefreshing() &&
+                    (mPagedList != null && mPagedList.getValue() != null && !mPagedList.getValue().isEmpty()) &&
+                    (mSourcePageList == null || mSourcePageList.getValue() == null || mSourcePageList.getValue().isEmpty())) {
+                return mPagedList.getValue();
+            }
+            return input;
+        });
     }
 
     @Override
@@ -77,9 +85,12 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
 
     @Override
     public <ItemBean> List<ItemViewDataHolder> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
-        return mapperList(operation, mOldList, beanDataList);
+        return mapperList(operation, (mPagedList == null || mPagedList.getValue() == null) ? null : new ArrayList<>(mPagedList.getValue()), beanDataList);
     }
 
+    /**
+     * 执行一个操作
+     */
     @Override
     public void refresh() {
         mWrapper.refresh();

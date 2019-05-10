@@ -31,26 +31,20 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
 public class PageListDataSourceFactory extends DataSource.Factory<PageInfo, ItemViewDataHolder> {
     private MutableLiveData<PageListKeyedDataSource> mDataSource = new MutableLiveData<>();
     private OnRequestPageListener mOnRequestPageListener;
-    final private MutableLiveData<RequestStatus> mRequestStatusLive;
 
     public PageListDataSourceFactory(OnRequestPageListener onRequestPageListener) {
         mOnRequestPageListener = onRequestPageListener;
-        mRequestStatusLive = new MutableLiveData<>(new RequestStatus());
     }
 
     @NonNull
     @Override
     public DataSource<PageInfo, ItemViewDataHolder> create() {
-        PageListKeyedDataSource dataSource = new PageListKeyedDataSource(mOnRequestPageListener, mRequestStatusLive);
+        PageListKeyedDataSource dataSource = new PageListKeyedDataSource(mOnRequestPageListener);
         mDataSource.postValue(dataSource);
         return dataSource;
     }
 
     public MutableLiveData<PageListKeyedDataSource> getDataSource() {
         return mDataSource;
-    }
-
-    public MutableLiveData<RequestStatus> getRequestStatusLive() {
-        return mRequestStatusLive;
     }
 }

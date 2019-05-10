@@ -31,17 +31,12 @@ public interface PageDataCallBack {
     /**
      * eg: callBack.onComplete(listResult.getData().getItems(), PageInfo.getPrePageInfo(listResult), PageInfo.getNextPageInfo(listResult));
      */
-    void onSuccess(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey);
+    void onResult(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey);
 
     /**
      * eg: callBack.onComplete(result);
      */
-    default void onSuccess(List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @NonNull ListBean<?> listBean) {
-        onSuccess(data, PageInfo.getPrePageInfo(prePageKey, listBean), PageInfo.getNextPageInfo(prePageKey, listBean));
+    default void onResult(List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @NonNull ListBean<?> listBean) {
+        onResult(data, PageInfo.getPrePageInfo(prePageKey, listBean), PageInfo.getNextPageInfo(prePageKey, listBean));
     }
-
-    /**
-     * eg: callBack.onFailure(message);
-     */
-    void onFailure(String message);
 }

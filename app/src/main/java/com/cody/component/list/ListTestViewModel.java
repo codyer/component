@@ -55,7 +55,8 @@ public class ListTestViewModel extends PageListViewModel<MaskViewData> {
             items.clear();
         }
         pageInfo.setPageNo(pageInfo.getPageNo() + 1);
-        pageDataCallBack.onSuccess(mapperList(operation, items), null, pageInfo);
+        result.onResult(mapperList(operation, items), null, pageInfo);
+        onComplete(items);
     }
 
     @Override

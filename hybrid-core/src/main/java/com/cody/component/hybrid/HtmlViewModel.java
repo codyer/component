@@ -63,7 +63,7 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
 
     public void onPageFinished(final String url) {
         getFriendlyViewData().setUrl(url);
-        onComplete();
+        onComplete(url);
     }
 
     @Override

@@ -20,5 +20,5 @@ import com.cody.component.handler.define.PageInfo;
  * 请求分页数据,可以通过数据库或者网络加载方式实现
  */
 public interface OnRequestPageListener {
-    void OnRequestPageData(Operation operation, PageInfo oldPageInfo, PageDataCallBack callBack);
+    void onRequestPageData(Operation operation, PageInfo oldPageInfo, PageResultCallBack callBack);
 }
