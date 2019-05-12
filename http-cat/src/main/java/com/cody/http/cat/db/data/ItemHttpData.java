@@ -13,6 +13,7 @@
 package com.cody.http.cat.db.data;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.http.cat.utils.FormatUtils;
@@ -34,7 +35,7 @@ import okhttp3.Headers;
  * cat data
  */
 @Entity(tableName = "http_cat_table")
-public class ItemHttpData extends ItemViewDataHolder {
+public class ItemHttpData extends ItemViewDataHolder implements Parcelable {
     private static final int DEFAULT_RESPONSE_CODE = -100;
 
     public enum Status {Requested, Complete, Failed}
@@ -420,7 +421,6 @@ public class ItemHttpData extends ItemViewDataHolder {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
         dest.writeLong(this.id);
         dest.writeLong(this.mRequestDate != null ? this.mRequestDate.getTime() : -1);
         dest.writeLong(this.mResponseDate != null ? this.mResponseDate.getTime() : -1);
@@ -450,7 +450,6 @@ public class ItemHttpData extends ItemViewDataHolder {
     }
 
     protected ItemHttpData(Parcel in) {
-        super(in);
         this.id = in.readLong();
         long tmpMRequestDate = in.readLong();
         this.mRequestDate = tmpMRequestDate == -1 ? null : new Date(tmpMRequestDate);

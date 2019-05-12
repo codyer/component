@@ -12,8 +12,6 @@
 
 package com.cody.component.handler.data;
 
-import android.os.Parcel;
-
 /**
  * Created by xu.yi. on 2019/3/26.
  * 和界面绑定的数据基类默认实现
@@ -29,31 +27,4 @@ public class ViewData implements IViewData {
     public boolean areContentsTheSame(IViewData newData) {
         return this.equals(newData);
     }
-
-    public ViewData() {
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-    }
-
-    protected ViewData(Parcel in) {
-    }
-
-    public static final Creator<ViewData> CREATOR = new Creator<ViewData>() {
-        @Override
-        public ViewData createFromParcel(Parcel source) {
-            return new ViewData(source);
-        }
-
-        @Override
-        public ViewData[] newArray(int size) {
-            return new ViewData[size];
-        }
-    };
 }

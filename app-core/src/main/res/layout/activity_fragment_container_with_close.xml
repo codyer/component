@@ -69,7 +69,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/dimen_normal"
+                    android:ellipsize="end"
                     android:gravity="center_vertical"
+                    android:singleLine="true"
                     tools:layout_height="wrap_content"
                     tools:text="SecondActivity" />
 

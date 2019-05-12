@@ -12,7 +12,6 @@
 
 package com.cody.component.banner.data;
 
-import android.os.Parcel;
 import android.text.TextUtils;
 
 import com.cody.component.handler.data.IViewData;
@@ -102,40 +101,4 @@ public class BannerViewData extends ItemViewDataHolder {
     public int hashCode() {
         return Objects.hash(super.hashCode(), mImgId, mImgDesc, mImgUrl, mImgSize, mLinkUrl);
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.mImgId);
-        dest.writeString(this.mImgDesc);
-        dest.writeString(this.mImgUrl);
-        dest.writeString(this.mImgSize);
-        dest.writeString(this.mLinkUrl);
-    }
-
-    protected BannerViewData(Parcel in) {
-        super(in);
-        this.mImgId = in.readString();
-        this.mImgDesc = in.readString();
-        this.mImgUrl = in.readString();
-        this.mImgSize = in.readString();
-        this.mLinkUrl = in.readString();
-    }
-
-    public static final Creator<BannerViewData> CREATOR = new Creator<BannerViewData>() {
-        @Override
-        public BannerViewData createFromParcel(Parcel source) {
-            return new BannerViewData(source);
-        }
-
-        @Override
-        public BannerViewData[] newArray(int size) {
-            return new BannerViewData[size];
-        }
-    };
 }

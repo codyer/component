@@ -13,6 +13,9 @@
 package com.cody.component.list;
 
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
@@ -46,16 +49,21 @@ public class ListTestViewModel extends PageListViewModel<MaskViewData> {
 
     @Override
     public void onRequestPageData(Operation operation, final PageInfo pageInfo, final PageResultCallBack result) {
-        ArrayList<String> items = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            items.add("item===" + (pageInfo.getPageNo() * pageInfo.getPageSize() + i));
-        }
-        if (pageInfo.getPageNo() == 3) {
-            items.clear();
-        }
-        pageInfo.setPageNo(pageInfo.getPageNo() + 1);
-        result.onResult(mapperList(operation, items), null, pageInfo);
-        onComplete(items);
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ArrayList<String> items = new ArrayList<>();
+                for (int i = 0; i < 20; i++) {
+                    items.add(System.currentTimeMillis() + "item===" + (pageInfo.getPageNo() * pageInfo.getPageSize() + i));
+                }
+                if (pageInfo.getPageNo() == 3) {
+                    items.clear();
+                }
+                pageInfo.setPageNo(pageInfo.getPageNo() + 1);
+                result.onResult(mapperList(operation, items), null, pageInfo);
+                onComplete(items);
+            }
+        }, 500);
     }
 
     @Override

@@ -12,13 +12,11 @@
 
 package com.cody.component.handler.data;
 
-import android.os.Parcelable;
-
 /**
  * Created by xu.yi. on 2019/3/26.
  * 和界面绑定的数据基类接口
  */
-public interface IViewData extends Parcelable {
+public interface IViewData {
     boolean areItemsTheSame(IViewData newData);
 
     boolean areContentsTheSame(IViewData newData);

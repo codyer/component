@@ -12,8 +12,6 @@
 
 package com.cody.component.handler.data;
 
-import android.os.Parcel;
-
 import com.cody.component.handler.livedata.BooleanLiveData;
 
 /**
@@ -60,32 +58,4 @@ public class ItemViewData extends ItemViewDataHolder {
     public boolean areContentsTheSame(final IViewData newData) {
         return this.equals(newData);
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeParcelable(this.mValid, flags);
-    }
-
-    protected ItemViewData(Parcel in) {
-        super(in);
-        this.mValid = in.readParcelable(BooleanLiveData.class.getClassLoader());
-    }
-
-    public static final Creator<ItemViewData> CREATOR = new Creator<ItemViewData>() {
-        @Override
-        public ItemViewData createFromParcel(Parcel source) {
-            return new ItemViewData(source);
-        }
-
-        @Override
-        public ItemViewData[] newArray(int size) {
-            return new ItemViewData[size];
-        }
-    };
 }

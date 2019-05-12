@@ -12,8 +12,6 @@
 
 package com.cody.component.hybrid.data;
 
-import android.os.Parcel;
-
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.livedata.BooleanLiveData;
 import com.cody.component.handler.livedata.IntegerLiveData;
@@ -63,43 +61,4 @@ public class HtmlViewData extends MaskViewData {
     public void setProgress(final int progress) {
         mProgress.setValue(progress);
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeByte(this.mIgnoreError ? (byte) 1 : (byte) 0);
-        dest.writeParcelable(this.mShowHeader, flags);
-        dest.writeParcelable(this.mProgress, flags);
-        dest.writeParcelable(this.mHeader, flags);
-        dest.writeParcelable(this.mUrl, flags);
-    }
-
-    public HtmlViewData() {
-    }
-
-    protected HtmlViewData(Parcel in) {
-        super(in);
-        this.mIgnoreError = in.readByte() != 0;
-        this.mShowHeader = in.readParcelable(BooleanLiveData.class.getClassLoader());
-        this.mProgress = in.readParcelable(IntegerLiveData.class.getClassLoader());
-        this.mHeader = in.readParcelable(StringLiveData.class.getClassLoader());
-        this.mUrl = in.readParcelable(StringLiveData.class.getClassLoader());
-    }
-
-    public static final Creator<HtmlViewData> CREATOR = new Creator<HtmlViewData>() {
-        @Override
-        public HtmlViewData createFromParcel(Parcel source) {
-            return new HtmlViewData(source);
-        }
-
-        @Override
-        public HtmlViewData[] newArray(int size) {
-            return new HtmlViewData[size];
-        }
-    };
 }

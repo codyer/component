@@ -12,8 +12,6 @@
 
 package com.cody.component.handler.livedata;
 
-import android.os.Parcel;
-
 /**
  * Created by xu.yi. on 2019/4/15.
  * component
@@ -38,30 +36,4 @@ public class BooleanLiveData extends SafeMutableLiveData<Boolean>{
         }
         return false;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-    }
-
-    protected BooleanLiveData(Parcel in) {
-        super(in);
-    }
-
-    public static final Creator<BooleanLiveData> CREATOR = new Creator<BooleanLiveData>() {
-        @Override
-        public BooleanLiveData createFromParcel(Parcel source) {
-            return new BooleanLiveData(source);
-        }
-
-        @Override
-        public BooleanLiveData[] newArray(int size) {
-            return new BooleanLiveData[size];
-        }
-    };
 }

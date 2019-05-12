@@ -12,8 +12,6 @@
 
 package com.cody.component.handler.data;
 
-import android.os.Parcel;
-
 import com.cody.component.handler.R;
 import com.cody.component.handler.livedata.BooleanLiveData;
 import com.cody.component.handler.livedata.IntegerLiveData;
@@ -101,42 +99,4 @@ public class MaskViewData extends ViewData {
     public IntegerLiveData getImageId() {
         return mImageId;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeParcelable(this.mVisibility, flags);
-        dest.writeParcelable(this.mInfoId, flags);
-        dest.writeParcelable(this.mMessage, flags);
-        dest.writeParcelable(this.mLoading, flags);
-        dest.writeParcelable(this.mImageId, flags);
-        dest.writeInt(this.loadingResId);
-    }
-
-    protected MaskViewData(Parcel in) {
-        super(in);
-        this.mVisibility = in.readParcelable(BooleanLiveData.class.getClassLoader());
-        this.mInfoId = in.readParcelable(IntegerLiveData.class.getClassLoader());
-        this.mMessage = in.readParcelable(StringLiveData.class.getClassLoader());
-        this.mLoading = in.readParcelable(BooleanLiveData.class.getClassLoader());
-        this.mImageId = in.readParcelable(IntegerLiveData.class.getClassLoader());
-        this.loadingResId = in.readInt();
-    }
-
-    public static final Creator<MaskViewData> CREATOR = new Creator<MaskViewData>() {
-        @Override
-        public MaskViewData createFromParcel(Parcel source) {
-            return new MaskViewData(source);
-        }
-
-        @Override
-        public MaskViewData[] newArray(int size) {
-            return new MaskViewData[size];
-        }
-    };
 }

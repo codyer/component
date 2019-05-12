@@ -12,13 +12,6 @@
 
 package com.cody.component.handler.viewmodel;
 
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
-
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
@@ -32,6 +25,12 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
+
 /**
  * Created by xu.yi. on 2019/4/8.
  * 数据仓库，获取列表数据
@@ -39,9 +38,8 @@ import java.util.List;
 public abstract class PageListViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> implements OnRequestPageListener, IDataMapper {
     private final PageListDataSourceFactory mSourceFactory;
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
-    protected LiveData<PagedList<ItemViewDataHolder>> mSourcePageList;
-
     private MutableLiveData<PageListKeyedDataSource> mDataSource;
+    private List<ItemViewDataHolder> mOldList;
 
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
@@ -55,15 +53,7 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
     @Override
     public void onInit() {
         super.onInit();
-        mSourcePageList = new LivePagedListBuilder<>(mSourceFactory, initPageListConfig()).build();
-        mPagedList = Transformations.map(mSourcePageList, input -> {
-            if (mRequestStatus.isRefreshing() &&
-                    (mPagedList != null && mPagedList.getValue() != null && !mPagedList.getValue().isEmpty()) &&
-                    (mSourcePageList == null || mSourcePageList.getValue() == null || mSourcePageList.getValue().isEmpty())) {
-                return mPagedList.getValue();
-            }
-            return input;
-        });
+        mPagedList = new LivePagedListBuilder<>(mSourceFactory, initPageListConfig()).build();
     }
 
     @Override
@@ -77,7 +67,7 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
 
     @Override
     public <ItemBean> List<ItemViewDataHolder> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
-        return mapperList(operation, (mPagedList == null || mPagedList.getValue() == null) ? null : new ArrayList<>(mPagedList.getValue()), beanDataList);
+        return mapperList(operation, (mOldList == null) ? null : new ArrayList<>(mOldList), beanDataList);
     }
 
     /**
@@ -89,6 +79,7 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
 
         if (requestStatus != null && mDataSource != null && mDataSource.getValue() != null) {
             if (requestStatus.isRefreshing()) {
+                mOldList = mPagedList.getValue();
                 mDataSource.getValue().refresh();
             } else if (requestStatus.isRetrying()) {
                 mDataSource.getValue().retry();

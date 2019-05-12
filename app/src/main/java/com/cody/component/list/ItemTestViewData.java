@@ -12,8 +12,6 @@
 
 package com.cody.component.list;
 
-import android.os.Parcel;
-
 import com.cody.component.handler.data.ItemViewDataHolder;
 
 import java.util.Objects;
@@ -52,32 +50,4 @@ public class ItemTestViewData extends ItemViewDataHolder {
     public void setTest(final String test) {
         this.test = test;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-        dest.writeString(this.test);
-    }
-
-    protected ItemTestViewData(Parcel in) {
-        super(in);
-        this.test = in.readString();
-    }
-
-    public static final Creator<ItemTestViewData> CREATOR = new Creator<ItemTestViewData>() {
-        @Override
-        public ItemTestViewData createFromParcel(Parcel source) {
-            return new ItemTestViewData(source);
-        }
-
-        @Override
-        public ItemTestViewData[] newArray(int size) {
-            return new ItemTestViewData[size];
-        }
-    };
 }

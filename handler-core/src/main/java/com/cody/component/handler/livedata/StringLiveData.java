@@ -12,8 +12,6 @@
 
 package com.cody.component.handler.livedata;
 
-import android.os.Parcel;
-
 /**
  * Created by xu.yi. on 2019/4/15.
  * component
@@ -31,30 +29,4 @@ public class StringLiveData extends SafeMutableLiveData<String> {
         }
         return "";
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
-    }
-
-    protected StringLiveData(Parcel in) {
-        super(in);
-    }
-
-    public static final Creator<StringLiveData> CREATOR = new Creator<StringLiveData>() {
-        @Override
-        public StringLiveData createFromParcel(Parcel source) {
-            return new StringLiveData(source);
-        }
-
-        @Override
-        public StringLiveData[] newArray(int size) {
-            return new StringLiveData[size];
-        }
-    };
 }
