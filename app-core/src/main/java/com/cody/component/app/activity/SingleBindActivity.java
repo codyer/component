@@ -12,20 +12,15 @@
 
 package com.cody.component.app.activity;
 
-import com.cody.component.bind.CoreBR;
-import com.cody.component.handler.data.IViewData;
-
 import androidx.databinding.ViewDataBinding;
+
+import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.viewmodel.SingleViewModel;
 
 /**
  * Created by xu.yi. on 2019/3/25.
  * 一个页面只绑定一个viewModel
  */
-public abstract class SingleBindActivity<B extends ViewDataBinding, VD extends IViewData> extends BaseBindActivity<B> {
-    protected abstract VD getViewData();
+public abstract class SingleBindActivity<B extends ViewDataBinding, VM extends SingleViewModel<VD>, VD extends MaskViewData> extends FriendlyBindActivity<B, VM, VD> {
 
-    @Override
-    protected void bindViewData() {
-        bindViewData(CoreBR.viewData, getViewData());
-    }
 }

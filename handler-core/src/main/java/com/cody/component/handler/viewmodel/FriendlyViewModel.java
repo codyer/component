@@ -18,7 +18,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cody.component.handler.data.MaskViewData;
-import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnFriendlyListener;
 import com.cody.component.lib.bean.ListBean;
@@ -53,7 +52,7 @@ public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseVie
         if (mRequestStatusLive == null) {
             mRequestStatusLive = new MutableLiveData<>(mRequestStatus);
         }
-        setOperation(mRequestStatus);
+        setOperation(mRequestStatus.init());
     }
 
     @Override

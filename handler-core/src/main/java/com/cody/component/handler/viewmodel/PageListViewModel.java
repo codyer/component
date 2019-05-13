@@ -34,7 +34,6 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
  */
 @SuppressWarnings("unchecked")
 public abstract class PageListViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> {
-    private final PageListDataSourceFactory<Object> mSourceFactory;
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
     private MutableLiveData<PageListKeyedDataSource> mDataSource;
     private PagedList<ItemViewDataHolder> mOldList;
@@ -44,14 +43,19 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
     protected abstract OnRequestPageListener<?> createRequestPageListener();
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-        mSourceFactory = new PageListDataSourceFactory<>((OnRequestPageListener) (operation, oldPageInfo, callBack) -> {
+        final PageListDataSourceFactory<Object> sourceFactory = new PageListDataSourceFactory<>((OnRequestPageListener) (operation, oldPageInfo, callBack) -> {
             if (mRequestStatus.isRefreshing()) {
                 operation = Operation.REFRESH;
             }
             mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.setOperation(operation));
             createRequestPageListener().onRequestPageData(operation, oldPageInfo, callBack);
         });
-        mDataSource = mSourceFactory.getDataSource();
+        mDataSource = sourceFactory.getDataSource();
+
+        IPageDataMapper<ItemViewDataHolder, Object> mapper = (IPageDataMapper<ItemViewDataHolder, Object>) createMapper();
+
+        // TODO 是否解决刷新闪问题？ 此处保留数据源？
+        mPagedList = new LivePagedListBuilder<>(sourceFactory.map(mapper), initPageListConfig()).build();
     }
 
     /**
@@ -64,15 +68,6 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
                 .setInitialLoadSizeHint(PageInfo.DEFAULT_PAGE_SIZE)
                 .setPageSize(PageInfo.DEFAULT_PAGE_SIZE)
                 .build();
-    }
-
-    @Override
-    public void onInit() {
-        super.onInit();
-        IPageDataMapper<ItemViewDataHolder, Object> mapper = (IPageDataMapper<ItemViewDataHolder, Object>) createMapper();
-
-        // TODO 是否解决刷新闪问题？ 此处保留数据源？
-        mPagedList = new LivePagedListBuilder<>(mSourceFactory.map(mapper), initPageListConfig()).build();
     }
 
     @Override
