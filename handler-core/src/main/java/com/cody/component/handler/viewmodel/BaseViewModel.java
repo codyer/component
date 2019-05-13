@@ -14,6 +14,8 @@ package com.cody.component.handler.viewmodel;
 
 
 import com.cody.component.handler.define.ViewAction;
+import com.cody.component.util.ActivityUtil;
+import com.cody.component.util.LogUtil;
 
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -77,13 +79,18 @@ public class BaseViewModel extends ViewModel implements IViewModel {
     @Override
     final public void executeAction(ViewAction action) {
         if (mViewActionLiveData != null) {
-            mViewActionLiveData.postValue(action);
+            if (ActivityUtil.isMainThread()) {
+                mViewActionLiveData.setValue(action);
+            } else {
+                LogUtil.e("executeAction maybe lose ->"+action);
+                mViewActionLiveData.postValue(action);
+            }
         }
     }
 
     @Override
     final public MutableLiveData<ViewAction> getActionLiveData() {
-        if (mViewActionLiveData == null){
+        if (mViewActionLiveData == null) {
             mViewActionLiveData = new MutableLiveData<>();
         }
         return mViewActionLiveData;

@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Looper;
 import android.text.TextUtils;
 
 import java.lang.ref.Reference;
@@ -203,6 +204,9 @@ public class ActivityUtil {
         activity.finish();
     }
 
+    public static boolean isMainThread() {
+        return Looper.myLooper() == Looper.getMainLooper();
+    }
 
     private static void startForResult(Object context, Intent intent, int request) {
         if (context instanceof Activity) {

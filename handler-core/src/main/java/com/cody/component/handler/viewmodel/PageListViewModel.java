@@ -44,8 +44,11 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
         mSourceFactory = new PageListDataSourceFactory((operation, oldPageInfo, callBack) -> {
-            mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.isRefreshing() ? mRequestStatus.refresh() : mRequestStatus.setOperation(operation));
-            PageListViewModel.this.onRequestPageData(mRequestStatus.isRefreshing() ? Operation.REFRESH : operation, oldPageInfo, callBack);
+            if (mRequestStatus.isRefreshing()) {
+                operation = Operation.REFRESH;
+            }
+            mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.setOperation(operation));
+            PageListViewModel.this.onRequestPageData(operation, oldPageInfo, callBack);
         });
         mDataSource = mSourceFactory.getDataSource();
     }
