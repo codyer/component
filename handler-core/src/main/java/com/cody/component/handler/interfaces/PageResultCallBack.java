@@ -13,7 +13,6 @@
 package com.cody.component.handler.interfaces;
 
 
-import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.lib.bean.ListBean;
 import com.cody.component.handler.define.PageInfo;
 
@@ -26,16 +25,16 @@ import androidx.annotation.Nullable;
  * Created by xu.yi. on 2019/4/8.
  * 获取分页数据后进行回调的接口
  */
-public interface PageResultCallBack {
+public interface PageResultCallBack<Bean> {
     /**
      * eg: callBack.onComplete(listResult.getData().getItems(), PageInfo.getPrePageInfo(listResult), PageInfo.getNextPageInfo(listResult));
      */
-    void onResult(@NonNull List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey);
+    void onResult(@NonNull List<Bean> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey);
 
     /**
      * eg: callBack.onComplete(result);
      */
-    default void onResult(List<ItemViewDataHolder> data, @Nullable PageInfo prePageKey, @NonNull ListBean<?> listBean) {
+    default void onResult(List<Bean> data, @Nullable PageInfo prePageKey, @NonNull ListBean<?> listBean) {
         onResult(data, PageInfo.getPrePageInfo(prePageKey, listBean), PageInfo.getNextPageInfo(prePageKey, listBean));
     }
 }

@@ -12,6 +12,12 @@
 
 package com.cody.component.handler.viewmodel;
 
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.paging.LivePagedListBuilder;
+import androidx.paging.PagedList;
+
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
@@ -19,44 +25,54 @@ import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.factory.PageListDataSourceFactory;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
-import com.cody.component.handler.mapper.IDataMapper;
+import com.cody.component.handler.mapper.IPageDataMapper;
 import com.cody.component.handler.source.PageListKeyedDataSource;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
 
 /**
  * Created by xu.yi. on 2019/4/8.
  * 数据仓库，获取列表数据
  */
-public abstract class PageListViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> implements OnRequestPageListener, IDataMapper {
-    private final PageListDataSourceFactory mSourceFactory;
+@SuppressWarnings("unchecked")
+public abstract class PageListViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> {
+    private final PageListDataSourceFactory<Object> mSourceFactory;
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
     private MutableLiveData<PageListKeyedDataSource> mDataSource;
-    private List<ItemViewDataHolder> mOldList;
+    private PagedList<ItemViewDataHolder> mOldList;
 
+    protected abstract IPageDataMapper<?, ?> createMapper();
+
+    protected abstract OnRequestPageListener<?> createRequestPageListener();
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-        mSourceFactory = new PageListDataSourceFactory((operation, oldPageInfo, callBack) -> {
+        mSourceFactory = new PageListDataSourceFactory<>((OnRequestPageListener) (operation, oldPageInfo, callBack) -> {
             if (mRequestStatus.isRefreshing()) {
                 operation = Operation.REFRESH;
             }
             mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.setOperation(operation));
-            PageListViewModel.this.onRequestPageData(operation, oldPageInfo, callBack);
+            createRequestPageListener().onRequestPageData(operation, oldPageInfo, callBack);
         });
         mDataSource = mSourceFactory.getDataSource();
+    }
+
+    /**
+     * 分页数据配置
+     */
+    protected PagedList.Config initPageListConfig() {
+        return (new PagedList.Config.Builder())
+                .setPrefetchDistance(PageInfo.DEFAULT_PREFETCH_DISTANCE)
+                .setEnablePlaceholders(false)
+                .setInitialLoadSizeHint(PageInfo.DEFAULT_PAGE_SIZE)
+                .setPageSize(PageInfo.DEFAULT_PAGE_SIZE)
+                .build();
     }
 
     @Override
     public void onInit() {
         super.onInit();
-        mPagedList = new LivePagedListBuilder<>(mSourceFactory, initPageListConfig()).build();
+        IPageDataMapper<ItemViewDataHolder, Object> mapper = (IPageDataMapper<ItemViewDataHolder, Object>) createMapper();
+
+        // TODO 是否解决刷新闪问题？ 此处保留数据源？
+        mPagedList = new LivePagedListBuilder<>(mSourceFactory.map(mapper), initPageListConfig()).build();
     }
 
     @Override
@@ -66,11 +82,6 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
 
     public LiveData<PagedList<ItemViewDataHolder>> getPagedList() {
         return mPagedList;
-    }
-
-    @Override
-    public <ItemBean> List<ItemViewDataHolder> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
-        return mapperList(operation, (mOldList == null) ? null : new ArrayList<>(mOldList), beanDataList);
     }
 
     /**
@@ -88,17 +99,5 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
                 mDataSource.getValue().retry();
             }
         }
-    }
-
-    /**
-     * 分页数据配置
-     */
-    protected PagedList.Config initPageListConfig() {
-        return (new PagedList.Config.Builder())
-                .setPrefetchDistance(PageInfo.DEFAULT_PREFETCH_DISTANCE)
-                .setEnablePlaceholders(false)
-                .setInitialLoadSizeHint(PageInfo.DEFAULT_PAGE_SIZE)
-                .setPageSize(PageInfo.DEFAULT_PAGE_SIZE)
-                .build();
     }
 }

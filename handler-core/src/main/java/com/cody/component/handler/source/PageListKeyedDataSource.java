@@ -15,7 +15,6 @@ package com.cody.component.handler.source;
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 
-import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
@@ -28,12 +27,12 @@ import com.cody.component.handler.interfaces.Refreshable;
  * 根据接口返回的信息进行分页加载处理基类
  * 泛型为分页Item的类类型
  */
-public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemViewDataHolder>
+public class PageListKeyedDataSource<Bean> extends PageKeyedDataSource<PageInfo, Bean>
         implements Refreshable, OnRetryListener {
-    final private OnRequestPageListener mOnRequestPageListener;
+    final private OnRequestPageListener<Bean> mOnRequestPageListener;
     private OnRetryListener mOnRetryListener;
 
-    public PageListKeyedDataSource(final OnRequestPageListener onRequestPageListener) {
+    public PageListKeyedDataSource(final OnRequestPageListener<Bean> onRequestPageListener) {
         mOnRequestPageListener = onRequestPageListener;
     }
 
@@ -50,7 +49,7 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
     }
 
     @Override
-    public void loadInitial(@NonNull LoadInitialParams<PageInfo> params, @NonNull LoadInitialCallback<PageInfo, ItemViewDataHolder> callback) {
+    public void loadInitial(@NonNull LoadInitialParams<PageInfo> params, @NonNull LoadInitialCallback<PageInfo, Bean> callback) {
         PageInfo pageInfo = new PageInfo(PageInfo.DEFAULT_PAGE_NO, params.requestedLoadSize, PageInfo.DEFAULT_POSITION);
         if (mOnRetryListener == null) {
             mOnRetryListener = () -> loadInitial(params, callback);
@@ -62,7 +61,7 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
     }
 
     @Override
-    public void loadBefore(@NonNull LoadParams<PageInfo> params, @NonNull LoadCallback<PageInfo, ItemViewDataHolder> callback) {
+    public void loadBefore(@NonNull LoadParams<PageInfo> params, @NonNull LoadCallback<PageInfo, Bean> callback) {
         if (mOnRetryListener == null) {
             mOnRetryListener = () -> loadBefore(params, callback);
         }
@@ -73,7 +72,7 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
     }
 
     @Override
-    public void loadAfter(@NonNull LoadParams<PageInfo> params, @NonNull LoadCallback<PageInfo, ItemViewDataHolder> callback) {
+    public void loadAfter(@NonNull LoadParams<PageInfo> params, @NonNull LoadCallback<PageInfo, Bean> callback) {
         if (mOnRetryListener == null) {
             mOnRetryListener = () -> loadAfter(params, callback);
         }
@@ -90,7 +89,7 @@ public class PageListKeyedDataSource extends PageKeyedDataSource<PageInfo, ItemV
     /**
      * 请求一页数据
      */
-    private void requestPageData(Operation operation, PageInfo pageInfo, PageResultCallBack callBack) {
+    private void requestPageData(Operation operation, PageInfo pageInfo, PageResultCallBack<Bean> callBack) {
         if (mOnRequestPageListener != null) {
             mOnRequestPageListener.onRequestPageData(operation, pageInfo, callBack);
         }

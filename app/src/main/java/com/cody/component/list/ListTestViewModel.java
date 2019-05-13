@@ -16,40 +16,41 @@ package com.cody.component.list;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.cody.component.handler.data.ItemViewDataHolder;
+import androidx.annotation.NonNull;
+
 import com.cody.component.handler.data.MaskViewData;
-import com.cody.component.handler.define.Operation;
-import com.cody.component.handler.define.PageInfo;
-import com.cody.component.handler.interfaces.PageResultCallBack;
+import com.cody.component.handler.interfaces.OnRequestPageListener;
+import com.cody.component.handler.mapper.IPageDataMapper;
 import com.cody.component.handler.viewmodel.PageListViewModel;
 
 import java.util.ArrayList;
-
-import androidx.annotation.NonNull;
 
 /**
  * Created by xu.yi. on 2019/4/14.
  * component
  */
 public class ListTestViewModel extends PageListViewModel<MaskViewData> {
-    public ListTestViewModel(final MaskViewData maskViewData) {
-        super(maskViewData);
+
+    @Override
+    protected IPageDataMapper<ItemTestViewData, String> createMapper() {
+        return new IPageDataMapper<ItemTestViewData, String>() {
+            @NonNull
+            @Override
+            public ItemTestViewData createItem() {
+                return new ItemTestViewData();
+            }
+
+            @Override
+            public ItemTestViewData mapperItem(@NonNull final ItemTestViewData item, final String bean) {
+                item.setTest(bean);
+                return item;
+            }
+        };
     }
 
     @Override
-    public <ItemBean> ItemViewDataHolder mapperItem(@NonNull ItemViewDataHolder itemViewDataHolder, ItemBean beanData, int position) {
-        if (itemViewDataHolder instanceof ItemTestViewData) {
-         ((ItemTestViewData)itemViewDataHolder).setTest((String) beanData);
-        }
-        return itemViewDataHolder;
-    }
-
-    public void test() {
-    }
-
-    @Override
-    public void onRequestPageData(Operation operation, final PageInfo pageInfo, final PageResultCallBack result) {
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+    protected OnRequestPageListener<String> createRequestPageListener() {
+        return (operation, pageInfo, callBack) -> new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 ArrayList<String> items = new ArrayList<>();
@@ -60,14 +61,16 @@ public class ListTestViewModel extends PageListViewModel<MaskViewData> {
                     items.clear();
                 }
                 pageInfo.setPageNo(pageInfo.getPageNo() + 1);
-                result.onResult(mapperList(operation, items), null, pageInfo);
+                callBack.onResult(items, null, pageInfo);
                 onComplete(items);
             }
         }, 500);
     }
 
-    @Override
-    public ItemTestViewData newItemViewData(int position) {
-        return new ItemTestViewData();
+    public ListTestViewModel(final MaskViewData maskViewData) {
+        super(maskViewData);
+    }
+
+    public void test() {
     }
 }
