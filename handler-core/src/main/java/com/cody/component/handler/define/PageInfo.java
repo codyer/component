@@ -34,14 +34,14 @@ public class PageInfo {
     }
 
     public static PageInfo getPrePageInfo(PageInfo prePageKey, ListBean<?> listBean) {
-        if (listBean == null || prePageKey == null) {
+        if (listBean == null || prePageKey == null || !listBean.isMore()|| listBean.getItems() == null || listBean.getItems().size() < prePageKey.getPageSize()) {
             return null;
         }
         return new PageInfo(--prePageKey.mPageNo, prePageKey.mPageSize, listBean.getPrePosition());
     }
 
     public static PageInfo getNextPageInfo(PageInfo prePageKey, ListBean<?> listBean) {
-        if (listBean == null || prePageKey == null) {
+        if (listBean == null || prePageKey == null || !listBean.isMore() || listBean.getItems() == null || listBean.getItems().size() < prePageKey.getPageSize()) {
             return null;
         }
         return new PageInfo(++prePageKey.mPageNo, prePageKey.mPageSize, listBean.getNextPosition());
