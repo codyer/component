@@ -23,6 +23,7 @@ import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.viewmodel.PageListViewModel;
 
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,7 +48,17 @@ public abstract class PageListBindFragment<VM extends PageListViewModel<MaskView
         getBinding().recyclerView.setAdapter(mListAdapter);
         getBinding().swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark, android.R.color.holo_orange_dark);
         getBinding().swipeRefreshLayout.setOnRefreshListener(() -> getFriendlyViewModel().refresh());
-        getFriendlyViewModel().getPagedList().observe(this, items -> mListAdapter.submitList(items));
+        getFriendlyViewModel().getPagedList().observe(this, items -> {
+            getFriendlyViewModel().getRequestStatusLive().observe(this, new Observer<RequestStatus>() {
+                @Override
+                public void onChanged(final RequestStatus requestStatus) {
+                    if (!requestStatus.isLoading()) {
+                        getFriendlyViewModel().getRequestStatusLive().removeObserver(this);
+                        mListAdapter.submitList(items);
+                    }
+                }
+            });
+        });
     }
 
     @Override
