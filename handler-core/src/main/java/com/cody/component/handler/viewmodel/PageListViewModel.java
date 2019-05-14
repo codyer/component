@@ -25,7 +25,7 @@ import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.factory.PageListDataSourceFactory;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
-import com.cody.component.handler.mapper.IPageDataMapper;
+import com.cody.component.handler.mapper.PageDataMapper;
 import com.cody.component.handler.source.PageListKeyedDataSource;
 
 /**
@@ -36,14 +36,14 @@ public abstract class PageListViewModel<VD extends MaskViewData, Bean> extends F
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
     private MutableLiveData<PageListKeyedDataSource> mDataSource;
 
-    protected abstract IPageDataMapper<? extends ItemViewDataHolder, Bean> createMapper();
+    protected abstract PageDataMapper<? extends ItemViewDataHolder, Bean> createMapper();
 
     protected abstract OnRequestPageListener<Bean> createRequestPageListener();
 
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
         @SuppressWarnings("unchecked")
-        IPageDataMapper<ItemViewDataHolder, Bean> mapper = (IPageDataMapper<ItemViewDataHolder, Bean>) createMapper();
+        PageDataMapper<ItemViewDataHolder, Bean> mapper = (PageDataMapper<ItemViewDataHolder, Bean>) createMapper();
         final PageListDataSourceFactory<Bean> sourceFactory = new PageListDataSourceFactory<>(mapper, (operation, oldPageInfo, callBack) -> {
             if (mRequestStatus.isRefreshing()) {
                 operation = Operation.REFRESH;

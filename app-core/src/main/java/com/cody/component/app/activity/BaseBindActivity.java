@@ -77,8 +77,8 @@ public abstract class BaseBindActivity<B extends ViewDataBinding> extends BaseAc
      * 是否已经设置bind
      */
     @Override
-    public boolean isBound() {
-        return mBinding != null;
+    public boolean unBound() {
+        return mBinding == null;
     }
 
     @Override

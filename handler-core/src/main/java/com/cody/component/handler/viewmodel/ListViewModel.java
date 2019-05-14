@@ -12,13 +12,12 @@
 
 package com.cody.component.handler.viewmodel;
 
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.define.Operation;
-import com.cody.component.handler.mapper.IDataMapper;
+import com.cody.component.handler.mapper.DataMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,20 +26,17 @@ import java.util.List;
  * Created by xu.yi. on 2019/4/8.
  * 获取列表数据
  */
-public abstract class ListViewModel<VD extends MaskViewData> extends SingleViewModel<VD>
-        implements IDataMapper {
+public abstract class ListViewModel<VD extends MaskViewData, Bean> extends SingleViewModel<VD> {
 
     private MutableLiveData<List<ItemViewDataHolder>> mItems = new MutableLiveData<>(new ArrayList<>());
-    protected List<ItemViewDataHolder> mOldList = new ArrayList<>();
+    private List<ItemViewDataHolder> mOldList = new ArrayList<>();
+    @SuppressWarnings("unchecked")
+    private DataMapper<ItemViewDataHolder, Bean> mDataMapper = (DataMapper<ItemViewDataHolder, Bean>) createMapper();
+
+    protected abstract DataMapper<? extends ItemViewDataHolder, Bean> createMapper();
 
     public ListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-    }
-
-    @Override
-    public <T extends BaseViewModel> T setLifecycleOwner(final LifecycleOwner lifecycleOwner) {
-        mItems.observe(lifecycleOwner, itemViewDataHolders -> mOldList = new ArrayList<>(itemViewDataHolders));
-        return super.setLifecycleOwner(lifecycleOwner);
     }
 
     public MutableLiveData<List<ItemViewDataHolder>> getItems() {
@@ -53,9 +49,10 @@ public abstract class ListViewModel<VD extends MaskViewData> extends SingleViewM
         mItems.postValue(mOldList);
     }
 
-    @Override
-    public <ItemBean> List<ItemViewDataHolder> mapperList(final Operation operation, final List<ItemBean> beanDataList) {
-        mItems.postValue(mapperList(operation, mOldList, beanDataList));
-        return mOldList;
+    public void mapperList(final Operation operation, final List<Bean> beanList) {
+        if (operation == Operation.REFRESH) {
+            mDataMapper.init();
+        }
+        mOldList = mDataMapper.mapperList(mOldList, beanList);
     }
 }

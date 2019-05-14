@@ -21,7 +21,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import com.cody.component.app.R;
-import com.cody.component.app.databinding.ActivityFragmentContainerBinding;
 import com.cody.component.app.databinding.ActivityFragmentContainerWithCloseBinding;
 import com.cody.component.handler.interfaces.Scrollable;
 import com.cody.component.handler.livedata.BooleanLiveData;
@@ -66,7 +65,7 @@ public abstract class FragmentContainerWithCloseActivity extends EmptyBindActivi
     @Override
     protected void onBaseReady(final Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
-        if (!isBound()) return;
+        if (unBound()) return;
         setSupportActionBar(getBinding().toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);

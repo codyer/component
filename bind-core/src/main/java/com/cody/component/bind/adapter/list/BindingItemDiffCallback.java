@@ -21,14 +21,14 @@ import androidx.recyclerview.widget.DiffUtil;
  * Created by xu.yi. on 2019/4/4.
  * component
  */
-public class BindingItemDiffCallback extends DiffUtil.ItemCallback<ItemViewDataHolder> {
+public class BindingItemDiffCallback<Item extends ItemViewDataHolder> extends DiffUtil.ItemCallback<Item> {
     @Override
-    public boolean areItemsTheSame(@NonNull ItemViewDataHolder oldItem, @NonNull ItemViewDataHolder newItem) {
+    public boolean areItemsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
         return oldItem.areItemsTheSame(newItem);
     }
 
     @Override
-    public boolean areContentsTheSame(@NonNull ItemViewDataHolder oldItem, @NonNull ItemViewDataHolder newItem) {
+    public boolean areContentsTheSame(@NonNull Item oldItem, @NonNull Item newItem) {
         return oldItem.areContentsTheSame(newItem);
     }
 }

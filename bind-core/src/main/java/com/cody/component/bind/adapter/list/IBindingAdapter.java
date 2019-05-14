@@ -14,27 +14,11 @@ package com.cody.component.bind.adapter.list;
 
 import android.view.View;
 
-import com.cody.component.bind.CoreBR;
-
 /**
  * Created by xu.yi. on 2019/4/4.
  * binding adapter基类
  */
 interface IBindingAdapter {
-    /**
-     * dataBinding 自动生成的BR文件对应的viewData id
-     */
-    default int getViewDataId() {
-        return CoreBR.viewData;
-    }
-
-    /**
-     * dataBinding 自动生成的BR文件对应的OnClickListener id
-     */
-    default int getOnClickListenerId() {
-        return CoreBR.onClickListener;
-    }
-
     /**
      * 获取List中的Item的Layout ID
      *

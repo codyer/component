@@ -20,7 +20,7 @@ import androidx.annotation.NonNull;
 
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
-import com.cody.component.handler.mapper.IPageDataMapper;
+import com.cody.component.handler.mapper.PageDataMapper;
 import com.cody.component.handler.viewmodel.PageListViewModel;
 
 import java.util.ArrayList;
@@ -32,8 +32,8 @@ import java.util.ArrayList;
 public class ListTestViewModel extends PageListViewModel<MaskViewData, String> {
 
     @Override
-    protected IPageDataMapper<ItemTestViewData, String> createMapper() {
-        return new IPageDataMapper<ItemTestViewData, String>() {
+    protected PageDataMapper<ItemTestViewData, String> createMapper() {
+        return new PageDataMapper<ItemTestViewData, String>() {
             @NonNull
             @Override
             public ItemTestViewData createItem() {

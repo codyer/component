@@ -56,7 +56,7 @@ public abstract class BaseBindFragment<B extends ViewDataBinding> extends BaseLa
         if (getLayoutID() == 0) {
             return view;
         }
-        if (!isBound()) {
+        if (unBound()) {
             mBinding = DataBindingUtil.inflate(inflater, getLayoutID(), container, false);
         }
         if (mBinding != null) {
@@ -91,8 +91,8 @@ public abstract class BaseBindFragment<B extends ViewDataBinding> extends BaseLa
      * 是否已经设置bind
      */
     @Override
-    public boolean isBound() {
-        return mBinding != null;
+    public boolean unBound() {
+        return mBinding == null;
     }
 
     @Override

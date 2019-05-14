@@ -12,22 +12,21 @@
 
 package com.cody.component.bind.adapter.list;
 
-import com.cody.component.bind.R;
-import com.cody.component.handler.data.ItemViewDataHolder;
-import com.cody.component.handler.data.ItemFooterOrHeaderData;
-import com.cody.component.handler.define.Operation;
-import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.interfaces.OnRetryListener;
-
 import androidx.annotation.CallSuper;
 import androidx.lifecycle.LifecycleOwner;
+
+import com.cody.component.bind.R;
+import com.cody.component.handler.data.ItemFooterOrHeaderData;
+import com.cody.component.handler.data.ItemViewDataHolder;
+import com.cody.component.handler.define.RequestStatus;
+import com.cody.component.handler.interfaces.OnRetryListener;
 
 /**
  * Created by xu.yi. on 2019/4/8.
  * 包含下拉加载更多，加载失败显示重试 header
  * 包含上拉加载更多，加载失败显示重试 footer
  */
-public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter {
+public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter<ItemViewDataHolder> {
     final private static int HEADER_OR_FOOTER_VIEW_TYPE = -1;
     final private ItemFooterOrHeaderData mItemHolderFooterOrHeader = new ItemFooterOrHeaderData(HEADER_OR_FOOTER_VIEW_TYPE);
     private RequestStatus mRequestStatus = new RequestStatus();

@@ -20,7 +20,7 @@ public interface IBinding<B> {
     /**
      * 是否已经设置bind
      */
-    boolean isBound();
+    boolean unBound();
 
     B getBinding();
 }

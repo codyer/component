@@ -19,7 +19,7 @@ import androidx.paging.DataSource;
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
-import com.cody.component.handler.mapper.IPageDataMapper;
+import com.cody.component.handler.mapper.PageDataMapper;
 import com.cody.component.handler.source.PageListKeyedDataSource;
 
 /**
@@ -30,9 +30,9 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
 public class PageListDataSourceFactory<Bean> extends DataSource.Factory<PageInfo, Bean> {
     private MutableLiveData<PageListKeyedDataSource> mDataSource = new MutableLiveData<>();
     private OnRequestPageListener<Bean> mOnRequestPageListener;
-    private IPageDataMapper<ItemViewDataHolder, Bean> mPageDataMapper;
+    private PageDataMapper<ItemViewDataHolder, Bean> mPageDataMapper;
 
-    public PageListDataSourceFactory(@NonNull IPageDataMapper<ItemViewDataHolder, Bean> mapper, OnRequestPageListener<Bean> onRequestPageListener) {
+    public PageListDataSourceFactory(@NonNull PageDataMapper<ItemViewDataHolder, Bean> mapper, OnRequestPageListener<Bean> onRequestPageListener) {
         mPageDataMapper = mapper;
         mOnRequestPageListener = onRequestPageListener;
     }

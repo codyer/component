@@ -46,7 +46,7 @@ public abstract class FragmentContainerActivity extends EmptyBindActivity<Activi
     @Override
     protected void onBaseReady(final Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
-        if (!isBound()) return;
+        if (unBound()) return;
         setSupportActionBar(getBinding().toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(isShowBack());

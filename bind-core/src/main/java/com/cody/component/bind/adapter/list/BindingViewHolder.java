@@ -15,6 +15,7 @@ package com.cody.component.bind.adapter.list;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.cody.component.bind.CoreBR;
 import com.cody.component.handler.data.ItemViewDataHolder;
 
 import androidx.annotation.NonNull;
@@ -27,8 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
  * component
  */
 public class BindingViewHolder extends RecyclerView.ViewHolder {
-    private int mViewDataId;
-    private int mOnClickListenerId;
     private View.OnCreateContextMenuListener mContextMenuListener;
     private OnBindingItemClickListener mClickListener;
     private RecyclerView mParentView;
@@ -41,9 +40,7 @@ public class BindingViewHolder extends RecyclerView.ViewHolder {
         return DataBindingUtil.bind(itemView);
     }
 
-    void bindTo(ItemViewDataHolder item, int viewDataId, int onClickListenerId, RecyclerView recyclerView, View.OnCreateContextMenuListener contextMenuListener, OnBindingItemClickListener clickListener) {
-        mViewDataId = viewDataId;
-        mOnClickListenerId = onClickListenerId;
+    void bindTo(ItemViewDataHolder item, RecyclerView recyclerView, View.OnCreateContextMenuListener contextMenuListener, OnBindingItemClickListener clickListener) {
         mContextMenuListener = contextMenuListener;
         mClickListener = clickListener;
         mParentView = recyclerView;
@@ -53,9 +50,9 @@ public class BindingViewHolder extends RecyclerView.ViewHolder {
                 mContextMenuListener.onCreateContextMenu(menu, v, menuInfo);
             }
         });
-        getItemBinding().setVariable(mViewDataId, item);
+        getItemBinding().setVariable(CoreBR.viewData, item);
         //分发点击事件
-        getItemBinding().setVariable(mOnClickListenerId, (View.OnClickListener) v -> {
+        getItemBinding().setVariable(CoreBR.onClickListener, (View.OnClickListener) v -> {
             if (mClickListener != null) {
                 mClickListener.onItemClick(mParentView, v, getAdapterPosition(), v.getId());
             }
@@ -64,9 +61,9 @@ public class BindingViewHolder extends RecyclerView.ViewHolder {
     }
 
     void clear() {
-        getItemBinding().setVariable(mViewDataId, null);
+        getItemBinding().setVariable(CoreBR.viewData, null);
         //分发点击事件
-        getItemBinding().setVariable(mOnClickListenerId, null);
+        getItemBinding().setVariable(CoreBR.onClickListener, null);
         mParentView = null;
         mContextMenuListener = null;
         mClickListener = null;

@@ -23,7 +23,6 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 
-import com.cody.component.app.fragment.SimpleBindFragment;
 import com.cody.component.app.fragment.SingleBindFragment;
 import com.cody.component.app.local.BaseLocalKey;
 import com.cody.component.app.local.Repository;
@@ -35,7 +34,6 @@ import com.cody.component.hybrid.HtmlViewModel;
 import com.cody.component.hybrid.JsBridge;
 import com.cody.component.hybrid.OnUrlListener;
 import com.cody.component.hybrid.R;
-import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.hybrid.core.JsWebChromeClient;
 import com.cody.component.hybrid.data.HtmlViewData;
 import com.cody.component.hybrid.databinding.FragmentHtmlBinding;
@@ -106,7 +104,7 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
     @Override
     protected void onBaseReady(final Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
-        if (!isBound()) return;
+        if (unBound()) return;
         mImageViewDelegate = new ImageViewDelegate(this);
         JsBridge.getInstance()
                 .addJsHandler(JsHandlerCommonImpl.class.getSimpleName(), JsHandlerCommonImpl.class)

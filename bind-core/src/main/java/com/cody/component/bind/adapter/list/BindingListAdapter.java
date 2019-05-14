@@ -16,24 +16,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cody.component.handler.data.ItemViewDataHolder;
-
-import java.util.List;
-
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cody.component.handler.data.ItemViewDataHolder;
+
 /**
  * Created by xu.yi. on 2019/3/28.
  * 抽象列表adapter
  */
-public abstract class BindingListAdapter extends ListAdapter<ItemViewDataHolder, BindingViewHolder> implements IBindingAdapter {
+public abstract class BindingListAdapter<Item extends ItemViewDataHolder> extends ListAdapter<Item, BindingViewHolder> implements IBindingAdapter {
 
     protected RecyclerView mRecyclerView;
     protected OnBindingItemClickListener mItemClickListener;//item 事件监听
@@ -51,7 +48,7 @@ public abstract class BindingListAdapter extends ListAdapter<ItemViewDataHolder,
     }
 
     protected BindingListAdapter(LifecycleOwner lifecycleOwner) {
-        super(new BindingItemDiffCallback());
+        super(new BindingItemDiffCallback<>());
         mLifecycleOwner = lifecycleOwner;
     }
 
@@ -67,7 +64,7 @@ public abstract class BindingListAdapter extends ListAdapter<ItemViewDataHolder,
     }
 
     @Override
-    public ItemViewDataHolder getItem(int position) {
+    public Item getItem(int position) {
         return super.getItem(position);
     }
 
@@ -93,7 +90,7 @@ public abstract class BindingListAdapter extends ListAdapter<ItemViewDataHolder,
     public void onBindViewHolder(@NonNull BindingViewHolder holder, int position) {
         ItemViewDataHolder item = getItem(position);
         if (item != null) {
-            holder.bindTo(item, getViewDataId(), getOnClickListenerId(), mRecyclerView, mItemLongClickListener, mItemClickListener);
+            holder.bindTo(item, mRecyclerView, mItemLongClickListener, mItemClickListener);
         } else {
             holder.clear();
         }

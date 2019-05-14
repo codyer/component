@@ -12,23 +12,21 @@
 
 package com.cody.component.banner.adapter;
 
-import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 
+import androidx.lifecycle.LifecycleOwner;
+
+import com.cody.component.banner.R;
+import com.cody.component.banner.data.BannerViewData;
 import com.cody.component.bind.adapter.list.BindingListAdapter;
 import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
-import com.cody.component.banner.R;
-import com.cody.component.handler.data.ItemViewDataHolder;
-
-import androidx.lifecycle.LifecycleOwner;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by cody.yi on 2017/4/26.
  * RecyclerView适配器，假无限循环列表
  */
-public class BindingBannerAdapter extends BindingListAdapter {
+public class BindingBannerAdapter extends BindingListAdapter<BannerViewData> {
 
     public BindingBannerAdapter(LifecycleOwner lifecycleOwner) {
         super(lifecycleOwner);
@@ -40,33 +38,27 @@ public class BindingBannerAdapter extends BindingListAdapter {
 
     @Override
     public void setItemClickListener(final OnBindingItemClickListener itemClickListener) {
-        super.setItemClickListener(new OnBindingItemClickListener() {
-            @Override
-            public void onItemClick(RecyclerView parent, View view, int position, int id) {
-                if (itemClickListener != null) {
-                    itemClickListener.onItemClick(parent, view, getPosition(position), id);
-                }
+        super.setItemClickListener((parent, view, position, id) -> {
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(parent, view, getPosition(position), id);
             }
         });
     }
 
     @Override
     public void setItemLongClickListener(final View.OnCreateContextMenuListener itemLongClickListener) {
-        super.setItemLongClickListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-                if (itemLongClickListener != null) {
-                    if (menuInfo instanceof AdapterView.AdapterContextMenuInfo) {
-                        ((AdapterView.AdapterContextMenuInfo) menuInfo).position = getPosition(((AdapterView.AdapterContextMenuInfo) menuInfo).position);
-                        itemLongClickListener.onCreateContextMenu(menu, v, menuInfo);
-                    }
+        super.setItemLongClickListener((menu, v, menuInfo) -> {
+            if (itemLongClickListener != null) {
+                if (menuInfo instanceof AdapterView.AdapterContextMenuInfo) {
+                    ((AdapterView.AdapterContextMenuInfo) menuInfo).position = getPosition(((AdapterView.AdapterContextMenuInfo) menuInfo).position);
+                    itemLongClickListener.onCreateContextMenu(menu, v, menuInfo);
                 }
             }
         });
     }
 
     @Override
-    public ItemViewDataHolder getItem(int position) {
+    public BannerViewData getItem(int position) {
         return super.getItem(getPosition(position));
     }
 

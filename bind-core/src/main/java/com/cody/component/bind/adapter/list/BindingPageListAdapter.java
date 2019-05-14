@@ -30,7 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by xu.yi. on 2019/3/28.
  * 分页抽象列表adapter
  */
-public abstract class BindingPageListAdapter extends PagedListAdapter<ItemViewDataHolder, BindingViewHolder> implements IBindingAdapter {
+public abstract class BindingPageListAdapter<Item extends ItemViewDataHolder> extends PagedListAdapter<Item, BindingViewHolder> implements IBindingAdapter {
 
     protected RecyclerView mRecyclerView;
     protected OnBindingItemClickListener mItemClickListener;//item 事件监听
@@ -48,7 +48,7 @@ public abstract class BindingPageListAdapter extends PagedListAdapter<ItemViewDa
     }
 
     protected BindingPageListAdapter(LifecycleOwner lifecycleOwner) {
-        super(new BindingItemDiffCallback());
+        super(new BindingItemDiffCallback<>());
         mLifecycleOwner = lifecycleOwner;
     }
 
@@ -64,7 +64,7 @@ public abstract class BindingPageListAdapter extends PagedListAdapter<ItemViewDa
     }
 
     @Override
-    public ItemViewDataHolder getItem(int position) {
+    public Item getItem(int position) {
         return super.getItem(position);
     }
 
@@ -90,7 +90,7 @@ public abstract class BindingPageListAdapter extends PagedListAdapter<ItemViewDa
     public void onBindViewHolder(@NonNull BindingViewHolder holder, int position) {
         ItemViewDataHolder item = getItem(position);
         if (item != null) {
-            holder.bindTo(item, getViewDataId(), getOnClickListenerId(), mRecyclerView, mItemLongClickListener, mItemClickListener);
+            holder.bindTo(item, mRecyclerView, mItemLongClickListener, mItemClickListener);
         } else {
             holder.clear();
         }
