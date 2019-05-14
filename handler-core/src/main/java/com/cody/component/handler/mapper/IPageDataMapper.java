@@ -22,10 +22,15 @@ import com.cody.component.handler.data.ItemViewDataHolder;
  * 将 DataModel 映射到 ViewData
  * 当获取的数据和ViewData有差距时需要使用mapper
  */
-public interface IPageDataMapper<Item extends ItemViewDataHolder, Bean> extends Function<Bean, Item> {
+public abstract class IPageDataMapper<Item extends ItemViewDataHolder, Bean> implements Function<Bean, Item> {
+    private int mId = 0;
+
+    public void init() {
+        mId = 0;
+    }
 
     @NonNull
-    Item createItem();
+    public abstract Item createItem();
 
     /**
      * 将 bean 装饰成 Item viewData
@@ -33,10 +38,12 @@ public interface IPageDataMapper<Item extends ItemViewDataHolder, Bean> extends 
      * @param bean 数据模型，对应网络请求获取的bean或entity
      * @return 视图模型，对应 data binding 中的 viewData
      */
-    Item mapperItem(@NonNull Item item, Bean bean);
+    public abstract Item mapperItem(@NonNull Item item, Bean bean);
 
     @Override
-    default Item apply(Bean bean) {
-        return mapperItem(createItem(), bean);
+    public Item apply(Bean bean) {
+        Item item = createItem();
+        item.setItemId(mId++);
+        return mapperItem(item, bean);
     }
 }

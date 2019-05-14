@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * Created by xu.yi. on 2019/4/14.
  * component
  */
-public class ListTestViewModel extends PageListViewModel<MaskViewData> {
+public class ListTestViewModel extends PageListViewModel<MaskViewData, String> {
 
     @Override
     protected IPageDataMapper<ItemTestViewData, String> createMapper() {

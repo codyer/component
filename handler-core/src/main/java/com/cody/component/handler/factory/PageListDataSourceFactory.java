@@ -16,8 +16,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 
+import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
+import com.cody.component.handler.mapper.IPageDataMapper;
 import com.cody.component.handler.source.PageListKeyedDataSource;
 
 /**
@@ -28,8 +30,10 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
 public class PageListDataSourceFactory<Bean> extends DataSource.Factory<PageInfo, Bean> {
     private MutableLiveData<PageListKeyedDataSource> mDataSource = new MutableLiveData<>();
     private OnRequestPageListener<Bean> mOnRequestPageListener;
+    private IPageDataMapper<ItemViewDataHolder, Bean> mPageDataMapper;
 
-    public PageListDataSourceFactory(OnRequestPageListener<Bean> onRequestPageListener) {
+    public PageListDataSourceFactory(@NonNull IPageDataMapper<ItemViewDataHolder, Bean> mapper, OnRequestPageListener<Bean> onRequestPageListener) {
+        mPageDataMapper = mapper;
         mOnRequestPageListener = onRequestPageListener;
     }
 
@@ -37,11 +41,17 @@ public class PageListDataSourceFactory<Bean> extends DataSource.Factory<PageInfo
     @Override
     public DataSource<PageInfo, Bean> create() {
         PageListKeyedDataSource<Bean> dataSource = new PageListKeyedDataSource<>(mOnRequestPageListener);
+        mPageDataMapper.init();
         mDataSource.postValue(dataSource);
         return dataSource;
     }
 
     public MutableLiveData<PageListKeyedDataSource> getDataSource() {
         return mDataSource;
+    }
+
+    @NonNull
+    public DataSource.Factory<PageInfo, ItemViewDataHolder> map() {
+        return super.map(mPageDataMapper);
     }
 }

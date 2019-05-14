@@ -32,18 +32,19 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
  * Created by xu.yi. on 2019/4/8.
  * 数据仓库，获取列表数据
  */
-@SuppressWarnings("unchecked")
-public abstract class PageListViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> {
+public abstract class PageListViewModel<VD extends MaskViewData, Bean> extends FriendlyViewModel<VD> {
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
     private MutableLiveData<PageListKeyedDataSource> mDataSource;
-    private PagedList<ItemViewDataHolder> mOldList;
 
-    protected abstract IPageDataMapper<?, ?> createMapper();
+    protected abstract IPageDataMapper<? extends ItemViewDataHolder, Bean> createMapper();
 
-    protected abstract OnRequestPageListener<?> createRequestPageListener();
+    protected abstract OnRequestPageListener<Bean> createRequestPageListener();
+
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-        final PageListDataSourceFactory<Object> sourceFactory = new PageListDataSourceFactory<>((OnRequestPageListener) (operation, oldPageInfo, callBack) -> {
+        @SuppressWarnings("unchecked")
+        IPageDataMapper<ItemViewDataHolder, Bean> mapper = (IPageDataMapper<ItemViewDataHolder, Bean>) createMapper();
+        final PageListDataSourceFactory<Bean> sourceFactory = new PageListDataSourceFactory<>(mapper, (operation, oldPageInfo, callBack) -> {
             if (mRequestStatus.isRefreshing()) {
                 operation = Operation.REFRESH;
             }
@@ -51,11 +52,7 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
             createRequestPageListener().onRequestPageData(operation, oldPageInfo, callBack);
         });
         mDataSource = sourceFactory.getDataSource();
-
-        IPageDataMapper<ItemViewDataHolder, Object> mapper = (IPageDataMapper<ItemViewDataHolder, Object>) createMapper();
-
-        // TODO 是否解决刷新闪问题？ 此处保留数据源？
-        mPagedList = new LivePagedListBuilder<>(sourceFactory.map(mapper), initPageListConfig()).build();
+        mPagedList = new LivePagedListBuilder<>(sourceFactory.map(), initPageListConfig()).build();
     }
 
     /**
@@ -88,7 +85,6 @@ public abstract class PageListViewModel<VD extends MaskViewData> extends Friendl
 
         if (requestStatus != null && mDataSource != null && mDataSource.getValue() != null) {
             if (requestStatus.isRefreshing()) {
-                mOldList = mPagedList.getValue();
                 mDataSource.getValue().refresh();
             } else if (requestStatus.isRetrying()) {
                 mDataSource.getValue().retry();
