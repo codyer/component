@@ -23,10 +23,14 @@ import com.cody.component.handler.data.ItemViewDataHolder;
  * 当获取的数据和ViewData有差距时需要使用mapper
  */
 public abstract class IPageDataMapper<Item extends ItemViewDataHolder, Bean> implements Function<Bean, Item> {
-    private int mId = 0;
+    private int mPosition = 0;
+
+    public int getPosition() {
+        return mPosition;
+    }
 
     public void init() {
-        mId = 0;
+        mPosition = 0;
     }
 
     @NonNull
@@ -43,7 +47,7 @@ public abstract class IPageDataMapper<Item extends ItemViewDataHolder, Bean> imp
     @Override
     public Item apply(Bean bean) {
         Item item = createItem();
-        item.setItemId(mId++);
+        item.setItemId(mPosition++);
         return mapperItem(item, bean);
     }
 }
