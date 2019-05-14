@@ -26,20 +26,19 @@ import java.util.List;
  * Created by xu.yi. on 2019/4/8.
  * 获取列表数据
  */
-public abstract class ListViewModel<VD extends MaskViewData, Bean> extends SingleViewModel<VD> {
+public abstract class ListViewModel<VD extends MaskViewData, Item extends ItemViewDataHolder, Bean> extends SingleViewModel<VD> {
 
-    private MutableLiveData<List<ItemViewDataHolder>> mItems = new MutableLiveData<>(new ArrayList<>());
-    private List<ItemViewDataHolder> mOldList = new ArrayList<>();
-    @SuppressWarnings("unchecked")
-    private DataMapper<ItemViewDataHolder, Bean> mDataMapper = (DataMapper<ItemViewDataHolder, Bean>) createMapper();
+    private MutableLiveData<List<Item>> mItems = new MutableLiveData<>(new ArrayList<>());
+    private List<Item> mOldList = new ArrayList<>();
+    private DataMapper<Item, Bean> mDataMapper = createMapper();
 
-    protected abstract DataMapper<? extends ItemViewDataHolder, Bean> createMapper();
+    protected abstract DataMapper<Item, Bean> createMapper();
 
     public ListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
     }
 
-    public MutableLiveData<List<ItemViewDataHolder>> getItems() {
+    public MutableLiveData<List<Item>> getItems() {
         return mItems;
     }
 
