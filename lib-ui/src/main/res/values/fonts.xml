@@ -12,19 +12,35 @@
 
 <resources>
     <dimen name="ui_font_hugest">34sp</dimen>
+    <dimen name="ui_font_hugest_odd">33sp</dimen>
     <dimen name="ui_font_hugger">32sp</dimen>
+    <dimen name="ui_font_hugger_odd">31sp</dimen>
     <dimen name="ui_font_huge">30sp</dimen>
+    <dimen name="ui_font_huge_odd">29sp</dimen>
     <dimen name="ui_font_largest">28sp</dimen>
+    <dimen name="ui_font_largest_odd">27sp</dimen>
     <dimen name="ui_font_larger">26sp</dimen>
+    <dimen name="ui_font_larger_odd">25sp</dimen>
     <dimen name="ui_font_large">24sp</dimen>
+    <dimen name="ui_font_large_odd">23sp</dimen>
     <dimen name="ui_font_biggest">22sp</dimen>
+    <dimen name="ui_font_biggest_odd">21sp</dimen>
     <dimen name="ui_font_bigger">20sp</dimen>
+    <dimen name="ui_font_bigger_odd">19sp</dimen>
     <dimen name="ui_font_big">18sp</dimen>
+    <dimen name="ui_font_big_odd">17sp</dimen>
     <dimen name="ui_font_normal">16sp</dimen>
+    <dimen name="ui_font_normal_odd">15sp</dimen>
     <dimen name="ui_font_small">14sp</dimen>
+    <dimen name="ui_font_small_odd">13sp</dimen>
     <dimen name="ui_font_smaller">12sp</dimen>
+    <dimen name="ui_font_smaller_odd">11sp</dimen>
     <dimen name="ui_font_smallest">10sp</dimen>
+    <dimen name="ui_font_smallest_odd">9sp</dimen>
     <dimen name="ui_font_tiny">8sp</dimen>
+    <dimen name="ui_font_tiny_odd">7sp</dimen>
     <dimen name="ui_font_tinier">6sp</dimen>
+    <dimen name="ui_font_tinier_odd">5sp</dimen>
     <dimen name="ui_font_tiniest">4sp</dimen>
+    <dimen name="ui_font_tiniest_odd">3sp</dimen>
 </resources>

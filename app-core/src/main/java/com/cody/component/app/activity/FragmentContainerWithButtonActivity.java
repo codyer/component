@@ -13,91 +13,24 @@
 package com.cody.component.app.activity;
 
 
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.View;
+import androidx.appcompat.widget.Toolbar;
 
 import com.cody.component.app.R;
 import com.cody.component.app.databinding.ActivityFragmentContainerWithButtonBinding;
 import com.cody.component.handler.interfaces.Scrollable;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 /**
  * 包含返回键和头部和底部按钮
  */
-public abstract class FragmentContainerWithButtonActivity extends EmptyBindActivity<ActivityFragmentContainerWithButtonBinding> implements Scrollable {
-    public abstract Fragment getFragment();
+public abstract class FragmentContainerWithButtonActivity extends BaseFragmentContainerActivity<ActivityFragmentContainerWithButtonBinding> implements Scrollable {
 
     @Override
     protected int getLayoutID() {
         return R.layout.activity_fragment_container_with_button;
     }
 
-    protected boolean isShowBack() {
-        return true;
-    }
-
-    protected boolean isShowTitle() {
-        return true;
-    }
-
     @Override
-    public void setTitle(final int title) {
-        super.setTitle(title);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(title);
-        }
-    }
-
-    @Override
-    public void setTitle(final CharSequence title) {
-        super.setTitle(title);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(title);
-        }
-    }
-
-    @Override
-    protected void onBaseReady(final Bundle savedInstanceState) {
-        super.onBaseReady(savedInstanceState);
-        if (unBound()) return;
-        setSupportActionBar(getBinding().toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(isShowBack());
-            getSupportActionBar().setDisplayShowTitleEnabled(isShowTitle());
-        }
-        FragmentManager manager = getSupportFragmentManager();
-        Fragment fragment = manager.findFragmentById(R.id.container);
-        if (fragment == null) {
-            fragment = getFragment();
-            if (fragment == null) {
-                finish();
-                return;
-            }
-            manager.beginTransaction()
-                    .add(R.id.container, fragment)
-                    .commit();
-        }
-    }
-
-    //添加点击返回箭头事件
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            if (isShowBack()) {
-                finish();
-            }
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onClick(final View v) {
-        if (v.getId() == R.id.toolbar) {
-            scrollToTop();
-        }
+    protected Toolbar getToolbar() {
+        return getBinding().toolbar;
     }
 }
