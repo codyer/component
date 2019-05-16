@@ -14,6 +14,11 @@ package com.cody.component.util;
 
 import android.util.Log;
 
+import androidx.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * Created by Cody.yi on 2016/7/13.
  * 日志工具类
@@ -24,12 +29,25 @@ public class LogUtil {
      * ERROR
      * RUNNING_MODE大于4时Log关闭
      */
-    public static final int RUNNING_MODE = 1;
+    private static int RUNNING_MODE = 1;
+
+    /**
+     * 日志状态
+     */
+    @IntDef({RUNNING_MODE_DEBUG, RUNNING_MODE_INFO, RUNNING_MODE_WARRING, RUNNING_MODE_ERROR})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface LogMode {
+    }
+
     public static final int RUNNING_MODE_DEBUG = 1;
     public static final int RUNNING_MODE_INFO = 2;
-    public static final int RUNNING_MODE_WRING = 3;
+    public static final int RUNNING_MODE_WARRING = 3;
     public static final int RUNNING_MODE_ERROR = 4;
     public static final String LOG_TAG = "Foundation";
+
+    public static void setMode(@LogMode int mode) {
+        RUNNING_MODE = mode;
+    }
 
     public static void d(String message) {
         if (message == null) {
@@ -59,20 +77,28 @@ public class LogUtil {
     }
 
     public static void i(String message) {
-        if (message == null) {
+        i(LOG_TAG, message);
+    }
+
+    public static void i(String tag, String message) {
+        if (tag == null || message == null) {
             return;
         }
         if (RUNNING_MODE <= RUNNING_MODE_INFO) {
-            Log.i(LOG_TAG, message);
+            Log.i(tag, message);
         }
     }
 
     public static void i(String message, Throwable t) {
-        if (message == null || t == null) {
+        i(LOG_TAG, message, t);
+    }
+
+    public static void i(String tag, String message, Throwable t) {
+        if (tag == null || message == null || t == null) {
             return;
         }
         if (RUNNING_MODE <= RUNNING_MODE_INFO) {
-            Log.i(LOG_TAG, message, t);
+            Log.i(tag, message, t);
         }
     }
 
@@ -80,27 +106,26 @@ public class LogUtil {
         if (message == null) {
             return;
         }
-        if (RUNNING_MODE <= RUNNING_MODE_WRING) {
+        if (RUNNING_MODE <= RUNNING_MODE_WARRING) {
             Log.w(LOG_TAG, message);
         }
     }
 
     public static void w(String message, Throwable t) {
-        if (message == null || t == null) {
+        w(LOG_TAG, message, t);
+    }
+
+    public static void w(String tag, String message, Throwable t) {
+        if (tag == null || message == null || t == null) {
             return;
         }
-        if (RUNNING_MODE <= RUNNING_MODE_WRING) {
-            Log.w(LOG_TAG, message, t);
+        if (RUNNING_MODE <= RUNNING_MODE_WARRING) {
+            Log.w(tag, message, t);
         }
     }
 
     public static void e(String message) {
-        if (message == null) {
-            return;
-        }
-        if (RUNNING_MODE <= RUNNING_MODE_ERROR) {
-            Log.e(LOG_TAG, message);
-        }
+        e(LOG_TAG, message);
     }
 
     public static void e(String tag, String message) {
@@ -113,12 +138,7 @@ public class LogUtil {
     }
 
     public static void e(String message, Throwable t) {
-        if (message == null || t == null) {
-            return;
-        }
-        if (RUNNING_MODE <= RUNNING_MODE_ERROR) {
-            Log.e(LOG_TAG, message, t);
-        }
+        e(LOG_TAG, message, t);
     }
 
     public static void e(String tag, String message, Throwable t) {
