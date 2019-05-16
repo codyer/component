@@ -112,6 +112,13 @@ public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseVie
         }
     }
 
+    @Override
+    public void onCancel() {
+        if (mRequestStatus.isLoading()) {
+            getRequestStatusLive().postValue(mRequestStatus = mRequestStatus.empty());
+        }
+    }
+
     /**
      * 执行一个操作
      */

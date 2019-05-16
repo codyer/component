@@ -32,4 +32,6 @@ public interface OnFriendlyListener extends Refreshable, OnRetryListener, OnInit
     void onComplete(Object result);
 
     void onFailure(final String message);
+
+    void onCancel();
 }

@@ -12,11 +12,16 @@
 
 package com.cody.component.bus.core.wrapper;
 
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
+import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.Transformations;
+
+import com.cody.component.bus.lib.exception.UnInitValueException;
 
 /**
  * Created by xu.yi. on 2019/3/31.
@@ -35,6 +40,11 @@ final public class LiveEventWrapper<T> {
         mMutableLiveData = new MutableLiveData<>();
     }
 
+    @MainThread
+    public void initValue(T value) {
+        mMutableLiveData.setValue(new ValueWrapper<>(value, mSequence));
+    }
+
     public void observeForever(@NonNull final ObserverWrapper<T> observer) {
         observer.sequence = mSequence++;
         mMutableLiveData.observeForever(filterObserver(observer));
@@ -48,12 +58,24 @@ final public class LiveEventWrapper<T> {
         mMutableLiveData.removeObservers(owner);
     }
 
-    @Nullable
     public T getValue() {
         if (mMutableLiveData.getValue() == null) {
-            return null;
+            throw new UnInitValueException();
         }
         return mMutableLiveData.getValue().value;
+    }
+
+    /**
+     * LiveData 不为空，但是value有可能为空，因此要调用 getValue 前一定要先初始化，先设置默认值，后调用
+     */
+    @NonNull
+    public LiveData<T> getLiveData() {
+        return Transformations.map(mMutableLiveData, input -> {
+            if (input == null) {
+                throw new UnInitValueException();
+            }
+            return input.value;
+        });
     }
 
     public boolean hasObservers() {
@@ -80,11 +102,11 @@ final public class LiveEventWrapper<T> {
         mMutableLiveData.observe(owner, filterObserver(observer));
     }
 
-    public void postValue(T value) {
+    public void postValue(@NonNull T value) {
         mMutableLiveData.postValue(new ValueWrapper<>(value, mSequence));
     }
 
-    public void setValue(T value) {
+    public void setValue(@NonNull T value) {
         mMutableLiveData.setValue(new ValueWrapper<>(value, mSequence));
     }
 
@@ -94,12 +116,9 @@ final public class LiveEventWrapper<T> {
         if (observerWrapper.observer != null) {
             return observerWrapper.observer;
         }
-        return observerWrapper.observer = new Observer<ValueWrapper<T>>() {
-            @Override
-            public void onChanged(@Nullable ValueWrapper<T> valueWrapper) {
-                if (valueWrapper != null && valueWrapper.sequence > observerWrapper.sequence) {
-                    observerWrapper.onChanged(valueWrapper.value);
-                }
+        return observerWrapper.observer = valueWrapper -> {
+            if (valueWrapper != null && valueWrapper.sequence > observerWrapper.sequence) {
+                observerWrapper.onChanged(valueWrapper.value);
             }
         };
     }

@@ -197,6 +197,10 @@ public class BindingBanner extends FrameLayout {
         }
     }
 
+    public BindingBannerAdapter getBindingBannerAdapter() {
+        return mBindingBannerAdapter;
+    }
+
     /**
      * 设置是否显示指示器导航点
      *
