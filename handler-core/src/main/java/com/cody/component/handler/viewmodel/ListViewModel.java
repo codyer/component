@@ -49,7 +49,7 @@ public abstract class ListViewModel<VD extends MaskViewData, Item extends ItemVi
     }
 
     public void mapperList(final Operation operation, final List<Bean> beanList) {
-        if (operation == Operation.REFRESH) {
+        if (operation == Operation.REFRESH || operation == Operation.INIT) {
             mDataMapper.init();
         }
         mOldList = mDataMapper.mapperList(mOldList, beanList);
