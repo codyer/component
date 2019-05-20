@@ -208,7 +208,8 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
             for (ParameterBean parameter : method.getParameters()) {
                 methodBuilder = methodBuilder.addParameter(parameter.getType(), parameter.getName());
             }
-            methodBuilder.addParameter(parameterType, CALL_BACK).returns(TypeName.VOID);
+            TypeName typeName = ClassName.bestGuess("io.reactivex.disposables.Disposable");
+            methodBuilder.addParameter(parameterType, CALL_BACK).returns(typeName);
             builder.addMethod(methodBuilder.build());
         }
 
@@ -259,8 +260,8 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
             methodBuilder.addParameter(callBackTypeName, CALL_BACK)
                     .addAnnotation(Override.class)
                     .addCode(noHost ?
-                            "$N(getService(" + BASE_URL + ", $T.class)." :
-                            "$N(getService($T.class)."/*execute,service*/, methodExecute, serviceTypeName)
+                            "return $N(getService(" + BASE_URL + ", $T.class)." :
+                            "return $N(getService($T.class)."/*execute,service*/, methodExecute, serviceTypeName)
                     .addCode("$L("/*invoke*/, method.getName());
             int i = 0;
             if (method.getParameters() != null && method.getParameters().size() > 0) {
@@ -271,7 +272,8 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
             } else {
                 methodBuilder.addCode(") ,$N);\n", CALL_BACK);
             }
-            methodBuilder.returns(TypeName.VOID);
+            TypeName typeName = ClassName.bestGuess("io.reactivex.disposables.Disposable");
+            methodBuilder.returns(typeName);
             builder.addMethod(methodBuilder.build());
         }
 

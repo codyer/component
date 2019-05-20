@@ -16,10 +16,11 @@ package com.cody.component.handler.define;
  * Created by xu.yi. on 2019/4/8.
  * 状态
  */
-public enum  Status {
+public enum Status {
     RUNNING,
     SUCCESS,
     FAILED,
     EMPTY,
+    CANCEL,
     END
 }

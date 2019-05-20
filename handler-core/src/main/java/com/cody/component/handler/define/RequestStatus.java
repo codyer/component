@@ -75,6 +75,10 @@ public class RequestStatus {
         return new RequestStatus(mOperation, Status.SUCCESS);
     }
 
+    public RequestStatus cancel() {
+        return new RequestStatus(mOperation, Status.CANCEL);
+    }
+
     public RequestStatus empty() {
         return new RequestStatus(mOperation, Status.EMPTY);
     }

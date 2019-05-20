@@ -59,10 +59,16 @@ public abstract class BaseRemoteDataSource {
         }
     }
 
+    public void remove(Disposable disposable) {
+        if (!mCompositeDisposable.isDisposed()) {
+            mCompositeDisposable.remove(disposable);
+        }
+    }
+
     /**
      * 原始数据对象不做解析
      */
-    protected <T> void executeOriginal(Observable<T> observable, RequestCallback<T> callback) {
+    protected <T> Disposable executeOriginal(Observable<T> observable, RequestCallback<T> callback) {
         Disposable disposable = observable
                 .throttleFirst(TimeConfig.WINDOW_DURATION, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
@@ -71,12 +77,13 @@ public abstract class BaseRemoteDataSource {
                 .compose(loadingTransformer(callback))
                 .subscribeWith(new BaseSubscriber<>(callback));
         addDisposable(disposable);
+        return disposable;
     }
 
     /**
      * 直接解析出result中的data
      */
-    protected <T> void execute(Observable<Result<T>> observable, RequestCallback<T> callback) {
+    protected <T> Disposable execute(Observable<Result<T>> observable, RequestCallback<T> callback) {
         Disposable disposable = observable
                 .throttleFirst(TimeConfig.WINDOW_DURATION, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
@@ -86,6 +93,7 @@ public abstract class BaseRemoteDataSource {
                 .compose(loadingTransformer(callback))
                 .subscribeWith(new BaseSubscriber<>(callback));
         addDisposable(disposable);
+        return disposable;
     }
 
     private void addDisposable(Disposable disposable) {
