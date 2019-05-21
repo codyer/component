@@ -16,6 +16,7 @@ import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.livedata.BooleanLiveData;
 import com.cody.component.handler.livedata.IntegerLiveData;
 import com.cody.component.handler.livedata.StringLiveData;
+import com.cody.component.util.LogUtil;
 
 /**
  * Created by xu.yi. on 2019/4/11.
@@ -51,6 +52,7 @@ public class HtmlViewData extends MaskViewData {
 
     public void setUrl(String url) {
         setProgress(0);
+        LogUtil.d("HtmlViewData", url);
         mUrl.setValue(url);
     }
 
