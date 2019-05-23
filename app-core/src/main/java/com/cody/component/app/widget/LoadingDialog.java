@@ -37,7 +37,7 @@ public class LoadingDialog extends Dialog {
         //使用自定义的layout
         setContentView(R.layout.loading_dialog);
         if (getWindow() != null) {
-            getWindow().setDimAmount(0f);
+            getWindow().setDimAmount(0.1f);
         }
         mTextView = findViewById(android.R.id.message);
     }

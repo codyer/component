@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：bg_shape_round.xml  模块：lib-ui  项目：component
+  ~ 当前修改时间：2019年05月23日 16:15:51
+  ~ 上次修改时间：2019年04月26日 22:46:37
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-ui
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <stroke
+        android:width="@dimen/dimen_line"
+        android:color="@color/uiColorLoadingMask" />
+    <corners android:radius="@dimen/dimen_normal" />
+    <solid android:color="@color/uiColorLoadingMask" />
+</shape>

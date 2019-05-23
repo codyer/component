@@ -10,23 +10,35 @@
   ~ *************************************************************
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@android:id/progress"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal" />
+        android:background="@drawable/bg_shape_round"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dimen_huge"
+        android:paddingTop="@dimen/dimen_normal"
+        android:paddingRight="@dimen/dimen_huge"
+        android:paddingBottom="@dimen/dimen_normal">
 
-    <TextView
-        android:id="@android:id/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_tiny"
-        android:text="@string/ui_str_loading"
-        android:visibility="visible" />
-</LinearLayout>
+        <ProgressBar
+            android:id="@android:id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal" />
+
+        <TextView
+            android:id="@android:id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_tiny"
+            android:text="@string/ui_str_loading"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</RelativeLayout>
