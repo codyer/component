@@ -12,6 +12,8 @@
 
 package com.cody.http.core.callback;
 
+import android.text.TextUtils;
+
 import com.cody.http.core.holder.ToastHolder;
 
 /**
@@ -30,6 +32,9 @@ public interface RequestCallback<T> {
     }
 
     default void showToast(String message) {
+        if (TextUtils.isEmpty(message)){
+            message = "未知错误";
+        }
         ToastHolder.showToast(message);
     }
 
