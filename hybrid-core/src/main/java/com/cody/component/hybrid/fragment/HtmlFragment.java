@@ -144,7 +144,7 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
             case ViewAction.DEFAULT:
                 getViewData().setProgress(0);
                 if (getFriendlyViewModel().getRequestStatus().isInitializing() || getFriendlyViewModel().getRequestStatus().isRetrying()) {
-                    getBinding().webView.loadUrl(getViewData().getUrl().getValue());
+                    getBinding().webView.loadUrl(getViewData().getUrl().get());
                 }
                 break;
         }

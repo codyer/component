@@ -52,6 +52,6 @@ public abstract class ListViewModel<VD extends MaskViewData, Item extends ItemVi
         if (operation == Operation.REFRESH || operation == Operation.INIT) {
             mDataMapper.init();
         }
-        mOldList = mDataMapper.mapperList(mOldList, beanList);
+        mOldList = mDataMapper.mapperList(beanList);
     }
 }

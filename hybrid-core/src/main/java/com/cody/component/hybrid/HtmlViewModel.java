@@ -41,7 +41,7 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
             return true;
         }
         //从内部链接跳到外部链接打开新的html页面
-        if (UrlUtil.isInnerLink(getFriendlyViewData().getUrl().getValue())
+        if (UrlUtil.isInnerLink(getFriendlyViewData().getUrl().get())
                 && !UrlUtil.isInnerLink(url)) {
             HtmlActivity.startHtml(getFriendlyViewData().getHeader().getValue(), url);
             return true;
