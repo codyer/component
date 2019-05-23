@@ -15,36 +15,35 @@ package com.cody.component.app.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.widget.Toast;
 
-import com.cody.component.app.R;
-import com.cody.component.handler.viewmodel.BaseViewModel;
-import com.cody.component.handler.view.IBaseView;
-import com.cody.component.handler.viewmodel.IViewModel;
-import com.cody.component.handler.define.ViewAction;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.cody.component.app.R;
+import com.cody.component.app.widget.LoadingDialog;
+import com.cody.component.handler.define.ViewAction;
+import com.cody.component.handler.view.IBaseView;
+import com.cody.component.handler.viewmodel.BaseViewModel;
+import com.cody.component.handler.viewmodel.IViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by xu.yi. on 2019/3/25.
  * 所有fragment的基类
  */
 public abstract class BaseFragment extends Fragment implements IBaseView, DialogInterface.OnCancelListener {
-    private ProgressDialog mLoading;
+    private LoadingDialog mLoading;
     private List<String> mViewModelNames;
     private Toast mToast;
     protected String TAG = null;
@@ -87,7 +86,7 @@ public abstract class BaseFragment extends Fragment implements IBaseView, Dialog
     public void showLoading(String message) {
         if (!isAdded()) return;
         if (mLoading == null && getActivity() != null) {
-            mLoading = new ProgressDialog(getActivity());
+            mLoading = new LoadingDialog(getActivity());
             mLoading.setCanceledOnTouchOutside(false);
             mLoading.setCancelable(false);
         }
@@ -193,6 +192,6 @@ public abstract class BaseFragment extends Fragment implements IBaseView, Dialog
      */
     private void observeAction(IViewModel viewModel) {
         if (viewModel == null) return;
-        viewModel.getActionLiveData().observe(this, action -> onExecuteAction(action));
+        viewModel.getActionLiveData().observe(this, this::onExecuteAction);
     }
 }

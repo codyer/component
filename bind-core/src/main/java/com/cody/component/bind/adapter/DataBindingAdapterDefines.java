@@ -41,6 +41,19 @@ public class DataBindingAdapterDefines {
     }
 
     @BindingAdapter({"gifSrc"})
+    public static void setGifSrc(ImageView view, Drawable gif) {
+        RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .priority(Priority.HIGH);
+        if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
+            options = options.fitCenter();
+        } else {
+            options = options.centerCrop();
+        }
+        Glide.with(view.getContext()).asGif().load(gif).apply(options).into(view);
+    }
+
+    @BindingAdapter({"gifSrc"})
     public static void setGifSrc(ImageView view, int gif) {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)

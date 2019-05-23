@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：loading_dialog.xml  模块：app-core  项目：component
+  ~ 当前修改时间：2019年05月23日 15:00:31
+  ~ 上次修改时间：2019年05月23日 15:00:30
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：app-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@android:id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@android:id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_tiny"
+        android:text="@string/ui_str_loading"
+        android:visibility="visible" />
+</LinearLayout>

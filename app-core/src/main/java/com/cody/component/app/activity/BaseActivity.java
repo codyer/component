@@ -13,7 +13,6 @@
 package com.cody.component.app.activity;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -28,16 +27,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.cody.component.app.R;
-import com.cody.component.handler.viewmodel.BaseViewModel;
-import com.cody.component.handler.viewmodel.IViewModel;
-import com.cody.component.handler.define.ViewAction;
-import com.cody.component.handler.view.IBaseView;
-import com.cody.component.util.ActivityUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,13 +34,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.cody.component.app.R;
+import com.cody.component.app.widget.LoadingDialog;
+import com.cody.component.handler.define.ViewAction;
+import com.cody.component.handler.view.IBaseView;
+import com.cody.component.handler.viewmodel.BaseViewModel;
+import com.cody.component.handler.viewmodel.IViewModel;
+import com.cody.component.util.ActivityUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by xu.yi. on 2019/3/25.
  * 所有activity的基类
  */
 public abstract class BaseActivity extends AppCompatActivity implements IBaseView, DialogInterface.OnCancelListener {
     private final static float DISTANCE = dp2px(10);
-    private ProgressDialog mLoading;
+    private LoadingDialog mLoading;
     private List<String> mViewModelNames;
     private Toast mToast;
     protected String TAG = null;
@@ -166,7 +166,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     @Override
     public void showLoading(String message) {
         if (mLoading == null) {
-            mLoading = new ProgressDialog(this);
+            mLoading = new LoadingDialog(this);
             mLoading.setCanceledOnTouchOutside(false);
             mLoading.setCancelable(false);
         }

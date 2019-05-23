@@ -12,7 +12,7 @@
   -->
 
 <resources>
-    <string name="ui_str_loading">努力加载中&#8230;</string>
+    <string name="ui_str_loading">加载中&#8230;</string>
     <string name="ui_str_please_input_username">请输入用户名</string>
     <string name="ui_str_please_input_password">请输入登录密码</string>
     <string name="ui_str_login">登 录</string>
