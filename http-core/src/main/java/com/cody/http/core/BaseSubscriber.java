@@ -15,13 +15,14 @@ package com.cody.http.core;
 import com.cody.http.core.callback.RequestCallback;
 import com.cody.http.core.callback.RequestMultiplyCallback;
 import com.cody.http.lib.config.HttpCode;
+import com.cody.http.lib.exception.TokenInvalidException;
 import com.cody.http.lib.exception.base.BaseException;
 
 import io.reactivex.observers.DisposableObserver;
+import retrofit2.HttpException;
 
 /**
  * Created by xu.yi. on 2019/4/6.
- *
  */
 public class BaseSubscriber<T> extends DisposableObserver<T> {
 
@@ -45,6 +46,12 @@ public class BaseSubscriber<T> extends DisposableObserver<T> {
             RequestMultiplyCallback callback = (RequestMultiplyCallback) requestCallback;
             if (e instanceof BaseException) {
                 callback.onFail((BaseException) e);
+            } else if (e instanceof HttpException) {
+                if (((HttpException) e).code() == HttpCode.CODE_TOKEN_INVALID) {
+                    callback.onFail(new TokenInvalidException());
+                } else {
+                    callback.onFail(new BaseException(((HttpException) e).code(), e.getMessage()));
+                }
             } else {
                 callback.onFail(new BaseException(HttpCode.CODE_UNKNOWN, e.getMessage()));
             }

@@ -25,6 +25,6 @@ public class TokenInvalidException extends BaseException {
     private static final long serialVersionUID = 275593545034454755L;
 
     public TokenInvalidException() {
-        super(HttpCode.CODE_TOKEN_INVALID, "Token失效");
+        super(HttpCode.CODE_TOKEN_INVALID, "登录状态已过期，请重新登录");
     }
 }
