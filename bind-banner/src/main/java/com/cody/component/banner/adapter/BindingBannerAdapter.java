@@ -38,9 +38,9 @@ public class BindingBannerAdapter extends BindingListAdapter<BannerViewData> {
 
     @Override
     public void setItemClickListener(final OnBindingItemClickListener itemClickListener) {
-        super.setItemClickListener((parent, view, position, id) -> {
+        super.setItemClickListener((holder, view, position, id) -> {
             if (itemClickListener != null) {
-                itemClickListener.onItemClick(parent, view, getPosition(position), id);
+                itemClickListener.onItemClick(holder, view, getPosition(position), id);
             }
         });
     }

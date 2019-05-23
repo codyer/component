@@ -17,6 +17,7 @@ import android.view.View;
 
 import com.cody.component.R;
 import com.cody.component.app.fragment.PageListBindFragment;
+import com.cody.component.bind.adapter.list.BindingViewHolder;
 import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.handler.data.MaskViewData;
 
@@ -39,7 +40,7 @@ public class PageListTestBindFragment extends PageListBindFragment<ListTestViewM
     }
 
     @Override
-    public void onItemClick(final RecyclerView recyclerView, final View view, final int i, final int l) {
+    public void onItemClick(BindingViewHolder holder, final View view, final int i, final int l) {
         getFriendlyViewModel().test();
     }
 

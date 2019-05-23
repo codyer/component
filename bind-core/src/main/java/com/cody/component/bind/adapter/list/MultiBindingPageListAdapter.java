@@ -40,12 +40,12 @@ public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter
 
     @Override
     final public void setItemClickListener(final OnBindingItemClickListener itemClickListener) {
-        super.setItemClickListener((parent, view, position, id) -> {
+        super.setItemClickListener((holder, view, position, id) -> {
             if (view.getId() == R.id.retryButton && mOnRetryListener != null) {
                 mOnRetryListener.retry();
                 notifyItemChanged(super.getItemCount());
             } else if (itemClickListener != null) {
-                itemClickListener.onItemClick(parent, view, position, id);
+                itemClickListener.onItemClick(holder, view, position, id);
             }
         });
     }

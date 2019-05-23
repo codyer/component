@@ -18,9 +18,9 @@ package com.cody.http.core.repository;
  */
 public class BaseRepository<T> {
 
-    protected final T mRemoteDataSource;
+    protected final T mDataSource;
 
-    public BaseRepository(T remoteDataSource) {
-        this.mRemoteDataSource = remoteDataSource;
+    public BaseRepository(T dataSource) {
+        this.mDataSource = dataSource;
     }
 }

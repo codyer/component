@@ -21,4 +21,6 @@ dependencies {
     api rootProject.ext.dependencies["logging"]
     api rootProject.ext.dependencies["adapter-rxjava2"]
     api rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["room-runtime"]
+    annotationProcessor rootProject.ext.dependencies["room-compiler"]
 }

@@ -29,11 +29,11 @@ public interface OnBindingItemClickListener {
      * Implementers can call getItemAtPosition(position) if they need
      * to access the data associated with the selected item.
      *
-     * @param parent   The AdapterView where the click happened.
+     * @param holder   The AdapterView where the click happened.
      * @param view     The view within the AdapterView that was clicked (this
      *                 will be a view provided by the adapter)
      * @param position The position of the view in the adapter.
      * @param id       The row id of the item that was clicked.
      */
-    void onItemClick(RecyclerView parent, View view, int position, int id);
+    void onItemClick(BindingViewHolder holder, View view, int position, int id);
 }

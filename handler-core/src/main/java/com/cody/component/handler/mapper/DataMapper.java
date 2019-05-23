@@ -61,6 +61,7 @@ public abstract class DataMapper<Item extends ItemViewDataHolder, Bean> {
     Item mapperItem(Bean bean) {
         Item item = createItem();
         item.setItemId(mPosition);
+        if (bean == null) return item;
         return mapperItem(item, bean);
     }
 

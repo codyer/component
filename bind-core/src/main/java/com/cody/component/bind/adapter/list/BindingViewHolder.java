@@ -54,7 +54,7 @@ public class BindingViewHolder extends RecyclerView.ViewHolder {
         //分发点击事件
         getItemBinding().setVariable(CoreBR.onClickListener, (View.OnClickListener) v -> {
             if (mClickListener != null) {
-                mClickListener.onItemClick(mParentView, v, getAdapterPosition(), v.getId());
+                mClickListener.onItemClick(this, v, getAdapterPosition(), v.getId());
             }
         });
         getItemBinding().executePendingBindings();

@@ -20,19 +20,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.cody.component.R;
 import com.cody.component.app.activity.EmptyBindActivity;
 import com.cody.component.banner.adapter.BindingBannerAdapter;
 import com.cody.component.banner.data.BannerViewData;
 import com.cody.component.bean.TestDataBean;
-import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
 import com.cody.component.bus.BusDemoActivity;
 import com.cody.component.data.generate.CatApiOpen$RemoteDataSource;
 import com.cody.component.data.generate.CatHttpBin$RemoteDataSource;
 import com.cody.component.databinding.ActivityMainBannerBinding;
-import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.hybrid.core.UrlUtil;
 import com.cody.component.image.certificate.camera.CameraActivity;

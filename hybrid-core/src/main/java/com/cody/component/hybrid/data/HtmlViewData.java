@@ -12,6 +12,8 @@
 
 package com.cody.component.hybrid.data;
 
+import android.net.Uri;
+
 import com.cody.component.handler.data.MaskViewData;
 import com.cody.component.handler.livedata.BooleanLiveData;
 import com.cody.component.handler.livedata.IntegerLiveData;
@@ -58,6 +60,11 @@ public class HtmlViewData extends MaskViewData {
 
     public StringLiveData getUrl() {
         return mUrl;
+    }
+
+    public String getUrlHost() {
+        Uri uri = Uri.parse(mUrl.get());
+        return uri.getHost();
     }
 
     public void setProgress(final int progress) {

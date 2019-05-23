@@ -109,7 +109,7 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
         JsBridge.getInstance()
                 .addJsHandler(JsHandlerCommonImpl.class.getSimpleName(), JsHandlerCommonImpl.class)
                 // TODO syncCookie
-                .syncCookie(getActivity(), getViewData().getUrl().getValue(), Repository.getLocalMap(BaseLocalKey.COOKIE))
+                .syncCookie(getActivity(), getViewData().getUrlHost(), Repository.getLocalMap(BaseLocalKey.COOKIE))
                 .setFileChooseCallBack(this)
                 .build(getBinding().webView, getFriendlyViewModel());
 
