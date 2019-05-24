@@ -24,6 +24,7 @@ import androidx.core.app.NotificationCompat;
 
 import android.util.LongSparseArray;
 
+import com.cody.component.app.local.Repository;
 import com.cody.http.cat.R;
 import com.cody.http.cat.db.data.ItemHttpData;
 import com.cody.http.cat.service.CatClearService;
@@ -35,6 +36,7 @@ import com.cody.http.cat.ui.CatMainActivity;
  */
 public class NotificationManagement {
 
+    private static final String SHOW_NOTIFICATION = "HTTP_CAT_SHOW_NOTIFICATION";
     private static final String CHANNEL_ID = "CatChannelId";
 
     private static final String CHANNEL_NAME = "Http Notifications";
@@ -53,7 +55,7 @@ public class NotificationManagement {
 
     private int transactionCount;
 
-    private volatile boolean showNotification = true;
+    private volatile boolean showNotification = Repository.getLocalBoolean(SHOW_NOTIFICATION);
 
     private static volatile NotificationManagement instance;
 
@@ -115,6 +117,7 @@ public class NotificationManagement {
 
     public synchronized void showNotification(boolean showNotification) {
         this.showNotification = showNotification;
+        Repository.setLocalBoolean(SHOW_NOTIFICATION, showNotification);
     }
 
     public synchronized void clearBuffer() {

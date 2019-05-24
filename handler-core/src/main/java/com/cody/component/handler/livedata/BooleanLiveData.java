@@ -25,6 +25,13 @@ public class BooleanLiveData extends SafeMutableLiveData<Boolean>{
     public void negation() {
         Boolean old = getValue();
         if (old != null) {
+            setValue(!old);
+        }
+    }
+
+    public void postNegation() {
+        Boolean old = getValue();
+        if (old != null) {
             postValue(!old);
         }
     }

@@ -16,11 +16,20 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
+import com.cody.component.app.local.Repository;
+import com.cody.http.cat.ui.CatMainActivity;
+
 /**
  * Created by xu.yi. on 2019/4/5.
  * component
  */
 public class LauncherUtil {
+    public static String VISIBLE = "http_cat_visible";
+
+    public static void launcherVisible(final Context context, final Class launcher) {
+        launcherVisible(context, launcher, Repository.getLocalBoolean(VISIBLE));
+    }
+
     /**
      * 显示隐藏App图标
      */
@@ -34,6 +43,7 @@ public class LauncherUtil {
         } else {
             hideLauncher(packageManager, componentName);
         }
+        Repository.setLocalBoolean(VISIBLE, visible);
     }
 
     public static void hideLauncher(PackageManager packageManager, ComponentName componentName) {

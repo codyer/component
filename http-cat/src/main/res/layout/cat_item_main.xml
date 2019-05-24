@@ -35,8 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
-        android:onClick="@{onClickListener::onClick}"
         android:background="@android:color/white"
+        android:onClick="@{onClickListener::onClick}"
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
 
@@ -75,10 +75,23 @@
             tools:text="200" />
 
         <TextView
+            android:id="@+id/method"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/domain"
+            android:layout_margin="6dp"
+            android:gravity="center"
+            android:padding="6dp"
+            android:text="@{viewData.method}"
+            android:textAppearance="@style/cat.title"
+            tools:text="PUT" />
+
+        <TextView
             android:id="@+id/path"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/domain"
+            android:layout_toEndOf="@+id/method"
             android:layout_marginTop="6dp"
             android:gravity="center"
             android:padding="6dp"

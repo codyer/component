@@ -13,6 +13,7 @@
 package com.cody.http.cat;
 
 import androidx.lifecycle.LiveData;
+
 import okhttp3.Interceptor;
 
 import android.content.Context;
@@ -20,6 +21,7 @@ import android.content.Context;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import com.cody.component.app.local.Repository;
 import com.cody.http.cat.db.HttpCatDatabase;
 import com.cody.http.cat.db.data.ItemHttpData;
 import com.cody.http.cat.exception.NoCatCreatedException;
@@ -36,7 +38,7 @@ public class HttpCat {
     private WeakReference<Context> mContext;
 
     public Context getContext() {
-        if (mContext == null)return null;
+        if (mContext == null) return null;
         return mContext.get();
     }
 
@@ -58,7 +60,7 @@ public class HttpCat {
      * 在创建OkHttpClient时候进行拦截器添加
      */
     public static Interceptor create(Context context) {
-        LauncherUtil.launcherVisible(context, CatMainActivity.class, true);
+        LauncherUtil.launcherVisible(context, CatMainActivity.class);
         HttpCatHolder.INSTANCE.mContext = new WeakReference<>(context);
         return new HttpCatInterceptor(context);
     }
@@ -67,6 +69,13 @@ public class HttpCat {
      * 只是单纯的删除图标，实际还在继续拦截
      */
     public void show() {
+        LauncherUtil.launcherVisible(getContext(), CatMainActivity.class, true);
+    }
+
+    /**
+     * 只是单纯的删除图标，实际还在继续拦截
+     */
+    public void showWithNotification() {
         LauncherUtil.launcherVisible(getContext(), CatMainActivity.class, true);
         showNotification(true);
     }

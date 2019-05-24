@@ -45,6 +45,10 @@ public abstract class ListViewModel<VD extends MaskViewData, Item extends ItemVi
     @Override
     public void onComplete(Object result) {
         super.onComplete(result);
+        submitList();
+    }
+
+    public void submitList() {
         mItems.postValue(mOldList);
     }
 

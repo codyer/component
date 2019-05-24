@@ -16,7 +16,6 @@
     <application>
         <activity
             android:name=".ui.CatMainActivity"
-            android:enabled="false"
             android:icon="@mipmap/cat_ic_launcher"
             android:label="@string/cat_app_name"
             android:launchMode="singleTask"

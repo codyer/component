@@ -41,10 +41,10 @@ public interface HttpCatDao {
     @Query("SELECT * FROM http_cat_table")
     List<ItemHttpData> queryAllRecord();
 
-    @Query("SELECT * FROM http_cat_table order by id ASC limit :limit")
+    @Query("SELECT * FROM http_cat_table order by id DESC limit :limit")
     LiveData<List<ItemHttpData>> queryAllRecordObservable(int limit);
 
-    @Query("SELECT * FROM http_cat_table order by id ASC")
+    @Query("SELECT * FROM http_cat_table order by id DESC")
     LiveData<List<ItemHttpData>> queryAllRecordObservable();
 
     @Query("DELETE FROM http_cat_table")
