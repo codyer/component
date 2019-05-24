@@ -52,7 +52,7 @@ public class BusDemoActivity extends AppCompatActivity {
                 count++;
                 Snackbar.make(view, "发送事件监听" + count, Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                LiveEventBus.begin().inScope(Scope$demo.class).withEvent$testBean().setValue(new TestBean("count", ("count" + count)));
+                LiveEventBus.begin().inScope(Scope$demo.class).testBean().setValue(new TestBean("count", ("count" + count)));
             }
         });
     }
@@ -76,7 +76,7 @@ public class BusDemoActivity extends AppCompatActivity {
                 return true;
             case R.id.action_settings:
                 Toast.makeText(BusDemoActivity.this, "注册事件监听", Toast.LENGTH_SHORT).show();
-                LiveEventBus.begin().inScope(Scope$demo.class).withEvent$testBean()
+                LiveEventBus.begin().inScope(Scope$demo.class).testBean()
                         .observe(BusDemoActivity.this, new ObserverWrapper<TestBean>() {
                             @Override
                             public void onChanged(TestBean testBean) {

@@ -36,7 +36,6 @@
             android:id="@android:id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorPrimary"
             android:layout_marginTop="@dimen/dimen_tiny"
             android:text="@string/ui_str_loading"
             android:visibility="visible" />
