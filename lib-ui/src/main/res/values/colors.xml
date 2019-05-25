@@ -43,6 +43,6 @@
     <color name="uiColorTransparentWhite">#00FFFFFF</color>
     <color name="uiColorTransparentMask">#7F000000</color>
     <color name="uiColorMask">#60000000</color>
-    <color name="uiColorLoadingMask">#E0FFFFFF</color>
+    <color name="uiColorLoadingMask">#A0FFFFFF</color>
     <color name="uiColorLine">#F5F5F5</color>
 </resources>

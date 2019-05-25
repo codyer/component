@@ -42,6 +42,7 @@ import androidx.fragment.app.Fragment;
 public class HtmlActivity extends FragmentContainerWithCloseActivity implements OnUrlListener {
     public static final String HTML_WITH_CONFIG = "html_with_config";
     private HtmlFragment mHtmlFragment;
+    private HtmlConfig mHtmlConfig;
     private static Boolean isExit = false;
     private boolean mIsRoot = false;
 
@@ -77,19 +78,29 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
         startHtml(title, null, url, false, false);
     }
 
+    /**
+     * 跳转html页面统一使用此函数
+     *
+     * @param title title为空意味着不要原生的头部
+     * @param url   地址
+     */
+    public static void startHtml(String title, String url, boolean share) {
+        startHtml(title, null, url, share, false);
+    }
+
     @Override
     public Fragment getFragment() {
         Intent intent = getIntent();
         if (intent != null && intent.getExtras() != null) {
-            HtmlConfig config = intent.getExtras().getParcelable(HTML_WITH_CONFIG);
-            if (config != null) {
-                mIsRoot = config.isRoot();
-                mHtmlFragment = HtmlFragment.getInstance(config.getUrl());
+            mHtmlConfig = intent.getExtras().getParcelable(HTML_WITH_CONFIG);
+            if (mHtmlConfig != null) {
+                mIsRoot = mHtmlConfig.isRoot();
+                mHtmlFragment = HtmlFragment.getInstance(mHtmlConfig.getUrl());
                 if (getSupportActionBar() != null) {
-                    setTitle(config.getTitle());
-                    getSupportActionBar().setSubtitle(config.getDescription());
-                    if (!TextUtils.isEmpty(config.getUrl())) {
-                        if (!UrlUtil.isInnerLink(config.getUrl()) || !TextUtils.isEmpty(config.getTitle())) {
+                    setTitle(mHtmlConfig.getTitle());
+                    getSupportActionBar().setSubtitle(mHtmlConfig.getDescription());
+                    if (!TextUtils.isEmpty(mHtmlConfig.getUrl())) {
+                        if (!UrlUtil.isInnerLink(mHtmlConfig.getUrl()) || !TextUtils.isEmpty(mHtmlConfig.getTitle())) {
                             //外链 或者内链且有title显示头部
                             getBinding().toolbar.setVisibility(View.VISIBLE);
                         } else {
@@ -134,10 +145,22 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
                 return mHtmlFragment.goBack();
             }
         } else if (item.getItemId() == R.id.action_share) {
-            showToast("share");
+            if (mHtmlFragment != null &&
+                    mHtmlFragment.getViewData().getUrl() != null &&
+                    mHtmlFragment.getViewData().getHeader() != null) {
+                share(mHtmlFragment.getViewData().getUrl().get(), mHtmlFragment.getViewData().getHeader().get());
+            }
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void share(String content, String title) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, content);
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, null));
     }
 
     @Override
@@ -153,6 +176,9 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
         getMenuInflater().inflate(R.menu.html_menu, menu);
+        if (!mHtmlConfig.isCanShare()) {
+            menu.clear();
+        }
         return true;
     }
 

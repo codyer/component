@@ -30,11 +30,10 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/uiColorSecondaryAccent"
             android:minHeight="?attr/actionBarSize"
             android:onClick="@{onClickListener::onClick}"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            tools:background="@color/uiColorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Light"
             tools:layout_height="wrap_content">
 
             <LinearLayout

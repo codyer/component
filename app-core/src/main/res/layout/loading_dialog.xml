@@ -21,9 +21,9 @@
         android:layout_height="wrap_content"
         android:background="@drawable/bg_shape_round"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/dimen_huge"
+        android:paddingLeft="@dimen/dimen_normal"
         android:paddingTop="@dimen/dimen_normal"
-        android:paddingRight="@dimen/dimen_huge"
+        android:paddingRight="@dimen/dimen_normal"
         android:paddingBottom="@dimen/dimen_normal">
 
         <ProgressBar
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_tiny"
             android:text="@string/ui_str_loading"
-            android:visibility="visible" />
+            android:visibility="gone" />
     </LinearLayout>
 
 </RelativeLayout>

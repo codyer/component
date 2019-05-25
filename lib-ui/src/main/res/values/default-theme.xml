@@ -20,6 +20,7 @@
         <item name="android:buttonStyle">@style/ButtonTheme</item>
         <item name="alertDialogTheme">@style/AlertDialog</item>
         <item name="android:textViewStyle">@style/TexTtViewStyle</item>
+        <item name="android:actionBarStyle">@style/actionBarStyle</item>
     </style>
 
     <style name="FullscreenTheme" parent="AppTheme">
@@ -28,6 +29,9 @@
     </style>
 
     <style name="TexTtViewStyle" parent="@android:style/Widget.TextView">
+    </style>
+
+    <style name="actionBarStyle" parent="@style/Theme.AppCompat.Light">
     </style>
 
     <style name="ButtonTheme" parent="@style/Widget.AppCompat.Button.Colored">
