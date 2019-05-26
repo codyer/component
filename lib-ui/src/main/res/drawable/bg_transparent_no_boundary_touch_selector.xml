@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ *************************************************************
+  ~ 文件：bg_transparent_no_boundary_touch_selector.xml  模块：lib-ui  项目：component
+  ~ 当前修改时间：2019年05月26日 14:16:40
+  ~ 上次修改时间：2019年05月26日 14:16:10
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-ui
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/uiColorSecondaryDark" android:state_pressed="true" />
+    <item android:drawable="@color/uiColorSecondaryDark" android:state_focused="true" />
+    <item android:drawable="@color/uiColorSecondaryAccent" android:state_checked="true" />
+    <item android:drawable="@color/uiColorTransparent" />
+</selector>
