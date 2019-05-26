@@ -22,24 +22,15 @@
             type="android.view.View.OnClickListener" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:minHeight="?attr/actionBarSize"
-            android:onClick="@{onClickListener::onClick}"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
         <cn.bingoogolapple.qrcode.zxing.ZXingView
             android:id="@+id/qrCodeView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             bind:qrcv_animTime="1000"
             bind:qrcv_borderColor="@color/uiColorPrimaryBackground"
             bind:qrcv_borderSize="@dimen/dimen_line"
@@ -58,7 +49,25 @@
             bind:qrcv_scanLineColor="@color/uiColorPrimaryAccent"
             bind:qrcv_scanLineSize="@dimen/dimen_line"
             bind:qrcv_tipTextMargin="@dimen/dimen_smallest"
-            bind:qrcv_verticalBias="0.5" />
+            bind:qrcv_verticalBias="0.4" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:onClick="@{onClickListener::onClick}"
+            android:padding="@dimen/dimen_normal"
+            android:src="@drawable/ic_back_white" />
+
+        <ImageView
+            android:id="@+id/gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:contentDescription="@null"
+            android:onClick="@{onClickListener::onClick}"
+            android:padding="@dimen/dimen_normal"
+            android:src="@drawable/ic_gallery" />
+    </FrameLayout>
 </layout>

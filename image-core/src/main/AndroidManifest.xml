@@ -16,7 +16,8 @@
         android:required="true" />
 
     <application>
-        <activity android:name=".preview.ImageActivity"></activity>
+        <activity android:name=".preview.ImageActivity"
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".certificate.camera.CameraActivity"
             android:configChanges="orientation|keyboard|layoutDirection|screenSize"
@@ -24,7 +25,8 @@
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".scan.ScanActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme" />
     </application>
 
 </manifest>

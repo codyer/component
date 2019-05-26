@@ -294,7 +294,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onPickImage(int id, List<ImageItem> images) {
         if (images == null || images.size() == 0) return;
-        if (id == R.id.action_gallery) {
+        if (id == R.id.gallery) {
             mCropBitmap = ImageUtil.getBitmap(images.get(0).path, 800, 800);
             int degree = CameraUtils.getCameraDisplayOrientation(this);
             mCropBitmap = ImageUtil.rotateBitmapByDegree(mCropBitmap, degree);
@@ -319,7 +319,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             takePhoto();
         } else if (id == R.id.camera_gallery) {
             if (null != mImageViewDelegate) {
-                mImageViewDelegate.withId(R.id.action_gallery).selectImage(1, false);
+                mImageViewDelegate.withId(R.id.gallery).selectImage(1, false);
             }
         } else if (id == R.id.camera_flash) {
             boolean isFlashOn = mCameraPreview.switchFlashLight();

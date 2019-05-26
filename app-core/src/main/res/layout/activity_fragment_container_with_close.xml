@@ -34,6 +34,7 @@
             android:minHeight="?attr/actionBarSize"
             android:onClick="@{onClickListener::onClick}"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
+            app:contentInsetStart="@dimen/dimen_tiny"
             tools:layout_height="wrap_content">
 
             <LinearLayout

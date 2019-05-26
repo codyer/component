@@ -188,5 +188,5 @@
         android:layout_height="wrap_content"
         android:contentDescription="@null"
         android:padding="@dimen/dimen_normal"
-        android:src="@drawable/ic_arrow_back" />
+        android:src="@drawable/ic_back_white" />
 </RelativeLayout>

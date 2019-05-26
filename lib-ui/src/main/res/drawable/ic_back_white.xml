@@ -1,0 +1,21 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：ic_back_white.xml  模块：lib-ui  项目：component
+  ~ 当前修改时间：2019年05月26日 11:21:36
+  ~ 上次修改时间：2019年05月26日 11:09:54
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：lib-ui
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M20,11H7.83l5.59,-5.59L12,4l-8,8 8,8 1.41,-1.41L7.83,13H20v-2z"/>
+</vector>
