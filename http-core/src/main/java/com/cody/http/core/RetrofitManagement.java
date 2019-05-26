@@ -14,20 +14,21 @@ package com.cody.http.core;
 
 import android.webkit.URLUtil;
 
-import com.cody.http.lib.annotation.Domain;
 import com.cody.component.lib.bean.Result;
+import com.cody.http.core.interceptor.HeaderInterceptor;
+import com.cody.http.lib.annotation.Domain;
 import com.cody.http.lib.config.HttpCode;
 import com.cody.http.lib.config.TimeConfig;
 import com.cody.http.lib.exception.AccountInvalidException;
 import com.cody.http.lib.exception.DomainInvalidException;
 import com.cody.http.lib.exception.ServerResultException;
 import com.cody.http.lib.exception.TokenInvalidException;
-import com.cody.http.core.interceptor.HeaderInterceptor;
-import com.cody.http.core.interceptor.HttpInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,6 +38,8 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.CipherSuite;
+import okhttp3.ConnectionSpec;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -179,10 +182,28 @@ class RetrofitManagement {
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(httpLoggingInterceptor);
         }
-        OkHttpClient client = builder.build();
-        Gson gson = new GsonBuilder()
-                .setLenient()
-                .create();
+        OkHttpClient client = null;
+
+        // Add legacy cipher suite for Android 4
+        // Necessary because our servers don't have the right cipher suites.
+        // https://github.com/square/okhttp/issues/4053
+        List<CipherSuite> oldCipherSuites = ConnectionSpec.MODERN_TLS.cipherSuites();
+        if (oldCipherSuites != null) {
+            List<CipherSuite> cipherSuites = new ArrayList<>(oldCipherSuites);
+            cipherSuites.add(CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA);
+            cipherSuites.add(CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA);
+
+            ConnectionSpec legacyTls = new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
+                    .cipherSuites(cipherSuites.toArray(new CipherSuite[0]))
+                    .build();
+
+            client = builder.connectionSpecs(Arrays.asList(legacyTls, ConnectionSpec.CLEARTEXT))
+                    .build();
+        }
+        if (client == null) {
+            client = builder.build();
+        }
+        Gson gson = new GsonBuilder().setLenient().create();
         return new Retrofit.Builder()
                 .client(client)
                 .baseUrl(baseUrl)
