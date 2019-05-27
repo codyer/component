@@ -46,7 +46,7 @@ public abstract class PageListBindFragment<VM extends PageListViewModel<MaskView
         mListAdapter.setItemLongClickListener(this);
         getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         getBinding().recyclerView.setAdapter(mListAdapter);
-        getBinding().swipeRefreshLayout.setColorSchemeResources(R.color.uiColorPrimary, R.color.uiColorBlue, R.color.uiColorPrimaryAccent);
+        getBinding().swipeRefreshLayout.setColorSchemeResources(R.color.uiColorPrimary, R.color.uiColorPrimaryAccent, R.color.uiColorYellow);
         getBinding().swipeRefreshLayout.setOnRefreshListener(() -> getFriendlyViewModel().refresh());
         getFriendlyViewModel().getPagedList().observe(this, items -> getFriendlyViewModel().getRequestStatusLive().observe(this, new Observer<RequestStatus>() {
             @Override

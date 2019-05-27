@@ -34,6 +34,7 @@
     <color name="uiColorBlack">#000000</color>
     <color name="uiColorBlue">#1C90DB</color>
     <color name="uiColorGreen">#3BB032</color>
+    <color name="uiColorYellow">#FFFF00</color>
     <color name="uiColorGray">#D3D3D3</color>
     <color name="uiColorLightGray">#FAFAFA</color>
     <color name="uiColorGray3">#333333</color>
