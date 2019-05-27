@@ -36,6 +36,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
+        // dex突破65535的限制
+        multiDexEnabled true
     }
 
     buildTypes {
