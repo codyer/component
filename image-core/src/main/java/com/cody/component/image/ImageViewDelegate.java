@@ -20,18 +20,18 @@ import android.graphics.Matrix;
 import android.os.Bundle;
 import android.text.TextUtils;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.exifinterface.media.ExifInterface;
+
+import com.cody.component.image.preview.ImageActivity;
 import com.cody.component.util.ActivityUtil;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
-import com.lzy.imagepicker.ui.ImagePreviewActivity;
 import com.lzy.imagepicker.ui.ImagePreviewDelActivity;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.exifinterface.media.ExifInterface;
 
 /**
  * Created by cody.yi on 2017/5/19.
@@ -46,6 +46,9 @@ public class ImageViewDelegate implements IImageViewListener {
     private boolean mCanDelete = true;
     private OnImageViewListener mOnImageViewListener;
     private Object mContext;
+
+    public ImageViewDelegate() {
+    }
 
     public ImageViewDelegate(OnImageViewListener onImageViewListener, Object context) {
         mOnImageViewListener = onImageViewListener;
@@ -87,12 +90,17 @@ public class ImageViewDelegate implements IImageViewListener {
         bundle.putSerializable(ImagePicker.EXTRA_IMAGE_ITEMS, items);
         bundle.putInt(ImagePicker.EXTRA_SELECTED_IMAGE_POSITION, position);
         bundle.putBoolean(ImagePicker.EXTRA_FROM_ITEMS, true);
-        ActivityUtil.navigateToForResult(mContext, mCanDelete ? ImagePreviewDelActivity.class : ImagePreviewActivity
-                .class, REQUEST_CODE_PREVIEW, bundle);
+        if (mOnImageViewListener == null || mContext == null) {
+            ActivityUtil.navigateTo(ImageActivity.class, bundle);
+        } else {
+            ActivityUtil.navigateToForResult(mContext, mCanDelete ? ImagePreviewDelActivity.class : ImageActivity
+                    .class, REQUEST_CODE_PREVIEW, bundle);
+        }
     }
 
     @Override
     public void selectImage(int limit, boolean isCrop) {
+        if (mContext == null) return;
         // 设置是否裁剪照片
         ImagePicker.getInstance().setCrop(isCrop);
         if (limit == 1) {
@@ -106,6 +114,7 @@ public class ImageViewDelegate implements IImageViewListener {
 
     @Override
     public void pickImage(int limit, boolean isCrop) {
+        if (mContext == null) return;
         // 设置是否裁剪照片
         ImagePicker.getInstance().setCrop(isCrop);
         if (limit == 1) {
@@ -144,13 +153,17 @@ public class ImageViewDelegate implements IImageViewListener {
             //添加图片返回
             if (data != null && requestCode == REQUEST_CODE_SELECT) {
                 images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_RESULT_ITEMS);
-                mOnImageViewListener.onPickImage(mCurrentId, images);
+                if (mOnImageViewListener != null) {
+                    mOnImageViewListener.onPickImage(mCurrentId, images);
+                }
             }
         } else if (resultCode == ImagePicker.RESULT_CODE_BACK) {
             //预览图片返回
             if (data != null && requestCode == REQUEST_CODE_PREVIEW) {
                 images = (ArrayList<ImageItem>) data.getSerializableExtra(ImagePicker.EXTRA_IMAGE_ITEMS);
-                mOnImageViewListener.onPreview(mCurrentId, images);
+                if (mOnImageViewListener != null) {
+                    mOnImageViewListener.onPreview(mCurrentId, images);
+                }
             }
         }
     }

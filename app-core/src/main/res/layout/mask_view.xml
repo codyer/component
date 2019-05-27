@@ -57,7 +57,19 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:maxLines="5"
+                android:text="@{viewData.infoId}"
+                android:visibility="@{viewData.showInfo?View.VISIBLE:View.GONE}"
+                tools:text="@string/ui_str_bad_network_view_tip" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_normal"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:maxLines="5"
                 android:text="@{viewData.message}"
+                android:visibility="@{viewData.showInfo?View.GONE:View.VISIBLE}"
                 tools:text="@string/ui_str_bad_network_view_tip" />
 
             <TextView

@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
  */
 public class MaskViewData extends ViewData {
     private BooleanLiveData mVisibility = new BooleanLiveData(true);
+    private BooleanLiveData mShowInfo = new BooleanLiveData(true);//默认显示info
     private IntegerLiveData mInfoId = new IntegerLiveData(R.string.ui_str_loading);
     private StringLiveData mMessage = new StringLiveData("");
     private BooleanLiveData mLoading = new BooleanLiveData(true);
@@ -47,6 +48,7 @@ public class MaskViewData extends ViewData {
     public void noContentView() {
         mVisibility.postValue(true);
         mLoading.postValue(false);
+        mShowInfo.postValue(true);
         mInfoId.postValue(R.string.ui_str_no_content);
         mImageId.postValue(R.drawable.ic_no_content);
     }
@@ -54,6 +56,7 @@ public class MaskViewData extends ViewData {
     public void badNetWorkView() {
         mVisibility.postValue(true);
         mLoading.postValue(false);
+        mShowInfo.postValue(true);
         mInfoId.postValue(R.string.ui_str_bad_network_view_tip);
         mImageId.postValue(R.drawable.ic_bad_network);
     }
@@ -65,18 +68,24 @@ public class MaskViewData extends ViewData {
     }
 
     public void failedView(String message) {
-        mMessage.postValue(message);
         failedView();
+        mShowInfo.postValue(false);
+        mMessage.postValue(message);
     }
 
     public void failedView() {
         mVisibility.postValue(true);
         mLoading.postValue(false);
+        mShowInfo.postValue(true);
         mInfoId.postValue(R.string.ui_str_load_failed_click_to_reload);
         mImageId.postValue(R.drawable.ic_load_failed);
     }
 
     public MaskViewData() {
+    }
+
+    public BooleanLiveData getShowInfo() {
+        return mShowInfo;
     }
 
     public BooleanLiveData getLoading() {

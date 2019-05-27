@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ *************************************************************
   ~ 文件：activity_image.xml  模块：image-core  项目：component
   ~ 当前修改时间：2019年05月25日 15:39:42
@@ -11,11 +10,47 @@
   ~ *************************************************************
   -->
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".preview.ImageActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".preview.ImageActivity">
+
+        <com.lzy.imagepicker.view.ViewPagerFixed
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000"
+            android:onClick="@{onClickListener::onClick}" />
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:onClick="@{onClickListener::onClick}"
+            android:padding="@dimen/dimen_normal"
+            android:src="@drawable/ic_back_white" />
+
+        <TextView
+            android:id="@+id/position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="@dimen/dimen_hugest"
+            android:textColor="@color/uiColorPrimaryText"
+            android:textSize="@dimen/ui_font_big"
+            tools:text="2/5" />
+    </FrameLayout>
+</layout>

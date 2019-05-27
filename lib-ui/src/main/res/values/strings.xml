@@ -36,7 +36,7 @@
     <string name="ui_str_network_connect_error">网络连接异常</string>
     <string name="ui_str_network_connect_timeout">网络连接超时</string>
     <string name="ui_str_bad_network_view_tip">您的网络不给力，点击屏幕可重新加载</string>
-    <string name="ui_str_load_failed_click_to_reload">加载失败，点击可重新加载</string>
+    <string name="ui_str_load_failed_click_to_reload">点击可重新加载</string>
     <string name="ui_str_no_content">暂无数据</string>
 
     <string name="ui_str_refresh">刷新一下试试</string>
