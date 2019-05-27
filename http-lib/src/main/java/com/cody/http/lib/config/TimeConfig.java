@@ -18,7 +18,7 @@ package com.cody.http.lib.config;
  */
 public class TimeConfig {
     public static final long WINDOW_DURATION = 500;
-    public static final long READ_TIMEOUT = 10000;
-    public static final long WRITE_TIMEOUT = 10000;
-    public static final long CONNECT_TIMEOUT = 10000;
+    public static final long READ_TIMEOUT = 6000;
+    public static final long WRITE_TIMEOUT = 6000;
+    public static final long CONNECT_TIMEOUT = 6000;
 }
