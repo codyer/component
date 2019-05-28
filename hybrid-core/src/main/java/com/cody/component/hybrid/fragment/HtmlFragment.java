@@ -108,7 +108,7 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
         mImageViewDelegate = new ImageViewDelegate(this);
         JsBridge.getInstance()
                 .addJsHandler(JsHandlerCommonImpl.class.getSimpleName(), JsHandlerCommonImpl.class)
-                // TODO syncCookie
+                // syncCookie
                 .syncCookie(getActivity(), getViewData().getUrlHost(), Repository.getLocalMap(BaseLocalKey.COOKIE))
                 .setFileChooseCallBack(this)
                 .build(getBinding().webView, getFriendlyViewModel());

@@ -43,11 +43,13 @@ import java.util.Map;
  * JsBridge
  */
 public class JsBridge {
-    private final static String USER_AGENT = ";android;hybrid-core:1.0.0;app";
+    private String VERSION = "1.0.0";
+    private String APP_NAME = "app";
+    final private static String USER_AGENT = ";android;hybrid-core:";
     private volatile static JsBridge sInstance;
     private JsHandlerFactory mJsHandlerFactory;
     private SparseArray<OnActivityResultListener> mResultListener;
-//    private SparseArray<EasyPermissions.PermissionCallbacks> mPermissionsListener;
+    //    private SparseArray<EasyPermissions.PermissionCallbacks> mPermissionsListener;
     private WeakReference<WebView> mWebViewRef;
     private JsWebChromeClient.OpenFileChooserCallBack mFileChooserCallBack;
 
@@ -128,7 +130,6 @@ public class JsBridge {
             LogUtil.d("webView is recycled.");
         }
     }*/
-
     public static void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
        /* EasyPermissions.PermissionCallbacks listener = getInstance().mPermissionsListener.get(requestCode);
         if (listener != null) {
@@ -168,6 +169,18 @@ public class JsBridge {
         }
         getInstance().mFileChooserCallBack = null;
         getInstance().mResultListener.clear();
+    }
+
+    /**
+     * 初始化版本和名称，最后需要调用build方法使处理类生效
+     *
+     * @param version 处理类名
+     * @param name    处理类类型
+     */
+    public JsBridge init(String version, String name) {
+        sInstance.VERSION = version;
+        sInstance.APP_NAME = name;
+        return this;
     }
 
     /**
@@ -224,7 +237,8 @@ public class JsBridge {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         String userAgentString = settings.getUserAgentString();
-        settings.setUserAgentString(userAgentString + USER_AGENT);
+        String userAgentMore = USER_AGENT + VERSION + ";" + APP_NAME;
+        settings.setUserAgentString(userAgentString + userAgentMore);
 //		settings.setPluginState(PluginState.ON_DEMAND);
         settings.setAllowFileAccess(true);
         // 设置 缓存模式
