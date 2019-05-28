@@ -198,6 +198,16 @@ public class Repository {
         }
     }
 
+    public static void clear() {
+        getRepository().mLocalStringCache.clear();
+        getRepository().mLocalIntegerCache.clear();
+        getRepository().mLocalBooleanCache.clear();
+        getRepository().mLocalFloatCache.clear();
+        getRepository().mLocalMapCache.clear();
+        getRepository().mLocalListCache.clear();
+        getRepository().mProfile.clear();
+    }
+
     private static void checkKey(String localKey) {
         if (localKey == null) {
             throw new NullPointerException("localKey should not be null.");

@@ -13,7 +13,7 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/uiColorThirdDark" android:state_pressed="true" />
+    <item android:drawable="@color/uiTouchRipple" android:state_pressed="true" />
     <item android:drawable="@color/uiColorThirdDark" android:state_focused="true" />
     <item android:drawable="@color/uiColorThirdAccent" android:state_checked="true" />
     <item android:drawable="@color/uiColorThird" />

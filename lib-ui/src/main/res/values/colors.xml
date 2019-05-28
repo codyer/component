@@ -46,4 +46,5 @@
     <color name="uiColorMask">#60000000</color>
     <color name="uiColorLoadingMask">#A0FFFFFF</color>
     <color name="uiColorLine">#F5F5F5</color>
+    <color name="uiTouchRipple">#30ED0C1E</color>
 </resources>

@@ -169,4 +169,9 @@ public class LocalProfile {
     public final void setList(String key, List<String> list) {
         setValue(key, mParseUtil.toJson(list));
     }
+
+    public void clear() {
+        SharedPreferences.Editor editor = mSharedPreferences.edit();
+        editor.clear().apply();
+    }
 }

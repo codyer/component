@@ -13,5 +13,5 @@
   -->
 
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-        android:color="@color/uiColorSecondaryDark">
+        android:color="@color/uiTouchRipple">
 </ripple>

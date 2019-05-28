@@ -19,7 +19,7 @@
             <item android:state_pressed="true">
                 <shape android:shape="rectangle">
                     <stroke android:width="@dimen/dimen_line" android:color="@color/uiColorLine" />
-                    <solid android:color="@color/uiColorPrimaryDark" />
+                    <solid android:color="@color/uiTouchRipple" />
                 </shape>
             </item>
             <item android:state_focused="true">
