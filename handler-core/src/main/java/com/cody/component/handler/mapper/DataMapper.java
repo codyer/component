@@ -73,6 +73,7 @@ public abstract class DataMapper<Item extends ItemViewDataHolder, Bean> {
      * @return 视图模型，对应data binding中的viewData
      */
     public List<Item> mapperList(List<Bean> beanList) {
+        init();
         return mapperList(null, beanList);
     }
 
