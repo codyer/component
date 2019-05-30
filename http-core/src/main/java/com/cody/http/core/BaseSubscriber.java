@@ -34,12 +34,9 @@ public class BaseSubscriber<T> extends DisposableObserver<T> {
 
     @Override
     public void onNext(T t) {
-        if (requestCallback != null) {
-            try {
-                requestCallback.onSuccess(t);
-            } catch (Exception e) {
-                onError(e);
-            }
+        if (requestCallback != null && !isDisposed()) {
+            requestCallback.onSuccess(t);
+            dispose();
         }
     }
 
@@ -68,7 +65,9 @@ public class BaseSubscriber<T> extends DisposableObserver<T> {
 
     @Override
     public void onComplete() {
-
+        if (requestCallback != null && !isDisposed()) {
+            requestCallback.onSuccess(null);
+            dispose();
+        }
     }
-
 }

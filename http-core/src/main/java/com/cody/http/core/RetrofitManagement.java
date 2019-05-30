@@ -96,7 +96,9 @@ class RetrofitManagement {
     private <T> Observable<T> createData(T t) {
         return Observable.create(emitter -> {
             try {
-                emitter.onNext(t);
+                if (t != null) {
+                    emitter.onNext(t);
+                }
                 emitter.onComplete();
             } catch (Exception e) {
                 emitter.onError(e);
