@@ -23,4 +23,5 @@
     <string name="not_now">暂时忽略</string>
     <string name="download_finished">下载完成！</string>
     <string name="download_progress_format">下载进度：%1$s/%2$s</string>
+    <string name="get_install_permission">请打开未知来源权限设置</string>
 </resources>

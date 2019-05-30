@@ -25,11 +25,15 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Binder;
-import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 
 import com.cody.component.app.R;
 import com.cody.component.util.LogUtil;
@@ -39,12 +43,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.FileProvider;
 
 /**
  * Created by Cody.yi on 2016/10/20.
@@ -68,16 +66,13 @@ public class DownloadService extends Service {
     private OnDownloadListener mOnDownloadListener;
     private OnDownloadListener mOnNotificationListener;
     private boolean mIsForce;
-    private Handler mHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            switch (msg.what) {
-                case QUERY:
-                    updateProgress();
-                    break;
-            }
-            return true;
+    private Handler mHandler = new Handler(msg -> {
+        switch (msg.what) {
+            case QUERY:
+                updateProgress();
+                break;
         }
+        return true;
     });
 
     public boolean isDownloaded() {
@@ -96,16 +91,25 @@ public class DownloadService extends Service {
             if (new File(path).exists()) {
                 mIsDownloaded = packageManager.getPackageArchiveInfo(path, PackageManager.GET_ACTIVITIES) != null;
                 if (mIsDownloaded) {
-                    installApk(getApplicationContext(), new File(Environment.getExternalStorageDirectory() + "/download/" + mApkName));
+                    installApk(getApplicationContext());
                     return mDownloadBinder;
                 }
             }
             startDownload(uri);
         } else {
-            LogUtil.d( getBaseContext().getString(R.string.permission_un_granted));
+            LogUtil.d(getBaseContext().getString(R.string.permission_un_granted));
             stopSelf();
         }
         return mDownloadBinder;
+    }
+
+    private void installApk(final Context applicationContext) {
+        if (mOnDownloadListener != null) {
+            mOnDownloadListener.onFinish();
+        }
+        if (mOnNotificationListener != null) {
+            mOnNotificationListener.onFinish();
+        }
     }
 
     /**
@@ -139,30 +143,6 @@ public class DownloadService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         return Service.START_REDELIVER_INTENT;
-    }
-
-    private void installApk(Context context, File file) {
-        installApk(context, file, mIsForce);
-    }
-
-    private void installApk(Context context, File file, boolean force) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-        } else {
-            Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".file_provider", file);
-            intent.setDataAndType(uri, "application/vnd.android.package-archive");
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        }
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-        if (mOnDownloadListener != null) {
-            mOnDownloadListener.onFinish();
-        }
-        if (mOnNotificationListener != null) {
-            mOnNotificationListener.onFinish();
-        }
-        System.exit(0);
     }
 
     /**
@@ -341,14 +321,16 @@ public class DownloadService extends Service {
     private class DownLoadBroadcast extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            if (intent == null) return;
             long downId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            if (intent.getAction() == null) return;
             switch (intent.getAction()) {
                 case DownloadManager.ACTION_DOWNLOAD_COMPLETE:
                     if (mDownLoadId == downId && downId != -1 && mDownloadManager != null) {
                         Uri downIdUri = mDownloadManager.getUriForDownloadedFile(mDownLoadId);
                         if (downIdUri != null) {
                             //成功下载Apk后安装
-                            installApk(context, new File(Environment.getExternalStorageDirectory() + "/download/" + mApkName));
+                            installApk(context);
                         } else {
                             if (mOnDownloadListener != null) {
                                 mOnDownloadListener.onFailure();

@@ -35,7 +35,11 @@ public class BaseSubscriber<T> extends DisposableObserver<T> {
     @Override
     public void onNext(T t) {
         if (requestCallback != null) {
-            requestCallback.onSuccess(t);
+            try {
+                requestCallback.onSuccess(t);
+            } catch (Exception e) {
+                onError(e);
+            }
         }
     }
 
