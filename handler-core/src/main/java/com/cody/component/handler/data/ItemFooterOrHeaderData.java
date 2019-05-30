@@ -22,6 +22,7 @@ import com.cody.component.handler.livedata.StringLiveData;
  * 列表底部数据类
  */
 public class ItemFooterOrHeaderData extends ItemViewDataHolder {
+    final public static int HEADER_OR_FOOTER_VIEW_TYPE = -1;
     private boolean mShowFooter = true;
     private BooleanLiveData mNoMoreItem = new BooleanLiveData(false);
     private BooleanLiveData mError = new BooleanLiveData(false);
@@ -29,10 +30,7 @@ public class ItemFooterOrHeaderData extends ItemViewDataHolder {
     private StringLiveData mErrorMessage = new StringLiveData("");
 
     public ItemFooterOrHeaderData() {
-    }
-
-    public ItemFooterOrHeaderData(int itemType) {
-        super(itemType);
+        super(HEADER_OR_FOOTER_VIEW_TYPE);
     }
 
     public boolean isShowFooter() {

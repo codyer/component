@@ -27,8 +27,7 @@ import com.cody.component.handler.interfaces.OnRetryListener;
  * 包含上拉加载更多，加载失败显示重试 footer
  */
 public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter<ItemViewDataHolder> {
-    final private static int HEADER_OR_FOOTER_VIEW_TYPE = -1;
-    final private ItemFooterOrHeaderData mItemHolderFooterOrHeader = new ItemFooterOrHeaderData(HEADER_OR_FOOTER_VIEW_TYPE);
+    final private ItemFooterOrHeaderData mItemHolderFooterOrHeader = new ItemFooterOrHeaderData();
     private RequestStatus mRequestStatus = new RequestStatus();
     private OnRetryListener mOnRetryListener;
 
@@ -93,7 +92,7 @@ public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter
     @CallSuper
     @Override
     public int getItemLayoutId(int viewType) {
-        if (viewType == HEADER_OR_FOOTER_VIEW_TYPE) {
+        if (viewType == ItemFooterOrHeaderData.HEADER_OR_FOOTER_VIEW_TYPE) {
             return R.layout.item_load_more;
         }
         return -1;
@@ -102,7 +101,7 @@ public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter
     @Override
     final public int getItemViewType(int position) {
         if ((hasFooterItem() && position == super.getItemCount()) || (hasHeaderItem() && position == 0)) {
-            return HEADER_OR_FOOTER_VIEW_TYPE;
+            return ItemFooterOrHeaderData.HEADER_OR_FOOTER_VIEW_TYPE;
         }
         return super.getItemViewType(position);
     }
