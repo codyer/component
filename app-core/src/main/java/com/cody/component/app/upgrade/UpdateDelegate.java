@@ -60,8 +60,10 @@ public class UpdateDelegate {
             if (downloadService.isDownloaded()) {
                 stopDownLoadService();
                 installApk();
-                mProgressDialog.dismiss();
-            }else {
+                if (mProgressDialog != null) {
+                    mProgressDialog.dismiss();
+                }
+            } else {
                 //接口回调，下载进度
                 downloadService.setOnProgressListener(new DownloadService.OnDownloadListener() {
                     @Override
@@ -72,25 +74,38 @@ public class UpdateDelegate {
                     public void onProgress(int size, int total) {
                         String progress = String.format(mActivity.getString(R.string.download_progress_format), SizeUtil.formatSize(size), SizeUtil.formatSize(total));
                         LogUtil.d("download", progress);
-                        mProgressDialog.setMax(total);
-                        mProgressDialog.setProgress(size);
-                        mProgressDialog.setMessage(progress);
+                        if (mProgressDialog != null) {
+                            mProgressDialog.setMax(total);
+                            mProgressDialog.setProgress(size);
+                            mProgressDialog.setMessage(progress);
+                        }
                     }
 
                     @Override
                     public void onFinish() {
-                        mActivity.showToast(mActivity.getString(R.string.download_finished));
+                        if (mActivity != null) {
+                            mActivity.showToast(mActivity.getString(R.string.download_finished));
+                        }
                         stopDownLoadService();
                         installApk();
-                        mProgressDialog.dismiss();
+
+                        if (mProgressDialog != null) {
+                            mProgressDialog.dismiss();
+                        }
                     }
 
                     @Override
                     public void onFailure() {
-                        mActivity.showToast("更新失败！");
+                        if (mActivity != null) {
+                            mActivity.showToast("更新失败！");
+                        }
                         stopDownLoadService();
-                        mProgressDialog.dismiss();
-                        mOnUpdateListener.onUpdateFinish();
+                        if (mProgressDialog != null) {
+                            mProgressDialog.dismiss();
+                        }
+                        if (mOnUpdateListener != null) {
+                            mOnUpdateListener.onUpdateFinish();
+                        }
                     }
                 });
             }
@@ -104,10 +119,16 @@ public class UpdateDelegate {
         }
     };
 
-    private UpdateDelegate(BaseActivity activity, UpdateViewData viewModel, OnUpdateListener onUpdateListener) {
+    private UpdateDelegate(BaseActivity activity, UpdateViewData viewData, OnUpdateListener onUpdateListener) {
         mActivity = activity;
-        mUpdateViewData = viewModel;
+        mUpdateViewData = viewData;
         mOnUpdateListener = onUpdateListener;
+        if (viewData == null || mOnUpdateListener == null) {
+            if (activity != null) {
+                activity.finish();
+            }
+            return;
+        }
 
         mProgressDialog = new ProgressDialog(activity);
         mProgressDialog.setTitle(R.string.version_update);
@@ -131,10 +152,11 @@ public class UpdateDelegate {
 
 
     private void installApk() {
+        if (mActivity == null || mUpdateViewData == null) return;
         installApk(mActivity, new File(Environment.getExternalStorageDirectory() + "/download/" + mUpdateViewData.getApkName()));
     }
 
-    private void installApk(Context context, File file) {
+    private void installApk(BaseActivity context, File file) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
@@ -144,7 +166,7 @@ public class UpdateDelegate {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             //兼容8.0
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                boolean hasInstallPermission = mActivity.getPackageManager().canRequestPackageInstalls();
+                boolean hasInstallPermission = context.getPackageManager().canRequestPackageInstalls();
                 if (!hasInstallPermission) {
                     startInstallPermissionSettingActivity();
                     return;
@@ -152,9 +174,9 @@ public class UpdateDelegate {
             }
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        if (mActivity.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+        if (context.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
             //如果APK安装界面存在，携带请求码跳转。使用forResult是为了处理用户 取消 安装的事件。外面这层判断理论上来说可以不要，但是由于国内的定制，这个加上还是比较保险的
-            mActivity.startActivityForResult(intent, 2);
+            context.startActivityForResult(intent, 2);
         }
     }
 
@@ -163,6 +185,7 @@ public class UpdateDelegate {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void startInstallPermissionSettingActivity() {
+        if (mActivity == null)return;
         //后面跟上包名，可以直接跳转到对应APP的未知来源权限设置界面。使用startActivityForResult 是为了在关闭设置界面之后，获取用户的操作结果，然后根据结果做其他处理
         Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:" + mActivity.getPackageName()));
         mActivity.startActivityForResult(intent, 1);
@@ -170,6 +193,7 @@ public class UpdateDelegate {
 
     // Activity 需要调用
     public void onActivityResult(int requestCode, int resultCode) {
+        if (mActivity == null)return;
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
                 installApk();
@@ -197,6 +221,7 @@ public class UpdateDelegate {
      * 说明：8.0手机升级APK时获取了未知来源权限，并跳转到APK界面后，用户可能会选择取消安装，所以，再给一个弹窗
      */
     private void showApkInstallDialog() {
+        if (mActivity == null)return;
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity)
                 .setTitle(mActivity.getString(R.string.upgrade_title))
                 .setMessage(mUpdateViewData.getUpdateInfo())
@@ -213,6 +238,7 @@ public class UpdateDelegate {
      * 说明：8.0系统中升级APK时，如果跳转到了 未知来源权限设置界面，并且用户没用允许该权限，会弹出此窗口
      */
     private void showUnKnowResourceDialog() {
+        if (mActivity == null)return;
         new AlertDialog.Builder(mActivity)
                 .setTitle(mActivity.getString(R.string.get_install_permission))
                 .setCancelable(false)
@@ -238,6 +264,7 @@ public class UpdateDelegate {
      * 选择更新
      */
     private void optionalUpdate() {
+        if (mActivity == null)return;
         new AlertDialog.Builder(mActivity)
                 .setTitle(mActivity.getString(R.string.upgrade_title))
                 .setMessage(mUpdateViewData.getUpdateInfo())
@@ -250,6 +277,7 @@ public class UpdateDelegate {
      * 强制更新
      */
     private void forceUpdate() {
+        if (mActivity == null)return;
         final AlertDialog alertDialog = new AlertDialog.Builder(mActivity)
                 .setTitle(mActivity.getString(R.string.upgrade_title))
                 .setMessage(mUpdateViewData.getUpdateInfo())
@@ -282,6 +310,7 @@ public class UpdateDelegate {
     }
 
     private void bindDownLoadService() {
+        if (mActivity == null)return;
         if (isDownLoadMangerEnable(mActivity)) {
             Intent intent = new Intent(mActivity, DownloadService.class);
             intent.putExtra(DownloadService.DOWNLOAD, mUpdateViewData.getApkUrl());
