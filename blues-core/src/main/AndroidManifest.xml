@@ -1,0 +1,13 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：AndroidManifest.xml  模块：cody-component  项目：component
+  ~ 当前修改时间：2019年05月31日 18:44:40
+  ~ 上次修改时间：2019年05月31日 16:00:26
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：cody-component
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<manifest package="com.cody.component.blues" />
