@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *************************************************************
+  ~ 文件：strings.xml  模块：bind-update  项目：component
+  ~ 当前修改时间：2019年05月31日 15:58:57
+  ~ 上次修改时间：2019年05月30日 18:12:42
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：bind-update
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <string name="app_name">component</string>
+</resources>

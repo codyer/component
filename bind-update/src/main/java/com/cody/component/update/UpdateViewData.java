@@ -1,16 +1,16 @@
 /*
  * ************************************************************
- * 文件：UpdateViewData.java  模块：app-core  项目：component
- * 当前修改时间：2019年04月23日 18:23:19
- * 上次修改时间：2019年04月21日 22:53:02
+ * 文件：UpdateViewData.java  模块：bind-update  项目：component
+ * 当前修改时间：2019年05月31日 15:56:34
+ * 上次修改时间：2019年05月13日 09:54:51
  * 作者：Cody.yi   https://github.com/codyer
  *
- * 描述：app-core
+ * 描述：bind-update
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.component.app.upgrade;
+package com.cody.component.update;
 
 import com.cody.component.handler.data.ViewData;
 import com.cody.component.handler.livedata.StringLiveData;

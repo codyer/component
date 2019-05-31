@@ -1,16 +1,16 @@
 /*
  * ************************************************************
- * 文件：DownloadService.java  模块：app-core  项目：component
- * 当前修改时间：2019年04月23日 18:23:19
- * 上次修改时间：2019年04月21日 22:09:04
+ * 文件：DownloadService.java  模块：bind-update  项目：component
+ * 当前修改时间：2019年05月31日 15:56:33
+ * 上次修改时间：2019年05月30日 19:05:55
  * 作者：Cody.yi   https://github.com/codyer
  *
- * 描述：app-core
+ * 描述：bind-update
  * Copyright (c) 2019
  * ************************************************************
  */
 
-package com.cody.component.app.upgrade;
+package com.cody.component.update;
 
 import android.Manifest;
 import android.app.DownloadManager;
@@ -35,7 +35,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 
-import com.cody.component.app.R;
 import com.cody.component.util.LogUtil;
 
 import java.io.File;

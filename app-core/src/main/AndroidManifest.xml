@@ -27,7 +27,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <service android:name=".upgrade.DownloadService" />
+        <service android:name="com.cody.component.update.DownloadService" />
     </application>
 
 </manifest>
