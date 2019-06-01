@@ -41,8 +41,8 @@ public final class Blues {
     /**
      * 安装 Blues
      */
-    public static synchronized void install(final Context context) {
-        install(new BluesHandler(context));
+    public static synchronized void install(final Context context, BluesCallBack callBack) {
+        install(new BluesHandler(context, callBack));
     }
 
     /**

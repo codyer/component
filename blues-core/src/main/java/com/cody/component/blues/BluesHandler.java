@@ -16,10 +16,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
+import android.util.Log;
 
-import com.mmall.jz.app.BuildConfig;
-import com.mmall.jz.xf.utils.LogUtil;
-import com.mmall.jz.xf.utils.ToastUtil;
 
 /**
  * Created by cody.yi on 2018/6/6.
@@ -29,11 +28,13 @@ final public class BluesHandler implements Blues.ExceptionHandler {
     final private static String BLUES_KEY = "BLUES_KEY";
     final private static String BLUES_TOAST = "出现异常\n建议返回重试或重启应用。";
     private Context mContext;
+    private BluesCallBack mBluesCallBack;
 
-    BluesHandler(Context context) {
+    BluesHandler(Context context, BluesCallBack callBack) {
         mContext = context;
+        mBluesCallBack = callBack;
         // 确保blues初始化在 buglly 之后
-        CrashUtil.init(context);
+        CrashUtil.init(context, callBack);
     }
 
     @Override
@@ -42,37 +43,36 @@ final public class BluesHandler implements Blues.ExceptionHandler {
             CrashUtil.postException(throwable);
             return;
         }
-//        SwitchConfigBean config = UserDataManager.getSwitchConfig();
-//        if (config != null && config.bluesControl == 1 && config.buglyControl == 1) {
-//            CrashUtil.postException(mContext, throwable);
-//            return;
-//        }
+
         SharedPreferences settings = mContext.getSharedPreferences(BLUES_KEY, Context.MODE_PRIVATE);
         if (throwable.getStackTrace() != null && settings != null) {
             String blues = settings.getString(BLUES_KEY, "Blues");
             String stackTrace = (throwable.getStackTrace())[0].toString();
             showToast("出现异常：\n" + thread + "\n" + throwable.toString());
-            if (blues.equals(stackTrace)) {
-                //建议使用下面方式在控制台打印异常，这样就可以在Error级别看到红色log
-                LogUtil.e("Blues", "--->BluesException:" + thread + "<---", throwable);
+            if (TextUtils.equals(blues, stackTrace)) {
+                if (mBluesCallBack != null) {
+                    mBluesCallBack.sameException(thread, throwable);
+                } else {
+                    //建议使用下面方式在控制台打印异常，这样就可以在Error级别看到红色log
+                    Log.e("Blues", "--->BluesException:" + thread + "<---", throwable);
+                }
             } else {
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putString(BLUES_KEY, stackTrace);
                 editor.apply();
-                CrashUtil.postException(mContext, throwable);
+                CrashUtil.postException(mContext, mBluesCallBack, throwable);
             }
         }
     }
 
     private void showToast(final String msg) {
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    ToastUtil.showToast(BuildConfig.DEBUG ? msg : BLUES_TOAST);
-                } catch (Throwable e) {
-                    CrashUtil.postException(mContext, e);
+        new Handler(Looper.getMainLooper()).post(() -> {
+            try {
+                if (mBluesCallBack != null) {
+                    mBluesCallBack.showException(BluesConfig.isDebug() ? msg : BLUES_TOAST);
                 }
+            } catch (Throwable e) {
+                CrashUtil.postException(mContext, mBluesCallBack, e);
             }
         });
     }
