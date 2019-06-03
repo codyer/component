@@ -22,6 +22,8 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.3.2'
         // 使用github仓库代码
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        //添加bugly mapping上传
+        classpath 'com.tencent.bugly:symtabfileuploader:2.2.1'
     }
 }
 
