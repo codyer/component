@@ -16,6 +16,14 @@
     android:color="@color/uiColorPrimary">
     <item>
         <selector>
+            <item android:state_enabled="false">
+                <shape android:shape="rectangle">
+                    <stroke
+                        android:width="@dimen/dimen_line"
+                        android:color="@color/uiColorGray" />
+                    <solid android:color="@color/uiColorGray" />
+                </shape>
+            </item>
             <item android:state_pressed="true">
                 <shape android:shape="rectangle">
                     <stroke
