@@ -184,7 +184,7 @@ public class UpdateDelegate {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void startInstallPermissionSettingActivity() {
-        if (mActivity == null)return;
+        if (mActivity == null) return;
         //后面跟上包名，可以直接跳转到对应APP的未知来源权限设置界面。使用startActivityForResult 是为了在关闭设置界面之后，获取用户的操作结果，然后根据结果做其他处理
         Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:" + mActivity.getPackageName()));
         mActivity.startActivityForResult(intent, 1);
@@ -192,7 +192,7 @@ public class UpdateDelegate {
 
     // Activity 需要调用
     public void onActivityResult(int requestCode, int resultCode) {
-        if (mActivity == null)return;
+        if (mActivity == null) return;
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
                 installApk();
@@ -220,7 +220,7 @@ public class UpdateDelegate {
      * 说明：8.0手机升级APK时获取了未知来源权限，并跳转到APK界面后，用户可能会选择取消安装，所以，再给一个弹窗
      */
     private void showApkInstallDialog() {
-        if (mActivity == null)return;
+        if (mActivity == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity)
                 .setTitle(mActivity.getString(R.string.upgrade_title))
                 .setMessage(mUpdateViewData.getUpdateInfo())
@@ -237,7 +237,7 @@ public class UpdateDelegate {
      * 说明：8.0系统中升级APK时，如果跳转到了 未知来源权限设置界面，并且用户没用允许该权限，会弹出此窗口
      */
     private void showUnKnowResourceDialog() {
-        if (mActivity == null)return;
+        if (mActivity == null) return;
         new AlertDialog.Builder(mActivity)
                 .setTitle(mActivity.getString(R.string.get_install_permission))
                 .setCancelable(false)
@@ -263,7 +263,7 @@ public class UpdateDelegate {
      * 选择更新
      */
     private void optionalUpdate() {
-        if (mActivity == null)return;
+        if (mActivity == null) return;
         new AlertDialog.Builder(mActivity)
                 .setTitle(mActivity.getString(R.string.upgrade_title))
                 .setMessage(mUpdateViewData.getUpdateInfo())
@@ -276,11 +276,12 @@ public class UpdateDelegate {
      * 强制更新
      */
     private void forceUpdate() {
-        if (mActivity == null)return;
+        if (mActivity == null) return;
         final AlertDialog alertDialog = new AlertDialog.Builder(mActivity)
                 .setTitle(mActivity.getString(R.string.upgrade_title))
                 .setMessage(mUpdateViewData.getUpdateInfo())
-                .setCancelable(false)
+                .setCancelable(true)
+                .setOnCancelListener(dialog -> mActivity.finish())
                 .setPositiveButton(R.string.update_now, (dialog, which) -> bindDownLoadService()).create();
         alertDialog.show();
         alertDialog.setOnKeyListener((dialog, keyCode, event) -> {
@@ -309,7 +310,7 @@ public class UpdateDelegate {
     }
 
     private void bindDownLoadService() {
-        if (mActivity == null)return;
+        if (mActivity == null || TextUtils.isEmpty(mUpdateViewData.getApkUrl())) return;
         if (isDownLoadMangerEnable(mActivity)) {
             Intent intent = new Intent(mActivity, DownloadService.class);
             intent.putExtra(DownloadService.DOWNLOAD, mUpdateViewData.getApkUrl());
