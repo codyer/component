@@ -22,6 +22,7 @@ import android.util.SparseArray;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
+import android.webkit.WebStorage;
 import android.webkit.WebView;
 
 import com.cody.component.hybrid.core.JsCallback;
@@ -194,6 +195,25 @@ public class JsBridge {
         return this;
     }
 
+    public JsBridge clearCookie(Context context) {
+        if (context == null) {
+            return this;
+        }
+        CookieSyncManager.createInstance(context);
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.removeSessionCookie();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.removeAllCookie();
+            CookieSyncManager.getInstance().sync();
+        } else {
+            cookieManager.removeAllCookies(null);
+            CookieManager.getInstance().flush();
+        }
+        WebStorage.getInstance().deleteAllData(); //清空WebView的localStorage
+        return this;
+    }
+
     /**
      * 同步指定地址的cookie到webView
      */
@@ -212,6 +232,8 @@ public class JsBridge {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(context);
             cookieSyncManager.sync();
+        } else {
+            CookieManager.getInstance().flush();
         }
         return this;
     }

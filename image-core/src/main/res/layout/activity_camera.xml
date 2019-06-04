@@ -14,6 +14,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     android:background="@color/uiColorBlack">
 
     <!--相机预览-->
@@ -116,7 +117,7 @@
                             android:layout_weight="1"
                             android:contentDescription="@null"
                             android:padding="@dimen/dimen_normal"
-                            android:src="@drawable/ic_close" />-->
+                            bind:srcCompat="@drawable/ic_close" />-->
 
                 <ImageView
                     android:id="@+id/camera_gallery"
@@ -125,7 +126,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@null"
                     android:padding="@dimen/dimen_normal"
-                    android:src="@drawable/ic_gallery" />
+                    bind:srcCompat="@drawable/ic_gallery" />
 
                 <ImageView
                     android:id="@+id/camera_take"
@@ -134,7 +135,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@null"
                     android:padding="@dimen/dimen_normal"
-                    android:src="@drawable/ic_shoot" />
+                    bind:srcCompat="@drawable/ic_shoot" />
 
                 <ImageView
                     android:id="@+id/camera_flash"
@@ -143,7 +144,7 @@
                     android:layout_weight="1"
                     android:contentDescription="@null"
                     android:padding="@dimen/dimen_normal"
-                    android:src="@drawable/ic_flashlight_off" />
+                    bind:srcCompat="@drawable/ic_flashlight_off" />
 
             </LinearLayout>
 
@@ -166,7 +167,7 @@
                     android:layout_weight="2"
                     android:contentDescription="@null"
                     android:padding="@dimen/dimen_normal"
-                    android:src="@drawable/ic_cancel" />
+                    bind:srcCompat="@drawable/ic_cancel" />
 
                 <ImageView
                     android:id="@+id/camera_rotate"
@@ -175,7 +176,7 @@
                     android:layout_weight="2"
                     android:contentDescription="@null"
                     android:padding="@dimen/dimen_normal"
-                    android:src="@drawable/ic_rotate" />
+                    bind:srcCompat="@drawable/ic_rotate" />
 
                 <ImageView
                     android:id="@+id/camera_result_ok"
@@ -184,7 +185,7 @@
                     android:layout_weight="2"
                     android:contentDescription="@null"
                     android:padding="@dimen/dimen_normal"
-                    android:src="@drawable/ic_choose" />
+                    bind:srcCompat="@drawable/ic_choose" />
 
             </LinearLayout>
 
@@ -198,5 +199,5 @@
         android:layout_height="wrap_content"
         android:contentDescription="@null"
         android:padding="@dimen/dimen_normal"
-        android:src="@drawable/ic_back_white" />
+        bind:srcCompat="@drawable/ic_back_white" />
 </RelativeLayout>

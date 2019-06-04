@@ -10,7 +10,7 @@
   ~ *************************************************************
   -->
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -34,7 +34,7 @@
             android:minHeight="?attr/actionBarSize"
             android:onClick="@{onClickListener::onClick}"
             android:theme="@style/ThemeOverlay.AppCompat.Light"
-            app:contentInsetStart="@dimen/dimen_tiny"
+            bind:contentInsetStart="@dimen/dimen_tiny"
             tools:layout_height="wrap_content">
 
             <LinearLayout
@@ -52,7 +52,7 @@
                     android:onClick="@{onClickListener::onClick}"
                     android:paddingLeft="@dimen/dimen_tiny"
                     android:paddingRight="@dimen/dimen_tiny"
-                    android:src="@drawable/ic_back" />
+                    bind:srcCompat="@drawable/ic_back" />
 
                 <ImageView
                     android:id="@+id/quickClose"
@@ -63,7 +63,7 @@
                     android:onClick="@{onClickListener::onClick}"
                     android:paddingStart="@dimen/dimen_super_tiny"
                     android:paddingEnd="@dimen/dimen_tiny"
-                    android:src="@drawable/ic_close" />
+                    bind:srcCompat="@drawable/ic_close" />
 
                 <TextView
                     android:id="@+id/title"

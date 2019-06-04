@@ -11,7 +11,8 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -41,7 +42,7 @@
             android:contentDescription="@null"
             android:onClick="@{onClickListener::onClick}"
             android:padding="@dimen/dimen_normal"
-            android:src="@drawable/ic_back_white" />
+            bind:srcCompat="@drawable/ic_back_white" />
 
         <TextView
             android:id="@+id/position"

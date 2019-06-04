@@ -58,7 +58,7 @@
             android:contentDescription="@null"
             android:onClick="@{onClickListener::onClick}"
             android:padding="@dimen/dimen_normal"
-            android:src="@drawable/ic_back_white" />
+            bind:srcCompat="@drawable/ic_back_white" />
 
         <ImageView
             android:id="@+id/gallery"
@@ -68,6 +68,6 @@
             android:contentDescription="@null"
             android:onClick="@{onClickListener::onClick}"
             android:padding="@dimen/dimen_normal"
-            android:src="@drawable/ic_gallery" />
+            bind:srcCompat="@drawable/ic_gallery" />
     </FrameLayout>
 </layout>

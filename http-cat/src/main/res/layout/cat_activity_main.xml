@@ -13,7 +13,7 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -43,8 +43,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                bind:layout_scrollFlags="scroll|enterAlways|snap"
+                bind:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                 <TextView
                     android:id="@+id/toolbarTitle"
@@ -72,7 +72,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
             android:onClick="@{onClickListener::onClick}"
-            android:src="@drawable/ic_arrow_upward"
-            app:fabSize="mini" />
+            bind:srcCompat="@drawable/ic_arrow_upward"
+            bind:fabSize="mini" />
     </RelativeLayout>
 </layout>

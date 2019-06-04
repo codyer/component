@@ -38,6 +38,7 @@ android {
         versionName rootProject.ext.versionName
         // dex突破65535的限制
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
