@@ -11,6 +11,12 @@
  */
 
 apply plugin: 'com.android.application'
+//多渠道打包
+apply plugin: 'channel'
+// bugly
+apply plugin: 'bugly'
+// 产品名
+def MODULE_NAME = "app-"
 
 //加载签名配置的文件
 Properties props = new Properties()
@@ -46,19 +52,82 @@ android {
         versionName rootProject.ext.versionName // 版本号
         // dex突破65535的限制
         multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    //程序在buid的时候，会执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉
+    lintOptions {
+        abortOnError false
+        htmlReport true
+    }
+    // 多渠道打包需要去除 'LICENSE.txt'
+    packagingOptions {
+        exclude 'LICENSE.txt'
     }
 
     // 构建类型，此处配置debug和release版本的一些参数，像混淆、签名配置。
     buildTypes {
-        release {
+        debug {
+            debuggable true
+            // 不进行代码优化
             minifyEnabled false
+            // 不进行zip对齐
+            zipAlignEnabled false
+            // 指定混淆文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 读取设置的签名文件
+            signingConfig signingConfigs.config
+
+            // 为包名添加后缀，使调试与正式包可以并存
+//            applicationIdSuffix ".debug"
+            // 在调试包中禁用lint
+            project.gradle.startParameter.excludedTaskNames.add("lint")
+
+            bugly {
+                appId = '9d100f49ad' // 注册时分配的App ID
+                appKey = '2b1a5122-0248-42fd-a95a-69be7bb74123' // 注册时分配的App Key
+                upload = false
+                debug = true
+            }
+        }
+
+        release {
+            // 启用资源压缩 因为您可能需要编辑 proguard-rules.pro 文件以保留动态创建或调用的类或方法，然后再开始移除资源
+            shrinkResources true
+            // 开启代码压缩
+            minifyEnabled true
+            // 对齐
+            zipAlignEnabled true
+            // 指定混淆文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 指定签名配置
+            signingConfig signingConfigs.config
+
+            bugly {
+                appId = '9d100f49ad' // 注册时分配的App ID
+                appKey = '2b1a5122-0248-42fd-a95a-69be7bb74123' // 注册时分配的App Key
+            }
         }
     }
 
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
+    }
+
+    channel {
+        //指定渠道文件
+        channelFile = new File(project.rootDir, "markets.txt")
+        //多渠道包的输出目录，默认为new File(project.buildDir,"channel")
+        baseOutputDir = new File(project.rootProject.buildDir, "apks")
+        //多渠道包的命名规则，默认为：${appName}-${versionName}-${versionCode}-${flavorName}-${buildType}
+        apkNameFormat = MODULE_NAME + '${appName}-${buildType}-${versionName}-${flavorName}-${buildTime}'
+        //快速模式：生成渠道包时不进行校验（速度可以提升10倍以上，默认为false）
+        isFastMode = true
+        //buildTime的时间格式，默认格式：yyyyMMdd-HHmmss
+        buildTimeDateFormat = 'yyyyMMdd-HH:mm'
+        //低内存模式（仅针对V2签名，默认为false）：只把签名块、中央目录和EOCD读取到内存，不把最大头的内容块读取到内存，在手机上合成APK时，可以使用该模式
+        lowMemory = false
     }
 }
 
@@ -67,17 +136,18 @@ dependencies {
 //        implementation rootProject.ext.dependencies["local-component"]
 //        annotationProcessor rootProject.ext.dependencies["local-compiler"]
 //    } else if (isComponent) {
-        implementation project(":http-core")
-        implementation project(":bus-core")
-        implementation project(":bind-banner")
-        implementation project(":http-cat")
-        implementation project(":hybrid-core")
-        annotationProcessor project(":bus-compiler")
-        annotationProcessor project(":http-compiler")
+    implementation project(":http-core")
+    implementation project(":bus-core")
+    implementation project(":bind-banner")
+    implementation project(":http-cat")
+    implementation project(":hybrid-core")
+    annotationProcessor project(":bus-compiler")
+    annotationProcessor project(":http-compiler")
 //    } else {//if (isApp || isJitPack)
 //        implementation rootProject.ext.dependencies["component"]
 //        annotationProcessor rootProject.ext.dependencies["compiler"]
 //    }
     implementation rootProject.ext.dependencies["constraintlayout"]
     implementation rootProject.ext.dependencies["material"]
+    implementation rootProject.ext.dependencies["channel"]
 }
