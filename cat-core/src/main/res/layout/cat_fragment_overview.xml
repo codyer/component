@@ -17,7 +17,7 @@
 
         <import type="android.view.View" />
 
-        <import type="com.cody.component.http.cat.utils.FormatUtils" />
+        <import type="com.cody.component.cat.utils.FormatUtils" />
 
         <variable
             name="onClickListener"
@@ -25,7 +25,7 @@
 
         <variable
             name="viewData"
-            type="com.cody.component.http.cat.db.data.ItemHttpData" />
+            type="com.cody.component.cat.db.data.ItemHttpData" />
 
     </data>
 

@@ -10,7 +10,7 @@
  * ************************************************************
  */
 
-package com.cody.component.bean;
+package com.cody.component.demo.bean;
 
 import androidx.annotation.NonNull;
 

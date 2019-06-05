@@ -10,7 +10,7 @@
  * ************************************************************
  */
 
-package com.cody.component.banner;
+package com.cody.component.demo.banner;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -20,20 +20,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.cody.component.R;
+import com.cody.component.demo.R;
 import com.cody.component.app.activity.EmptyBindActivity;
 import com.cody.component.banner.adapter.BindingBannerAdapter;
 import com.cody.component.banner.data.BannerViewData;
-import com.cody.component.bean.TestDataBean;
-import com.cody.component.bus.BusDemoActivity;
-import com.cody.component.data.generate.CatApiOpen$RemoteDataSource;
-import com.cody.component.data.generate.CatHttpBin$RemoteDataSource;
-import com.cody.component.databinding.ActivityMainBannerBinding;
+import com.cody.component.demo.bean.TestDataBean;
+import com.cody.component.demo.bus.BusDemoActivity;
+import com.cody.component.demo.data.generate.CatApiOpen$RemoteDataSource;
+import com.cody.component.demo.data.generate.CatHttpBin$RemoteDataSource;
+import com.cody.component.demo.databinding.ActivityMainBannerBinding;
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.hybrid.core.UrlUtil;
 import com.cody.component.image.certificate.camera.CameraActivity;
 import com.cody.component.image.scan.ScanActivity;
-import com.cody.component.list.ListTestActivity;
+import com.cody.component.demo.list.ListTestActivity;
 import com.cody.component.util.ActivityUtil;
 import com.cody.component.cat.HttpCat;
 import com.cody.component.http.HttpCore;

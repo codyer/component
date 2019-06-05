@@ -1,8 +1,8 @@
 /*
  * ************************************************************
  * 文件：DemoApplication.java  模块：app  项目：component
- * 当前修改时间：2019年04月23日 18:23:19
- * 上次修改时间：2019年04月13日 08:43:55
+ * 当前修改时间：2019年06月05日 14:15:10
+ * 上次修改时间：2019年06月05日 14:02:38
  * 作者：Cody.yi   https://github.com/codyer
  *
  * 描述：app
@@ -10,7 +10,7 @@
  * ************************************************************
  */
 
-package com.cody.component;
+package com.cody.component.demo;
 
 import android.app.Activity;
 

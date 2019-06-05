@@ -10,15 +10,14 @@
  * ************************************************************
  */
 
-package com.cody.component.bus;
+package com.cody.component.demo.bus;
 
 import android.os.Bundle;
 
-import com.cody.component.R;
-import com.cody.component.bean.TestBean;
-import com.cody.component.bus.event.Scope$demo;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.cody.component.bus.LiveEventBus;
+import com.cody.component.demo.R;
+import com.cody.component.demo.bean.TestBean;
+import com.cody.component.demo.bus.event.Scope$demo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -29,6 +28,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.cody.component.bus.wrapper.ObserverWrapper;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 public class BusDemoActivity extends AppCompatActivity {
     private static int count = 0;

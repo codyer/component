@@ -10,19 +10,18 @@
  * ************************************************************
  */
 
-package com.cody.component.list;
+package com.cody.component.demo.list;
 
 
 import android.view.View;
 
-import com.cody.component.R;
+import com.cody.component.demo.R;
 import com.cody.component.app.fragment.PageListBindFragment;
 import com.cody.component.bind.adapter.list.BindingViewHolder;
 import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.handler.data.MaskViewData;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * test

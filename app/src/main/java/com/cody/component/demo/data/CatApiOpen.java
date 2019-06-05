@@ -10,7 +10,7 @@
  * ************************************************************
  */
 
-package com.cody.component.data;
+package com.cody.component.demo.data;
 
 import com.cody.component.http.lib.annotation.Domain;
 

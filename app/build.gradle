@@ -136,11 +136,13 @@ dependencies {
 //        implementation rootProject.ext.dependencies["local-component"]
 //        annotationProcessor rootProject.ext.dependencies["local-compiler"]
 //    } else if (isComponent) {
+    implementation project(':cat-core')
+    implementation project(':update-core')
+    implementation project(':blues-core')
+    implementation project(":hybrid-core")
+    implementation project(':banner-core')
     implementation project(":http-core")
     implementation project(":bus-core")
-    implementation project(':banner-core')
-    implementation project(':cat-core')
-    implementation project(":hybrid-core")
     annotationProcessor project(":bus-compiler")
     annotationProcessor project(":http-compiler")
 //    } else {//if (isApp || isJitPack)

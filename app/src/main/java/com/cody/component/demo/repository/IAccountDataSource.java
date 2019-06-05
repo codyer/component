@@ -10,7 +10,7 @@
  * ************************************************************
  */
 
-package com.cody.component.repository;
+package com.cody.component.demo.repository;
 
 
 import com.cody.component.http.callback.RequestCallback;

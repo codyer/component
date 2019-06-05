@@ -10,7 +10,7 @@
  * ************************************************************
  */
 
-package com.cody.component.bean;
+package com.cody.component.demo.bean;
 
 /**
  * Created by xu.yi. on 2019/4/7.

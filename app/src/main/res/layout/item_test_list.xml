@@ -24,7 +24,7 @@
 
         <variable
             name="viewData"
-            type="com.cody.component.list.ItemTestViewData" />
+            type="com.cody.component.demo.list.ItemTestViewData" />
     </data>
 
     <TextView

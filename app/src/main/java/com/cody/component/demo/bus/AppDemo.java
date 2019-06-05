@@ -10,9 +10,9 @@
  * ************************************************************
  */
 
-package com.cody.component.bus;
+package com.cody.component.demo.bus;
 
-import com.cody.component.bean.TestBean;
+import com.cody.component.demo.bean.TestBean;
 import com.cody.component.bus.lib.annotation.Event;
 import com.cody.component.bus.lib.annotation.EventScope;
 
