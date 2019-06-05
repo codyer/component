@@ -91,7 +91,6 @@
       <excludeFolder url="file://$MODULE_DIR$/../ui-core/build/intermediates/aapt_friendly_merged_manifests" />
       <excludeFolder url="file://$MODULE_DIR$/../ui-core/build/intermediates/check_manifest_result" />
       <excludeFolder url="file://$MODULE_DIR$/../ui-core/build/intermediates/library_manifest" />
-      <excludeFolder url="file://$MODULE_DIR$/../ui-core/build/intermediates/lint_jar" />
       <excludeFolder url="file://$MODULE_DIR$/../ui-core/build/intermediates/merged_manifests" />
       <excludeFolder url="file://$MODULE_DIR$/../ui-core/build/intermediates/rs" />
       <excludeFolder url="file://$MODULE_DIR$/../ui-core/build/outputs" />

@@ -11,9 +11,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/app-core" />
-            <option value="$PROJECT_DIR$/bind-banner" />
+            <option value="$PROJECT_DIR$/banner-core" />
             <option value="$PROJECT_DIR$/bind-core" />
-            <option value="$PROJECT_DIR$/bind-update" />
             <option value="$PROJECT_DIR$/blues-core" />
             <option value="$PROJECT_DIR$/bus-compiler" />
             <option value="$PROJECT_DIR$/bus-core" />
@@ -29,6 +28,7 @@
             <option value="$PROJECT_DIR$/image-core" />
             <option value="$PROJECT_DIR$/lib-core" />
             <option value="$PROJECT_DIR$/ui-core" />
+            <option value="$PROJECT_DIR$/update-core" />
             <option value="$PROJECT_DIR$/util-core" />
           </set>
         </option>
