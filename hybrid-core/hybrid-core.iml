@@ -160,9 +160,9 @@
     <orderEntry type="module" module-name="image-core" />
     <orderEntry type="module" module-name="handler-core" />
     <orderEntry type="module" module-name="lib-core" />
+    <orderEntry type="module" module-name="ui-core" />
     <orderEntry type="module" module-name="blues-core" />
     <orderEntry type="module" module-name="util-core" />
-    <orderEntry type="module" module-name="lib-ui" />
     <orderEntry type="module" module-name="app-core" />
     <orderEntry type="module" module-name="bind-core" />
   </component>

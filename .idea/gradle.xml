@@ -28,7 +28,7 @@
             <option value="$PROJECT_DIR$/hybrid-core" />
             <option value="$PROJECT_DIR$/image-core" />
             <option value="$PROJECT_DIR$/lib-core" />
-            <option value="$PROJECT_DIR$/lib-ui" />
+            <option value="$PROJECT_DIR$/ui-core" />
             <option value="$PROJECT_DIR$/util-core" />
           </set>
         </option>

@@ -17,7 +17,7 @@ include ':compiler'
 
 // components
 include ':http-cat'
-include ':app-core', ':bind-core', ':handler-core', ':image-core', ':lib-ui', ':lib-core'
+include ':app-core', ':bind-core', ':handler-core', ':image-core', ':ui-core', ':lib-core'
 include ':hybrid-core', 'util-core'
 include ':bind-banner'
 include ':bind-update'
