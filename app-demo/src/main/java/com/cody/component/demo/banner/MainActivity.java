@@ -162,7 +162,6 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
     }
 
     private void httpRequest1() {
-        showLoading();
         CatHttpBin$RemoteDataSource api = new CatHttpBin$RemoteDataSource(null);
         RequestCallback cb = new RequestCallback<Object>() {
             @Override
