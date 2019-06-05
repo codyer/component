@@ -13,12 +13,14 @@
 package com.cody.component.cat.ui;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.cody.component.bind.adapter.list.BindingListAdapter;
 import com.cody.component.app.activity.EmptyBindActivity;
+import com.cody.component.cat.HttpCat;
 import com.cody.component.cat.R;
 import com.cody.component.cat.databinding.CatActivityMainBinding;
 import com.cody.component.cat.db.data.ItemHttpData;
@@ -47,11 +49,22 @@ public class CatMainActivity extends EmptyBindActivity<CatActivityMainBinding> {
     protected void onBaseReady(Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
         setSupportActionBar(getBinding().toolbar);
+        if (!TextUtils.isEmpty(HttpCat.getInstance().getName())) {
+            getBinding().toolbarTitle.setText(HttpCat.getInstance().getName());
+        }
         getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mListAdapter.setItemClickListener((parent, view, position, id) ->
                 CatDetailsActivity.openActivity(CatMainActivity.this, mListAdapter.getItem(position)));
         getBinding().recyclerView.setAdapter(mListAdapter);
         getViewModel(CatViewModel.class).getAllRecordLiveData().observe(this, mListAdapter::submitList);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!TextUtils.isEmpty(HttpCat.getInstance().getName())) {
+            getBinding().toolbarTitle.setText(HttpCat.getInstance().getName());
+        }
     }
 
     @Override

@@ -43,6 +43,7 @@ public class DemoApplication extends BaseApplication {
                 .withHttpCat(HttpCat.create(this))
 //                .withHttpHeader(new HeaderParameterInterceptor())
                 .done();
+        HttpCat.getInstance().setName("demo");
         JsBridge.getInstance()
                 .init(BuildConfig.VERSION_NAME, getString(R.string.app_name));
 //                .addJsHandler(GbbHandler.class.getSimpleName(), GbbHandler.class);

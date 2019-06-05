@@ -35,6 +35,11 @@ import com.cody.component.cat.utils.LauncherUtil;
  */
 public class HttpCat {
     private WeakReference<Context> mContext;
+    private String mName;
+
+    public String getName() {
+        return mName;
+    }
 
     public Context getContext() {
         if (mContext == null) return null;
@@ -85,6 +90,13 @@ public class HttpCat {
     public void hide() {
         LauncherUtil.launcherVisible(getContext(), CatMainActivity.class, false);
         showNotification(false);
+    }
+
+    /**
+     * 给猫取名字
+     */
+    public void setName(String name) {
+        mName = name;
     }
 
     /**

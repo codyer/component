@@ -11,7 +11,7 @@
   -->
 
 <resources>
-    <string name="cat_app_name">HTTP-Cat</string>
+    <string name="cat_app_name">Cat</string>
     <string name="cat_share">Share</string>
     <string name="cat_clear">Clear</string>
 </resources>
