@@ -14,8 +14,8 @@ package com.cody.component.repository;
 
 
 import com.cody.component.handler.viewmodel.BaseViewModel;
-import com.cody.http.core.BaseRemoteDataSource;
-import com.cody.http.core.callback.RequestCallback;
+import com.cody.component.http.BaseRemoteDataSource;
+import com.cody.component.http.callback.RequestCallback;
 import com.cody.component.lib.bean.Result;
 
 import io.reactivex.Observable;

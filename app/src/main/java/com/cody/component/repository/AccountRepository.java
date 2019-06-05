@@ -13,8 +13,8 @@
 package com.cody.component.repository;
 
 import com.cody.component.handler.viewmodel.BaseViewModel;
-import com.cody.http.core.callback.RequestCallback;
-import com.cody.http.core.repository.BaseRepository;
+import com.cody.component.http.callback.RequestCallback;
+import com.cody.component.http.repository.BaseRepository;
 
 /**
  * Created by xu.yi. on 2019-05-22.

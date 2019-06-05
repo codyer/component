@@ -28,8 +28,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.cody.component.bus.core.LiveEventBus;
-import com.cody.component.bus.core.wrapper.ObserverWrapper;
+import com.cody.component.bus.wrapper.ObserverWrapper;
 
 public class BusDemoActivity extends AppCompatActivity {
     private static int count = 0;

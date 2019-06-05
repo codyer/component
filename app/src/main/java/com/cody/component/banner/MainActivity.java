@@ -35,9 +35,9 @@ import com.cody.component.image.certificate.camera.CameraActivity;
 import com.cody.component.image.scan.ScanActivity;
 import com.cody.component.list.ListTestActivity;
 import com.cody.component.util.ActivityUtil;
-import com.cody.http.cat.HttpCat;
-import com.cody.http.core.HttpCore;
-import com.cody.http.core.callback.RequestCallback;
+import com.cody.component.cat.HttpCat;
+import com.cody.component.http.HttpCore;
+import com.cody.component.http.callback.RequestCallback;
 
 import java.util.ArrayList;
 import java.util.List;

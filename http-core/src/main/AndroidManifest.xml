@@ -10,4 +10,4 @@
   ~ *************************************************************
   -->
 
-<manifest package="com.cody.http.core" />
+<manifest package="com.cody.component.http" />

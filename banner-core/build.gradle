@@ -14,5 +14,4 @@
 apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
     api project(':bind-core')
-    implementation rootProject.ext.dependencies["appcompat"]
 }

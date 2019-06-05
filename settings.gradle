@@ -1,5 +1,5 @@
 include ':app'
-include ':component'
+include ':core'
 /*
  * ************************************************************
  * 文件：settings.gradle  模块：component  项目：component
@@ -16,7 +16,7 @@ include ':component'
 include ':compiler'
 
 // components
-include ':http-cat'
+include ':cat-core'
 include ':app-core', ':bind-core', ':handler-core', ':image-core', ':ui-core', ':lib-core'
 include ':hybrid-core', 'util-core'
 include ':banner-core'

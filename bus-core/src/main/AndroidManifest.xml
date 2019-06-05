@@ -10,4 +10,4 @@
   ~ *************************************************************
   -->
 
-<manifest package="com.cody.component.bus.core" />
+<manifest package="com.cody.component.bus" />

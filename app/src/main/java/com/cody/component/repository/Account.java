@@ -12,7 +12,7 @@
 
 package com.cody.component.repository;
 
-import com.cody.http.lib.annotation.Domain;
+import com.cody.component.http.lib.annotation.Domain;
 import com.cody.component.lib.bean.Result;
 
 import java.util.List;

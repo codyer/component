@@ -13,7 +13,7 @@
 package com.cody.component.repository;
 
 
-import com.cody.http.core.callback.RequestCallback;
+import com.cody.component.http.callback.RequestCallback;
 
 /**
  * 自动生成，不要修改

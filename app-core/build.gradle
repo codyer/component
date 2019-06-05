@@ -12,7 +12,5 @@
 
 apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
-    implementation rootProject.ext.dependencies["material"]
     api project(':bind-core')
-    api project(':blues-core')
 }

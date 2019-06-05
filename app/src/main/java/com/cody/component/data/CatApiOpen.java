@@ -12,7 +12,7 @@
 
 package com.cody.component.data;
 
-import com.cody.http.lib.annotation.Domain;
+import com.cody.component.http.lib.annotation.Domain;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

@@ -16,9 +16,9 @@ import com.cody.component.http.compiler.bean.DataSourceInfoBean;
 import com.cody.component.http.compiler.bean.DomainBean;
 import com.cody.component.http.compiler.bean.MethodBean;
 import com.cody.component.http.compiler.bean.ParameterBean;
-import com.cody.http.lib.annotation.Domain;
-import com.cody.http.lib.exception.GenerateDataSourceException;
-import com.cody.http.lib.exception.InvalidDefineException;
+import com.cody.component.http.lib.annotation.Domain;
+import com.cody.component.http.lib.exception.GenerateDataSourceException;
+import com.cody.component.http.lib.exception.InvalidDefineException;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -62,8 +62,8 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
     private static final String TAG = "[RemoteDataSourceProcessor]";
 
     private static final String VIEW_MODEL_CLASS = "com.cody.component.handler.viewmodel.BaseViewModel";
-    private static final String BASE_DATA_SOURCE_CLASS = "com.cody.http.core.BaseRemoteDataSource";
-    private static final String CALL_BACK_CLASS = "com.cody.http.core.callback.RequestCallback";
+    private static final String BASE_DATA_SOURCE_CLASS = "com.cody.component.http.BaseRemoteDataSource";
+    private static final String CALL_BACK_CLASS = "com.cody.component.http.callback.RequestCallback";
     private static final String CALL_BACK = "callback";
     private static final String BASE_URL = "baseUrl";
 

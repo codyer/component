@@ -17,10 +17,10 @@
             <option value="$PROJECT_DIR$/bus-compiler" />
             <option value="$PROJECT_DIR$/bus-core" />
             <option value="$PROJECT_DIR$/bus-lib" />
+            <option value="$PROJECT_DIR$/cat-core" />
             <option value="$PROJECT_DIR$/compiler" />
-            <option value="$PROJECT_DIR$/component" />
+            <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/handler-core" />
-            <option value="$PROJECT_DIR$/http-cat" />
             <option value="$PROJECT_DIR$/http-compiler" />
             <option value="$PROJECT_DIR$/http-core" />
             <option value="$PROJECT_DIR$/http-lib" />

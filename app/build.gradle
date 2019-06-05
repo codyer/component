@@ -139,7 +139,7 @@ dependencies {
     implementation project(":http-core")
     implementation project(":bus-core")
     implementation project(':banner-core')
-    implementation project(":http-cat")
+    implementation project(':cat-core')
     implementation project(":hybrid-core")
     annotationProcessor project(":bus-compiler")
     annotationProcessor project(":http-compiler")
@@ -148,6 +148,5 @@ dependencies {
 //        annotationProcessor rootProject.ext.dependencies["compiler"]
 //    }
     implementation rootProject.ext.dependencies["constraintlayout"]
-    implementation rootProject.ext.dependencies["material"]
     implementation rootProject.ext.dependencies["channel"]
 }
