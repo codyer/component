@@ -37,6 +37,12 @@ public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseVie
 
     public FriendlyViewModel(final VD friendlyViewData) {
         mFriendlyViewData = friendlyViewData;
+        if (mRequestStatus == null) {
+            mRequestStatus = new RequestStatus();
+        }
+        if (mRequestStatusLive == null) {
+            mRequestStatusLive = new MutableLiveData<>(mRequestStatus);
+        }
     }
 
     public VD getFriendlyViewData() {
@@ -46,12 +52,6 @@ public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseVie
     @CallSuper
     @Override
     public void onInit() {
-        if (mRequestStatus == null) {
-            mRequestStatus = new RequestStatus();
-        }
-        if (mRequestStatusLive == null) {
-            mRequestStatusLive = new MutableLiveData<>(mRequestStatus);
-        }
         setOperation(mRequestStatus.init());
     }
 

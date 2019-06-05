@@ -286,7 +286,7 @@ public class UpdateDelegate {
         alertDialog.show();
         alertDialog.setOnKeyListener((dialog, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
-                ((Activity) alertDialog.getContext()).finish();
+                mActivity.finish();
             }
             return false;
         });

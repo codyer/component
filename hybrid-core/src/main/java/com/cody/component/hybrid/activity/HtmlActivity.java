@@ -140,17 +140,19 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     //添加点击返回箭头事件
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            if (mHtmlFragment.canGoBack()) {
-                return mHtmlFragment.goBack();
+        if (mHtmlFragment != null) {
+            if (item.getItemId() == android.R.id.home) {
+                if (mHtmlFragment.canGoBack()) {
+                    return mHtmlFragment.goBack();
+                }
+            } else if (item.getItemId() == R.id.action_share) {
+                if (mHtmlFragment.getViewData() != null &&
+                        mHtmlFragment.getViewData().getUrl() != null &&
+                        mHtmlFragment.getViewData().getHeader() != null) {
+                    share(mHtmlFragment.getViewData().getUrl().get(), mHtmlFragment.getViewData().getHeader().get());
+                }
+                return true;
             }
-        } else if (item.getItemId() == R.id.action_share) {
-            if (mHtmlFragment != null &&
-                    mHtmlFragment.getViewData().getUrl() != null &&
-                    mHtmlFragment.getViewData().getHeader() != null) {
-                share(mHtmlFragment.getViewData().getUrl().get(), mHtmlFragment.getViewData().getHeader().get());
-            }
-            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -165,7 +167,7 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
 
     @Override
     public void onBackPressed() {
-        if (mHtmlFragment.canGoBack()) {
+        if (mHtmlFragment != null && mHtmlFragment.canGoBack()) {
             mHtmlFragment.goBack();
             return;
         }
@@ -176,7 +178,7 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
         getMenuInflater().inflate(R.menu.html_menu, menu);
-        if (!mHtmlConfig.isCanShare()) {
+        if (mHtmlConfig != null && !mHtmlConfig.isCanShare()) {
             menu.clear();
         }
         return true;
@@ -187,12 +189,14 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
      */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == android.view.KeyEvent.KEYCODE_BACK) {
-            if (mHtmlFragment.canGoBack()) {
-                return mHtmlFragment.goBack();
-            } else if (mIsRoot) {
-                exitByDoubleClick(); //调用双击退出函数
-                return false;
+        if (mHtmlFragment != null) {
+            if (keyCode == android.view.KeyEvent.KEYCODE_BACK) {
+                if (mHtmlFragment.canGoBack()) {
+                    return mHtmlFragment.goBack();
+                } else if (mIsRoot) {
+                    exitByDoubleClick(); //调用双击退出函数
+                    return false;
+                }
             }
         }
         return super.onKeyDown(keyCode, event);
@@ -219,6 +223,8 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
 
     @Override
     public void scrollToTop() {
-        mHtmlFragment.scrollToTop();
+        if (mHtmlFragment != null) {
+            mHtmlFragment.scrollToTop();
+        }
     }
 }
