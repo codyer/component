@@ -105,7 +105,6 @@
       <excludeFolder url="file://$MODULE_DIR$/../app-demo/build/intermediates/jniLibs" />
       <excludeFolder url="file://$MODULE_DIR$/../app-demo/build/intermediates/legacy_multidex_aapt_derived_proguard_rules" />
       <excludeFolder url="file://$MODULE_DIR$/../app-demo/build/intermediates/legacy_multidex_main_dex_list" />
-      <excludeFolder url="file://$MODULE_DIR$/../app-demo/build/intermediates/lint_jar" />
       <excludeFolder url="file://$MODULE_DIR$/../app-demo/build/intermediates/merged_assets" />
       <excludeFolder url="file://$MODULE_DIR$/../app-demo/build/intermediates/merged_manifests" />
       <excludeFolder url="file://$MODULE_DIR$/../app-demo/build/intermediates/metadata_feature_manifest" />

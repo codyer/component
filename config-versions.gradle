@@ -51,8 +51,8 @@ ext {
             "bugly-crashreport"      : "com.tencent.bugly:crashreport:3.0.0",
             "bugly-nativecrashreport": "com.tencent.bugly:nativecrashreport:3.7.1",
             // local maven
-            "component"              : "com.github.codyer:component:core:${componentVersion}",
-            "compiler"               : "com.github.codyer:component:compiler:${componentVersion}",
+            "component"              : "com.github.codyer.component:core:${componentVersion}",
+            "compiler"               : "com.github.codyer.component:compiler:${componentVersion}",
             "local-component"        : "com.cody.component.local:core:${componentVersion}",
             "local-compiler"         : "com.cody.component.local:compiler:${componentVersion}",
     ]
