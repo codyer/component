@@ -46,6 +46,7 @@ import java.util.Map;
 public class JsBridge {
     private String VERSION = "1.0.0";
     private String APP_NAME = "app";
+    private int mRequestCodeSequence = 0x001;
     final private static String USER_AGENT = ";android;hybrid-core:";
     private volatile static JsBridge sInstance;
     private JsHandlerFactory mJsHandlerFactory;
@@ -93,7 +94,7 @@ public class JsBridge {
      * 替换Activity中的startActivityForResult
      */
     public static void startActivityForResult(Intent intent, OnActivityResultListener listener) {
-        int requestCode = getInstance().mResultListener.size();
+        int requestCode = getInstance().mRequestCodeSequence++;
         getInstance().mResultListener.put(requestCode, listener);
         if (getInstance().mWebViewRef != null && getInstance().mWebViewRef.get() != null) {
             WebView webView = getInstance().mWebViewRef.get();

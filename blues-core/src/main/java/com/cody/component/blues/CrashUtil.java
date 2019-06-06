@@ -69,7 +69,7 @@ public class CrashUtil {
         }
     }
 
-    static void postException(Throwable throwable) {
+    public static void postException(Throwable throwable) {
         CrashReport.postCatchedException(throwable);
     }
 
