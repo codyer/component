@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *************************************************************
+  ~ 文件：util_ids.xml  模块：util-core  项目：component
+  ~ 当前修改时间：2019年06月11日 09:39:27
+  ~ 上次修改时间：2018年08月27日 17:20:34
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：util-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <item name="f_statusbar_view" type="id"/>
+    <item name="f_translucent_view" type="id"/>
+</resources>

@@ -37,6 +37,11 @@ public class ImageActivity extends EmptyBindActivity<ActivityImageBinding> {
     protected boolean isFromItems = false;
 
     @Override
+    public boolean isSupportImmersive() {
+        return false;
+    }
+
+    @Override
     protected int getLayoutID() {
         return R.layout.activity_image;
     }

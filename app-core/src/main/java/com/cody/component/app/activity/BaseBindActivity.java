@@ -60,6 +60,10 @@ public abstract class BaseBindActivity<B extends ViewDataBinding> extends BaseAc
         } else {
             setContentView(getLayoutID());
         }
+
+        if (isSupportImmersive()){
+            onImmersiveReady();
+        }
     }
 
     /**

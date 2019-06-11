@@ -136,6 +136,11 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
+    public boolean isSupportImmersive() {
+        return false;
+    }
+
+    @Override
     protected void onBaseReady(Bundle savedInstanceState) {
         mType = getIntent().getIntExtra(TAKE_TYPE, 0);
         /*动态请求需要的权限*/

@@ -46,6 +46,11 @@ public class CatMainActivity extends EmptyBindActivity<CatActivityMainBinding> {
     }
 
     @Override
+    public boolean isSupportImmersive() {
+        return false;
+    }
+
+    @Override
     protected void onBaseReady(Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
         setSupportActionBar(getBinding().toolbar);

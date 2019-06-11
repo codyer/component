@@ -16,6 +16,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.text.TextUtils;
@@ -42,6 +43,7 @@ import com.cody.component.handler.view.IBaseView;
 import com.cody.component.handler.viewmodel.BaseViewModel;
 import com.cody.component.handler.viewmodel.IViewModel;
 import com.cody.component.util.ActivityUtil;
+import com.cody.component.util.SystemBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +70,31 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     public static int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 Resources.getSystem().getDisplayMetrics());
+    }
+
+    /**
+     * 是否支持沉浸式。这里在父类中默认返回 true，如果某个界面不想支持沉浸式则重写该方法返回 false 即可
+     */
+    public boolean isSupportImmersive() {
+        return true;
+    }
+
+    /**
+     * 状态栏或者沉浸式
+     * 有特殊要求的全屏需要重载这个方法
+     */
+    protected void onImmersiveReady() {
+        if (!SystemBarUtil.isFlyme4Later()) {
+            SystemBarUtil.tintWhiteStatusBar(this, true);
+        }
+
+        View topLayout = findViewById(android.R.id.content);
+        if (topLayout != null) {
+            SystemBarUtil.setStatusBarDarkMode(this, true);
+            SystemBarUtil.tintStatusBar(this, Color.TRANSPARENT);
+            SystemBarUtil.immersiveStatusBar(this, 0.0f);
+            SystemBarUtil.setPadding(this, topLayout);
+        }
     }
 
     /**
@@ -127,6 +154,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
             mSwipeBackHelper.setSwipeBackEnable(enable);
         }
     }
+
     /**
      * 初始化滑动返回。在 super.onCreate(savedInstanceState) 之前调用该方法
      */

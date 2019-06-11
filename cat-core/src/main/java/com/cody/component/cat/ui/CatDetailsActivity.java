@@ -49,6 +49,11 @@ public class CatDetailsActivity extends EmptyBindActivity<CatActivityDetailsBind
     }
 
     @Override
+    public boolean isSupportImmersive() {
+        return false;
+    }
+
+    @Override
     protected int getLayoutID() {
         return R.layout.cat_activity_details;
     }
