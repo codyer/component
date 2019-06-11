@@ -15,6 +15,7 @@ package com.cody.component.app;
 
 import android.text.TextUtils;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDexApplication;
 
 import com.cody.component.app.local.Repository;
@@ -29,6 +30,10 @@ import java.io.IOException;
  * component
  */
 public class BaseApplication extends MultiDexApplication {
+    // This flag should be set to true to enable VectorDrawable support for API < 21
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     /**
      * 只初始化一次

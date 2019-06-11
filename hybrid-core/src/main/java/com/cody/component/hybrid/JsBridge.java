@@ -46,6 +46,7 @@ import java.util.Map;
 public class JsBridge {
     private String VERSION = "1.0.0";
     private String APP_NAME = "app";
+    private String HOST_SUFFIX = "";
     private int mRequestCodeSequence = 0x001;
     final private static String USER_AGENT = ";android;hybrid-core:";
     private volatile static JsBridge sInstance;
@@ -70,6 +71,10 @@ public class JsBridge {
             }
         }
         return sInstance;
+    }
+
+    public String getHostSuffix() {
+        return HOST_SUFFIX;
     }
 
     /**
@@ -182,6 +187,14 @@ public class JsBridge {
     public JsBridge init(String version, String name) {
         sInstance.VERSION = version;
         sInstance.APP_NAME = name;
+        return this;
+    }
+
+    /**
+     * 调用Native方法
+     */
+    public JsBridge setHost(String host) {
+        sInstance.HOST_SUFFIX = host;
         return this;
     }
 

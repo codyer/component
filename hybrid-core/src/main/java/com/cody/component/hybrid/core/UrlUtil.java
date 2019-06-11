@@ -17,6 +17,7 @@ import android.text.TextUtils;
 
 
 import com.cody.component.hybrid.BuildConfig;
+import com.cody.component.hybrid.JsBridge;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,9 +51,9 @@ public class UrlUtil {
             if (isHttpUrl(url)) {
                 String host = Uri.parse(url).getHost();
                 // TODO 内网地址判断条件
-                /*if (host.endsWith(Domain.HOST_SUFFIX)) {
+                if (host !=null && host.endsWith(JsBridge.getInstance().getHostSuffix())) {
                     return true;
-                }*/
+                }
                 // debug 条件下，ip地址的都算内网地址，测试用
                 return BuildConfig.DEBUG;
             }
