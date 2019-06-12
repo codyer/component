@@ -20,12 +20,15 @@ import com.cody.component.handler.livedata.StringLiveData;
  * 更新
  */
 public class UpdateViewData extends ViewData {
-    private StringLiveData mCountTime = new StringLiveData("3s");
+    final private StringLiveData mCountTime = new StringLiveData("3s");
     private boolean mVersionChecked = false;
     private boolean mForceUpdate = false;
     private boolean mOptionalUpdate = false;
     private boolean mIsDownloaded = false;//是否已下载
     private String mApkUrl = "";
+    private String mNewVersion = "";
+    private String mApkSize = "";
+    private String mUpdateTime = "";
     private String mUpdateInfo = "";
     private String mApkName = "";
 
@@ -67,6 +70,30 @@ public class UpdateViewData extends ViewData {
 
     public void setApkName(String apkName) {
         mApkName = apkName;
+    }
+
+    public String getNewVersion() {
+        return mNewVersion;
+    }
+
+    public void setNewVersion(final String newVersion) {
+        mNewVersion = newVersion;
+    }
+
+    public String getApkSize() {
+        return mApkSize;
+    }
+
+    public void setApkSize(final String apkSize) {
+        mApkSize = apkSize;
+    }
+
+    public String getUpdateTime() {
+        return mUpdateTime;
+    }
+
+    public void setUpdateTime(final String updateTime) {
+        mUpdateTime = updateTime;
     }
 
     public String getUpdateInfo() {

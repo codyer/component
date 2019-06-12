@@ -20,6 +20,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.databinding.DataBindingUtil;
+
+import com.cody.component.bind.CoreBR;
 import com.cody.component.demo.R;
 import com.cody.component.app.activity.EmptyBindActivity;
 import com.cody.component.banner.adapter.BindingBannerAdapter;
@@ -29,11 +33,13 @@ import com.cody.component.demo.bus.BusDemoActivity;
 import com.cody.component.demo.data.generate.CatApiOpen$RemoteDataSource;
 import com.cody.component.demo.data.generate.CatHttpBin$RemoteDataSource;
 import com.cody.component.demo.databinding.ActivityMainBannerBinding;
+import com.cody.component.demo.databinding.UpdateDialogBinding;
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.hybrid.core.UrlUtil;
 import com.cody.component.image.certificate.camera.CameraActivity;
 import com.cody.component.image.scan.ScanActivity;
 import com.cody.component.demo.list.ListTestActivity;
+import com.cody.component.update.UpdateViewData;
 import com.cody.component.util.ActivityUtil;
 import com.cody.component.cat.HttpCat;
 import com.cody.component.http.HttpCore;
@@ -57,7 +63,8 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
                 startActivity(new Intent(MainActivity.this, BusDemoActivity.class));
                 break;
             case R.id.httpRequest1:
-                httpRequest1();
+                testDialog();
+//                httpRequest1();
                 break;
             case R.id.httpRequest2:
                 httpRequest2();
@@ -113,6 +120,29 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
         getBinding().banner.setBindingBannerAdapter(bannerAdapter);
     }
 
+    private void testDialog() {
+        UpdateViewData viewData = new UpdateViewData();
+        viewData.setApkSize("12.4M");
+        viewData.setNewVersion("1.2.4");
+        viewData.setUpdateTime("2019-6-4 19:11");
+        viewData.setUpdateInfo("1.修复了但是当发生的方式发呆\n\n2.水电费水电费和扫黄打非");
+        UpdateDialogBinding binding = DataBindingUtil.inflate(getLayoutInflater(), R.layout.update_dialog, null, false);
+        binding.setVariable(CoreBR.onClickListener, (View.OnClickListener) v -> {
+            switch (v.getId()){
+                case android.R.id.button1:
+                    showToast("updateNow");
+                    break;
+                case android.R.id.button2:
+                    showToast("notNow");
+                    break;
+            }
+        });
+        binding.setVariable(CoreBR.viewData, viewData);
+        new AlertDialog.Builder(this)
+                .setView(binding.getRoot())
+                .setCancelable(true).show();
+    }
+
     /**
      * 身份证正面
      */
@@ -155,7 +185,7 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
         if (!TextUtils.isEmpty(result)) {
             if (UrlUtil.isHttpUrl(result)) {
                 HtmlActivity.startHtml("扫码打开", result);
-            }else {
+            } else {
                 showToast(result);
             }
         }

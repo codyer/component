@@ -18,8 +18,8 @@
     <string name="version_update">版本更新中</string>
     <string name="downLoading">下载中 -</string>
     <string name="update_progress">更新进度：0/100</string>
-    <string name="update_now">现在升级</string>
-    <string name="not_now">暂时忽略</string>
+    <string name="update_now">立即更新</string>
+    <string name="not_now">以后再说</string>
     <string name="download_finished">下载完成！</string>
     <string name="download_progress_format">下载进度：%1$s/%2$s</string>
     <string name="get_install_permission">请打开未知来源权限设置</string>

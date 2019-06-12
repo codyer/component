@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：update_dialog.xml  模块：app-demo  项目：component
+  ~ 当前修改时间：2019年06月12日 16:48:46
+  ~ 上次修改时间：2019年06月12日 16:36:12
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：app-demo
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="onClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewData"
+            type="com.cody.component.update.UpdateViewData" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/uiColorPrimary"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_smaller">
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{"发现新版本" + viewData.newVersion}'
+            android:textSize="@dimen/ui_font_larger"
+            tools:text="发现新版本1.2.3" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_smaller"
+            android:text='@{"新版本大小:" + viewData.apkSize}'
+            tools:text="新版本大小: 9.1M" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_smaller"
+            android:text='@{"更新时间:" + viewData.apkSize}'
+            tools:text="更新时间: 2019/05/06 19：00" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_smaller"
+            android:text='@{"新版本特性：\n\n" +viewData.updateInfo}'
+            tools:text="新版本特性：\n\n1.修复了但是当发生的方式发呆\n\n2.水电费水电费和扫黄打非" />
+
+        <Button
+            android:id="@android:id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_smaller"
+            android:layout_marginTop="@dimen/dimen_smaller"
+            android:layout_marginRight="@dimen/dimen_smaller"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="@string/update_now" />
+
+        <TextView
+            android:id="@android:id/button2"
+            style="@style/TextAppearance.Compat.Notification.Info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{onClickListener::onClick}"
+            android:text="@string/not_now"
+            android:visibility="@{viewData.forceUpdate?View.GONE:View.VISIBLE}" />
+
+    </LinearLayout>
+</layout>

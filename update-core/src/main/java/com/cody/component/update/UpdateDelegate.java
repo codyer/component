@@ -12,7 +12,6 @@
 
 package com.cody.component.update;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
@@ -25,14 +24,21 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.view.Display;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.WindowManager;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 
 import com.cody.component.app.activity.BaseActivity;
+import com.cody.component.bind.CoreBR;
 import com.cody.component.util.LogUtil;
+import com.cody.component.util.ScreenUtil;
 import com.cody.component.util.SizeUtil;
 
 import java.io.File;
@@ -208,7 +214,7 @@ public class UpdateDelegate {
                     }
                 }
             } else if (requestCode == 2) {
-                // 下午4:31 在安装页面中退出安装了
+                // 在安装页面中退出安装了
                 LogUtil.e(TAG, "从安装页面回到欢迎页面--拒绝安装");
                 showApkInstallDialog();
             }
@@ -221,15 +227,48 @@ public class UpdateDelegate {
      */
     private void showApkInstallDialog() {
         if (mActivity == null) return;
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity)
-                .setTitle(mActivity.getString(R.string.upgrade_title))
-                .setMessage(mUpdateViewData.getUpdateInfo())
-                .setCancelable(false)
-                .setPositiveButton(R.string.update_now, (dialog, which) -> installApk());
-        if (!mUpdateViewData.isForceUpdate()) {
-            builder.setNegativeButton(R.string.not_now, (dialog, which) -> mOnUpdateListener.onUpdateFinish());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        if (mOnUpdateListener.updateViewLayoutId() > 0) {
+            ViewDataBinding binding = DataBindingUtil.inflate(mActivity.getLayoutInflater(), mOnUpdateListener.updateViewLayoutId(), null, false);
+            binding.setVariable(CoreBR.onClickListener, (View.OnClickListener) v -> {
+                switch (v.getId()) {
+                    case android.R.id.button1:
+                        installApk();
+                        break;
+                    case android.R.id.button2:
+                        mOnUpdateListener.onUpdateFinish();
+                        break;
+                }
+            });
+            binding.setVariable(CoreBR.viewData, mUpdateViewData);
+            builder.setView(binding.getRoot());
+        } else {
+            builder.setTitle(mActivity.getString(R.string.upgrade_title))
+                    .setMessage(mUpdateViewData.getUpdateInfo())
+                    .setPositiveButton(R.string.update_now, (dialog, which) -> installApk());
+            if (!mUpdateViewData.isForceUpdate()) {
+                builder.setNegativeButton(R.string.not_now, (dialog, which) -> mOnUpdateListener.onUpdateFinish());
+            }
         }
-        builder.show();
+        if (mUpdateViewData.isForceUpdate()) {
+            builder.setOnKeyListener((dialog, keyCode, event) -> {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    mActivity.finish();
+                }
+                return false;
+            });
+        }
+        AlertDialog dialog = builder.setCancelable(!mUpdateViewData.isForceUpdate()).setOnCancelListener(d -> {
+            mOnUpdateListener.onUpdateFinish();
+            if (mUpdateViewData.isForceUpdate()) {
+                mActivity.finish();
+            }
+        }).show();
+        if (mOnUpdateListener.updateViewLayoutId() > 0 && dialog != null && dialog.getWindow() != null) {
+            WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+            params.width = (int) (ScreenUtil.getScreenWidth(mActivity) * 0.85);                     //使用这种方式更改了dialog的框宽
+            dialog.getWindow().setAttributes(params);
+        }
     }
 
     /**
@@ -253,7 +292,7 @@ public class UpdateDelegate {
                 .setNegativeButton(R.string.ui_str_cancel, (dialog, which) -> {
                     mOnUpdateListener.onUpdateFinish();
                     if (mUpdateViewData.isForceUpdate()) {
-                        System.exit(0);
+                        mActivity.finish();
                     }
                 })
                 .show();
@@ -264,12 +303,33 @@ public class UpdateDelegate {
      */
     private void optionalUpdate() {
         if (mActivity == null) return;
-        new AlertDialog.Builder(mActivity)
-                .setTitle(mActivity.getString(R.string.upgrade_title))
-                .setMessage(mUpdateViewData.getUpdateInfo())
-                .setCancelable(false)
-                .setPositiveButton(R.string.update_now, (dialog, which) -> bindDownLoadService())
-                .setNegativeButton(R.string.not_now, (dialog, which) -> mOnUpdateListener.onUpdateFinish()).show();
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        if (mOnUpdateListener.updateViewLayoutId() > 0) {
+            ViewDataBinding binding = DataBindingUtil.inflate(mActivity.getLayoutInflater(), mOnUpdateListener.updateViewLayoutId(), null, false);
+            binding.setVariable(CoreBR.onClickListener, (View.OnClickListener) v -> {
+                switch (v.getId()) {
+                    case android.R.id.button1:
+                        bindDownLoadService();
+                        break;
+                    case android.R.id.button2:
+                        mOnUpdateListener.onUpdateFinish();
+                        break;
+                }
+            });
+            binding.setVariable(CoreBR.viewData, mUpdateViewData);
+            builder.setView(binding.getRoot());
+        } else {
+            builder.setTitle(mActivity.getString(R.string.upgrade_title))
+                    .setMessage(mUpdateViewData.getUpdateInfo())
+                    .setPositiveButton(R.string.update_now, (dialog, which) -> bindDownLoadService())
+                    .setNegativeButton(R.string.not_now, (dialog, which) -> mOnUpdateListener.onUpdateFinish());
+        }
+        AlertDialog dialog = builder.setCancelable(true).setOnCancelListener(d -> mOnUpdateListener.onUpdateFinish()).show();
+        if (mOnUpdateListener.updateViewLayoutId() > 0 && dialog != null && dialog.getWindow() != null) {
+            WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+            params.width = (int) (ScreenUtil.getScreenWidth(mActivity) * 0.85);                     //使用这种方式更改了dialog的框宽
+            dialog.getWindow().setAttributes(params);
+        }
     }
 
     /**
@@ -277,19 +337,38 @@ public class UpdateDelegate {
      */
     private void forceUpdate() {
         if (mActivity == null) return;
-        final AlertDialog alertDialog = new AlertDialog.Builder(mActivity)
-                .setTitle(mActivity.getString(R.string.upgrade_title))
-                .setMessage(mUpdateViewData.getUpdateInfo())
-                .setCancelable(true)
-                .setOnCancelListener(dialog -> mActivity.finish())
-                .setPositiveButton(R.string.update_now, (dialog, which) -> bindDownLoadService()).create();
-        alertDialog.show();
-        alertDialog.setOnKeyListener((dialog, keyCode, event) -> {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        if (mOnUpdateListener.updateViewLayoutId() > 0) {
+            ViewDataBinding binding = DataBindingUtil.inflate(mActivity.getLayoutInflater(), mOnUpdateListener.updateViewLayoutId(), null, false);
+            binding.setVariable(CoreBR.onClickListener, (View.OnClickListener) v -> {
+                switch (v.getId()) {
+                    case android.R.id.button1:
+                        bindDownLoadService();
+                        break;
+                    case android.R.id.button2:
+                        mOnUpdateListener.onUpdateFinish();
+                        break;
+                }
+            });
+            binding.setVariable(CoreBR.viewData, mUpdateViewData);
+            builder.setView(binding.getRoot());
+        } else {
+            builder.setTitle(mActivity.getString(R.string.upgrade_title))
+                    .setMessage(mUpdateViewData.getUpdateInfo())
+                    .setPositiveButton(R.string.update_now, (dialog, which) -> bindDownLoadService()).create();
+        }
+        builder.setOnKeyListener((dialog, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 mActivity.finish();
             }
             return false;
         });
+        AlertDialog dialog = builder.setCancelable(false).show();
+        if (mOnUpdateListener.updateViewLayoutId() > 0 && dialog != null && dialog.getWindow() != null) {
+            WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+            params.width = (int) (ScreenUtil.getScreenWidth(mActivity) * 0.85);                     //使用这种方式更改了dialog的框宽
+            dialog.getWindow().setAttributes(params);
+        }
     }
 
     /**
@@ -351,6 +430,10 @@ public class UpdateDelegate {
     }
 
     public interface OnUpdateListener {
+        default int updateViewLayoutId() {
+            return -1;
+        }
+
         void onUpdateFinish();
     }
 }
