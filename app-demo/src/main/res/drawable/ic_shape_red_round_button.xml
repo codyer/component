@@ -1,0 +1,16 @@
+<!--
+  ~ *************************************************************
+  ~ 文件：ic_shape_red_round_button.xml  模块：app  项目：p-gbb-android
+  ~ 当前修改时间：2019年06月12日 17:57:47
+  ~ 上次修改时间：2019年06月10日 17:54:33
+  ~ Author：Cody.yi   http://www.gongbangbang.com
+  ~ 本内容仅限于工邦邦公司内部传阅，禁止外泄以及用于其他的商业目的
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/uiColorPrimary" />
+    <corners android:radius="@dimen/dimen_normal" />
+</shape>
