@@ -48,7 +48,7 @@ public class JsBridge {
     private String APP_NAME = "app";
     private String HOST_SUFFIX = "";
     private int mRequestCodeSequence = 0x001;
-    final private static String USER_AGENT = ";android;hybrid-core:";
+    final private static String USER_AGENT = "android;hybrid-core:";
     private volatile static JsBridge sInstance;
     private JsHandlerFactory mJsHandlerFactory;
     private SparseArray<OnActivityResultListener> mResultListener;
@@ -273,7 +273,7 @@ public class JsBridge {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         String userAgentString = settings.getUserAgentString();
-        String userAgentMore = USER_AGENT + VERSION + ";" + APP_NAME;
+        String userAgentMore = ";" + APP_NAME + "-" + USER_AGENT + VERSION + ";";
         settings.setUserAgentString(userAgentString + userAgentMore);
 //		settings.setPluginState(PluginState.ON_DEMAND);
         settings.setAllowFileAccess(true);
