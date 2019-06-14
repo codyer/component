@@ -16,7 +16,9 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,8 +27,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cody.component.app.R;
+import com.cody.component.handler.data.FriendlyViewData;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.define.Status;
+import com.cody.component.util.LogUtil;
 
 /**
  * Created by xu.yi. on 2019-06-11.
@@ -43,110 +47,124 @@ import com.cody.component.handler.define.Status;
  * EMPTY,
  * CANCEL,
  * END
+ * <p>
+ * bind:onClickListener="@{onClickListener}"
+ * bind:viewData="@{viewData}"
  */
-public class FriendlyLayout extends FrameLayout {
+public class FriendlyLayout extends SwipeRefreshLayout {
+    FrameLayout frameLayout;
     private Context mContext;
-    private IFriendly mIFriendly;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
-    private RecyclerView mRecyclerView;
-    private RequestStatus mRequestStatus = new RequestStatus();
+    private IFriendlyView mIFriendlyView;
+    private FriendlyViewData mFriendlyViewData;
+    private OnClickListener mOnClickListener;
     private Status mStatus;
 
     private View mInitView;
     private View mFailedView;
     private View mEmptyView;
 
-    public IFriendly getIFriendly() {
-        if (mIFriendly == null){
-            mIFriendly = new IFriendly() {
-                @Override
-                public int initLayoutId() {
-                    return R.layout.mask_view;
-                }
-
-                @Override
-                public int emptyLayoutId() {
-                    return R.layout.mask_view;
-                }
-
-                @Override
-                public int failedLayoutId() {
-                    return R.layout.mask_view;
-                }
-            };
+    public void setIFriendlyView(final IFriendlyView IFriendlyView) {
+        mIFriendlyView = IFriendlyView;
+        if (frameLayout != null) {
+            frameLayout.addView(new LinearLayout(mContext), new FrameLayout.LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.MATCH_PARENT
+            ));
+            frameLayout.addView(new LinearLayout(mContext), new FrameLayout.LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.MATCH_PARENT
+            ));
+            frameLayout.addView(new LinearLayout(mContext), new FrameLayout.LayoutParams(
+                    LayoutParams.MATCH_PARENT,
+                    LayoutParams.MATCH_PARENT
+            ));
+        } else {
+            LogUtil.e("setIFriendlyView +++++++");
         }
-        return mIFriendly;
     }
 
-    public void setIFriendly(final IFriendly IFriendly) {
-        mIFriendly = IFriendly;
+    /**
+     * bind:viewData="@{viewData}"
+     */
+    public void setViewData(final FriendlyViewData viewData) {
+        mFriendlyViewData = viewData;
     }
 
-    public void setRequestStatus(final RequestStatus requestStatus) {
-        mRequestStatus = requestStatus;
+    /**
+     * bind:onClickListener="@{onClickListener}"
+     */
+    @Override
+    public void setOnClickListener(final OnClickListener onClickListener) {
+        mOnClickListener = onClickListener;
     }
 
     public void setStatus(final Status status) {
         mStatus = status;
     }
 
-    public SwipeRefreshLayout getSwipeRefreshLayout() {
-        return mSwipeRefreshLayout;
-    }
-
-    public RecyclerView getRecyclerView() {
-        return mRecyclerView;
-    }
-
     public FriendlyLayout(@NonNull final Context context) {
         super(context);
+        mContext = context;
         initView(context);
     }
 
     public FriendlyLayout(@NonNull final Context context, @Nullable final AttributeSet attrs) {
         super(context, attrs);
-        initView(context);
-    }
-
-    public FriendlyLayout(@NonNull final Context context, @Nullable final AttributeSet attrs, final int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        initView(context);
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    public FriendlyLayout(@NonNull final Context context, @Nullable final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        mContext = context;
         initView(context);
     }
 
     private void initView(Context context) {
         mContext = context;
-        /*View view = LayoutInflater.from(context).inflate(R.layout.xf_pull_loadmore_layout, null);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayout);
-        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_green_dark, android.R.color.holo_blue_dark,
-                android.R.color.holo_orange_dark);
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayoutOnRefresh(this));
+        frameLayout = new FrameLayout(mContext);
+        super.addView(frameLayout, getChildCount(), new FrameLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT
+        ));
+    }
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        mRecyclerView.setVerticalScrollBarEnabled(true);
+    @Override
+    public void addView(final View child) {
+        if (frameLayout != null) {
+            frameLayout.addView(child);
+        } else {
+            super.addView(child);
+        }
+    }
 
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addOnScrollListener(new RecyclerViewOnScroll(this));
+    @Override
+    public void addView(final View child, final int index) {
+        if (frameLayout != null) {
+            frameLayout.addView(child, index);
+        } else {
+            super.addView(child, index);
+        }
+    }
 
-        mRecyclerView.setOnTouchListener(new onTouchRecyclerView());
+    @Override
+    public void addView(final View child, final int width, final int height) {
+        if (frameLayout != null) {
+            frameLayout.addView(child, width, height);
+        } else {
+            super.addView(child, width, height);
+        }
+    }
 
-        mFooterView = view.findViewById(R.id.footerView);
-        mEmptyViewContainer = (FrameLayout) view.findViewById(R.id.emptyView);
-        mDefaultViewContainer = (FrameLayout) view.findViewById(R.id.defaultView);
+    @Override
+    public void addView(final View child, final LayoutParams params) {
+        if (frameLayout != null) {
+            frameLayout.addView(child, params);
+        } else {
+            super.addView(child, params);
+        }
+    }
 
-        loadMoreLayout = (LinearLayout) view.findViewById(R.id.loadMoreLayout);
-        loadMoreText = (TextView) view.findViewById(R.id.loadMoreText);
-
-        mFooterView.setVisibility(View.GONE);
-        mEmptyViewContainer.setVisibility(View.GONE);
-        mDefaultViewContainer.setVisibility(View.GONE);
-
-        this.addView(view);*/
+    @Override
+    public void addView(final View child, final int index, final LayoutParams params) {
+        if (frameLayout != null) {
+            frameLayout.addView(child, index, params);
+        } else {
+            super.addView(child, index, params);
+        }
     }
 }

@@ -273,7 +273,7 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     private void hideKeyboard(IBinder token) {
         if (token != null) {
             InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
+            im.hideSoftInputFromWindow(token, 0);
         }
     }
 

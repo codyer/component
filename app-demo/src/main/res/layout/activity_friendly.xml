@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ *************************************************************
+  ~ 文件：activity_friendly.xml  模块：app-demo  项目：component
+  ~ 当前修改时间：2019年06月13日 17:45:54
+  ~ 上次修改时间：2019年06月05日 11:50:32
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：app-demo
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<com.cody.component.app.widget.friendly.FriendlyLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/friendlyView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+</com.cody.component.app.widget.friendly.FriendlyLayout>

@@ -34,6 +34,7 @@ import com.cody.component.demo.data.generate.CatApiOpen$RemoteDataSource;
 import com.cody.component.demo.data.generate.CatHttpBin$RemoteDataSource;
 import com.cody.component.demo.databinding.ActivityMainBannerBinding;
 import com.cody.component.demo.databinding.UpdateDialogBinding;
+import com.cody.component.demo.friendly.FriendlyActivity;
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.hybrid.core.UrlUtil;
 import com.cody.component.image.certificate.camera.CameraActivity;
@@ -63,7 +64,8 @@ public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
                 startActivity(new Intent(MainActivity.this, BusDemoActivity.class));
                 break;
             case R.id.httpRequest1:
-                testDialog();
+                ActivityUtil.navigateTo(FriendlyActivity.class);
+//                testDialog();
 //                httpRequest1();
                 break;
             case R.id.httpRequest2:

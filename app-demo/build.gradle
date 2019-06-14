@@ -143,6 +143,8 @@ dependencies {
     implementation project(':banner-core')
     implementation project(":http-core")
     implementation project(":bus-core")
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     annotationProcessor project(":bus-compiler")
     annotationProcessor project(":http-compiler")
 //    } else {//if (isApp || isJitPack)
