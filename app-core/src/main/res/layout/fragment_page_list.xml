@@ -26,28 +26,22 @@
 
         <variable
             name="viewData"
-            type="com.cody.component.handler.data.MaskViewData" />
+            type="com.cody.component.handler.data.FriendlyViewData" />
     </data>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <com.cody.component.app.widget.friendly.FriendlyLayout
+        android:id="@+id/friendlyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        bind:onClickListener="@{onClickListener}"
+        bind:viewData="@{viewData}"
         tools:context=".fragment.PageListBindFragment">
 
-        <FrameLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <include
-                layout="@layout/mask_view"
-                bind:onClickListener="@{onClickListener}"
-                bind:viewData="@{viewData}" />
-        </FrameLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.cody.component.app.widget.friendly.FriendlyLayout>
 </layout>

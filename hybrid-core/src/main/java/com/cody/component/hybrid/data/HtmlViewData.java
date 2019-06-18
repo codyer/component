@@ -14,7 +14,7 @@ package com.cody.component.hybrid.data;
 
 import android.net.Uri;
 
-import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.data.FriendlyViewData;
 import com.cody.component.handler.livedata.BooleanLiveData;
 import com.cody.component.handler.livedata.IntegerLiveData;
 import com.cody.component.handler.livedata.StringLiveData;
@@ -24,7 +24,7 @@ import com.cody.component.util.LogUtil;
  * Created by xu.yi. on 2019/4/11.
  * html页面数据
  */
-public class HtmlViewData extends MaskViewData {
+public class HtmlViewData extends FriendlyViewData {
     public final static int MAX_PROGRESS = 100;
     private boolean mIgnoreError = false;
     private BooleanLiveData mShowHeader = new BooleanLiveData(true);
@@ -68,6 +68,6 @@ public class HtmlViewData extends MaskViewData {
     }
 
     public void setProgress(final int progress) {
-        mProgress.setValue(progress);
+        mProgress.postValue(progress);
     }
 }

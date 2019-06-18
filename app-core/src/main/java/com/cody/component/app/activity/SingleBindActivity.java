@@ -14,13 +14,13 @@ package com.cody.component.app.activity;
 
 import androidx.databinding.ViewDataBinding;
 
-import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.data.FriendlyViewData;
 import com.cody.component.handler.viewmodel.SingleViewModel;
 
 /**
  * Created by xu.yi. on 2019/3/25.
  * 一个页面只绑定一个viewModel
  */
-public abstract class SingleBindActivity<B extends ViewDataBinding, VM extends SingleViewModel<VD>, VD extends MaskViewData> extends FriendlyBindActivity<B, VM, VD> {
+public abstract class SingleBindActivity<B extends ViewDataBinding, VM extends SingleViewModel<VD>, VD extends FriendlyViewData> extends FriendlyBindActivity<B, VM, VD> {
 
 }

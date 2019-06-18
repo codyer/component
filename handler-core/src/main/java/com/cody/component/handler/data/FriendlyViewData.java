@@ -12,58 +12,42 @@
 
 package com.cody.component.handler.data;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.UiThread;
-
 import com.cody.component.handler.R;
-import com.cody.component.handler.define.Operation;
-import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.livedata.BooleanLiveData;
-import com.cody.component.handler.livedata.IntegerLiveData;
 import com.cody.component.handler.livedata.StringLiveData;
+import com.cody.component.util.ApplicationUtil;
+import com.cody.component.util.ScreenUtil;
+
+import java.util.Objects;
 
 /**
  * Created by xu.yi. on 2019/4/9.
  * 页面出错、无网络、无数据等布局需要的数据
  */
 public class FriendlyViewData extends ViewData {
-    private RequestStatus mRequestStatus = new RequestStatus();
-    final private BooleanLiveData mVisibility = new BooleanLiveData(true);
-    private BooleanLiveData mInitialized = new BooleanLiveData(false);//已经初始化
-    /**
-     * 提交请求状态
-     */
-    @UiThread
-    public void submitStatus(final RequestStatus status) {
-        if (status != null) {
-            switch (status.getOperation()) {
-                case INIT:
-                    switch (status.getStatus()) {
-                        case RUNNING:
-                            mVisibility.setValue(true);
-                            break;
-                        case SUCCESS:
-                            mVisibility.setValue(false);
-                            break;
-                        case EMPTY:
-                            break;
-                        case END:
-                            break;
-                        case CANCEL:
-                            break;
-                        case FAILED:
-                            break;
-                    }
-                    break;
-                case REFRESH:
-                    break;
-                case RETRY:
-                    break;
-                case LOAD_BEFORE:
-                    break;
-                case LOAD_AFTER:
-                    break;
-            }
-        }
+    final private StringLiveData mMessage = new StringLiveData("数据为空");
+
+    public int imageWidth() {
+        return ScreenUtil.getScreenWidth(ApplicationUtil.getApplication()) * 129 / 375;
+    }
+
+    public int getLoadingResId() {
+        return R.drawable.ic_loading_gif;
+    }
+
+    public StringLiveData getMessage() {
+        return mMessage;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final FriendlyViewData that = (FriendlyViewData) o;
+        return Objects.equals(mMessage, that.mMessage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mMessage);
     }
 }

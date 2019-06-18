@@ -13,21 +13,21 @@
 package com.cody.component.app.widget.friendly;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.cody.component.app.R;
+import com.cody.component.bind.CoreBR;
 import com.cody.component.handler.data.FriendlyViewData;
+import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.define.Status;
 import com.cody.component.util.LogUtil;
@@ -52,35 +52,20 @@ import com.cody.component.util.LogUtil;
  * bind:viewData="@{viewData}"
  */
 public class FriendlyLayout extends SwipeRefreshLayout {
-    FrameLayout frameLayout;
+    private FrameLayout mFrameLayout;
     private Context mContext;
     private IFriendlyView mIFriendlyView;
     private FriendlyViewData mFriendlyViewData;
     private OnClickListener mOnClickListener;
-    private Status mStatus;
 
     private View mInitView;
-    private View mFailedView;
+    private View mErrorView;
     private View mEmptyView;
+    private boolean mInitialized = false;
 
     public void setIFriendlyView(final IFriendlyView IFriendlyView) {
         mIFriendlyView = IFriendlyView;
-        if (frameLayout != null) {
-            frameLayout.addView(new LinearLayout(mContext), new FrameLayout.LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT
-            ));
-            frameLayout.addView(new LinearLayout(mContext), new FrameLayout.LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT
-            ));
-            frameLayout.addView(new LinearLayout(mContext), new FrameLayout.LayoutParams(
-                    LayoutParams.MATCH_PARENT,
-                    LayoutParams.MATCH_PARENT
-            ));
-        } else {
-            LogUtil.e("setIFriendlyView +++++++");
-        }
+        initViewBind();
     }
 
     /**
@@ -88,6 +73,7 @@ public class FriendlyLayout extends SwipeRefreshLayout {
      */
     public void setViewData(final FriendlyViewData viewData) {
         mFriendlyViewData = viewData;
+        initViewBind();
     }
 
     /**
@@ -98,8 +84,56 @@ public class FriendlyLayout extends SwipeRefreshLayout {
         mOnClickListener = onClickListener;
     }
 
-    public void setStatus(final Status status) {
-        mStatus = status;
+    public void removeFriendLyView() {
+        setEnabled(true);
+        if (mFrameLayout != null) {
+            mFrameLayout.removeView(mInitView);
+            mFrameLayout.removeView(mEmptyView);
+            mFrameLayout.removeView(mErrorView);
+        }
+    }
+
+    public void submitStatus(final RequestStatus status) {
+        if (status != null) {
+            if (status.getStatus() != Status.RUNNING) {
+                setRefreshing(false);
+            }
+            if (status.getOperation() == Operation.INIT) {
+                mInitialized = false;
+            }
+            if (mFriendlyViewData != null) {
+                mFriendlyViewData.getMessage().setValue(status.getMessage());
+            }
+            switch (status.getStatus()) {
+                case RUNNING:
+                    if (!mInitialized) {
+                        removeFriendLyView();
+                        addToLayout(mInitView);
+                    }
+                    break;
+                case SUCCESS:
+                    removeFriendLyView();
+                    mInitialized = true;
+                    break;
+                case EMPTY:
+                    removeFriendLyView();
+                    addToLayout(mEmptyView);
+                    break;
+                case END:
+                    removeFriendLyView();
+                    mInitialized = true;
+                    break;
+                case CANCEL:
+                    removeFriendLyView();
+                    break;
+                case FAILED:
+                    if (!mInitialized) {
+                        removeFriendLyView();
+                        addToLayout(mErrorView);
+                    }
+                    break;
+            }
+        }
     }
 
     public FriendlyLayout(@NonNull final Context context) {
@@ -116,17 +150,32 @@ public class FriendlyLayout extends SwipeRefreshLayout {
 
     private void initView(Context context) {
         mContext = context;
-        frameLayout = new FrameLayout(mContext);
-        super.addView(frameLayout, getChildCount(), new FrameLayout.LayoutParams(
+        mFrameLayout = new FrameLayout(mContext);
+        super.addView(mFrameLayout, getChildCount(), new FrameLayout.LayoutParams(
                 LayoutParams.MATCH_PARENT,
                 LayoutParams.MATCH_PARENT
         ));
+
+        setColorSchemeResources(R.color.uiColorPrimary, R.color.uiColorPrimaryAccent, R.color.uiColorYellow);
+    }
+
+    @Override
+    public boolean canChildScrollUp() {
+        if (mIFriendlyView != null) {
+            if (mFrameLayout != null) {
+                View target = mFrameLayout.getChildAt(0);
+                if (target != null) {
+                    return mIFriendlyView.canScrollVertically(target, -1);
+                }
+            }
+        }
+        return super.canChildScrollUp();
     }
 
     @Override
     public void addView(final View child) {
-        if (frameLayout != null) {
-            frameLayout.addView(child);
+        if (mFrameLayout != null) {
+            mFrameLayout.addView(child);
         } else {
             super.addView(child);
         }
@@ -134,8 +183,8 @@ public class FriendlyLayout extends SwipeRefreshLayout {
 
     @Override
     public void addView(final View child, final int index) {
-        if (frameLayout != null) {
-            frameLayout.addView(child, index);
+        if (mFrameLayout != null) {
+            mFrameLayout.addView(child, index);
         } else {
             super.addView(child, index);
         }
@@ -143,8 +192,8 @@ public class FriendlyLayout extends SwipeRefreshLayout {
 
     @Override
     public void addView(final View child, final int width, final int height) {
-        if (frameLayout != null) {
-            frameLayout.addView(child, width, height);
+        if (mFrameLayout != null) {
+            mFrameLayout.addView(child, width, height);
         } else {
             super.addView(child, width, height);
         }
@@ -152,8 +201,8 @@ public class FriendlyLayout extends SwipeRefreshLayout {
 
     @Override
     public void addView(final View child, final LayoutParams params) {
-        if (frameLayout != null) {
-            frameLayout.addView(child, params);
+        if (mFrameLayout != null) {
+            mFrameLayout.addView(child, params);
         } else {
             super.addView(child, params);
         }
@@ -161,10 +210,52 @@ public class FriendlyLayout extends SwipeRefreshLayout {
 
     @Override
     public void addView(final View child, final int index, final LayoutParams params) {
-        if (frameLayout != null) {
-            frameLayout.addView(child, index, params);
+        if (mFrameLayout != null) {
+            mFrameLayout.addView(child, index, params);
         } else {
             super.addView(child, index, params);
         }
+    }
+
+    private void initViewBind() {
+        if (mIFriendlyView == null || mInitView != null || mErrorView != null || mEmptyView != null) return;
+        if (mFrameLayout != null && mFriendlyViewData != null) {
+            if (mIFriendlyView.initView() > 0) {
+                ViewDataBinding initViewBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), mIFriendlyView.initView(), null, false);
+                mInitView = initViewBinding.getRoot();
+                initViewBinding.setLifecycleOwner(mIFriendlyView.getLifecycleOwner());
+                initViewBinding.setVariable(CoreBR.viewData, mFriendlyViewData);
+                initViewBinding.setVariable(CoreBR.onClickListener, mOnClickListener);
+                initViewBinding.executePendingBindings();
+            }
+            if (mIFriendlyView.errorView() > 0) {
+                ViewDataBinding errorViewBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), mIFriendlyView.errorView(), null, false);
+                mErrorView = errorViewBinding.getRoot();
+                errorViewBinding.setLifecycleOwner(mIFriendlyView.getLifecycleOwner());
+                errorViewBinding.setVariable(CoreBR.viewData, mFriendlyViewData);
+                errorViewBinding.setVariable(CoreBR.onClickListener, mOnClickListener);
+                errorViewBinding.executePendingBindings();
+            }
+            if (mIFriendlyView.emptyView() > 0) {
+                ViewDataBinding emptyViewBinding = DataBindingUtil.inflate(LayoutInflater.from(mContext), mIFriendlyView.emptyView(), null, false);
+                mEmptyView = emptyViewBinding.getRoot();
+                emptyViewBinding.setVariable(CoreBR.viewData, mFriendlyViewData);
+                emptyViewBinding.setLifecycleOwner(mIFriendlyView.getLifecycleOwner());
+                emptyViewBinding.setVariable(CoreBR.onClickListener, mOnClickListener);
+                emptyViewBinding.executePendingBindings();
+            }
+
+            setOnRefreshListener(() -> mIFriendlyView.refresh());
+        } else {
+            LogUtil.e("setIFriendlyView +++++++");
+        }
+    }
+
+    private void addToLayout(final View view) {
+        setEnabled(false);
+        mFrameLayout.addView(view, new FrameLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT
+        ));
     }
 }

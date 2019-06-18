@@ -12,12 +12,10 @@
 
 package com.cody.component.app;
 
-import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
-import com.cody.component.handler.data.MaskViewData;
-import com.cody.component.handler.interfaces.OnRetryListener;
-import com.cody.component.handler.viewmodel.PageListViewModel;
-
 import androidx.annotation.NonNull;
+
+import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
+import com.cody.component.handler.interfaces.OnRetryListener;
 
 /**
  * Created by xu.yi. on 2019/4/10.

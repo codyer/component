@@ -13,7 +13,7 @@
 package com.cody.component.handler.viewmodel;
 
 
-import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.data.FriendlyViewData;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnRequestListener;
 
@@ -22,7 +22,7 @@ import com.cody.component.handler.interfaces.OnRequestListener;
  * component 用户友好的view model
  * 包含刷新，重试，出错默认提示页面
  */
-public abstract class SingleViewModel<VD extends MaskViewData> extends FriendlyViewModel<VD> implements OnRequestListener {
+public abstract class  SingleViewModel<VD extends FriendlyViewData> extends FriendlyViewModel<VD> implements OnRequestListener {
 
     public SingleViewModel(final VD friendlyViewData) {
         super(friendlyViewData);

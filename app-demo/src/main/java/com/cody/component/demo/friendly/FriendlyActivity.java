@@ -13,26 +13,93 @@
 package com.cody.component.demo.friendly;
 
 import android.os.Bundle;
+import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.LifecycleOwner;
 
-import com.cody.component.app.widget.friendly.FriendlyLayout;
+import com.cody.component.app.activity.SimpleBindActivity;
 import com.cody.component.app.widget.friendly.IFriendlyView;
 import com.cody.component.demo.R;
+import com.cody.component.demo.databinding.ActivityFriendlyBinding;
+import com.cody.component.handler.data.FriendlyViewData;
+import com.cody.component.handler.define.RequestStatus;
+import com.cody.component.handler.interfaces.Refreshable;
 
 
-public class FriendlyActivity extends AppCompatActivity {
+public class FriendlyActivity extends SimpleBindActivity<ActivityFriendlyBinding, FriendlyViewData> implements Refreshable {
+    private RequestStatus mRequestStatus = new RequestStatus();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_friendly);
-       FriendlyLayout friendlyLayout = findViewById(R.id.friendlyView);
-       friendlyLayout.setIFriendlyView(new IFriendlyView() {
-           @Override
-           public int initView() {
-               return 0;
-           }
-       });
+    protected FriendlyViewData getViewData() {
+        return new FriendlyViewData();
+    }
+
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_friendly;
+    }
+
+    @Override
+    protected void onBaseReady(final Bundle savedInstanceState) {
+        super.onBaseReady(savedInstanceState);
+        getBinding().friendlyView.setIFriendlyView(new IFriendlyView() {
+            @Override
+            public int initView() {
+                return R.layout.friendly_init_view;
+            }
+
+            @Override
+            public int emptyView() {
+                return R.layout.friendly_empty_view;
+            }
+
+            @Override
+            public int errorView() {
+                return R.layout.friendly_error_view;
+            }
+
+            @Override
+            public void refresh() {
+                FriendlyActivity.this.refresh();
+            }
+
+            @Override
+            public LifecycleOwner getLifecycleOwner() {
+                return FriendlyActivity.this;
+            }
+        });
+    }
+
+    @Override
+    public void onClick(final View v) {
+        switch (v.getId()) {
+            case R.id.initView:
+                refresh();
+                break;
+            case R.id.emptyView:
+                refresh();
+                break;
+            case R.id.errorView:
+                refresh();
+                break;
+        }
+    }
+
+    int i = 0;
+
+    @Override
+    public void refresh() {
+        getBinding().friendlyView.submitStatus(mRequestStatus = mRequestStatus.refresh());
+        getBinding().friendlyView.postDelayed(() -> {
+            if (i % 3 == 0) {
+                getBinding().friendlyView.submitStatus(mRequestStatus = mRequestStatus.error("失败"));
+            } else if (i % 3 == 1) {
+                getBinding().friendlyView.submitStatus(mRequestStatus = mRequestStatus.empty());
+            } else {
+                getBinding().friendlyView.submitStatus(mRequestStatus = mRequestStatus.loaded());
+            }
+            i++;
+        }, 1000);
     }
 }

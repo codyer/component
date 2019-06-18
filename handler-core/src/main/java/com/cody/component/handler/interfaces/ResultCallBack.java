@@ -19,7 +19,7 @@ package com.cody.component.handler.interfaces;
  */
 public interface ResultCallBack {
     /**
-     * eg: callBack.onComplete();
+     * eg: callBack.onSuccess();
      */
     void onSuccess();
 

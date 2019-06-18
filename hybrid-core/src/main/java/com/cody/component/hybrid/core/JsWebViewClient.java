@@ -87,7 +87,7 @@ public class JsWebViewClient extends WebViewClient {
 
     @Override
     public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-        mHtmlViewModel.onPageFailure(failingUrl + ":" + description);
+        mHtmlViewModel.onPageFailure(description + ":\n" + failingUrl);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class JsWebViewClient extends WebViewClient {
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
         super.onReceivedSslError(view, handler, error);
-        mHtmlViewModel.onPageFailure(view.getUrl() + ":\n" + error.toString());
+        mHtmlViewModel.onPageFailure(error.toString() + ":\n" + view.getUrl());
     }
 
     @Override
@@ -151,6 +151,6 @@ public class JsWebViewClient extends WebViewClient {
     @Override
     public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
         super.onReceivedError(view, request, error);
-        mHtmlViewModel.onPageFailure(request.getUrl() + ":\n" + error.getDescription().toString());
+        mHtmlViewModel.onPageFailure(error.getDescription().toString() + ":\n" + request.getUrl());
     }
 }

@@ -13,25 +13,38 @@
 package com.cody.component.app.fragment;
 
 import android.os.Bundle;
-
-import com.cody.component.app.IBaseListView;
-import com.cody.component.app.R;
-import com.cody.component.app.databinding.FragmentPageListBinding;
-import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
-import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
-import com.cody.component.handler.data.MaskViewData;
-import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.viewmodel.PageListViewModel;
+import android.view.View;
 
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cody.component.app.IBaseListView;
+import com.cody.component.app.R;
+import com.cody.component.app.databinding.FragmentPageListBinding;
+import com.cody.component.app.widget.friendly.FriendlyLayout;
+import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
+import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
+import com.cody.component.handler.data.FriendlyViewData;
+import com.cody.component.handler.define.RequestStatus;
+import com.cody.component.handler.viewmodel.PageListViewModel;
+
 /**
  * 使用pageList 做列表页面，自动分页，刷新，初始化，加载更多，出错提示，重试，下拉刷新
  */
-public abstract class PageListBindFragment<VM extends PageListViewModel<MaskViewData, ?>> extends FriendlyBindFragment<FragmentPageListBinding, VM, MaskViewData> implements IBaseListView, OnBindingItemClickListener {
+public abstract class PageListBindFragment<VM extends PageListViewModel<FriendlyViewData, ?>> extends FriendlyBindFragment<FragmentPageListBinding, VM, FriendlyViewData> implements IBaseListView, OnBindingItemClickListener {
     protected MultiBindingPageListAdapter mListAdapter;
+
+    @Override
+    public FriendlyLayout getFriendlyLayout() {
+        return getBinding().friendlyView;
+    }
+
+    @Override
+    public boolean canScrollVertically(final View target, final int direction) {
+        int topRowVerticalPosition = getBinding().recyclerView.getChildCount() == 0 ? 0 : getBinding().recyclerView.getChildAt(0).getTop();
+        return topRowVerticalPosition < 0 || getBinding().recyclerView.canScrollVertically(direction);
+    }
 
     @Override
     protected int getLayoutID() {
@@ -46,8 +59,7 @@ public abstract class PageListBindFragment<VM extends PageListViewModel<MaskView
         mListAdapter.setItemLongClickListener(this);
         getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         getBinding().recyclerView.setAdapter(mListAdapter);
-        getBinding().swipeRefreshLayout.setColorSchemeResources(R.color.uiColorPrimary, R.color.uiColorPrimaryAccent, R.color.uiColorYellow);
-        getBinding().swipeRefreshLayout.setOnRefreshListener(() -> getFriendlyViewModel().refresh());
+
         getFriendlyViewModel().getPagedList().observe(this, items -> getFriendlyViewModel().getRequestStatusLive().observe(this, new Observer<RequestStatus>() {
             @Override
             public void onChanged(final RequestStatus requestStatus) {
@@ -62,9 +74,6 @@ public abstract class PageListBindFragment<VM extends PageListViewModel<MaskView
     @Override
     protected void onRequestStatus(final RequestStatus requestStatus) {
         super.onRequestStatus(requestStatus);
-        if (getBinding().swipeRefreshLayout.isRefreshing()) {
-            getBinding().swipeRefreshLayout.setRefreshing(requestStatus.isLoading());
-        }
         mListAdapter.setRequestStatus(requestStatus);
     }
 }

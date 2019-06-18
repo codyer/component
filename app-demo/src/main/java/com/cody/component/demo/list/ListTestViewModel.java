@@ -18,7 +18,7 @@ import android.os.Looper;
 
 import androidx.annotation.NonNull;
 
-import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.data.FriendlyViewData;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
 import com.cody.component.handler.mapper.PageDataMapper;
 import com.cody.component.handler.viewmodel.PageListViewModel;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * Created by xu.yi. on 2019/4/14.
  * component
  */
-public class ListTestViewModel extends PageListViewModel<MaskViewData, String> {
+public class ListTestViewModel extends PageListViewModel<FriendlyViewData, String> {
 
     @Override
     protected PageDataMapper<ItemTestViewData, String> createMapper() {
@@ -57,18 +57,15 @@ public class ListTestViewModel extends PageListViewModel<MaskViewData, String> {
                 for (int i = 0; i < 20; i++) {
                     items.add(System.currentTimeMillis() + "item===" + (pageInfo.getPageNo() * pageInfo.getPageSize() + i));
                 }
-                if (pageInfo.getPageNo() == 3) {
-                    items.clear();
-                }
                 pageInfo.setPageNo(pageInfo.getPageNo() + 1);
-                callBack.onResult(items, null, pageInfo);
-                onComplete(items);
+                callBack.onResult(pageInfo.getPageNo() == 3 ? new ArrayList<>() : items, null, pageInfo);
+                refreshUI(pageInfo.getPageNo() == 3 ? getRequestStatus().end() : getRequestStatus().loaded());
             }
         }, 500);
     }
 
-    public ListTestViewModel(final MaskViewData maskViewData) {
-        super(maskViewData);
+    public ListTestViewModel(final FriendlyViewData viewData) {
+        super(viewData);
     }
 
     public void test() {

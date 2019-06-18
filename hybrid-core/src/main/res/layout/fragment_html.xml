@@ -27,50 +27,18 @@
 
     </data>
 
-    <RelativeLayout
+    <com.cody.component.app.widget.friendly.FriendlyLayout
+        android:id="@+id/friendlyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        bind:onClickListener="@{onClickListener}"
+        bind:viewData="@{viewData}"
         tools:context=".activity.HtmlActivity">
 
         <WebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-        <include
-            layout="@layout/mask_view"
-            bind:onClickListener="@{onClickListener}"
-            bind:viewData="@{viewData}"
-            tools:visibility="gone" />
-
-        <TextView
-            android:id="@+id/ignore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="end"
-            android:layout_margin="@dimen/dimen_bigger"
-            android:background="@drawable/bg_secondary_round_touch_selector"
-            android:onClick="@{onClickListener::onClick}"
-            android:paddingLeft="@dimen/dimen_smaller"
-            android:paddingTop="@dimen/dimen_tiniest"
-            android:paddingRight="@dimen/dimen_smaller"
-            android:paddingBottom="@dimen/dimen_tiniest"
-            android:text="@string/ui_str_ignore"
-            android:textColor="@color/uiColorSecondaryText"
-            android:visibility="@{(viewData.visibility &amp;&amp; !viewData.loading)?View.VISIBLE:View.GONE}" />
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_super_tiny"
-            android:layout_alignParentTop="true"
-            android:max="@{viewData.MAX_PROGRESS}"
-            android:progress="@{viewData.progress}"
-            android:progressDrawable="@drawable/ic_html_progress"
-            android:visibility="@{viewData.loading?View.VISIBLE:View.GONE}" />
-
-    </RelativeLayout>
+    </com.cody.component.app.widget.friendly.FriendlyLayout>
 
 </layout>

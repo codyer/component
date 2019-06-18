@@ -27,12 +27,12 @@ import androidx.annotation.Nullable;
  */
 public interface PageResultCallBack<Bean> {
     /**
-     * eg: callBack.onComplete(listResult.getData().getItems(), PageInfo.getPrePageInfo(listResult), PageInfo.getNextPageInfo(listResult));
+     * eg: callBack.onResult(listResult.getData().getItems(), PageInfo.getPrePageInfo(listResult), PageInfo.getNextPageInfo(listResult));
      */
     void onResult(@NonNull List<Bean> data, @Nullable PageInfo prePageKey, @Nullable PageInfo nextPageKey);
 
     /**
-     * eg: callBack.onComplete(result);
+     * eg: callBack.onResult(result);
      */
     default void onResult(List<Bean> data, @Nullable PageInfo prePageKey, @NonNull ListBean<?> listBean) {
         onResult(data, PageInfo.getPrePageInfo(prePageKey, listBean), PageInfo.getNextPageInfo(prePageKey, listBean));

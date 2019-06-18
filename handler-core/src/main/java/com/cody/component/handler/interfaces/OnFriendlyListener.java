@@ -29,7 +29,7 @@ public interface OnFriendlyListener extends Refreshable, OnRetryListener, OnInit
     @NonNull
     MutableLiveData<RequestStatus> getRequestStatusLive();
 
-    void onComplete(Object result);
+    void refreshUI(RequestStatus status);
 
     void onFailure(final String message);
 

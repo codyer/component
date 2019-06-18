@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 bind:b_AutoPlaying="true"
-                bind:b_Interval="2000"
+                bind:b_Interval="3000"
                 tools:background="@color/uiColorPrimaryDark" />
 
             <ImageView
@@ -54,8 +54,7 @@
                 android:scaleType="fitCenter"
                 bind:error="@{@drawable/ic_default_error}"
                 bind:placeholder="@{@drawable/ic_default_place_holder}"
-                bind:rectImageUrl="@{viewData.imgUrl}"
-                tools:src="@drawable/ic_default_error" />
+                bind:rectImageUrl="@{viewData.imgUrl}"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/toBus"
@@ -152,8 +151,7 @@
                 android:id="@+id/identify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="fitCenter"
-                tools:src="@drawable/ic_default_error" />
+                android:scaleType="fitCenter"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

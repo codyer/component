@@ -40,6 +40,8 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
             ActivityUtil.openDialPage(url);
             return true;
         }
+        // 自定义请求在上面处理，拦截其他非http页面
+        if (!UrlUtil.isHttpUrl(url)) return true;
         //从内部链接跳到外部链接打开新的html页面
         if (UrlUtil.isInnerLink(getFriendlyViewData().getUrl().get())
                 && !UrlUtil.isInnerLink(url)) {
@@ -62,7 +64,7 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
 
     public void onPageFinished(final String url) {
         getFriendlyViewData().setUrl(url);
-        onComplete(url);
+        refreshUI(getRequestStatus().loaded());
     }
 
     @Override

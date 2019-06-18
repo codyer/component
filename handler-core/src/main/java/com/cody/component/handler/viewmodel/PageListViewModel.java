@@ -19,7 +19,7 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
 import com.cody.component.handler.data.ItemViewDataHolder;
-import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.data.FriendlyViewData;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
@@ -32,7 +32,7 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
  * Created by xu.yi. on 2019/4/8.
  * 数据仓库，获取列表数据
  */
-public abstract class PageListViewModel<VD extends MaskViewData, Bean> extends FriendlyViewModel<VD> {
+public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> extends FriendlyViewModel<VD> {
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
     private MutableLiveData<PageListKeyedDataSource> mDataSource;
 
@@ -84,7 +84,9 @@ public abstract class PageListViewModel<VD extends MaskViewData, Bean> extends F
         super.setOperation(requestStatus);
 
         if (requestStatus != null && mDataSource != null && mDataSource.getValue() != null) {
-            if (requestStatus.isRefreshing()) {
+            if (requestStatus.isInitializing()) {
+                mDataSource.getValue().invalidate();
+            } else if (requestStatus.isRefreshing()) {
                 mDataSource.getValue().refresh();
             } else if (requestStatus.isRetrying()) {
                 mDataSource.getValue().retry();

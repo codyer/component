@@ -23,12 +23,13 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 
+import androidx.annotation.NonNull;
+
 import com.cody.component.app.fragment.SingleBindFragment;
 import com.cody.component.app.local.BaseLocalKey;
 import com.cody.component.app.local.Repository;
-import com.cody.component.handler.define.RequestStatus;
+import com.cody.component.app.widget.friendly.FriendlyLayout;
 import com.cody.component.handler.define.ViewAction;
-import com.cody.component.handler.interfaces.Refreshable;
 import com.cody.component.handler.interfaces.Scrollable;
 import com.cody.component.hybrid.HtmlViewModel;
 import com.cody.component.hybrid.JsBridge;
@@ -46,13 +47,11 @@ import com.lzy.imagepicker.bean.ImageItem;
 import java.io.File;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-
 /**
  * Html 页面具体实现
  */
 public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlViewModel, HtmlViewData>
-        implements OnImageViewListener, JsWebChromeClient.OpenFileChooserCallBack, Scrollable, Refreshable {
+        implements OnImageViewListener, JsWebChromeClient.OpenFileChooserCallBack, Scrollable {
     private static final String HTML_URL = "html_url";
     private ImageViewDelegate mImageViewDelegate;
     private ValueCallback<Uri[]> mFilePathCallback;
@@ -73,6 +72,26 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
     @Override
     protected int getLayoutID() {
         return R.layout.fragment_html;
+    }
+
+    @Override
+    public FriendlyLayout getFriendlyLayout() {
+        return getBinding().friendlyView;
+    }
+
+    @Override
+    public int initView() {
+        return R.layout.hybrid_friendly_init_view;
+    }
+
+    @Override
+    public int errorView() {
+        return R.layout.hybrid_friendly_error_view;
+    }
+
+    @Override
+    public boolean canScrollVertically(final View target, final int direction) {
+        return getBinding().webView.getScrollY() > 0 || getBinding().webView.canScrollVertically(direction);
     }
 
     @Override
@@ -124,26 +143,15 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
     }
 
     @Override
-    protected void onRequestStatus(RequestStatus requestStatus) {
-        if (requestStatus.isError()) {
-            getViewData().failedView(requestStatus.getMessage());
-        } else if (requestStatus.isEmpty()) {
-            getViewData().noContentView();
-        } else if (requestStatus.isLoading()) {
-            getViewData().startLoading();
-        } else {
-            getViewData().hideMaskView();
-        }
-    }
-
-    @Override
     protected void onExecuteAction(final ViewAction action) {
         super.onExecuteAction(action);
         if (action == null) return;
         switch (action.getAction()) {
             case ViewAction.DEFAULT:
                 getViewData().setProgress(0);
-                if (getFriendlyViewModel().getRequestStatus().isInitializing() || getFriendlyViewModel().getRequestStatus().isRetrying()) {
+                if (getFriendlyViewModel().getRequestStatus().isInitializing() ||
+                        getFriendlyViewModel().getRequestStatus().isRefreshing() ||
+                        getFriendlyViewModel().getRequestStatus().isRetrying()) {
                     getBinding().webView.loadUrl(getViewData().getUrl().get());
                 }
                 break;
@@ -254,7 +262,7 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
         super.onClick(v);
         if (v.getId() == R.id.ignore) {
             getViewData().setIgnoreError(true);
-            getViewData().hideMaskView();
+            getFriendlyLayout().removeFriendLyView();
         }
     }
 

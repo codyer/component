@@ -15,29 +15,33 @@ package com.cody.component.app.activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.cody.component.app.R;
-import com.cody.component.handler.data.MaskViewData;
-import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.interfaces.OnRetryListener;
-import com.cody.component.handler.interfaces.Refreshable;
-import com.cody.component.handler.viewmodel.BaseViewModel;
-import com.cody.component.handler.viewmodel.FriendlyViewModel;
-
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.cody.component.app.R;
+import com.cody.component.app.widget.friendly.FriendlyLayout;
+import com.cody.component.app.widget.friendly.IFriendlyView;
+import com.cody.component.handler.data.FriendlyViewData;
+import com.cody.component.handler.define.RequestStatus;
+import com.cody.component.handler.interfaces.OnRetryListener;
+import com.cody.component.handler.viewmodel.BaseViewModel;
+import com.cody.component.handler.viewmodel.FriendlyViewModel;
+
 /**
- * 包含出错刷新重试布局，需要在自己的布局 include mask_view
+ * 包含出错刷新重试布局，根布局使用 FriendlyLayout
  * <p>
- * <include
- * layout="@layout/mask_view"
+ * <p>
  * bind:onClickListener="@{onClickListener}"
- * bind:viewData="@{viewData}" />
+ * bind:viewData="@{viewData}"
  */
-public abstract class FriendlyBindActivity<B extends ViewDataBinding, VM extends FriendlyViewModel<VD>, VD extends MaskViewData> extends SimpleBindActivity<B, VD> implements Refreshable, OnRetryListener {
+public abstract class FriendlyBindActivity<B extends ViewDataBinding, VM extends FriendlyViewModel<VD>, VD extends FriendlyViewData> extends SimpleBindActivity<B, VD> implements IFriendlyView, OnRetryListener {
+
+    public abstract FriendlyLayout getFriendlyLayout();
 
     /**
      * 创建 viewModel 实例，注意初始化 viewData
@@ -46,6 +50,32 @@ public abstract class FriendlyBindActivity<B extends ViewDataBinding, VM extends
 
     @NonNull
     public abstract Class<VM> getVMClass();
+
+    @Override
+    public int initView() {
+        return R.layout.friendly_init_view;
+    }
+
+    @Override
+    public int emptyView() {
+        return R.layout.friendly_empty_view;
+    }
+
+    @Override
+    public int errorView() {
+        return R.layout.friendly_error_view;
+    }
+
+    @Override
+    public boolean canScrollVertically(final View target, final int direction) {
+        return target.canScrollVertically(direction);
+    }
+
+    @Nullable
+    @Override
+    public LifecycleOwner getLifecycleOwner() {
+        return this;
+    }
 
     @SuppressWarnings("unchecked")
     @Deprecated
@@ -83,6 +113,9 @@ public abstract class FriendlyBindActivity<B extends ViewDataBinding, VM extends
     @Override
     protected void onBaseReady(Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
+        if (getFriendlyLayout() != null) {
+            getFriendlyLayout().setIFriendlyView(this);
+        }
         getFriendlyViewModel().getRequestStatusLive().observe(this, this::onRequestStatus);
     }
 
@@ -90,28 +123,18 @@ public abstract class FriendlyBindActivity<B extends ViewDataBinding, VM extends
      * 请求状态变更
      */
     protected void onRequestStatus(final RequestStatus requestStatus) {
-        if (getViewData().getVisibility().get()) {//本来没有数据
-            if (requestStatus.isError()) {
-                getViewData().failedView(requestStatus.getMessage());
-            } else if (requestStatus.isEmpty()) {
-                getViewData().noContentView();
-            } else if (requestStatus.isLoading()) {
-                getViewData().startLoading();
-            } else {
-                getViewData().hideMaskView();
-            }
-        } else {// 本来有数据
-            getViewData().hideMaskView();
+        if (getFriendlyLayout() != null) {
+            getFriendlyLayout().submitStatus(requestStatus);
         }
     }
 
     @CallSuper
     @Override
     public void onClick(final View v) {
-        if (v.getId() == R.id.friendlyRetry) {
-            if (!getViewData().getLoading().get()) {
-                getFriendlyViewModel().retry();
-            }
+        if (v.getId() == R.id.errorView) {
+            retry();
+        } else if (v.getId() == R.id.emptyView) {
+            refresh();
         }
     }
 }

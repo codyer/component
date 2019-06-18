@@ -20,6 +20,7 @@ import androidx.multidex.MultiDexApplication;
 
 import com.cody.component.app.local.Repository;
 import com.cody.component.app.widget.swipebacklayout.BGASwipeBackHelper;
+import com.cody.component.util.ApplicationUtil;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -39,6 +40,7 @@ public class BaseApplication extends MultiDexApplication {
      * 只初始化一次
      */
     public void onInit() {
+        ApplicationUtil.install(this);
         Repository.install(this);
 //        Blues.install(this);
         /*

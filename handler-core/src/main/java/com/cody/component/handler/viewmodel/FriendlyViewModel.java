@@ -17,19 +17,16 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.cody.component.handler.data.MaskViewData;
+import com.cody.component.handler.data.FriendlyViewData;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnFriendlyListener;
-import com.cody.component.lib.bean.ListBean;
-
-import java.util.List;
 
 /**
  * Created by xu.yi. on 2019/4/23.
  * component 用户友好的view model
  * 包含刷新，重试，出错默认提示页面
  */
-public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseViewModel implements OnFriendlyListener {
+public abstract class FriendlyViewModel<VD extends FriendlyViewData> extends BaseViewModel implements OnFriendlyListener {
     final private VD mFriendlyViewData;
 
     MutableLiveData<RequestStatus> mRequestStatusLive;
@@ -80,29 +77,21 @@ public abstract class FriendlyViewModel<VD extends MaskViewData> extends BaseVie
     /**
      * 做完一个operation需要将处理结果告知底层，完成或者失败
      * <p>
-     * #onComplete()
+     * #refreshUI()
      * #onFailure(String) ()
      */
     @Override
-    public void onComplete(Object result) {
+    public void refreshUI(RequestStatus status) {
         if (mRequestStatus.isLoading()) {
-            boolean empty = result == null ||
-                    (result instanceof List && ((List) result).isEmpty()) ||
-                    result instanceof ListBean && (((ListBean) result).getItems() == null ||
-                            ((ListBean) result).getItems().isEmpty());
-            mRequestStatus = empty ? mRequestStatus.empty() : mRequestStatus.loaded();
-            if (result instanceof ListBean) {
-                boolean end = empty || !((ListBean) result).isMore();
-                mRequestStatus = end ? mRequestStatus.end() : mRequestStatus;
-            }
-            mRequestStatusLive.postValue(mRequestStatus);
+            mRequestStatus = status;
+            mRequestStatusLive.postValue(status);
         }
     }
 
     /**
      * 做完一个operation需要将处理结果告知底层，完成或者失败
      * <p>
-     * #onComplete()
+     * #refreshUI()
      * #onFailure(String) ()
      */
     @Override

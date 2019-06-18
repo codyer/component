@@ -41,7 +41,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by cody.yi on 2017/4/26.
  * bindingBanner
  */
-public class BindingBanner extends FrameLayout {
+public class  BindingBanner extends FrameLayout {
 
     private static final int DEFAULT_SELECTED_COLOR = 0xffffffff;
     private static final int DEFAULT_UNSELECTED_COLOR = 0x50ffffff;
@@ -82,6 +82,7 @@ public class BindingBanner extends FrameLayout {
             if (isShowIndicator) {
                 switchIndicator();
             }
+            handler.removeCallbacksAndMessages(null);
             handler.postDelayed(this, mInterval);
         }
     };
@@ -335,6 +336,7 @@ public class BindingBanner extends FrameLayout {
     private synchronized void setPlaying(boolean playing) {
         if (isAutoPlaying) {
             if (!isPlaying && playing && mBindingBannerAdapter != null && mBindingBannerAdapter.getBannerSize() > 2) {
+                handler.removeCallbacksAndMessages(null);
                 handler.postDelayed(playTask, mInterval);
                 isPlaying = true;
             } else if (isPlaying && !playing) {

@@ -12,5 +12,6 @@
 
 apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
+    api rootProject.ext.dependencies["constraintlayout"]
     api project(':bind-core')
 }
