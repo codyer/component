@@ -21,8 +21,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.cody.component.app.activity.FragmentContainerActivity;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.cody.component.app.activity.FragmentContainerWithCloseActivity;
+import com.cody.component.app.local.BaseLocalKey;
+import com.cody.component.app.local.Repository;
+import com.cody.component.hybrid.JsBridge;
 import com.cody.component.hybrid.OnUrlListener;
 import com.cody.component.hybrid.R;
 import com.cody.component.hybrid.core.UrlUtil;
@@ -32,9 +37,6 @@ import com.cody.component.util.ActivityUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 /**
  * Html 页面
@@ -134,6 +136,11 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            JsBridge.getInstance()
+                    // syncCookie
+                    .syncCookie(this, mHtmlFragment.getViewData().getUrlHost(), Repository.getLocalMap(BaseLocalKey.COOKIE));
+        }
         mHtmlFragment.onActivityResult(requestCode, resultCode, data);
     }
 
