@@ -12,10 +12,10 @@
 
 package com.cody.component.http;
 
+import com.cody.component.http.lib.config.HttpConfig;
 import com.cody.component.lib.view.IView;
 import com.cody.component.lib.bean.Result;
 import com.cody.component.http.callback.RequestCallback;
-import com.cody.component.http.lib.config.TimeConfig;
 
 import java.util.concurrent.TimeUnit;
 
@@ -70,7 +70,7 @@ public abstract class BaseRemoteDataSource {
      */
     protected <T> Disposable executeOriginal(Observable<T> observable, RequestCallback<T> callback) {
         Disposable disposable = observable
-                .throttleFirst(TimeConfig.WINDOW_DURATION, TimeUnit.MILLISECONDS)
+                .throttleFirst(HttpConfig.WINDOW_DURATION, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -85,7 +85,7 @@ public abstract class BaseRemoteDataSource {
      */
     protected <T> Disposable execute(Observable<Result<T>> observable, RequestCallback<T> callback) {
         Disposable disposable = observable
-                .throttleFirst(TimeConfig.WINDOW_DURATION, TimeUnit.MILLISECONDS)
+                .throttleFirst(HttpConfig.WINDOW_DURATION, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

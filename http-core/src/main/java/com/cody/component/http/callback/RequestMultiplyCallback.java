@@ -12,7 +12,7 @@
 
 package com.cody.component.http.callback;
 
-import com.cody.component.http.lib.exception.base.BaseException;
+import com.cody.component.http.lib.exception.base.BaseHttpException;
 
 /**
  * Created by xu.yi. on 2019/4/6.
@@ -20,5 +20,5 @@ import com.cody.component.http.lib.exception.base.BaseException;
  */
 public interface RequestMultiplyCallback<T> extends RequestCallback<T> {
 
-    void onFail(BaseException e);
+    void onFail(BaseHttpException e);
 }

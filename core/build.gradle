@@ -14,7 +14,6 @@ apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
     api project(':cat-core')
     api project(':update-core')
-    api project(':blues-core')
     api project(":hybrid-core")
     api project(':banner-core')
     api project(":http-core")

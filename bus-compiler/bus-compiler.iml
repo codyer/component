@@ -28,10 +28,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="bus-lib" exported="" />
+    <orderEntry type="module" module-name="lib-core" exported="" />
     <orderEntry type="library" exported="" name="Gradle: auto-service-1.0-rc2" level="project" />
     <orderEntry type="library" exported="" name="Gradle: javapoet-1.11.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: auto-common-0.3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: guava-18.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: gson-2.8.5" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="Gradle: tools" level="project" />
   </component>
 </module>

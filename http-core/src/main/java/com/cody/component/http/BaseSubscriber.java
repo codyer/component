@@ -15,8 +15,8 @@ package com.cody.component.http;
 import com.cody.component.http.callback.RequestCallback;
 import com.cody.component.http.callback.RequestMultiplyCallback;
 import com.cody.component.http.lib.config.HttpCode;
-import com.cody.component.http.lib.exception.TokenInvalidException;
-import com.cody.component.http.lib.exception.base.BaseException;
+import com.cody.component.http.lib.exception.TokenInvalidHttpException;
+import com.cody.component.http.lib.exception.base.BaseHttpException;
 
 import io.reactivex.observers.DisposableObserver;
 import retrofit2.HttpException;
@@ -45,16 +45,16 @@ public class BaseSubscriber<T> extends DisposableObserver<T> {
         e.printStackTrace();
         if (requestCallback instanceof RequestMultiplyCallback) {
             RequestMultiplyCallback callback = (RequestMultiplyCallback) requestCallback;
-            if (e instanceof BaseException) {
-                callback.onFail((BaseException) e);
+            if (e instanceof BaseHttpException) {
+                callback.onFail((BaseHttpException) e);
             } else if (e instanceof HttpException) {
                 if (((HttpException) e).code() == HttpCode.CODE_TOKEN_INVALID) {
-                    callback.onFail(new TokenInvalidException());
+                    callback.onFail(new TokenInvalidHttpException());
                 } else {
-                    callback.onFail(new BaseException(((HttpException) e).code(), e.getMessage()));
+                    callback.onFail(new BaseHttpException(((HttpException) e).code(), e.getMessage()));
                 }
             } else {
-                callback.onFail(new BaseException(HttpCode.CODE_UNKNOWN, e.getMessage()));
+                callback.onFail(new BaseHttpException(HttpCode.CODE_UNKNOWN, e.getMessage()));
             }
         } else {
             if (requestCallback != null) {

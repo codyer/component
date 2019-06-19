@@ -12,11 +12,13 @@
 
 package com.cody.component.bus.lib.exception;
 
+import com.cody.component.lib.exception.BaseException;
+
 /**
  * Created by xu.yi. on 2019/3/31.
  * 类型错误异常
  */
-public class WrongTypeException extends RuntimeException {
+public class WrongTypeException extends BaseException {
     private static final long serialVersionUID = -3309643656351709235L;
 
     public WrongTypeException() {

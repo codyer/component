@@ -17,8 +17,8 @@ import com.cody.component.http.compiler.bean.DomainBean;
 import com.cody.component.http.compiler.bean.MethodBean;
 import com.cody.component.http.compiler.bean.ParameterBean;
 import com.cody.component.http.lib.annotation.Domain;
-import com.cody.component.http.lib.exception.GenerateDataSourceException;
-import com.cody.component.http.lib.exception.InvalidDefineException;
+import com.cody.component.http.lib.exception.GenerateDataSourceHttpException;
+import com.cody.component.http.lib.exception.InvalidDefineHttpException;
 import com.google.auto.service.AutoService;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -123,7 +123,7 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
                 generateDataSourceInterfaceClass(info);
                 generateDataSourceClass(info);
             } else {
-                throw new InvalidDefineException();
+                throw new InvalidDefineHttpException();
             }
         }
     }
@@ -161,7 +161,7 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
         if (type.startsWith("io.reactivex.Observable<")) {//去掉最外层的 Observable
             type = Util.innerTypeToString(type);
         } else {
-            throw new GenerateDataSourceException("接口定义方法返回值错误，请用 io.reactivex.Observable 作为返回值");
+            throw new GenerateDataSourceHttpException("接口定义方法返回值错误，请用 io.reactivex.Observable 作为返回值");
         }
         if (type.startsWith("com.cody.component.lib.bean.Result<")) {//去掉最外层的 Result
             type = Util.innerTypeToString(type);

@@ -12,11 +12,13 @@
 
 package com.cody.component.bus.lib.exception;
 
+import com.cody.component.lib.exception.BaseException;
+
 /**
  * Created by xu.yi. on 2019/3/31.
  * scope未激活
  */
-public class ScopeInactiveException extends RuntimeException {
+public class ScopeInactiveException extends BaseException {
     private static final long serialVersionUID = -9041702601234976446L;
 
     public ScopeInactiveException() {

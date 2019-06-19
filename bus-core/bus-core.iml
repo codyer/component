@@ -132,6 +132,7 @@
     <orderEntry type="library" name="Gradle: androidx.databinding:databinding-common:3.3.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.1.0-alpha04@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.activity:activity:1.0.0-alpha06@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.google.code.gson:gson:2.8.5@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.multidex:multidex:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.savedstate:savedstate:1.0.0-alpha02@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.cursoradapter:cursoradapter:1.0.0@aar" level="project" />
@@ -160,5 +161,6 @@
     <orderEntry type="library" name="Gradle: androidx.collection:collection:1.1.0-beta01@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat-resources:1.1.0-alpha04@aar" level="project" />
     <orderEntry type="module" module-name="bus-lib" />
+    <orderEntry type="module" module-name="lib-core" />
   </component>
 </module>

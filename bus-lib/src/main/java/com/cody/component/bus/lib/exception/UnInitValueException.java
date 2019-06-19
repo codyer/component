@@ -12,11 +12,13 @@
 
 package com.cody.component.bus.lib.exception;
 
+import com.cody.component.lib.exception.BaseException;
+
 /**
  * Created by xu.yi. on 2019/3/31.
  * 未初始化异常
  */
-public class UnInitValueException extends RuntimeException {
+public class UnInitValueException extends BaseException {
     private static final long serialVersionUID = -3309643656351709235L;
 
     public UnInitValueException() {

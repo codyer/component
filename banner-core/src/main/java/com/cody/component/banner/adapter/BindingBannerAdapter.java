@@ -76,7 +76,7 @@ public class BindingBannerAdapter extends BindingListAdapter<BannerViewData> {
         return super.getItemCount() < 2 ? super.getItemCount() : Integer.MAX_VALUE;
     }
 
-    private int getPosition(int position) {
+    public int getPosition(int position) {
         return position % getBannerSize();
     }
 }

@@ -12,11 +12,13 @@
 
 package com.cody.component.cat.exception;
 
+import com.cody.component.lib.exception.BaseException;
+
 /**
  * Created by xu.yi. on 2019/4/7.
  * component
  */
-public class NoCatCreatedException extends RuntimeException {
+public class NoCatCreatedException extends BaseException {
     private static final long serialVersionUID = -4749478194441091368L;
 
     public NoCatCreatedException() {

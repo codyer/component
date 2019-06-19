@@ -15,6 +15,9 @@ dependencies {
     api project(':lib-core')
     api project(':ui-core')
     api project(":util-core")
+    api rootProject.ext.dependencies["material"]
+    api rootProject.ext.dependencies["lifecycle"]
+    api rootProject.ext.dependencies["gson"]
     api rootProject.ext.dependencies["paging"]
     api(rootProject.ext.dependencies["glide"]) {
         exclude group: "com.android.support"

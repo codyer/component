@@ -13,7 +13,6 @@
 apply from: "${project.rootDir}/config-aar.gradle"
 
 dependencies {
-    api project(':lib-core')
     api project(':http-lib')
     api rootProject.ext.dependencies["appcompat"]
     api rootProject.ext.dependencies["retrofit"]

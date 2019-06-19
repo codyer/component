@@ -12,12 +12,14 @@
 
 package com.cody.component.bus.lib.exception;
 
+import com.cody.component.lib.exception.BaseException;
+
 /**
  * Created by xu.yi. on 2019/3/31.
  * 在同一scope存在相同的event定义，或者这个event已经被定义
  *
  */
-public class WrongTypeDefineException extends RuntimeException {
+public class WrongTypeDefineException extends BaseException {
     private static final long serialVersionUID = -5035036959348844480L;
 
     public WrongTypeDefineException() {

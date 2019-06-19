@@ -41,7 +41,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * Created by cody.yi on 2017/4/26.
  * bindingBanner
  */
-public class  BindingBanner extends FrameLayout {
+public class BindingBanner extends FrameLayout {
 
     private static final int DEFAULT_SELECTED_COLOR = 0xffffffff;
     private static final int DEFAULT_UNSELECTED_COLOR = 0x50ffffff;
@@ -55,14 +55,14 @@ public class  BindingBanner extends FrameLayout {
     private int mInterval;
     private final int mSize;
     private final int mSpace;
-    private int startX;
-    private int startY;
-    private int currentIndex;
+    private int mStartX;
+    private int mStartY;
+    private int mCurrentIndex = Integer.MAX_VALUE / 2;
 
-    private boolean isShowIndicator;
-    private boolean isPlaying;
-    private boolean isTouched;
-    private boolean isAutoPlaying;
+    private boolean mIsShowIndicator;
+    private boolean mIsPlaying;
+    private boolean mIsTouched;
+    private boolean mIsAutoPlaying;
 
     private final Drawable mSelectedDrawable;
     private final Drawable mUnselectedDrawable;
@@ -72,18 +72,23 @@ public class  BindingBanner extends FrameLayout {
 
     private BindingBannerAdapter mBindingBannerAdapter;
 
-    private final Handler handler = new Handler();
+    private final Handler mHandler = new Handler();
 
-    private final Runnable playTask = new Runnable() {
+    private final Runnable mPlayTask = new Runnable() {
 
         @Override
         public void run() {
-            mRecyclerView.smoothScrollToPosition(++currentIndex);
-            if (isShowIndicator) {
+            if (Integer.MAX_VALUE - mCurrentIndex < mBindingBannerAdapter.getBannerSize()) {
+                int halfSize = Integer.MAX_VALUE / (mBindingBannerAdapter.getBannerSize() * 2);
+                mCurrentIndex = halfSize * mBindingBannerAdapter.getBannerSize();
+            }
+            mRecyclerView.scrollToPosition(mCurrentIndex++);
+            mRecyclerView.smoothScrollToPosition(mCurrentIndex);
+            if (mIsShowIndicator) {
                 switchIndicator();
             }
-            handler.removeCallbacksAndMessages(null);
-            handler.postDelayed(this, mInterval);
+            mHandler.removeCallbacksAndMessages(null);
+            mHandler.postDelayed(this, mInterval);
         }
     };
 
@@ -100,8 +105,8 @@ public class  BindingBanner extends FrameLayout {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BindingBanner);
         mInterval = a.getInt(R.styleable.BindingBanner_b_Interval, 3000);
-        isShowIndicator = a.getBoolean(R.styleable.BindingBanner_b_ShowIndicator, true);
-        isAutoPlaying = a.getBoolean(R.styleable.BindingBanner_b_AutoPlaying, true);
+        mIsShowIndicator = a.getBoolean(R.styleable.BindingBanner_b_ShowIndicator, true);
+        mIsAutoPlaying = a.getBoolean(R.styleable.BindingBanner_b_AutoPlaying, true);
         Drawable sd = a.getDrawable(R.styleable.BindingBanner_b_IndicatorSelectedSrc);
         Drawable usd = a.getDrawable(R.styleable.BindingBanner_b_IndicatorUnselectedSrc);
         if (sd == null) {
@@ -136,7 +141,7 @@ public class  BindingBanner extends FrameLayout {
         }
         a.recycle();
 
-        mRecyclerView = new RecyclerView(context){
+        mRecyclerView = new RecyclerView(context) {
             @Override
             public boolean canScrollHorizontally(final int direction) {
                 return true;//解决滑动冲突 https://www.jianshu.com/p/43befa4224c9
@@ -155,10 +160,10 @@ public class  BindingBanner extends FrameLayout {
                     if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
                         int first = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
                         int last = ((LinearLayoutManager) recyclerView.getLayoutManager()).findLastVisibleItemPosition();
-                        if (first == last && currentIndex != last) {
-                            currentIndex = last;
-                            if (isShowIndicator && isTouched) {
-                                isTouched = false;
+                        if (first == last && mCurrentIndex != last) {
+                            mCurrentIndex = last;
+                            if (mIsShowIndicator && mIsTouched) {
+                                mIsTouched = false;
                                 switchIndicator();
                             }
                         }
@@ -186,14 +191,14 @@ public class  BindingBanner extends FrameLayout {
 
         if (mBindingBannerAdapter.getBannerSize() > 1) {
             int halfSize = Integer.MAX_VALUE / (mBindingBannerAdapter.getBannerSize() * 2);
-            currentIndex = halfSize * mBindingBannerAdapter.getBannerSize();
-            mRecyclerView.scrollToPosition(currentIndex);
-            if (isShowIndicator) {
+            mCurrentIndex = halfSize * mBindingBannerAdapter.getBannerSize();
+            mRecyclerView.scrollToPosition(mCurrentIndex);
+            if (mIsShowIndicator) {
                 createIndicators();
             }
             setPlaying(true);
         } else {
-            currentIndex = 0;
+            mRecyclerView.scrollToPosition(mCurrentIndex);
             mLinearLayout.removeAllViews();
         }
     }
@@ -208,7 +213,7 @@ public class  BindingBanner extends FrameLayout {
      * @param show 显示
      */
     public void setShowIndicator(boolean show) {
-        this.isShowIndicator = show;
+        this.mIsShowIndicator = show;
     }
 
     /**
@@ -226,7 +231,7 @@ public class  BindingBanner extends FrameLayout {
      * @param isAutoPlaying true  是自动滚动播放,false 是禁止自动滚动
      */
     public void setAutoPlaying(boolean isAutoPlaying) {
-        this.isAutoPlaying = isAutoPlaying;
+        this.mIsAutoPlaying = isAutoPlaying;
     }
 
     /**
@@ -243,15 +248,15 @@ public class  BindingBanner extends FrameLayout {
         //手动触摸的时候，停止自动播放，根据手势变换
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                startX = (int) ev.getX();
-                startY = (int) ev.getY();
+                mStartX = (int) ev.getX();
+                mStartY = (int) ev.getY();
                 getParent().requestDisallowInterceptTouchEvent(true);
                 break;
             case MotionEvent.ACTION_MOVE:
                 int moveX = (int) ev.getX();
                 int moveY = (int) ev.getY();
-                int disX = moveX - startX;
-                int disY = moveY - startY;
+                int disX = moveX - mStartX;
+                int disY = moveY - mStartY;
                 boolean hasMoved = 2 * Math.abs(disX) > Math.abs(disY);
                 getParent().requestDisallowInterceptTouchEvent(hasMoved);
                 if (hasMoved) {
@@ -260,8 +265,8 @@ public class  BindingBanner extends FrameLayout {
                 break;
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                if (!isPlaying) {
-                    isTouched = true;
+                if (!mIsPlaying) {
+                    mIsTouched = true;
                     setPlaying(true);
                 }
                 break;
@@ -334,14 +339,14 @@ public class  BindingBanner extends FrameLayout {
      * @param playing 开始播放
      */
     private synchronized void setPlaying(boolean playing) {
-        if (isAutoPlaying) {
-            if (!isPlaying && playing && mBindingBannerAdapter != null && mBindingBannerAdapter.getBannerSize() > 2) {
-                handler.removeCallbacksAndMessages(null);
-                handler.postDelayed(playTask, mInterval);
-                isPlaying = true;
-            } else if (isPlaying && !playing) {
-                handler.removeCallbacksAndMessages(null);
-                isPlaying = false;
+        if (mIsAutoPlaying) {
+            if (!mIsPlaying && playing && mBindingBannerAdapter != null && mBindingBannerAdapter.getBannerSize() > 2) {
+                mHandler.removeCallbacksAndMessages(null);
+                mHandler.postDelayed(mPlayTask, mInterval);
+                mIsPlaying = true;
+            } else if (mIsPlaying && !playing) {
+                mHandler.removeCallbacksAndMessages(null);
+                mIsPlaying = false;
             }
         }
     }
@@ -353,8 +358,7 @@ public class  BindingBanner extends FrameLayout {
         if (mLinearLayout != null && mLinearLayout.getChildCount() > 0) {
             for (int i = 0; i < mLinearLayout.getChildCount(); i++) {
                 ((AppCompatImageView) mLinearLayout.getChildAt(i)).setImageDrawable(
-                        i == currentIndex % mBindingBannerAdapter.getBannerSize() ? mSelectedDrawable :
-                                mUnselectedDrawable);
+                        i == mBindingBannerAdapter.getPosition(mCurrentIndex) ? mSelectedDrawable : mUnselectedDrawable);
             }
         }
     }

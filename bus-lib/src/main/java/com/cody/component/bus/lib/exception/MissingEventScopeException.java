@@ -12,11 +12,13 @@
 
 package com.cody.component.bus.lib.exception;
 
+import com.cody.component.lib.exception.BaseException;
+
 /**
  * Created by xu.yi. on 2019/3/31.
  * 事件枚举类没有使用EventScope注解
  */
-public class MissingEventScopeException extends RuntimeException {
+public class MissingEventScopeException extends BaseException {
     private static final long serialVersionUID = 4265334833804926157L;
 
     public MissingEventScopeException() {

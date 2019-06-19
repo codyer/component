@@ -14,15 +14,15 @@ package com.cody.component.http;
 
 import android.webkit.URLUtil;
 
+import com.cody.component.http.lib.config.HttpConfig;
+import com.cody.component.http.lib.exception.ServerResultHttpException;
+import com.cody.component.http.lib.exception.TokenInvalidHttpException;
 import com.cody.component.lib.bean.Result;
 import com.cody.component.http.interceptor.HeaderInterceptor;
 import com.cody.component.http.lib.annotation.Domain;
 import com.cody.component.http.lib.config.HttpCode;
-import com.cody.component.http.lib.config.TimeConfig;
-import com.cody.component.http.lib.exception.AccountInvalidException;
-import com.cody.component.http.lib.exception.DomainInvalidException;
-import com.cody.component.http.lib.exception.ServerResultException;
-import com.cody.component.http.lib.exception.TokenInvalidException;
+import com.cody.component.http.lib.exception.AccountInvalidHttpException;
+import com.cody.component.http.lib.exception.DomainInvalidHttpException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -37,6 +37,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Cache;
 import okhttp3.CipherSuite;
 import okhttp3.ConnectionSpec;
 import okhttp3.Interceptor;
@@ -80,13 +81,13 @@ class RetrofitManagement {
                             return createData(result.getData());
                         }
                         case HttpCode.CODE_TOKEN_INVALID: {
-                            throw new TokenInvalidException();
+                            throw new TokenInvalidHttpException();
                         }
                         case HttpCode.CODE_ACCOUNT_INVALID: {
-                            throw new AccountInvalidException();
+                            throw new AccountInvalidHttpException();
                         }
                         default: {
-                            throw new ServerResultException(result.getCode(), result.getMessage());
+                            throw new ServerResultHttpException(result.getCode(), result.getMessage());
                         }
                     }
                 });
@@ -108,7 +109,7 @@ class RetrofitManagement {
     <T> T getService(Class<T> clz) {
         Domain domain = clz.getAnnotation(Domain.class);
         if (domain == null || !URLUtil.isNetworkUrl(domain.value())) {
-            throw new DomainInvalidException();
+            throw new DomainInvalidHttpException();
         }
         String baseUrl = domain.value();
         return getService(baseUrl, clz);
@@ -164,12 +165,15 @@ class RetrofitManagement {
 
     private Retrofit createRetrofit(String baseUrl) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .readTimeout(TimeConfig.READ_TIMEOUT, TimeUnit.MILLISECONDS)
-                .writeTimeout(TimeConfig.WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
-                .connectTimeout(TimeConfig.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
+                .readTimeout(HttpConfig.READ_TIMEOUT, TimeUnit.MILLISECONDS)
+                .writeTimeout(HttpConfig.WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
+                .connectTimeout(HttpConfig.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
 //                .addInterceptor(new HttpInterceptor())
                 .addInterceptor(new HeaderInterceptor())
                 .retryOnConnectionFailure(true);
+        if (HttpCore.getInstance().getContext() != null) {
+            builder.cache(new Cache(HttpCore.getInstance().getContext().getCacheDir(), HttpConfig.CACHE_SIZE));
+        }
         if (mInterceptors != null) {
             for (Interceptor interceptor : mInterceptors) {
                 builder.addInterceptor(interceptor);

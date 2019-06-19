@@ -14,12 +14,14 @@ package com.cody.component.hybrid;
 
 import android.text.TextUtils;
 
+import com.cody.component.blues.CrashUtil;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.ViewAction;
 import com.cody.component.handler.viewmodel.SingleViewModel;
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.hybrid.core.UrlUtil;
 import com.cody.component.hybrid.data.HtmlViewData;
+import com.cody.component.lib.exception.BaseException;
 import com.cody.component.util.ActivityUtil;
 
 
@@ -60,6 +62,7 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
 
     public void onPageFailure(final String message) {
         onFailure(message);
+        CrashUtil.postException(new H5Exception(message));
     }
 
     public void onPageFinished(final String url) {

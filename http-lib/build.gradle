@@ -11,3 +11,7 @@
  */
 
 apply from:  "${project.rootDir}/config-lib.gradle"
+
+dependencies {
+    api project(':lib-core')
+}
