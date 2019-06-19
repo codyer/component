@@ -58,9 +58,10 @@ public class ItemFooterOrHeaderData extends ItemViewDataHolder {
     }
 
     public void setRequestStatus(final RequestStatus status) {
+        if (status.isRefreshing()) return;
         mNoMoreItem.postValue(status.isEnd());
         mError.postValue(status.isError());
-        mLoading.postValue(status.isLoading());
+        mLoading.postValue(status.isLoadingBefore() || status.isLoadingAfter());
         mErrorMessage.postValue(status.getMessage());
     }
 }

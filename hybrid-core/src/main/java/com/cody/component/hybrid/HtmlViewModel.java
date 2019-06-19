@@ -54,7 +54,7 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
     public void onPageStarted(final String url) {
         if (!getRequestStatus().isInitializing()) {
             getFriendlyViewData().setUrl(url);
-            setOperation(getRequestStatus().loadAfter());
+            startOperation(getRequestStatus().loadAfter());
         }
     }
 

@@ -118,6 +118,7 @@ public class FriendlyLayout extends SwipeRefreshLayout {
                 case EMPTY:
                     removeFriendLyView();
                     addToLayout(mEmptyView);
+                    mInitialized = false;
                     break;
                 case END:
                     removeFriendLyView();

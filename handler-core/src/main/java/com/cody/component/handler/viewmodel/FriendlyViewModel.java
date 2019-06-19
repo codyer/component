@@ -49,17 +49,17 @@ public abstract class FriendlyViewModel<VD extends FriendlyViewData> extends Bas
     @CallSuper
     @Override
     public void onInit() {
-        setOperation(mRequestStatus.init());
+        startOperation(mRequestStatus.init());
     }
 
     @Override
     public void refresh() {
-        setOperation(mRequestStatus.refresh());
+        startOperation(mRequestStatus.refresh());
     }
 
     @Override
     public void retry() {
-        setOperation(mRequestStatus.retry());
+        startOperation(mRequestStatus.retry());
     }
 
     @NonNull
@@ -112,7 +112,14 @@ public abstract class FriendlyViewModel<VD extends FriendlyViewData> extends Bas
      * 执行一个操作
      */
     @CallSuper
-    protected void setOperation(RequestStatus requestStatus) {
+    protected void startOperation(RequestStatus requestStatus) {
+        setOperation(requestStatus);
+    }
+
+    /**
+     * 执行一个操作
+     */
+    final public void setOperation(RequestStatus requestStatus) {
         mRequestStatusLive.setValue(mRequestStatus = requestStatus);
     }
 }

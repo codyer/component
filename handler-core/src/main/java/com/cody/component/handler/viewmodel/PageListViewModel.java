@@ -80,8 +80,8 @@ public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> exten
      * 执行一个操作
      */
     @Override
-    protected void setOperation(RequestStatus requestStatus) {
-        super.setOperation(requestStatus);
+    protected void startOperation(RequestStatus requestStatus) {
+        super.startOperation(requestStatus);
 
         if (requestStatus != null && mDataSource != null && mDataSource.getValue() != null) {
             if (requestStatus.isInitializing()) {

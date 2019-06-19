@@ -32,8 +32,8 @@ public abstract class  SingleViewModel<VD extends FriendlyViewData> extends Frie
      * 执行一个操作
      */
     @Override
-    protected void setOperation(RequestStatus requestStatus) {
-        super.setOperation(requestStatus);
+    protected void startOperation(RequestStatus requestStatus) {
+        super.startOperation(requestStatus);
         onRequestData(requestStatus.getOperation());
     }
 }
