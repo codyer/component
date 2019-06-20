@@ -41,7 +41,7 @@ public abstract class PageListBindFragment<VM extends PageListViewModel<Friendly
     }
 
     @Override
-    public boolean canScrollVertically(final View target, final int direction) {
+    public boolean childHandleScrollVertically(final View target, final int direction) {
         int topRowVerticalPosition = getBinding().recyclerView.getChildCount() == 0 ? 0 : getBinding().recyclerView.getChildAt(0).getTop();
         return topRowVerticalPosition < 0 || getBinding().recyclerView.canScrollVertically(direction);
     }

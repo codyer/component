@@ -90,7 +90,7 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
     }
 
     @Override
-    public boolean canScrollVertically(final View target, final int direction) {
+    public boolean childHandleScrollVertically(final View target, final int direction) {
         return getBinding().webView.getScrollY() > 0 || getBinding().webView.canScrollVertically(direction);
     }
 

@@ -51,12 +51,9 @@ public interface IFriendlyView extends Refreshable {
     }
 
     /**
-     * Check if this view can be scrolled vertically in a certain direction.
-     *
-     * @param direction Negative to check scrolling up, positive to check scrolling down.
-     * @return true if this view can be scrolled in the specified direction, false otherwise.
+     * 子布局是否需要自己处理滚动
      */
-    default boolean canScrollVertically(View target, int direction) {
+    default boolean childHandleScrollVertically(View target, int direction) {
         return target.canScrollVertically(direction);
     }
 

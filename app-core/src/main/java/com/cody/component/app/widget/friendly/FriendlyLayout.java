@@ -166,7 +166,7 @@ public class FriendlyLayout extends SwipeRefreshLayout {
             if (mFrameLayout != null) {
                 View target = mFrameLayout.getChildAt(0);
                 if (target != null) {
-                    return mIFriendlyView.canScrollVertically(target, -1);
+                    return mIFriendlyView.childHandleScrollVertically(target, -1);
                 }
             }
         }

@@ -67,7 +67,7 @@ public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends
     }
 
     @Override
-    public boolean canScrollVertically(final View target, final int direction) {
+    public boolean childHandleScrollVertically(final View target, final int direction) {
         return target.canScrollVertically(direction);
     }
 
