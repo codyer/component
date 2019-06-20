@@ -141,10 +141,10 @@ public class RequestStatus {
     }
 
     public boolean isLoadingBefore() {
-        return mOperation == Operation.LOAD_BEFORE && !isLoaded();
+        return mOperation == Operation.LOAD_BEFORE && isLoading();
     }
 
     public boolean isLoadingAfter() {
-        return mOperation == Operation.LOAD_AFTER && !isLoaded();
+        return mOperation == Operation.LOAD_AFTER && isLoading();
     }
 }

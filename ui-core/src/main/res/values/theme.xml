@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ *************************************************************
   ~ 文件：theme.xml  模块：lib-ui  项目：component
   ~ 当前修改时间：2019年04月23日 18:23:19
@@ -16,5 +15,6 @@
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--<item name="android:background">@drawable/main_background</item>-->
         <item name="android:windowNoTitle">true</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item> <!--返回icon-->
     </style>
 </resources>
