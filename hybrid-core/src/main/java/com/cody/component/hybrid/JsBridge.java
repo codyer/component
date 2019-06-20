@@ -35,7 +35,6 @@ import com.cody.component.hybrid.core.JsWebViewClient;
 import com.cody.component.hybrid.data.HtmlViewData;
 import com.cody.component.util.LogUtil;
 
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.util.Map;
 
@@ -53,7 +52,6 @@ public class JsBridge {
     private JsHandlerFactory mJsHandlerFactory;
     private SparseArray<OnActivityResultListener> mResultListener;
     //    private SparseArray<EasyPermissions.PermissionCallbacks> mPermissionsListener;
-    private WeakReference<WebView> mWebViewRef;
     private JsWebChromeClient.OpenFileChooserCallBack mFileChooserCallBack;
 
     private JsBridge() {
@@ -98,11 +96,10 @@ public class JsBridge {
     /**
      * 替换Activity中的startActivityForResult
      */
-    public static void startActivityForResult(Intent intent, OnActivityResultListener listener) {
+    public static void startActivityForResult(WebView webView, Intent intent, OnActivityResultListener listener) {
         int requestCode = getInstance().mRequestCodeSequence++;
         getInstance().mResultListener.put(requestCode, listener);
-        if (getInstance().mWebViewRef != null && getInstance().mWebViewRef.get() != null) {
-            WebView webView = getInstance().mWebViewRef.get();
+        if (webView != null) {
             if (webView.getContext() instanceof Activity) {
                 ((Activity) webView.getContext()).startActivityForResult(intent, requestCode);
             }
@@ -125,11 +122,10 @@ public class JsBridge {
     /**
      * 6.0以上需要动态请求权限的时候需要调用此函数
      */
-   /* public static void requestPermissions(@NonNull String rationale, EasyPermissions.PermissionCallbacks listener, @NonNull String... perms) {
+   /* public static void requestPermissions(WebView webView,@NonNull String rationale, EasyPermissions.PermissionCallbacks listener, @NonNull String... perms) {
         int requestCode = getInstance().mPermissionsListener.size();
         getInstance().mPermissionsListener.put(requestCode, listener);
-        if (getInstance().mWebViewRef != null && getInstance().mWebViewRef.get() != null) {
-            WebView webView = getInstance().mWebViewRef.get();
+        if (webView != null) {
             if (webView.getContext() instanceof Activity) {
                 EasyPermissions.requestPermissions(((Activity) webView.getContext()), rationale, requestCode, perms);
             }
@@ -149,9 +145,8 @@ public class JsBridge {
     /**
      * 需要在包含webView的Activity中调用
      */
-    public static void onResume() {
-        if (getInstance().mWebViewRef != null && getInstance().mWebViewRef.get() != null) {
-            WebView webView = getInstance().mWebViewRef.get();
+    public static void onResume(WebView webView) {
+        if (webView != null) {
             JsLifeCycle.onResume(webView);
         }
     }
@@ -159,9 +154,8 @@ public class JsBridge {
     /**
      * 需要在包含webView的Activity中调用
      */
-    public static void onPause() {
-        if (getInstance().mWebViewRef != null && getInstance().mWebViewRef.get() != null) {
-            WebView webView = getInstance().mWebViewRef.get();
+    public static void onPause(WebView webView) {
+        if (webView != null) {
             JsLifeCycle.onPause(webView);
         }
     }
@@ -169,9 +163,8 @@ public class JsBridge {
     /**
      * 需要在包含webView的Activity中调用，用来回收webView数据
      */
-    public static void onDestroy() {
-        if (getInstance().mWebViewRef != null && getInstance().mWebViewRef.get() != null) {
-            WebView webView = getInstance().mWebViewRef.get();
+    public static void onDestroy(WebView webView) {
+        if (webView != null) {
             JsLifeCycle.onDestroy(webView);
         }
         getInstance().mFileChooserCallBack = null;
@@ -268,7 +261,6 @@ public class JsBridge {
         if (webView == null) {
             throw new NullPointerException("webView is null,can't build js handler!");
         }
-        mWebViewRef = new WeakReference<>(webView);
         getInstance().mJsHandlerFactory.build();
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);

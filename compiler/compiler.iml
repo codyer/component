@@ -32,11 +32,6 @@
     <orderEntry type="module" module-name="bus-lib" exported="" />
     <orderEntry type="module" module-name="http-lib" exported="" />
     <orderEntry type="module" module-name="lib-core" exported="" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: auto-service-1.0-rc2" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: javapoet-1.11.1" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: auto-common-0.3" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: guava-18.0" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: gson-2.8.5" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: auto-service-1.0-rc2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: javapoet-1.11.1" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="Gradle: auto-common-0.3" level="project" />

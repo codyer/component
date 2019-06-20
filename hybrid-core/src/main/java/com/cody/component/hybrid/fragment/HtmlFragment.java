@@ -90,6 +90,20 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
     }
 
     @Override
+    protected void onFirstUserVisible(final Bundle savedInstanceState) {
+        super.onFirstUserVisible(savedInstanceState);
+        // syncCookie
+        JsBridge.getInstance().syncCookie(getActivity(), getViewData().getUrlHost(), Repository.getLocalMap(BaseLocalKey.COOKIE));
+    }
+
+    @Override
+    protected void onUserVisible() {
+        super.onUserVisible();
+        // syncCookie
+        JsBridge.getInstance().syncCookie(getActivity(), getViewData().getUrlHost(), Repository.getLocalMap(BaseLocalKey.COOKIE));
+    }
+
+    @Override
     public boolean childHandleScrollVertically(final View target, final int direction) {
         return getBinding().webView.getScrollY() > 0 || getBinding().webView.canScrollVertically(direction);
     }
@@ -127,8 +141,6 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
         mImageViewDelegate = new ImageViewDelegate(this);
         JsBridge.getInstance()
                 .addJsHandler(JsHandlerCommonImpl.class.getSimpleName(), JsHandlerCommonImpl.class)
-                // syncCookie
-                .syncCookie(getActivity(), getViewData().getUrlHost(), Repository.getLocalMap(BaseLocalKey.COOKIE))
                 .setFileChooseCallBack(this)
                 .build(getBinding().webView, getFriendlyViewModel());
 
@@ -161,13 +173,13 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
     @Override
     public void onResume() {
         super.onResume();
-        JsBridge.onResume();
+        JsBridge.onResume(getBinding().webView);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        JsBridge.onPause();
+        JsBridge.onPause(getBinding().webView);
     }
 
     @Override
@@ -224,7 +236,7 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
 
     @Override
     public void onDestroy() {
-        JsBridge.onDestroy();
+        JsBridge.onDestroy(getBinding().webView);
         releaseFileChoose();
         mImageViewDelegate = null;
         super.onDestroy();

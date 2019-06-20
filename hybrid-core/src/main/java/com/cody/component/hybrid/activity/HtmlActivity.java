@@ -136,11 +136,6 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK){
-            JsBridge.getInstance()
-                    // syncCookie
-                    .syncCookie(this, mHtmlFragment.getViewData().getUrlHost(), Repository.getLocalMap(BaseLocalKey.COOKIE));
-        }
         mHtmlFragment.onActivityResult(requestCode, resultCode, data);
     }
 
