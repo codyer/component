@@ -116,8 +116,12 @@ public class RequestStatus {
         return mStatus == Status.FAILED;
     }
 
-    public boolean isLoaded() {
+    public boolean isSuccess() {
         return mStatus == Status.SUCCESS;
+    }
+
+    public boolean isLoaded() {
+        return mStatus == Status.SUCCESS || mStatus == Status.EMPTY || mStatus == Status.END;
     }
 
     public boolean isEnd() {

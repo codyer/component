@@ -63,7 +63,7 @@ public abstract class PageListBindFragment<VM extends PageListViewModel<Friendly
         getFriendlyViewModel().getPagedList().observe(this, items -> getFriendlyViewModel().getRequestStatusLive().observe(this, new Observer<RequestStatus>() {
             @Override
             public void onChanged(final RequestStatus requestStatus) {
-                if (!requestStatus.isLoading()) {
+                if (requestStatus.isLoaded()) {
                     getFriendlyViewModel().getRequestStatusLive().removeObserver(this);
                     mListAdapter.submitList(items);
                 }
