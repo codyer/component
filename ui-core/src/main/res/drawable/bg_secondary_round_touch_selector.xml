@@ -15,7 +15,7 @@
         <shape android:shape="rectangle">
             <stroke android:width="@dimen/dimen_line" android:color="@color/uiColorLine" />
             <corners android:radius="@dimen/dimen_smaller" />
-            <solid android:color="@color/uiColorSecondaryDark" />
+            <solid android:color="@color/uiTouchRipple" />
         </shape>
     </item>
     <item android:state_focused="true">
