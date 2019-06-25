@@ -16,12 +16,13 @@ import androidx.annotation.NonNull;
 
 import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.handler.interfaces.OnRetryListener;
+import com.cody.component.handler.interfaces.Scrollable;
 
 /**
  * Created by xu.yi. on 2019/4/10.
  * 列表绑定需要实现的接口
  */
-public interface IBaseListView extends OnRetryListener {
+public interface IBaseListView extends OnRetryListener, Scrollable {
     @NonNull
     MultiBindingPageListAdapter buildListAdapter();
 }

@@ -13,6 +13,7 @@
 package com.cody.component.http.holder;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.cody.component.http.HttpCore;
@@ -23,11 +24,15 @@ import com.cody.component.http.HttpCore;
 public class ToastHolder {
 
     private static void showToast(Context context, int message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     private static void showToast(Context context, String message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(context, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     public static void showToast(String message) {
