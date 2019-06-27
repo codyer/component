@@ -12,12 +12,7 @@
 
 package com.cody.component.handler.livedata;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import androidx.lifecycle.MutableLiveData;
-
-import java.io.Serializable;
 
 /**
  * Created by xu.yi. on 2019/4/11.

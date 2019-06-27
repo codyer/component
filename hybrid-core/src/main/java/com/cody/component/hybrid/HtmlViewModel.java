@@ -61,13 +61,13 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
     }
 
     public void onPageFailure(final String message) {
-        onFailure(message);
+        submitStatus(getRequestStatus().error(message));
         CrashUtil.postException(new H5Exception(message));
     }
 
     public void onPageFinished(final String url) {
         getFriendlyViewData().setUrl(url);
-        refreshUI(getRequestStatus().loaded());
+        submitStatus(getRequestStatus().loaded());
     }
 
     @Override

@@ -230,7 +230,6 @@ public class JsBridge {
         }
 
         CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.removeSessionCookie();
         cookieManager.setAcceptCookie(true);
         for (Map.Entry<String, String> entry : cookies.entrySet()) {
             cookieManager.setCookie(url, entry.getKey() + "=" + entry.getValue());

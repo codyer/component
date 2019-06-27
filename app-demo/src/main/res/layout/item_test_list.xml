@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ *************************************************************
   ~ 文件：item_test_list.xml  模块：app  项目：component
   ~ 当前修改时间：2019年04月23日 18:23:19
@@ -27,11 +26,38 @@
             type="com.cody.component.demo.list.ItemTestViewData" />
     </data>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="@dimen/dimen_normal"
-        android:text="@{viewData.test}"
-        tools:text="test" />
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="@={viewData.booleanLiveData}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/dimen_normal"
+            android:text='@{viewData.booleanLiveData?"true":"false"}'
+            tools:text="test" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="@dimen/dimen_normal"
+            android:text="@{viewData.stringLiveData}"
+            tools:text="test" />
+
+        <Button
+            android:id="@+id/testButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{onClickListener}"
+            android:text="@{viewData.test}" />
+    </LinearLayout>
 </layout>

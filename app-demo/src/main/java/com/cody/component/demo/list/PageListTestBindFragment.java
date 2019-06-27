@@ -39,7 +39,13 @@ public class PageListTestBindFragment extends PageListBindFragment<ListTestViewM
     }
 
     @Override
-    public void onItemClick(BindingViewHolder holder, final View view, final int i, final int l) {
+    public void onItemClick(BindingViewHolder holder, final View view, final int position, final int id) {
+        if (id == R.id.testButton) {
+            ItemTestViewData item = (ItemTestViewData) mListAdapter.getItem(position);
+            if (item != null) {
+                item.getStringLiveData().setValue(System.currentTimeMillis() + "");
+            }
+        }
         getFriendlyViewModel().test();
     }
 

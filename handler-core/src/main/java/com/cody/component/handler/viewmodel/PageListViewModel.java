@@ -15,6 +15,7 @@ package com.cody.component.handler.viewmodel;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
@@ -35,16 +36,17 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
 public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> extends FriendlyViewModel<VD> {
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
     private MutableLiveData<PageListKeyedDataSource> mDataSource;
+    private PageDataMapper<ItemViewDataHolder, Bean> mPageDataMapper;
 
     protected abstract PageDataMapper<? extends ItemViewDataHolder, Bean> createMapper();
 
     protected abstract OnRequestPageListener<Bean> createRequestPageListener();
 
+    @SuppressWarnings("unchecked")
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-        @SuppressWarnings("unchecked")
-        PageDataMapper<ItemViewDataHolder, Bean> mapper = (PageDataMapper<ItemViewDataHolder, Bean>) createMapper();
-        final PageListDataSourceFactory<Bean> sourceFactory = new PageListDataSourceFactory<>(mapper, (operation, oldPageInfo, callBack) -> {
+        mPageDataMapper = (PageDataMapper<ItemViewDataHolder, Bean>) createMapper();
+        final PageListDataSourceFactory<Bean> sourceFactory = new PageListDataSourceFactory<>(mPageDataMapper, (operation, oldPageInfo, callBack) -> {
             if (mRequestStatus.isRefreshing()) {
                 operation = Operation.REFRESH;
             }
@@ -69,6 +71,15 @@ public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> exten
 
     @Override
     public <T extends BaseViewModel> T setLifecycleOwner(final LifecycleOwner lifecycleOwner) {
+        mPagedList.observe(lifecycleOwner, items -> getRequestStatusLive().observe(lifecycleOwner, new Observer<RequestStatus>() {
+            @Override
+            public void onChanged(final RequestStatus requestStatus) {
+                if (requestStatus.isLoaded()) {
+                    getRequestStatusLive().removeObserver(this);
+                    mPageDataMapper.setOldItems(items);
+                }
+            }
+        }));
         return super.setLifecycleOwner(lifecycleOwner);
     }
 

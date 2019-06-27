@@ -76,4 +76,8 @@ public abstract class PageListBindFragment<VM extends PageListViewModel<Friendly
         super.onRequestStatus(requestStatus);
         mListAdapter.setRequestStatus(requestStatus);
     }
+
+    @Override
+    public void scrollToTop() {
+    }
 }

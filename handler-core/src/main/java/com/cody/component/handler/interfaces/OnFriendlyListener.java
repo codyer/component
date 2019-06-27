@@ -29,9 +29,9 @@ public interface OnFriendlyListener extends Refreshable, OnRetryListener, OnInit
     @NonNull
     MutableLiveData<RequestStatus> getRequestStatusLive();
 
-    void refreshUI(RequestStatus status);
+    void submitStatus(RequestStatus status);
 
-    void onFailure(final String message);
-
-    void onCancel();
+    default void onCancel() {
+        submitStatus(getRequestStatus().cancel());
+    }
 }

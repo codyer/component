@@ -29,8 +29,8 @@ import com.cody.component.handler.interfaces.OnFriendlyListener;
 public abstract class FriendlyViewModel<VD extends FriendlyViewData> extends BaseViewModel implements OnFriendlyListener {
     final private VD mFriendlyViewData;
 
-    MutableLiveData<RequestStatus> mRequestStatusLive;
-    RequestStatus mRequestStatus;
+    protected MutableLiveData<RequestStatus> mRequestStatusLive;
+    protected RequestStatus mRequestStatus;
 
     public FriendlyViewModel(final VD friendlyViewData) {
         mFriendlyViewData = friendlyViewData;
@@ -40,6 +40,12 @@ public abstract class FriendlyViewModel<VD extends FriendlyViewData> extends Bas
         if (mRequestStatusLive == null) {
             mRequestStatusLive = new MutableLiveData<>(mRequestStatus);
         }
+    }
+
+    @Override
+    protected void onCleared() {
+        onCancel();
+        super.onCleared();
     }
 
     public VD getFriendlyViewData() {
@@ -77,34 +83,14 @@ public abstract class FriendlyViewModel<VD extends FriendlyViewData> extends Bas
     /**
      * 做完一个operation需要将处理结果告知底层，完成或者失败
      * <p>
-     * #refreshUI()
+     * #submitStatus()
      * #onFailure(String) ()
      */
     @Override
-    public void refreshUI(RequestStatus status) {
+    public void submitStatus(RequestStatus status) {
         if (mRequestStatus.isLoading()) {
             mRequestStatus = status;
             mRequestStatusLive.postValue(status);
-        }
-    }
-
-    /**
-     * 做完一个operation需要将处理结果告知底层，完成或者失败
-     * <p>
-     * #refreshUI()
-     * #onFailure(String) ()
-     */
-    @Override
-    public void onFailure(final String message) {
-        if (mRequestStatus.isLoading()) {
-            getRequestStatusLive().postValue(mRequestStatus = mRequestStatus.error(message));
-        }
-    }
-
-    @Override
-    public void onCancel() {
-        if (mRequestStatus.isLoading()) {
-            getRequestStatusLive().postValue(mRequestStatus = mRequestStatus.cancel());
         }
     }
 

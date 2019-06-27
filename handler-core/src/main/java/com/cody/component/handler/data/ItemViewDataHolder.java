@@ -15,6 +15,8 @@ package com.cody.component.handler.data;
 /**
  * Created by xu.yi. on 2019/3/28.
  * 和界面绑定的数据基类默认实现，并用于列表
+ * 需要刷新时界面不闪需要都使用LiveData变量做属性,这样可以实现局部刷新
+ * 否则有一个非LiveData属性改变将导致整个Item刷新
  */
 public class ItemViewDataHolder extends ViewData {
     public final static int DEFAULT_TYPE = 0;

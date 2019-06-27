@@ -16,6 +16,8 @@ import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.livedata.BooleanLiveData;
 import com.cody.component.handler.livedata.StringLiveData;
 
+import java.util.Objects;
+
 
 /**
  * Created by xu.yi. on 2019/4/8.
@@ -63,5 +65,22 @@ public class ItemFooterOrHeaderData extends ItemViewDataHolder {
         mError.postValue(status.isError());
         mLoading.postValue(status.isLoadingBefore() || status.isLoadingAfter());
         mErrorMessage.postValue(status.getMessage());
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        final ItemFooterOrHeaderData that = (ItemFooterOrHeaderData) o;
+        return mShowFooter == that.mShowFooter &&
+                Objects.equals(mNoMoreItem, that.mNoMoreItem) &&
+                Objects.equals(mError, that.mError) &&
+                Objects.equals(mLoading, that.mLoading) &&
+                Objects.equals(mErrorMessage, that.mErrorMessage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), mShowFooter, mNoMoreItem, mError, mLoading, mErrorMessage);
     }
 }

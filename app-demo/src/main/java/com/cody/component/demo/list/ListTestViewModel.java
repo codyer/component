@@ -42,7 +42,7 @@ public class ListTestViewModel extends PageListViewModel<FriendlyViewData, Strin
 
             @Override
             public ItemTestViewData mapperItem(@NonNull final ItemTestViewData item, final String bean) {
-                item.setTest(bean);
+                item.getTest().postValue(bean);
                 return item;
             }
         };
@@ -50,17 +50,14 @@ public class ListTestViewModel extends PageListViewModel<FriendlyViewData, Strin
 
     @Override
     protected OnRequestPageListener<String> createRequestPageListener() {
-        return (operation, pageInfo, callBack) -> new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ArrayList<String> items = new ArrayList<>();
-                for (int i = 0; i < 20; i++) {
-                    items.add(System.currentTimeMillis() + "item===" + (pageInfo.getPageNo() * pageInfo.getPageSize() + i));
-                }
-                pageInfo.setPageNo(pageInfo.getPageNo() + 1);
-                callBack.onResult(pageInfo.getPageNo() == 3 ? new ArrayList<>() : items, null, pageInfo);
-                refreshUI(pageInfo.getPageNo() == 3 ? getRequestStatus().end() : getRequestStatus().loaded());
+        return (operation, pageInfo, callBack) -> new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            ArrayList<String> items = new ArrayList<>();
+            for (int i = 0; i < (type ? 20 : 5); i++) {
+                items.add(System.currentTimeMillis() + "item--" + (pageInfo.getPageNo() * pageInfo.getPageSize() + i));
             }
+            pageInfo.setPageNo(pageInfo.getPageNo() + 1);
+            callBack.onResult(pageInfo.getPageNo() == 3 ? new ArrayList<>() : items, null, pageInfo);
+            submitStatus(pageInfo.getPageNo() == 3 ? getRequestStatus().end() : getRequestStatus().loaded());
         }, 500);
     }
 
@@ -68,6 +65,14 @@ public class ListTestViewModel extends PageListViewModel<FriendlyViewData, Strin
         super(viewData);
     }
 
+    private boolean type = true;
+
     public void test() {
+        type = !type;
+        if (type) {
+            showToast("刷新正常");
+        } else {
+            showToast("刷新变少");
+        }
     }
 }

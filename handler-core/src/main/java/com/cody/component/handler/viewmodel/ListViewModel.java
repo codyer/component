@@ -14,10 +14,9 @@ package com.cody.component.handler.viewmodel;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.FriendlyViewData;
+import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.define.Operation;
-import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.mapper.DataMapper;
 
 import java.util.ArrayList;
@@ -30,7 +29,6 @@ import java.util.List;
 public abstract class ListViewModel<VD extends FriendlyViewData, Item extends ItemViewDataHolder, Bean> extends SingleViewModel<VD> {
 
     private MutableLiveData<List<Item>> mItems = new MutableLiveData<>(new ArrayList<>());
-    private List<Item> mOldList = new ArrayList<>();
     private DataMapper<Item, Bean> mDataMapper = createMapper();
 
     protected abstract DataMapper<Item, Bean> createMapper();
@@ -43,20 +41,13 @@ public abstract class ListViewModel<VD extends FriendlyViewData, Item extends It
         return mItems;
     }
 
-    @Override
-    public void refreshUI(RequestStatus status) {
-        super.refreshUI(status);
-        submitList();
-    }
-
-    public void submitList() {
-        mItems.postValue(mOldList);
-    }
-
-    public void mapperList(final Operation operation, final List<Bean> beanList) {
+    /**
+     * mapper 结束数据就会更新到list中
+     */
+    public void mapperListAppend(final Operation operation, final List<Bean> beanList) {
         if (operation == Operation.REFRESH || operation == Operation.INIT) {
             mDataMapper.init();
         }
-        mOldList = mDataMapper.mapperList(beanList);
+        mItems.postValue(mDataMapper.mapperListAppend(beanList));
     }
 }
