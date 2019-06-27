@@ -203,7 +203,7 @@ public class JsBridge {
     }
 
     /**
-     * 退出登录的时候调用清空cookie
+     * 退出 和 登录 的时候调用清空cookie
      */
     public JsBridge clearCookie(Context context) {
         if (context == null) {
