@@ -42,6 +42,7 @@ ext {
             "logging"                : "com.squareup.okhttp3:logging-interceptor:3.12.0",
             "adapter-rxjava2"        : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
             "rxandroid"              : "io.reactivex.rxjava2:rxandroid:2.1.0",
+            "easypermissions"        : "pub.devrel:easypermissions:1.0.1",
 
             "image-picker"           : "com.cysion:ImagePicker:1.0.6",
             "channel"                : "com.leon.channel:helper:2.0.3",
@@ -50,6 +51,15 @@ ext {
             //bugly崩溃日志上传
             "bugly-crashreport"      : "com.tencent.bugly:crashreport:3.0.0",
             "bugly-nativecrashreport": "com.tencent.bugly:nativecrashreport:3.7.1",
+
+            //umeng分享
+            "umeng-common"           : "com.umeng.umsdk:common:2.0.0",
+            "umeng-utdid"            : "com.umeng.umsdk:utdid:1.1.5.3",
+            "share-core"             : "com.umeng.umsdk:share-core:6.9.4",
+            "share-wechat"           : "com.umeng.umsdk:share-wx:6.9.4",
+            "share-qq"               : "com.umeng.umsdk:share-qq:6.9.4",
+            "share-sina"             : "com.umeng.umsdk:share-sina:6.9.4",
+            "share-widget"           : "com.umeng.umsdk:share-board:6.9.4",
             // local maven
             "component"              : "com.github.codyer.component:core:${componentVersion}",
             "compiler"               : "com.github.codyer.component:compiler:${componentVersion}",

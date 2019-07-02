@@ -12,8 +12,10 @@
 
 package com.cody.component.hybrid.activity;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -22,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.cody.component.app.activity.FragmentContainerWithCloseActivity;
@@ -34,9 +37,13 @@ import com.cody.component.hybrid.core.UrlUtil;
 import com.cody.component.hybrid.data.HtmlConfig;
 import com.cody.component.hybrid.fragment.HtmlFragment;
 import com.cody.component.util.ActivityUtil;
+import com.umeng.socialize.UMShareAPI;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Html 页面
@@ -136,7 +143,14 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         mHtmlFragment.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        JsBridge.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     //添加点击返回箭头事件
@@ -148,23 +162,16 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
                     return mHtmlFragment.goBack();
                 }
             } else if (item.getItemId() == R.id.action_share) {
-                if (mHtmlFragment.getViewData() != null &&
-                        mHtmlFragment.getViewData().getUrl() != null &&
-                        mHtmlFragment.getViewData().getHeader() != null) {
-                    share(mHtmlFragment.getViewData().getUrl().get(), mHtmlFragment.getViewData().getHeader().get());
+                if (mHtmlConfig != null &&
+                        mHtmlFragment.getViewData() != null &&
+                        mHtmlFragment.getViewData().getUrl() != null) {
+                    mHtmlConfig.setUrl(mHtmlFragment.getViewData().getUrl().get());
+                    JsBridge.share(HtmlActivity.this, mHtmlConfig);
                 }
                 return true;
             }
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void share(String content, String title) {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, content);
-        sendIntent.setType("text/plain");
-        startActivity(Intent.createChooser(sendIntent, null));
     }
 
     @Override
@@ -184,6 +191,12 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
             menu.clear();
         }
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        UMShareAPI.get(this).release();
     }
 
     /**

@@ -13,6 +13,7 @@
 apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
     api rootProject.ext.dependencies["constraintlayout"]
+    api rootProject.ext.dependencies["easypermissions"]
     api project(':bind-core')
     api project(':blues-core')
 }

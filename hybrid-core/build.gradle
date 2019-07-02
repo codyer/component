@@ -13,4 +13,12 @@
 apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
     api project(':image-core')
+
+    api rootProject.ext.dependencies["umeng-common"]
+    api rootProject.ext.dependencies["umeng-utdid"]
+    api rootProject.ext.dependencies["share-core"]
+    api rootProject.ext.dependencies["share-qq"]
+    api rootProject.ext.dependencies["share-wechat"]
+//  api rootProject.ext.dependencies["share-sina"]
+    api rootProject.ext.dependencies["share-widget"]
 }

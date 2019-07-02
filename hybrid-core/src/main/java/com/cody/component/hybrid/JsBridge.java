@@ -25,6 +25,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
 
+import androidx.annotation.NonNull;
+
 import com.cody.component.hybrid.core.JsCallback;
 import com.cody.component.hybrid.core.JsHandler;
 import com.cody.component.hybrid.core.JsHandlerFactory;
@@ -32,11 +34,14 @@ import com.cody.component.hybrid.core.JsInteract;
 import com.cody.component.hybrid.core.JsLifeCycle;
 import com.cody.component.hybrid.core.JsWebChromeClient;
 import com.cody.component.hybrid.core.JsWebViewClient;
+import com.cody.component.hybrid.data.HtmlConfig;
 import com.cody.component.hybrid.data.HtmlViewData;
 import com.cody.component.util.LogUtil;
 
 import java.lang.reflect.Method;
 import java.util.Map;
+
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by Cody.yi on 17/4/12.
@@ -51,13 +56,14 @@ public class JsBridge {
     private volatile static JsBridge sInstance;
     private JsHandlerFactory mJsHandlerFactory;
     private SparseArray<OnActivityResultListener> mResultListener;
-    //    private SparseArray<EasyPermissions.PermissionCallbacks> mPermissionsListener;
+    private SparseArray<EasyPermissions.PermissionCallbacks> mPermissionsListener;
     private JsWebChromeClient.OpenFileChooserCallBack mFileChooserCallBack;
+    private OnShareListener mOnShareListener;
 
     private JsBridge() {
         mJsHandlerFactory = new JsHandlerFactory();
         mResultListener = new SparseArray<>();
-//        mPermissionsListener = new SparseArray<>();
+        mPermissionsListener = new SparseArray<>();
     }
 
     public static JsBridge getInstance() {
@@ -69,6 +75,26 @@ public class JsBridge {
             }
         }
         return sInstance;
+    }
+
+    /**
+     * 设置分享回调
+     */
+    public JsBridge setShareListener(OnShareListener listener) {
+        sInstance.mOnShareListener = listener;
+        return this;
+    }
+
+    public static void share(final Activity activity, final HtmlConfig config) {
+        if (getInstance().mOnShareListener == null) {
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, config.toString());
+            sendIntent.setType("text/plain");
+            activity.startActivity(Intent.createChooser(sendIntent, null));
+        } else {
+            getInstance().mOnShareListener.share(activity, config);
+        }
     }
 
     public String getHostSuffix() {
@@ -122,24 +148,23 @@ public class JsBridge {
     /**
      * 6.0以上需要动态请求权限的时候需要调用此函数
      */
-   /* public static void requestPermissions(WebView webView,@NonNull String rationale, EasyPermissions.PermissionCallbacks listener, @NonNull String... perms) {
+    public static void requestPermissions(Activity activity, @NonNull String rationale, EasyPermissions.PermissionCallbacks listener, @NonNull String... perms) {
         int requestCode = getInstance().mPermissionsListener.size();
         getInstance().mPermissionsListener.put(requestCode, listener);
-        if (webView != null) {
-            if (webView.getContext() instanceof Activity) {
-                EasyPermissions.requestPermissions(((Activity) webView.getContext()), rationale, requestCode, perms);
-            }
+        if (activity != null) {
+            EasyPermissions.requestPermissions(activity, rationale, requestCode, perms);
         } else {
             LogUtil.d("webView is recycled.");
         }
-    }*/
+    }
+
     public static void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-       /* EasyPermissions.PermissionCallbacks listener = getInstance().mPermissionsListener.get(requestCode);
+        EasyPermissions.PermissionCallbacks listener = getInstance().mPermissionsListener.get(requestCode);
         if (listener != null) {
             // EasyPermissions handles the request result.
             EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, listener);
             getInstance().mPermissionsListener.remove(requestCode);
-        }*/
+        }
     }
 
     /**

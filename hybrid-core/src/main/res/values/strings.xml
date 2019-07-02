@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *************************************************************
+  ~ 文件：strings.xml  模块：hybrid-core  项目：component
+  ~ 当前修改时间：2019年07月02日 11:09:53
+  ~ 上次修改时间：2019年07月02日 11:09:53
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：hybrid-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<resources>
+    <string name="permission_remind">须开启相应权限才能正常使用此功能，是否授权？</string>
+</resources>

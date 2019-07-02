@@ -15,14 +15,18 @@ package com.cody.component.hybrid.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by xu.yi. on 2019/4/11.
  * 打开 html 需要的配置参数保存类
  */
 public class HtmlConfig implements Parcelable {
-    private String mTitle = "";
+    private String mTitle = "工邦邦";
     private String mDescription;
     private String mUrl;
+    private String mImage;//缩略图
+    private String mPicture;//大图片
     private boolean mIsRoot;
     private boolean mCanShare;
 
@@ -53,6 +57,22 @@ public class HtmlConfig implements Parcelable {
         return this;
     }
 
+    public String getImage() {
+        return mImage;
+    }
+
+    public void setImage(final String image) {
+        mImage = image;
+    }
+
+    public String getPicture() {
+        return mPicture;
+    }
+
+    public void setPicture(final String picture) {
+        mPicture = picture;
+    }
+
     public boolean isRoot() {
         return mIsRoot;
     }
@@ -69,6 +89,14 @@ public class HtmlConfig implements Parcelable {
     public HtmlConfig setCanShare(final boolean canShare) {
         mCanShare = canShare;
         return this;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return mTitle + '\n' +
+                mDescription + '\n' +
+                mUrl + '\n';
     }
 
     @Override
