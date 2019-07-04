@@ -74,7 +74,9 @@ public abstract class PageListBindFragment<VM extends PageListViewModel<Friendly
     @Override
     protected void onRequestStatus(final RequestStatus requestStatus) {
         super.onRequestStatus(requestStatus);
-        mListAdapter.setRequestStatus(requestStatus);
+        if (mListAdapter != null) {
+            mListAdapter.setRequestStatus(requestStatus);
+        }
     }
 
     @Override
