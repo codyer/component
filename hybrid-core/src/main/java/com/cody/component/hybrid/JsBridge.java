@@ -51,6 +51,7 @@ public class JsBridge {
     private String VERSION = "1.0.0";
     private String APP_NAME = "app";
     private String HOST_SUFFIX = "";
+    private boolean mRefreshable = true;
     private int mRequestCodeSequence = 0x001;
     final private static String USER_AGENT = "android;hybrid-core:";
     private volatile static JsBridge sInstance;
@@ -99,6 +100,10 @@ public class JsBridge {
 
     public String getHostSuffix() {
         return HOST_SUFFIX;
+    }
+
+    public boolean isRefreshable() {
+        return mRefreshable;
     }
 
     /**
@@ -213,6 +218,15 @@ public class JsBridge {
      */
     public JsBridge setHost(String host) {
         sInstance.HOST_SUFFIX = host;
+        return this;
+    }
+
+
+    /**
+     * 是否支持刷新
+     */
+    public JsBridge refreshable(boolean refreshable) {
+        sInstance.mRefreshable = refreshable;
         return this;
     }
 
