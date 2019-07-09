@@ -12,6 +12,7 @@
 
 package com.cody.component.app.local;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -170,8 +171,10 @@ public class LocalProfile {
         setValue(key, mParseUtil.toJson(list));
     }
 
+    @SuppressLint("ApplySharedPref")
     public void clear() {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.clear().apply();
+        editor.clear();
+        editor.commit();
     }
 }
