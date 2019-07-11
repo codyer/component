@@ -61,16 +61,18 @@ public class HtmlConfig implements Parcelable {
         return mImage;
     }
 
-    public void setImage(final String image) {
+    public HtmlConfig setImage(final String image) {
         mImage = image;
+        return this;
     }
 
     public String getPicture() {
         return mPicture;
     }
 
-    public void setPicture(final String picture) {
+    public HtmlConfig setPicture(final String picture) {
         mPicture = picture;
+        return this;
     }
 
     public boolean isRoot() {
@@ -109,6 +111,8 @@ public class HtmlConfig implements Parcelable {
         dest.writeString(this.mTitle);
         dest.writeString(this.mDescription);
         dest.writeString(this.mUrl);
+        dest.writeString(this.mImage);
+        dest.writeString(this.mPicture);
         dest.writeByte(this.mIsRoot ? (byte) 1 : (byte) 0);
         dest.writeByte(this.mCanShare ? (byte) 1 : (byte) 0);
     }
@@ -120,6 +124,8 @@ public class HtmlConfig implements Parcelable {
         this.mTitle = in.readString();
         this.mDescription = in.readString();
         this.mUrl = in.readString();
+        this.mImage = in.readString();
+        this.mPicture = in.readString();
         this.mIsRoot = in.readByte() != 0;
         this.mCanShare = in.readByte() != 0;
     }

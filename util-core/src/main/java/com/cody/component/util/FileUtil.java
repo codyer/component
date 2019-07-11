@@ -12,10 +12,15 @@
 
 package com.cody.component.util;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -131,6 +136,34 @@ public final class FileUtil {
         }
     }
 
+    // 保存图片到手机
+    public static void download(final Context context, final String base64String) {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    // 首先保存图片
+                    File pictureFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsoluteFile();
+
+                    File appDir = new File(pictureFolder, "picture");
+                    if (!appDir.exists()) {
+                        appDir.mkdirs();
+                    }
+                    String fileName = System.currentTimeMillis() + ".jpg";
+                    File destFile = new File(appDir, fileName);
+
+                    ImageUtil.base64ToFile(base64String, destFile);
+
+                    // 最后通知图库更新
+                    context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+                            Uri.fromFile(new File(destFile.getPath()))));
+                } catch (Exception e) {
+                    LogUtil.e(e.getMessage());
+                }
+            }
+        }).start();
+    }
     /**
      * 根据文件路径获取文件
      *
@@ -177,4 +210,37 @@ public final class FileUtil {
         }
     }
 
+    /**
+     * 复制文件
+     *
+     * @param source 输入文件
+     * @param target 输出文件
+     */
+    public static void copy(File source, File target) {
+        FileInputStream fileInputStream = null;
+        FileOutputStream fileOutputStream = null;
+        try {
+            fileInputStream = new FileInputStream(source);
+            fileOutputStream = new FileOutputStream(target);
+            byte[] buffer = new byte[1024];
+            while (fileInputStream.read(buffer) > 0) {
+                fileOutputStream.write(buffer);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeStream(fileInputStream);
+            closeStream(fileOutputStream);
+        }
+    }
+
+    private static void closeStream(Closeable stream) {
+        if (stream != null) {
+            try {
+                stream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

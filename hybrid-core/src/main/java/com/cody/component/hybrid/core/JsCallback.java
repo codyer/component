@@ -75,6 +75,14 @@ public class JsCallback {
     /**
      * 直接返回失败消息，不需要包含data部分
      */
+    public void failure() {
+        Result<Object> result = new Result<>(JsCode.FAILURE, "失败", null);
+        callJs(getCallBackUrl(result));
+    }
+
+    /**
+     * 直接返回失败消息，不需要包含data部分
+     */
     public void failure(String message) {
         Result<Object> result = new Result<>(JsCode.FAILURE, message, null);
         callJs(getCallBackUrl(result));
@@ -86,6 +94,14 @@ public class JsCallback {
      */
     public void success(String message) {
         Result<Object> result = new Result<>(JsCode.SUCCESS, message, null);
+        callJs(getCallBackUrl(result));
+    }
+
+    /**
+     * 直接返回成功消息，不需要包含data部分
+     */
+    public void success() {
+        Result<Object> result = new Result<>(JsCode.SUCCESS, "成功", null);
         callJs(getCallBackUrl(result));
     }
 

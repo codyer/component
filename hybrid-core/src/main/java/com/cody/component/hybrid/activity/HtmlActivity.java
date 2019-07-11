@@ -12,10 +12,8 @@
 
 package com.cody.component.hybrid.activity;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -24,12 +22,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.cody.component.app.activity.FragmentContainerWithCloseActivity;
-import com.cody.component.app.local.BaseLocalKey;
-import com.cody.component.app.local.Repository;
 import com.cody.component.hybrid.JsBridge;
 import com.cody.component.hybrid.OnUrlListener;
 import com.cody.component.hybrid.R;
@@ -39,11 +34,8 @@ import com.cody.component.hybrid.fragment.HtmlFragment;
 import com.cody.component.util.ActivityUtil;
 import com.umeng.socialize.UMShareAPI;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Html 页面
