@@ -44,6 +44,7 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     public static final String HTML_WITH_CONFIG = "html_with_config";
     private HtmlFragment mHtmlFragment;
     private HtmlConfig mHtmlConfig;
+    private Menu mMenu;
     private static Boolean isExit = false;
     private boolean mIsRoot = false;
 
@@ -89,6 +90,11 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
         startHtml(title, null, url, share, false);
     }
 
+    public void setHtmlConfig(@NonNull final HtmlConfig htmlConfig) {
+        mHtmlConfig = htmlConfig;
+        invalidateOptionsMenu();
+    }
+
     @Override
     public Fragment getFragment() {
         Intent intent = getIntent();
@@ -122,7 +128,10 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     }
 
     @Override
-    public void onUrlChange(boolean canGoBack) {
+    public void onUrlChange(String url, boolean canGoBack) {
+        if (mHtmlConfig != null) {
+            mHtmlConfig.setUrl(url);
+        }
         getQuickClose().setValue(canGoBack);
     }
 
@@ -154,10 +163,7 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
                     return mHtmlFragment.goBack();
                 }
             } else if (item.getItemId() == R.id.action_share) {
-                if (mHtmlConfig != null &&
-                        mHtmlFragment.getViewData() != null &&
-                        mHtmlFragment.getViewData().getUrl() != null) {
-                    mHtmlConfig.setUrl(mHtmlFragment.getViewData().getUrl().get());
+                if (mHtmlConfig != null) {
                     JsBridge.share(HtmlActivity.this, mHtmlConfig);
                 }
                 return true;
@@ -179,10 +185,18 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
         getMenuInflater().inflate(R.menu.html_menu, menu);
-        if (mHtmlConfig != null && !mHtmlConfig.isCanShare()) {
-            menu.clear();
-        }
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        mMenu = menu;
+        if (null != mMenu) {
+            if (mMenu.findItem(R.id.action_share) != null) {
+                mMenu.findItem(R.id.action_share).setVisible(mHtmlConfig != null && mHtmlConfig.isCanShare());
+            }
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override

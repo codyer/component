@@ -22,83 +22,83 @@ import androidx.annotation.NonNull;
  * 打开 html 需要的配置参数保存类
  */
 public class HtmlConfig implements Parcelable {
-    private String mTitle = "工邦邦";
-    private String mDescription;
-    private String mUrl;
-    private String mImage;//缩略图
-    private String mPicture;//大图片
-    private boolean mIsRoot;
-    private boolean mCanShare;
+    private String title = "";
+    private String description = "";
+    private String url = "";
+    private String image;//缩略图
+    private String picture;//大图片
+    private boolean isRoot;
+    private boolean canShare = true;
 
     public String getTitle() {
-        return mTitle;
+        return title;
     }
 
     public HtmlConfig setTitle(final String title) {
-        mTitle = title;
+        this.title = title;
         return this;
     }
 
     public String getDescription() {
-        return mDescription;
+        return description;
     }
 
     public HtmlConfig setDescription(final String description) {
-        mDescription = description;
+        this.description = description;
         return this;
     }
 
     public String getUrl() {
-        return mUrl;
+        return url;
     }
 
     public HtmlConfig setUrl(final String url) {
-        mUrl = url;
+        this.url = url;
         return this;
     }
 
     public String getImage() {
-        return mImage;
+        return image;
     }
 
     public HtmlConfig setImage(final String image) {
-        mImage = image;
+        this.image = image;
         return this;
     }
 
     public String getPicture() {
-        return mPicture;
+        return picture;
     }
 
     public HtmlConfig setPicture(final String picture) {
-        mPicture = picture;
+        this.picture = picture;
         return this;
     }
 
     public boolean isRoot() {
-        return mIsRoot;
+        return isRoot;
     }
 
     public HtmlConfig setRoot(final boolean root) {
-        mIsRoot = root;
+        isRoot = root;
         return this;
     }
 
     public boolean isCanShare() {
-        return mCanShare;
+        return canShare;
     }
 
     public HtmlConfig setCanShare(final boolean canShare) {
-        mCanShare = canShare;
+        this.canShare = canShare;
         return this;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return mTitle + '\n' +
-                mDescription + '\n' +
-                mUrl + '\n';
+        return title + '\n' +
+                description + '\n' +
+                url + '\n';
     }
 
     @Override
@@ -108,26 +108,26 @@ public class HtmlConfig implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.mTitle);
-        dest.writeString(this.mDescription);
-        dest.writeString(this.mUrl);
-        dest.writeString(this.mImage);
-        dest.writeString(this.mPicture);
-        dest.writeByte(this.mIsRoot ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.mCanShare ? (byte) 1 : (byte) 0);
+        dest.writeString(this.title);
+        dest.writeString(this.description);
+        dest.writeString(this.url);
+        dest.writeString(this.image);
+        dest.writeString(this.picture);
+        dest.writeByte(this.isRoot ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.canShare ? (byte) 1 : (byte) 0);
     }
 
     public HtmlConfig() {
     }
 
     protected HtmlConfig(Parcel in) {
-        this.mTitle = in.readString();
-        this.mDescription = in.readString();
-        this.mUrl = in.readString();
-        this.mImage = in.readString();
-        this.mPicture = in.readString();
-        this.mIsRoot = in.readByte() != 0;
-        this.mCanShare = in.readByte() != 0;
+        this.title = in.readString();
+        this.description = in.readString();
+        this.url = in.readString();
+        this.image = in.readString();
+        this.picture = in.readString();
+        this.isRoot = in.readByte() != 0;
+        this.canShare = in.readByte() != 0;
     }
 
     public static final Creator<HtmlConfig> CREATOR = new Creator<HtmlConfig>() {

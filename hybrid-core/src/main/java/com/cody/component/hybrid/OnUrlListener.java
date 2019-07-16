@@ -18,5 +18,6 @@ package com.cody.component.hybrid;
  */
 public interface OnUrlListener {
     void onTitleChange(String title);
-    void onUrlChange(boolean canGoBack);
+
+    void onUrlChange(String url, boolean canGoBack);
 }
