@@ -25,7 +25,7 @@ public class ConnectionHttpException extends BaseHttpException {
     private static final long serialVersionUID = 5857118712581692912L;
 
     public ConnectionHttpException() {
-        super(HttpCode.CODE_CONNECTION_FAILED, "网络请求失败");
+        super(HttpCode.CODE_CONNECTION_FAILED, "网络连接不可用，请稍后重试");
     }
 
 }

@@ -15,8 +15,11 @@ package com.cody.component.http;
 import com.cody.component.http.callback.RequestCallback;
 import com.cody.component.http.callback.RequestMultiplyCallback;
 import com.cody.component.http.lib.config.HttpCode;
+import com.cody.component.http.lib.exception.ConnectionHttpException;
 import com.cody.component.http.lib.exception.TokenInvalidHttpException;
 import com.cody.component.http.lib.exception.base.BaseHttpException;
+
+import java.net.UnknownHostException;
 
 import io.reactivex.observers.DisposableObserver;
 import retrofit2.HttpException;
@@ -53,6 +56,8 @@ public class BaseSubscriber<T> extends DisposableObserver<T> {
                 } else {
                     callback.onFail(new BaseHttpException(((HttpException) e).code(), e.getMessage()));
                 }
+            } else if (e instanceof UnknownHostException) {
+                callback.onFail(new ConnectionHttpException());
             } else {
                 callback.onFail(new BaseHttpException(HttpCode.CODE_UNKNOWN, e.getMessage()));
             }
