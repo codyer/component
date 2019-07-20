@@ -57,6 +57,7 @@ public class JsBridge {
     private volatile static JsBridge sInstance;
     private JsHandlerFactory mJsHandlerFactory;
     private SparseArray<OnActivityResultListener> mResultListener;
+    private OnWebViewInitListener mOnWebViewInitListener;
     private SparseArray<EasyPermissions.PermissionCallbacks> mPermissionsListener;
     private JsWebChromeClient.OpenFileChooserCallBack mFileChooserCallBack;
     private OnShareListener mOnShareListener;
@@ -83,6 +84,15 @@ public class JsBridge {
      */
     public JsBridge setShareListener(OnShareListener listener) {
         sInstance.mOnShareListener = listener;
+        return this;
+    }
+
+
+    /**
+     * 设置webView 初始化监听
+     */
+    public JsBridge setOnWebViewInitListener(OnWebViewInitListener listener) {
+        sInstance.mOnWebViewInitListener = listener;
         return this;
     }
 
@@ -334,10 +344,17 @@ public class JsBridge {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG);
         }
+        if (mOnWebViewInitListener != null) {
+            mOnWebViewInitListener.onWebViewInit(webView);
+        }
     }
 
     public interface OnActivityResultListener {
         void onActivityResult(int resultCode, Intent data);
+    }
+
+    public interface OnWebViewInitListener {
+        void onWebViewInit(WebView webView);
     }
 
     public interface OnProgressListener {

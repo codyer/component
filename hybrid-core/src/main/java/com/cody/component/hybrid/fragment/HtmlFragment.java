@@ -278,13 +278,6 @@ public class HtmlFragment extends SingleBindFragment<FragmentHtmlBinding, HtmlVi
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-//        JsBridge.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
     private void releaseFileChoose() {
         if (mUploadMsg != null) {
             mUploadMsg.onReceiveValue(null);

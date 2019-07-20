@@ -17,6 +17,9 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by xu.yi. on 2019/4/11.
  * 打开 html 需要的配置参数保存类
@@ -29,6 +32,7 @@ public class HtmlConfig implements Parcelable {
     private String picture;//大图片
     private boolean isRoot;
     private boolean canShare = true;
+    private String data;//存储分享数据
 
     public String getTitle() {
         return title;
@@ -93,6 +97,24 @@ public class HtmlConfig implements Parcelable {
         return this;
     }
 
+    public String getData() {
+        return data;
+    }
+
+    public HtmlConfig setData(final String data) {
+        this.data = data;
+        return this;
+    }
+
+    public JSONObject getJsonData() throws JSONException {
+        return new JSONObject(data);
+    }
+
+    public HtmlConfig setJsonData(@NonNull final JSONObject data) {
+        this.data = data.toString();
+        return this;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -115,6 +137,7 @@ public class HtmlConfig implements Parcelable {
         dest.writeString(this.picture);
         dest.writeByte(this.isRoot ? (byte) 1 : (byte) 0);
         dest.writeByte(this.canShare ? (byte) 1 : (byte) 0);
+        dest.writeString(this.data);
     }
 
     public HtmlConfig() {
@@ -128,6 +151,7 @@ public class HtmlConfig implements Parcelable {
         this.picture = in.readString();
         this.isRoot = in.readByte() != 0;
         this.canShare = in.readByte() != 0;
+        this.data = in.readString();
     }
 
     public static final Creator<HtmlConfig> CREATOR = new Creator<HtmlConfig>() {
