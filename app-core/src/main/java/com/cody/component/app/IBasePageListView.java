@@ -1,8 +1,8 @@
 /*
  * ************************************************************
- * 文件：IBaseListView.java  模块：app-core  项目：component
- * 当前修改时间：2019年04月23日 18:23:19
- * 上次修改时间：2019年04月23日 18:16:18
+ * 文件：IBasePageListView.java  模块：app-core  项目：component
+ * 当前修改时间：2019年07月23日 08:41:20
+ * 上次修改时间：2019年06月25日 10:52:57
  * 作者：Cody.yi   https://github.com/codyer
  *
  * 描述：app-core
@@ -14,7 +14,7 @@ package com.cody.component.app;
 
 import androidx.annotation.NonNull;
 
-import com.cody.component.bind.adapter.list.MultiBindingListAdapter;
+import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.handler.interfaces.OnRetryListener;
 import com.cody.component.handler.interfaces.Scrollable;
 
@@ -22,7 +22,7 @@ import com.cody.component.handler.interfaces.Scrollable;
  * Created by xu.yi. on 2019/4/10.
  * 列表绑定需要实现的接口
  */
-public interface IBaseListView extends OnRetryListener, Scrollable {
+public interface IBasePageListView extends OnRetryListener, Scrollable {
     @NonNull
-    MultiBindingListAdapter buildListAdapter();
+    MultiBindingPageListAdapter buildListAdapter();
 }

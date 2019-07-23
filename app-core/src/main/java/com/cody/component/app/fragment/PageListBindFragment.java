@@ -19,9 +19,9 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cody.component.app.IBaseListView;
+import com.cody.component.app.IBasePageListView;
 import com.cody.component.app.R;
-import com.cody.component.app.databinding.FragmentPageListBinding;
+import com.cody.component.app.databinding.FragmentListBinding;
 import com.cody.component.app.widget.friendly.FriendlyLayout;
 import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
@@ -32,7 +32,7 @@ import com.cody.component.handler.viewmodel.PageListViewModel;
 /**
  * 使用pageList 做列表页面，自动分页，刷新，初始化，加载更多，出错提示，重试，下拉刷新
  */
-public abstract class PageListBindFragment<VM extends PageListViewModel<FriendlyViewData, ?>> extends FriendlyBindFragment<FragmentPageListBinding, VM, FriendlyViewData> implements IBaseListView, OnBindingItemClickListener {
+public abstract class PageListBindFragment<VM extends PageListViewModel<FriendlyViewData, ?>> extends FriendlyBindFragment<FragmentListBinding, VM, FriendlyViewData> implements IBasePageListView, OnBindingItemClickListener {
     protected MultiBindingPageListAdapter mListAdapter;
 
     @Override
@@ -48,7 +48,7 @@ public abstract class PageListBindFragment<VM extends PageListViewModel<Friendly
 
     @Override
     protected int getLayoutID() {
-        return R.layout.fragment_page_list;
+        return R.layout.fragment_list;
     }
 
     @Override

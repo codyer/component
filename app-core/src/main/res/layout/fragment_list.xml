@@ -13,8 +13,7 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -35,8 +34,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         bind:onClickListener="@{onClickListener}"
-        bind:viewData="@{viewData}"
-        tools:context=".fragment.PageListBindFragment">
+        bind:viewData="@{viewData}">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"

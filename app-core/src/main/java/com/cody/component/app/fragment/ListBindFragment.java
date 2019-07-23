@@ -21,19 +21,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cody.component.app.IBaseListView;
 import com.cody.component.app.R;
-import com.cody.component.app.databinding.FragmentPageListBinding;
+import com.cody.component.app.databinding.FragmentListBinding;
 import com.cody.component.app.widget.friendly.FriendlyLayout;
-import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
+import com.cody.component.bind.adapter.list.MultiBindingListAdapter;
 import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
 import com.cody.component.handler.data.FriendlyViewData;
+import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.viewmodel.PageListViewModel;
+import com.cody.component.handler.viewmodel.ListViewModel;
 
 /**
  * 使用List 做列表页面，自动分页，刷新，初始化，加载更多，出错提示，重试，下拉刷新
  */
-public abstract class ListBindFragment<VM extends PageListViewModel<FriendlyViewData, ?>> extends FriendlyBindFragment<FragmentPageListBinding, VM, FriendlyViewData> implements IBaseListView, OnBindingItemClickListener {
-    protected MultiBindingPageListAdapter mListAdapter;
+public abstract class ListBindFragment<VM extends ListViewModel<FriendlyViewData, ItemViewDataHolder, ?>> extends FriendlyBindFragment<FragmentListBinding, VM, FriendlyViewData> implements IBaseListView, OnBindingItemClickListener {
+    protected MultiBindingListAdapter mListAdapter;
 
     @Override
     public FriendlyLayout getFriendlyLayout() {
@@ -48,7 +49,7 @@ public abstract class ListBindFragment<VM extends PageListViewModel<FriendlyView
 
     @Override
     protected int getLayoutID() {
-        return R.layout.fragment_page_list;
+        return R.layout.fragment_list;
     }
 
     @Override
@@ -60,7 +61,7 @@ public abstract class ListBindFragment<VM extends PageListViewModel<FriendlyView
         getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
         getBinding().recyclerView.setAdapter(mListAdapter);
 
-        getFriendlyViewModel().getPagedList().observe(this, items -> getFriendlyViewModel().getRequestStatusLive().observe(this, new Observer<RequestStatus>() {
+        getFriendlyViewModel().getItems().observe(this, items -> getFriendlyViewModel().getRequestStatusLive().observe(this, new Observer<RequestStatus>() {
             @Override
             public void onChanged(final RequestStatus requestStatus) {
                 if (requestStatus.isLoaded()) {
