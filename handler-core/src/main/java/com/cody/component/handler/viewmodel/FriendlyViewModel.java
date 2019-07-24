@@ -33,6 +33,7 @@ public abstract class FriendlyViewModel<VD extends FriendlyViewData> extends Bas
     protected RequestStatus mRequestStatus;
 
     public FriendlyViewModel(final VD friendlyViewData) {
+        super();
         mFriendlyViewData = friendlyViewData;
         if (mRequestStatus == null) {
             mRequestStatus = new RequestStatus();

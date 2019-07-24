@@ -38,6 +38,7 @@ public class CatViewModel extends BaseViewModel {
     private static final int LIMIT = 300;
 
     public CatViewModel() {
+        super();
         mAllRecordLiveData = Transformations.map(
                 HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().queryAllRecordObservable(LIMIT),
                 ArrayList::new
