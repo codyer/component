@@ -14,11 +14,11 @@ package com.cody.component.hybrid.core;
 
 import android.webkit.WebView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cody.component.hybrid.core.async.AsyncTaskExecutor;
 import com.cody.component.lib.bean.Result;
 import com.cody.component.util.LogUtil;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;
@@ -39,12 +39,10 @@ public class JsCallback {
 
     private WeakReference<WebView> mWebViewWeakRef;
     private String mPort;
-    private Gson mJsonUtil;
 
     private JsCallback(WebView webView, String port) {
         this.mWebViewWeakRef = new WeakReference<>(webView);
         this.mPort = port;
-        mJsonUtil = new Gson();
     }
 
     public static JsCallback newInstance(WebView webView, String port) {
@@ -108,31 +106,31 @@ public class JsCallback {
     /**
      * 直接返回成功消息，需要包含data部分
      */
-    public void success(String message, JsonObject data) {
-        Result<JsonObject> result = new Result<>(JsCode.SUCCESS, message, data);
+    public void success(String message, JSONObject data) {
+        Result<JSONObject> result = new Result<>(JsCode.SUCCESS, message, data);
         callJs(getCallBackUrl(result));
     }
 
     /**
      * 直接返回成功消息，需要包含data部分
      */
-    public void success(JsonObject data) {
-        Result<JsonObject> result = new Result<>(JsCode.SUCCESS, null, data);
+    public void success(JSONObject data) {
+        Result<JSONObject> result = new Result<>(JsCode.SUCCESS, null, data);
         callJs(getCallBackUrl(result));
     }
 
     /**
      * 直接返回成功消息，需要包含data部分
      */
-    public void callback(JsonObject result) {
+    public void callback(JSONObject result) {
         callJs(getCallBackUrl(result));
     }
 
     private String getCallBackUrl(Result result) {
-        return String.format(Locale.getDefault(), CALLBACK_JS_FORMAT, mPort, mJsonUtil.toJson(result));
+        return String.format(Locale.getDefault(), CALLBACK_JS_FORMAT, mPort, JSON.toJSON(result));
     }
 
-    private String getCallBackUrl(JsonObject result) {
+    private String getCallBackUrl(JSONObject result) {
         return String.format(Locale.getDefault(), CALLBACK_JS_FORMAT, mPort, result);
     }
 }

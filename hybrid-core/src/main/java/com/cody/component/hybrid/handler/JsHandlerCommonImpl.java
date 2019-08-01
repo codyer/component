@@ -19,12 +19,12 @@ import android.os.Build;
 import android.util.Log;
 import android.webkit.WebView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.hybrid.core.JsCallback;
 import com.cody.component.hybrid.core.JsHandler;
 import com.cody.component.util.LogUtil;
 import com.cody.component.util.NotProguard;
-import com.google.gson.JsonObject;
 
 /**
  * Created by Cody.yi on 16/4/19.
@@ -33,7 +33,7 @@ import com.google.gson.JsonObject;
 @NotProguard
 public final class JsHandlerCommonImpl implements JsHandler {
 
-    public static void getAppName(WebView webView, JsonObject params, JsCallback callback) {
+    public static void getAppName(WebView webView, JSONObject params, JsCallback callback) {
         String appName;
         try {
             PackageManager packageManager = webView.getContext().getApplicationContext().getPackageManager();
@@ -44,18 +44,18 @@ public final class JsHandlerCommonImpl implements JsHandler {
             LogUtil.e(Log.getStackTraceString(e));
             appName = "";
         }
-        JsonObject data = new JsonObject();
-        data.addProperty("result", appName);
+        JSONObject data = new JSONObject();
+        data.put("result", appName);
         callback.success(data);
     }
 
-    public static void getOsSdk(WebView webView, JsonObject params, JsCallback callback) {
-        JsonObject data = new JsonObject();
-        data.addProperty("os_sdk", Build.VERSION.SDK_INT);
+    public static void getOsSdk(WebView webView, JSONObject params, JsCallback callback) {
+        JSONObject data = new JSONObject();
+        data.put("os_sdk", Build.VERSION.SDK_INT);
         callback.success(data);
     }
 
-    public static void finish(WebView webView, JsonObject params, JsCallback callback) {
+    public static void finish(WebView webView, JSONObject params, JsCallback callback) {
         if (webView.getContext() instanceof Activity) {
             ((Activity) webView.getContext()).finish();
         }
@@ -64,11 +64,11 @@ public final class JsHandlerCommonImpl implements JsHandler {
     /**
      * 开新页
      */
-    public static void openNewPage(final WebView webView, final JsonObject params, JsCallback callback) {
+    public static void openNewPage(final WebView webView, final JSONObject params, JsCallback callback) {
         if (params != null) {
             String url = "";
-            if (params.has("url")) {
-                url = params.getAsJsonPrimitive("url").getAsString();
+            if (params.containsKey("url")) {
+                url = params.getString("url");
             }
             HtmlActivity.startHtml(null, url);
         }

@@ -30,7 +30,7 @@ public class Repository {
     private final Map<String, Integer> mLocalIntegerCache = new ConcurrentHashMap<>();
     private final Map<String, Boolean> mLocalBooleanCache = new ConcurrentHashMap<>();
     private final Map<String, Float> mLocalFloatCache = new ConcurrentHashMap<>();
-    private final Map<String, Map<String, String>> mLocalMapCache = new ConcurrentHashMap<>();
+    private final Map<String, Map<String, Object>> mLocalMapCache = new ConcurrentHashMap<>();
     private final Map<String, List<String>> mLocalListCache = new ConcurrentHashMap<>();
     private LocalProfile mProfile;
 
@@ -148,8 +148,8 @@ public class Repository {
         }
     }
 
-    public static Map<String, String> getLocalMap(String localKey) {
-        Map<String, String> value;
+    public static Map<String, Object> getLocalMap(String localKey) {
+        Map<String, Object> value;
         checkKey(localKey);
         if (!getRepository().mLocalMapCache.containsKey(localKey)) {
             value = getRepository().mProfile.getMap(localKey);
@@ -162,7 +162,7 @@ public class Repository {
         return value;
     }
 
-    public static void setLocalMap(String localKey, Map<String, String> localMap) {
+    public static void setLocalMap(String localKey, Map<String, Object> localMap) {
         checkKey(localKey);
         if (localMap == null) {
             getRepository().mLocalMapCache.remove(localKey);

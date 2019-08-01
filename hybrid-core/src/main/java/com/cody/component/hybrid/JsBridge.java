@@ -276,14 +276,14 @@ public class JsBridge {
     /**
      * 同步指定地址的cookie到webView
      */
-    public JsBridge syncCookie(Context context, String url, Map<String, String> cookies) {
+    public JsBridge syncCookie(Context context, String url, Map<String, Object> cookies) {
         if (context == null || TextUtils.isEmpty(url) || cookies == null) {
             return this;
         }
 
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
-        for (Map.Entry<String, String> entry : cookies.entrySet()) {
+        for (Map.Entry<String, Object> entry : cookies.entrySet()) {
             cookieManager.setCookie(url, entry.getKey() + "=" + entry.getValue());
         }
 

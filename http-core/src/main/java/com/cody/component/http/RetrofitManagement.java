@@ -23,8 +23,6 @@ import com.cody.component.http.lib.annotation.Domain;
 import com.cody.component.http.lib.config.HttpCode;
 import com.cody.component.http.lib.exception.AccountInvalidHttpException;
 import com.cody.component.http.lib.exception.DomainInvalidHttpException;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,8 +43,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-
+import retrofit2.converter.fastjson.FastJsonConverterFactory;
 
 /**
  * Created by xu.yi. on 2019/4/6.
@@ -208,11 +205,10 @@ class RetrofitManagement {
         if (client == null) {
             client = builder.build();
         }
-        Gson gson = new GsonBuilder().setLenient().create();
         return new Retrofit.Builder()
                 .client(client)
                 .baseUrl(baseUrl)
-                .addConverterFactory(GsonConverterFactory.create(gson))
+                .addConverterFactory(FastJsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }

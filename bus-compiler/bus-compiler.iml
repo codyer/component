@@ -33,7 +33,7 @@
     <orderEntry type="library" exported="" name="Gradle: javapoet-1.11.1" level="project" />
     <orderEntry type="library" exported="" name="Gradle: auto-common-0.3" level="project" />
     <orderEntry type="library" exported="" name="Gradle: guava-18.0" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: gson-2.8.5" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: fastjson-1.1.71.android" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="Gradle: tools" level="project" />
   </component>
 </module>

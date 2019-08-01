@@ -28,6 +28,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="lib-core" exported="" />
-    <orderEntry type="library" exported="" name="Gradle: gson-2.8.5" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: fastjson-1.1.71.android" level="project" />
   </component>
 </module>

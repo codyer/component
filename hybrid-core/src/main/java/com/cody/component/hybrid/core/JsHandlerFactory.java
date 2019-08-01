@@ -16,13 +16,13 @@ package com.cody.component.hybrid.core;
 import android.text.TextUtils;
 import android.webkit.WebView;
 
-import com.google.gson.JsonObject;
-
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Map;
 
 import androidx.collection.ArrayMap;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * Created by Cody.yi on 17/4/12.
@@ -109,7 +109,7 @@ public class JsHandlerFactory {
      */
     private boolean checkParameter(Class<?>[] parameterTypes) {
         return WebView.class == parameterTypes[0] &&
-                JsonObject.class == parameterTypes[1] &&
+                JSONObject.class == parameterTypes[1] &&
                 JsCallback.class == parameterTypes[2];
     }
 

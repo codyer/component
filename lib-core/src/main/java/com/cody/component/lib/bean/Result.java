@@ -12,23 +12,21 @@
 
 package com.cody.component.lib.bean;
 
-import com.google.gson.annotations.SerializedName;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * Created by xu.yi. on 2019/4/6.
  */
 public class Result<T> {
 
-    @SerializedName("code")
+    @JSONField(name = "code")
     private int code;
 
-    @SerializedName(value = "message", alternate = {"msg"})
+    @JSONField(name = "message", alternateNames = {"msg"})
     private String message;
 
-    @SerializedName(value = "data", alternate = {"dataMap"})
+    @JSONField(name = "data", alternateNames = {"dataMap"})
     private T data;
 
     public Result() {

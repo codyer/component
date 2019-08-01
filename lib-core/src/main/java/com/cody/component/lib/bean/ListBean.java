@@ -12,7 +12,8 @@
 
 package com.cody.component.lib.bean;
 
-import com.google.gson.annotations.SerializedName;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class ListBean<T> {
 
-    @SerializedName(value = "more", alternate = {"hasNext"})
+    @JSONField(name = "more", alternateNames = {"hasNext"})
     private boolean more;
     /**
      * 上次分页请求结果位置，默认-1
@@ -31,7 +32,7 @@ public class ListBean<T> {
     /**
      * 上次分页请求结果位置，默认-1
      */
-    @SerializedName(value = "nextPosition", alternate = {"position"})
+    @JSONField(name = "nextPosition", alternateNames = {"position"})
     private int nextPosition = -1;
     /**
      * 列表请求结果

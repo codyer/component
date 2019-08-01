@@ -17,11 +17,11 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.WebView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.cody.component.hybrid.JsBridge;
 import com.cody.component.util.LogUtil;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
 
 import java.lang.reflect.Method;
 
@@ -34,7 +34,7 @@ public class JsInteract {
     private String mHandlerName;
     private String mMethodName;
     private String mPort;
-    private JsonObject mParams;
+    private JSONObject mParams;
     private JsCallback mJsCallback;
 
     private JsInteract() {
@@ -79,9 +79,9 @@ public class JsInteract {
             if (message.contains("?")) {
                 int beginIndex = message.indexOf("?");
                 String query = message.substring(++beginIndex);
-                mParams = new JsonParser().parse(query).getAsJsonObject();
+                mParams = JSON.parseObject(query);
             }
-        } catch (JsonParseException
+        } catch (JSONException
                 | StringIndexOutOfBoundsException
                 | IllegalStateException e) {
 

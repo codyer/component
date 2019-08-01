@@ -17,7 +17,7 @@ ext {
     targetSdkVersion = 28
     compileSdkVersion = 28
     supportLibraryVersion = '28.0.0'
-    componentVersion = '0.8.2'
+    componentVersion = '0.8.4'
 
     //libraries dependencies
     dependencies = [
@@ -36,9 +36,9 @@ ext {
             "javapoet"               : "com.squareup:javapoet:1.11.1",
             "glide"                  : "com.github.bumptech.glide:glide:4.8.0",
             "okhttp3"                : "com.squareup.okhttp3:okhttp:3.12.0",
-            "gson"                   : "com.google.code.gson:gson:2.8.5",
+            "fastjson"               : "com.alibaba:fastjson:1.1.71.android",
             "retrofit"               : "com.squareup.retrofit2:retrofit:2.5.0",
-            "converter-gson"         : "com.squareup.retrofit2:converter-gson:2.5.0",
+            "converter-fastjson"     : "org.ligboy.retrofit2:converter-fastjson-android:2.1.0",
             "logging"                : "com.squareup.okhttp3:logging-interceptor:3.12.0",
             "adapter-rxjava2"        : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
             "rxandroid"              : "io.reactivex.rxjava2:rxandroid:2.1.0",

@@ -13,5 +13,5 @@
 apply from:  "${project.rootDir}/config-lib.gradle"
 
 dependencies {
-    api rootProject.ext.dependencies["gson"]
+    api rootProject.ext.dependencies["fastjson"]
 }

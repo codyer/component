@@ -18,21 +18,32 @@ package com.cody.component.cat.db.data;
  */
 public class HttpHeader {
 
-    private final String mName;
+    private String name;
 
-    private final String mValue;
+    private String value;
+
+    public HttpHeader() {
+    }
 
     HttpHeader(String name, String value) {
-        this.mName = name;
-        this.mValue = value;
+        this.name = name;
+        this.value = value;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public void setValue(final String value) {
+        this.value = value;
     }
 
     public String getName() {
-        return mName;
+        return name;
     }
 
     public String getValue() {
-        return mValue;
+        return value;
     }
 
 }

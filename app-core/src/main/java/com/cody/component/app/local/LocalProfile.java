@@ -16,11 +16,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
-import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +30,6 @@ public class LocalProfile {
 
     private final static String FILENAME = "XFProfile";
     private final SharedPreferences mSharedPreferences;
-    private final Gson mParseUtil = new Gson();
 
     /**
      * 构造函数，进行初始化
@@ -49,18 +46,17 @@ public class LocalProfile {
      * @param <T>       数据类型
      */
     public final <T> void setViewModel(String key, T viewModel) {
-        setValue(key, mParseUtil.toJson(viewModel));
+        setValue(key, JSON.toJSONString(viewModel));
     }
 
-    public final Map<String, String> getMap(String key) {
+    public final Map<String, Object> getMap(String key) {
         String mapStr = getValue(key, null);
-        Type type = new TypeToken<HashMap<String, String>>() {
-        }.getType();
-        return mParseUtil.fromJson(mapStr, type);
+        //json对象转Map
+        return JSONObject.parseObject(mapStr);
     }
 
-    public final void setMap(String key, Map<String, String> map) {
-        setValue(key, mParseUtil.toJson(map));
+    public final void setMap(String key, Map<String, Object> map) {
+        setValue(key, JSON.toJSONString(map));
     }
 
     /**
@@ -160,15 +156,14 @@ public class LocalProfile {
         if (listener == null) return;
         mSharedPreferences.registerOnSharedPreferenceChangeListener(listener);
     }
+
     public final List<String> getList(String key) {
         String listStr = getValue(key, null);
-        Type type = new TypeToken<List<String>>() {
-        }.getType();
-        return mParseUtil.fromJson(listStr, type);
+        return JSON.parseArray(listStr, String.class);
     }
 
     public final void setList(String key, List<String> list) {
-        setValue(key, mParseUtil.toJson(list));
+        setValue(key, JSON.toJSONString(list));
     }
 
     @SuppressLint("ApplySharedPref")

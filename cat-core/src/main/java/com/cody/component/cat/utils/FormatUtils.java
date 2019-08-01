@@ -14,8 +14,10 @@ package com.cody.component.cat.utils;
 
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.cody.component.cat.db.data.ItemHttpData;
-import com.google.gson.JsonParser;
 
 import org.xml.sax.InputSource;
 
@@ -89,19 +91,13 @@ public class FormatUtils {
 
     public static String formatBody(String body, String contentType) {
         if (contentType != null && contentType.toLowerCase().contains("json")) {
-            return FormatUtils.formatJson(body);
+            JSONObject object = JSONObject.parseObject(body);
+            return JSON.toJSONString(object, SerializerFeature.PrettyFormat,
+                    SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
         } else if (contentType != null && contentType.toLowerCase().contains("xml")) {
             return FormatUtils.formatXml(body);
         } else {
             return body;
-        }
-    }
-
-    private static String formatJson(String json) {
-        try {
-            return JsonConverter.getInstance().toJson(new JsonParser().parse(json));
-        } catch (Exception e) {
-            return json;
         }
     }
 

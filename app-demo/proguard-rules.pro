@@ -104,13 +104,11 @@
 
 #自定义widget
 # TODO
-#gson
-#如果用用到Gson解析包的，直接添加下面这几行就能成功混淆，不然会报错。
-# Gson specific classes
--keep class sun.misc.Unsafe { *; }
-# Application classes that will be serialized/deserialized over Gson
--keep class com.google.gson.** { *; }
--keep class com.google.gson.stream.** { *; }
+#fastjson
+#如果用用到 fastjson 解析包的，直接添加下面这几行就能成功混淆，不然会报错。
+-keepattributes Signature
+-dontwarn com.alibaba.fastjson.**
+-keep class com.alibaba.fastjson.**{*; }
 
 -keep class **.R$* {*;}
 

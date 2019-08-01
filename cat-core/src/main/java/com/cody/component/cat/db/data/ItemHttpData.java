@@ -15,10 +15,9 @@ package com.cody.component.cat.db.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.alibaba.fastjson.JSON;
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.cat.utils.FormatUtils;
-import com.cody.component.cat.utils.JsonConverter;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +27,7 @@ import java.util.Objects;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
 import okhttp3.Headers;
 
 /**
@@ -75,7 +75,7 @@ public class ItemHttpData extends ItemViewDataHolder implements Parcelable {
             for (int i = 0, count = headers.size(); i < count; i++) {
                 httpHeaders.add(new HttpHeader(headers.name(i), headers.value(i)));
             }
-            setRequestHeaders(JsonConverter.getInstance().toJson(httpHeaders));
+            setRequestHeaders(JSON.toJSONString(httpHeaders));
         } else {
             setRequestHeaders(null);
         }
@@ -87,7 +87,7 @@ public class ItemHttpData extends ItemViewDataHolder implements Parcelable {
             for (int i = 0, count = headers.size(); i < count; i++) {
                 httpHeaders.add(new HttpHeader(headers.name(i), headers.value(i)));
             }
-            setResponseHeaders(JsonConverter.getInstance().toJson(httpHeaders));
+            setResponseHeaders(JSON.toJSONString(httpHeaders));
         } else {
             setResponseHeaders(null);
         }
@@ -126,9 +126,7 @@ public class ItemHttpData extends ItemViewDataHolder implements Parcelable {
     }
 
     private List<HttpHeader> getRequestHeaderList() {
-        return JsonConverter.getInstance().fromJson(mRequestHeaders,
-                new TypeToken<List<HttpHeader>>() {
-                }.getType());
+        return JSON.parseArray(mRequestHeaders, HttpHeader.class);
     }
 
     public String getRequestHeadersString(boolean withMarkup) {
@@ -144,9 +142,7 @@ public class ItemHttpData extends ItemViewDataHolder implements Parcelable {
     }
 
     private List<HttpHeader> getResponseHeaderList() {
-        return JsonConverter.getInstance().fromJson(mResponseHeaders,
-                new TypeToken<List<HttpHeader>>() {
-                }.getType());
+        return JSON.parseArray(mResponseHeaders, HttpHeader.class);
     }
 
     public String getResponseHeadersString(boolean withMarkup) {
