@@ -14,10 +14,12 @@ package com.cody.component.hybrid.core;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 
 import com.cody.component.hybrid.BuildConfig;
 import com.cody.component.hybrid.JsBridge;
+import com.cody.component.util.LogUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,7 +61,7 @@ public class UrlUtil {
             }
             return false;
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
             return false;
         }
     }

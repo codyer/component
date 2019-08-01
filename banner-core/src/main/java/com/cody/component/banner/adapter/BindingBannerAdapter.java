@@ -26,7 +26,7 @@ import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
  * Created by cody.yi on 2017/4/26.
  * RecyclerView适配器，假无限循环列表
  */
-public class BindingBannerAdapter extends BindingListAdapter<BannerViewData> {
+public class BindingBannerAdapter<T extends BannerViewData> extends BindingListAdapter<T> {
 
     public BindingBannerAdapter(LifecycleOwner lifecycleOwner) {
         super(lifecycleOwner);
@@ -58,7 +58,7 @@ public class BindingBannerAdapter extends BindingListAdapter<BannerViewData> {
     }
 
     @Override
-    public BannerViewData getItem(int position) {
+    public T getItem(int position) {
         return super.getItem(getPosition(position));
     }
 

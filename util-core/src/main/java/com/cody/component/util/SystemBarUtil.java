@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -281,7 +282,7 @@ public class SystemBarUtil {
             setStatusBarDarkModeForFlyme4(window, dark);
         } else if (isMIUI6Later()) {
             setStatusBarDarkModeForMIUI6(window, dark);
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 setStatusBarDarkModeForM(window, dark);
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -316,7 +317,7 @@ public class SystemBarUtil {
             return true;
         } else if (isMIUI6Later()) {
             setStatusBarDarkModeForMIUI6(window, dark);
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 setStatusBarDarkModeForM(window, dark);
             }
             return true;
@@ -394,7 +395,7 @@ public class SystemBarUtil {
             Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
             extraFlagField.invoke(window, darkmode ? darkModeFlag : 0, darkModeFlag);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         }
     }
 

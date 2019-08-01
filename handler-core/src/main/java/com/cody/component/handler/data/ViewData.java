@@ -12,6 +12,10 @@
 
 package com.cody.component.handler.data;
 
+import android.util.Log;
+
+import com.cody.component.util.LogUtil;
+
 /**
  * Created by xu.yi. on 2019/3/26.
  * 和界面绑定的数据基类默认实现
@@ -39,7 +43,7 @@ public class ViewData implements IViewData, Cloneable {
         try {
             return super.clone();
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         }
         return null;
     }

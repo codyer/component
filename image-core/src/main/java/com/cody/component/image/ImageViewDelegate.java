@@ -19,12 +19,14 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.exifinterface.media.ExifInterface;
 
 import com.cody.component.image.preview.ImageActivity;
 import com.cody.component.util.ActivityUtil;
+import com.cody.component.util.LogUtil;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.bean.ImageItem;
 import com.lzy.imagepicker.ui.ImageGridActivity;
@@ -194,7 +196,7 @@ public class ImageViewDelegate implements IImageViewListener {
                     break;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         }
         return degree;
     }
@@ -216,7 +218,7 @@ public class ImageViewDelegate implements IImageViewListener {
             // 将原始图片按照旋转矩阵进行旋转，并得到新的图片
             returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
         } catch (OutOfMemoryError ex) {
-            ex.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(ex));
         }
         if (returnBm == null) {
             returnBm = bm;

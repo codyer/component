@@ -16,11 +16,13 @@ import android.app.Activity;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 import android.webkit.WebView;
 
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.hybrid.core.JsCallback;
 import com.cody.component.hybrid.core.JsHandler;
+import com.cody.component.util.LogUtil;
 import com.cody.component.util.NotProguard;
 import com.google.gson.JsonObject;
 
@@ -39,7 +41,7 @@ public final class JsHandlerCommonImpl implements JsHandler {
                     .getApplicationContext().getPackageName(), 0);
             appName = packageManager.getApplicationLabel(applicationInfo).toString();
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
             appName = "";
         }
         JsonObject data = new JsonObject();

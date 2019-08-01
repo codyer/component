@@ -15,8 +15,10 @@ package com.cody.component.cat.utils;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
 import com.cody.component.app.local.Repository;
+import com.cody.component.util.LogUtil;
 
 /**
  * Created by xu.yi. on 2019/4/5.
@@ -49,7 +51,7 @@ public class LauncherUtil {
         try {
             packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         }
     }
 
@@ -57,7 +59,7 @@ public class LauncherUtil {
         try {
             packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         }
     }
 
@@ -65,7 +67,7 @@ public class LauncherUtil {
         try {
             return packageManager.getComponentEnabledSetting(componentName);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         }
         return PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
     }

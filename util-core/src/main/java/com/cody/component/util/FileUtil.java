@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.Closeable;
 import java.io.File;
@@ -41,7 +42,7 @@ public final class FileUtil {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         }
         return size;
     }
@@ -131,7 +132,7 @@ public final class FileUtil {
         try {
             return file.createNewFile();
         } catch (IOException e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
             return false;
         }
     }
@@ -206,7 +207,7 @@ public final class FileUtil {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         }
     }
 
@@ -227,7 +228,7 @@ public final class FileUtil {
                 fileOutputStream.write(buffer);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         } finally {
             closeStream(fileInputStream);
             closeStream(fileOutputStream);
@@ -239,7 +240,7 @@ public final class FileUtil {
             try {
                 stream.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                LogUtil.e(Log.getStackTraceString(e));
             }
         }
     }

@@ -14,9 +14,11 @@ package com.cody.component.hybrid.core;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.WebView;
 
 import com.cody.component.hybrid.JsBridge;
+import com.cody.component.util.LogUtil;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
@@ -82,7 +84,8 @@ public class JsInteract {
         } catch (JsonParseException
                 | StringIndexOutOfBoundsException
                 | IllegalStateException e) {
-            e.printStackTrace();
+
+            LogUtil.e(Log.getStackTraceString(e));
             String msg = "";
             if (e.getCause() != null) {
                 msg = "Query parameter is invalid json :" + e.getCause().toString();
@@ -109,7 +112,7 @@ public class JsInteract {
         try {
             method.invoke(null, args);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
             String msg = e.getCause().toString();
             mJsCallback.failure(msg);
         }

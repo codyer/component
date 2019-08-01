@@ -27,6 +27,7 @@ import android.view.WindowManager;
 
 import com.cody.component.util.CameraUtil;
 import com.cody.component.util.DisplayUtil;
+import com.cody.component.util.LogUtil;
 import com.isseiaoki.simplecropview.util.Logger;
 
 import java.io.IOException;
@@ -118,7 +119,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
                 Log.i(TAG, "最终设置:PictureSize--With = " + parameters.getPictureSize().width
                         + "Height = " + parameters.getPictureSize().height);
             } catch (IOException e) {
-                e.printStackTrace();
+                LogUtil.e(Log.getStackTraceString(e));
                 Log.d(TAG, "Error setting mCamera preview: " + e.getMessage());
                 mCamera = null;
             }

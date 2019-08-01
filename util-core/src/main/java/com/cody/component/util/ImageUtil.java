@@ -25,6 +25,7 @@ import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -100,7 +101,7 @@ public class ImageUtil {
                 src.recycle();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         } finally {
             FileUtil.closeIO(os);
         }
@@ -154,7 +155,7 @@ public class ImageUtil {
             // 将原始图片按照旋转矩阵进行旋转，并得到新的图片
             returnBm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
         } catch (OutOfMemoryError ex) {
-            ex.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(ex));
         }
         if (returnBm == null) {
             returnBm = bm;
@@ -314,7 +315,7 @@ public class ImageUtil {
                     break;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         }
         return degree;
     }
@@ -331,7 +332,7 @@ public class ImageUtil {
             }
             bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         }
         return bitmap;
     }
@@ -363,10 +364,10 @@ public class ImageUtil {
             os.close();
             return true;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
             return false;
         } catch (IOException e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
             return false;
         }
 

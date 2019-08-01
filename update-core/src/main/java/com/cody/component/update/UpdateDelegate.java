@@ -24,6 +24,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
@@ -411,7 +412,7 @@ public class UpdateDelegate {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                LogUtil.e(Log.getStackTraceString(e));
             }
         }
     }
@@ -425,7 +426,7 @@ public class UpdateDelegate {
             }
             mActivity.stopService(intent);
         } catch (Exception e) {
-            e.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(e));
         }
     }
 

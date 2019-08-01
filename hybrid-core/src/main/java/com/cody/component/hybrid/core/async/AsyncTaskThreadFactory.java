@@ -13,6 +13,9 @@
 package com.cody.component.hybrid.core.async;
 
 import android.os.Process;
+import android.util.Log;
+
+import com.cody.component.util.LogUtil;
 
 import java.util.concurrent.ThreadFactory;
 
@@ -30,7 +33,7 @@ public class AsyncTaskThreadFactory implements ThreadFactory {
                 try {
                     Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
                 } catch (Throwable t) {
-                    t.printStackTrace();
+                    LogUtil.e(Log.getStackTraceString(t));
                 }
                 runnable.run();
             }

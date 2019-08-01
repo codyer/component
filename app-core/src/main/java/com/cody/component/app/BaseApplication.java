@@ -14,6 +14,7 @@ package com.cody.component.app;
 
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDexApplication;
@@ -21,6 +22,7 @@ import androidx.multidex.MultiDexApplication;
 import com.cody.component.app.local.Repository;
 import com.cody.component.app.widget.swipebacklayout.BGASwipeBackHelper;
 import com.cody.component.util.ApplicationUtil;
+import com.cody.component.util.LogUtil;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -84,14 +86,14 @@ public class BaseApplication extends MultiDexApplication {
             }
             return processName;
         } catch (Throwable throwable) {
-            throwable.printStackTrace();
+            LogUtil.e(Log.getStackTraceString(throwable));
         } finally {
             try {
                 if (reader != null) {
                     reader.close();
                 }
             } catch (IOException exception) {
-                exception.printStackTrace();
+                LogUtil.e(Log.getStackTraceString(exception));
             }
         }
         return null;

@@ -12,6 +12,8 @@
 
 package com.cody.component.http;
 
+import android.util.Log;
+
 import com.cody.component.http.callback.RequestCallback;
 import com.cody.component.http.callback.RequestMultiplyCallback;
 import com.cody.component.http.lib.config.HttpCode;
@@ -45,7 +47,7 @@ public class BaseSubscriber<T> extends DisposableObserver<T> {
 
     @Override
     public void onError(Throwable e) {
-        e.printStackTrace();
+        Log.e("BaseSubscriber", Log.getStackTraceString(e));
         if (requestCallback instanceof RequestMultiplyCallback) {
             RequestMultiplyCallback callback = (RequestMultiplyCallback) requestCallback;
             if (e instanceof BaseHttpException) {
