@@ -30,6 +30,7 @@ public class Repository {
     private final Map<String, Integer> mLocalIntegerCache = new ConcurrentHashMap<>();
     private final Map<String, Boolean> mLocalBooleanCache = new ConcurrentHashMap<>();
     private final Map<String, Float> mLocalFloatCache = new ConcurrentHashMap<>();
+    private final Map<String, Long> mLocalLongCache = new ConcurrentHashMap<>();
     private final Map<String, Map<String, Object>> mLocalMapCache = new ConcurrentHashMap<>();
     private final Map<String, List<String>> mLocalListCache = new ConcurrentHashMap<>();
     private LocalProfile mProfile;
@@ -87,6 +88,29 @@ public class Repository {
             getRepository().mLocalIntegerCache.put(localKey, value);
         } else {
             value = getRepository().mLocalIntegerCache.get(localKey);
+        }
+        return value;
+    }
+
+    public static void setLocalLong(String localKey, long localValue) {
+        checkKey(localKey);
+        if (localValue == 0) {
+            getRepository().mProfile.remove(localKey);
+            getRepository().mLocalLongCache.remove(localKey);
+        } else {
+            getRepository().mProfile.setValue(localKey, localValue);
+            getRepository().mLocalLongCache.put(localKey, localValue);
+        }
+    }
+
+    public static Long getLocalLong(String localKey) {
+        Long value;
+        checkKey(localKey);
+        if (!getRepository().mLocalLongCache.containsKey(localKey)) {
+            value = getRepository().mProfile.getValue(localKey, 0l);
+            getRepository().mLocalLongCache.put(localKey, value);
+        } else {
+            value = getRepository().mLocalLongCache.get(localKey);
         }
         return value;
     }
@@ -201,6 +225,7 @@ public class Repository {
     public static void clear() {
         getRepository().mLocalStringCache.clear();
         getRepository().mLocalIntegerCache.clear();
+        getRepository().mLocalLongCache.clear();
         getRepository().mLocalBooleanCache.clear();
         getRepository().mLocalFloatCache.clear();
         getRepository().mLocalMapCache.clear();

@@ -128,6 +128,27 @@ public class LocalProfile {
      * @param key   键
      * @param value 值
      */
+    public final void setValue(String key, long value) {
+        mSharedPreferences.edit().putLong(key, value).apply();
+    }
+
+    /**
+     * 获取本地化键值对
+     *
+     * @param key          键
+     * @param defaultValue 默认值
+     * @return 值
+     */
+    public final long getValue(String key, long defaultValue) {
+        return mSharedPreferences.getLong(key, defaultValue);
+    }
+
+    /**
+     * 保存本地化键值对
+     *
+     * @param key   键
+     * @param value 值
+     */
     public final void setValue(String key, float value) {
         mSharedPreferences.edit().putFloat(key, value).apply();
     }
