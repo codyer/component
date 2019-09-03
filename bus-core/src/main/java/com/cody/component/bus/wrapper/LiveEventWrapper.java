@@ -40,7 +40,7 @@ final public class LiveEventWrapper<T> {
     }
 
     @MainThread
-    public void initValue(T value) {
+    public void initValue(@NonNull T value) {
         mMutableLiveData.setValue(new ValueWrapper<>(value, mSequence));
     }
 

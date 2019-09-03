@@ -16,6 +16,8 @@ import android.app.Application;
 import android.content.Context;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -57,6 +59,7 @@ public class Repository {
         }
     }
 
+    @NonNull
     public static String getLocalValue(String localKey) {
         String value;
         checkKey(localKey);
@@ -65,6 +68,10 @@ public class Repository {
             getRepository().mLocalStringCache.put(localKey, value);
         } else {
             value = getRepository().mLocalStringCache.get(localKey);
+            if (value == null){
+                getRepository().mLocalStringCache.put(localKey, "");
+                return "";
+            }
         }
         return value;
     }
@@ -80,6 +87,7 @@ public class Repository {
         }
     }
 
+    @NonNull
     public static Integer getLocalInt(String localKey) {
         Integer value;
         checkKey(localKey);
@@ -88,6 +96,10 @@ public class Repository {
             getRepository().mLocalIntegerCache.put(localKey, value);
         } else {
             value = getRepository().mLocalIntegerCache.get(localKey);
+            if (value == null){
+                getRepository().mLocalIntegerCache.put(localKey, 0);
+                return 0;
+            }
         }
         return value;
     }
@@ -103,14 +115,19 @@ public class Repository {
         }
     }
 
+    @NonNull
     public static Long getLocalLong(String localKey) {
         Long value;
         checkKey(localKey);
         if (!getRepository().mLocalLongCache.containsKey(localKey)) {
-            value = getRepository().mProfile.getValue(localKey, 0l);
+            value = getRepository().mProfile.getValue(localKey, 0L);
             getRepository().mLocalLongCache.put(localKey, value);
         } else {
             value = getRepository().mLocalLongCache.get(localKey);
+            if (value == null){
+                getRepository().mLocalLongCache.put(localKey, 0L);
+                return 0L;
+            }
         }
         return value;
     }
@@ -126,6 +143,7 @@ public class Repository {
         }
     }
 
+    @NonNull
     public static Float getLocalFloat(String localKey) {
         Float value;
         checkKey(localKey);
@@ -134,6 +152,10 @@ public class Repository {
             getRepository().mLocalFloatCache.put(localKey, value);
         } else {
             value = getRepository().mLocalFloatCache.get(localKey);
+            if (value == null){
+                getRepository().mLocalFloatCache.put(localKey, 0f);
+                return 0f;
+            }
         }
         return value;
     }
@@ -149,6 +171,7 @@ public class Repository {
         }
     }
 
+    @NonNull
     public static Boolean getLocalBoolean(String localKey) {
         Boolean value;
         checkKey(localKey);
@@ -157,6 +180,10 @@ public class Repository {
             getRepository().mLocalBooleanCache.put(localKey, value);
         } else {
             value = getRepository().mLocalBooleanCache.get(localKey);
+            if (value == null){
+                getRepository().mLocalBooleanCache.put(localKey, false);
+                return false;
+            }
         }
         return value;
     }
