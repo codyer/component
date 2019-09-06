@@ -26,60 +26,67 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/uiColorSecondaryAccent"
-            android:minHeight="?attr/actionBarSize"
-            android:onClick="@{onClickListener::onClick}"
-            android:theme="@style/ThemeOverlay.AppCompat.Light"
-            bind:contentInsetStart="@dimen/dimen_tiny"
-            tools:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/uiColorSecondaryBackground"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/uiColorSecondaryAccent"
+                android:minHeight="?attr/actionBarSize"
+                android:onClick="@{onClickListener::onClick}"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                bind:contentInsetStart="@dimen/dimen_tiny"
                 tools:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/back"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/bg_transparent_no_boundary_touch_selector"
-                    android:contentDescription="@null"
-                    android:onClick="@{onClickListener::onClick}"
-                    android:paddingLeft="@dimen/dimen_tiny"
-                    android:paddingRight="@dimen/dimen_tiny"
-                    bind:srcCompat="@drawable/ic_back" />
+                    android:orientation="horizontal"
+                    tools:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/quickClose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/bg_transparent_no_boundary_touch_selector"
-                    android:contentDescription="@null"
-                    android:onClick="@{onClickListener::onClick}"
-                    android:paddingStart="@dimen/dimen_super_tiny"
-                    android:paddingEnd="@dimen/dimen_tiny"
-                    bind:srcCompat="@drawable/ic_close" />
+                    <ImageView
+                        android:id="@+id/back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_transparent_no_boundary_touch_selector"
+                        android:contentDescription="@null"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:paddingLeft="@dimen/dimen_tiny"
+                        android:paddingRight="@dimen/dimen_tiny"
+                        bind:srcCompat="@drawable/ic_back" />
 
-                <TextView
-                    android:id="@+id/title"
-                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/dimen_normal"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:singleLine="true"
-                    tools:layout_height="wrap_content"
-                    tools:text="SecondActivity" />
+                    <ImageView
+                        android:id="@+id/quickClose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_transparent_no_boundary_touch_selector"
+                        android:contentDescription="@null"
+                        android:onClick="@{onClickListener::onClick}"
+                        android:paddingStart="@dimen/dimen_super_tiny"
+                        android:paddingEnd="@dimen/dimen_tiny"
+                        bind:srcCompat="@drawable/ic_close" />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/title"
+                        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/dimen_normal"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        tools:layout_height="wrap_content"
+                        tools:text="SecondActivity" />
 
-        </androidx.appcompat.widget.Toolbar>
+                </LinearLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
             android:id="@+id/container"

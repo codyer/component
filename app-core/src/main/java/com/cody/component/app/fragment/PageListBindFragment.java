@@ -15,6 +15,7 @@ package com.cody.component.app.fragment;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,12 @@ import com.cody.component.handler.viewmodel.PageListViewModel;
  */
 public abstract class PageListBindFragment<VM extends PageListViewModel<FriendlyViewData, ?>> extends FriendlyBindFragment<FragmentListBinding, VM, FriendlyViewData> implements IBasePageListView, OnBindingItemClickListener {
     protected MultiBindingPageListAdapter mListAdapter;
+
+    @NonNull
+    @Override
+    public LinearLayoutManager buildLayoutManager() {
+        return new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
+    }
 
     @Override
     public FriendlyLayout getFriendlyLayout() {
@@ -57,7 +64,7 @@ public abstract class PageListBindFragment<VM extends PageListViewModel<Friendly
         mListAdapter = buildListAdapter();
         mListAdapter.setItemClickListener(this);
         mListAdapter.setItemLongClickListener(this);
-        getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+        getBinding().recyclerView.setLayoutManager(buildLayoutManager());
         getBinding().recyclerView.setAdapter(mListAdapter);
 
         getFriendlyViewModel().getPagedList().observe(this, items -> getFriendlyViewModel().getRequestStatusLive().observe(this, new Observer<RequestStatus>() {

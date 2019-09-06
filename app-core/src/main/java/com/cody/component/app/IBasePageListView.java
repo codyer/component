@@ -13,6 +13,8 @@
 package com.cody.component.app;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.handler.interfaces.OnRetryListener;
@@ -25,4 +27,7 @@ import com.cody.component.handler.interfaces.Scrollable;
 public interface IBasePageListView extends OnRetryListener, Scrollable {
     @NonNull
     MultiBindingPageListAdapter buildListAdapter();
+
+    @NonNull
+    LinearLayoutManager buildLayoutManager();
 }

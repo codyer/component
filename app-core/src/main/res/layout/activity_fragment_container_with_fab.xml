@@ -25,14 +25,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/uiColorSecondaryAccent"
-            android:minHeight="?attr/actionBarSize"
-            android:onClick="@{onClickListener::onClick}"
-            android:theme="@style/ThemeOverlay.AppCompat.Light" />
+            android:layout_height="wrap_content"
+            android:background="@color/uiColorSecondaryBackground"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/uiColorSecondaryAccent"
+                android:minHeight="?attr/actionBarSize"
+                android:onClick="@{onClickListener::onClick}"
+                android:theme="@style/ThemeOverlay.AppCompat.Light" />
+        </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -53,9 +60,9 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:onClick="@{onClickListener::onClick}"
-                bind:srcCompat="@drawable/ic_add"
                 android:textStyle="bold"
-                bind:fabSize="normal" />
+                bind:fabSize="normal"
+                bind:srcCompat="@drawable/ic_add" />
 
         </FrameLayout>
     </LinearLayout>
