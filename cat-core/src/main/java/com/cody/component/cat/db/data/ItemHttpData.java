@@ -133,6 +133,14 @@ public class ItemHttpData extends ItemViewDataHolder implements Parcelable {
         return FormatUtils.formatHeaders(getRequestHeaderList(), withMarkup);
     }
 
+    public boolean isRequestJson() {
+        return (mRequestContentType != null && mRequestContentType.toLowerCase().contains("json"));
+    }
+
+    public boolean isResponseJson() {
+        return (mResponseContentType != null && mResponseContentType.toLowerCase().contains("json"));
+    }
+
     public String getFormattedRequestBody() {
         return FormatUtils.formatBody(mRequestBody, mRequestContentType);
     }

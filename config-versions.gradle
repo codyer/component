@@ -45,6 +45,7 @@ ext {
             "easypermissions"        : "pub.devrel:easypermissions:1.0.1",
 
             "image-picker"           : "com.cysion:ImagePicker:1.0.6",
+            "jsonhandleview"           : "com.tzx.json:jsonhandleview:1.2.2",
             "channel"                : "com.leon.channel:helper:2.0.3",
             //二维码
             "qrcode"                 : "cn.bingoogolapple:bga-qrcode-zxing:1.3.4",

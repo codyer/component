@@ -28,6 +28,14 @@ public class BaseException extends RuntimeException {
         super(message);
     }
 
+    public BaseException(final String s, final Throwable throwable) {
+        super(s, throwable);
+    }
+
+    public BaseException(final Throwable throwable) {
+        super(throwable);
+    }
+
     public BaseException(int code, String message) {
         super(message);
         this.mCode = code;

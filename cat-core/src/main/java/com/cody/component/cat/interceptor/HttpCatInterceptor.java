@@ -27,9 +27,11 @@ import java.nio.charset.UnsupportedCharsetException;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import com.cody.component.app.local.Repository;
 import com.cody.component.cat.db.HttpCatDatabase;
 import com.cody.component.cat.db.data.ItemHttpData;
 import com.cody.component.cat.notification.NotificationManagement;
+import com.cody.component.cat.utils.LauncherUtil;
 
 import okhttp3.Headers;
 import okhttp3.Interceptor;
@@ -65,99 +67,103 @@ public class HttpCatInterceptor implements Interceptor {
     @NonNull
     @Override
     public Response intercept(@NonNull Chain chain) throws IOException {
-        Request request = chain.request();
-        RequestBody requestBody = request.body();
-        ItemHttpData itemHttpData = new ItemHttpData();
-        itemHttpData.setRequestDate(new Date());
-        itemHttpData.setRequestHttpHeaders(request.headers());
-        itemHttpData.setMethod(request.method());
-        String url = request.url().toString();
-        itemHttpData.setUrl(url);
-        if (!TextUtils.isEmpty(url)) {
-            Uri uri = Uri.parse(url);
-            itemHttpData.setHost(uri.getHost());
-            itemHttpData.setPath(uri.getPath() + ((uri.getQuery() != null) ? "?" + uri.getQuery() : ""));
-            itemHttpData.setScheme(uri.getScheme());
-        }
-        if (requestBody != null) {
-            MediaType contentType = requestBody.contentType();
-            if (contentType != null) {
-                itemHttpData.setRequestContentType(contentType.toString());
+        if (LauncherUtil.isCatVisible()) {
+            Request request = chain.request();
+            RequestBody requestBody = request.body();
+            ItemHttpData itemHttpData = new ItemHttpData();
+            itemHttpData.setRequestDate(new Date());
+            itemHttpData.setRequestHttpHeaders(request.headers());
+            itemHttpData.setMethod(request.method());
+            String url = request.url().toString();
+            itemHttpData.setUrl(url);
+            if (!TextUtils.isEmpty(url)) {
+                Uri uri = Uri.parse(url);
+                itemHttpData.setHost(uri.getHost());
+                itemHttpData.setPath(uri.getPath() + ((uri.getQuery() != null) ? "?" + uri.getQuery() : ""));
+                itemHttpData.setScheme(uri.getScheme());
             }
-            if (requestBody.contentLength() != -1) {
-                itemHttpData.setRequestContentLength(requestBody.contentLength());
-            }
-        }
-        itemHttpData.setRequestBodyIsPlainText(bodyAllSupportedEncoding(request.headers()));
-        if (requestBody != null && itemHttpData.isRequestBodyIsPlainText()) {
-            BufferedSource source = getNativeSource(new Buffer(), bodyGzipped(request.headers()));
-            Buffer buffer = source.buffer();
-            requestBody.writeTo(buffer);
-            Charset charset;
-            MediaType contentType = requestBody.contentType();
-            if (contentType != null) {
-                charset = contentType.charset(CHARSET_UTF8);
-            } else {
-                charset = CHARSET_UTF8;
-            }
-            if (isPlaintext(buffer)) {
-                itemHttpData.setRequestBody(readFromBuffer(buffer, charset));
-            } else {
-                itemHttpData.setResponseBodyIsPlainText(false);
-            }
-        }
-        long id = insert(itemHttpData);
-        itemHttpData.setId(id);
-        long startTime = System.nanoTime();
-        Response response;
-        try {
-            response = chain.proceed(request);
-        } catch (Exception e) {
-            itemHttpData.setError(e.toString());
-            update(itemHttpData);
-            throw e;
-        }
-        itemHttpData.setResponseDate(new Date());
-        itemHttpData.setDuration(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime));
-        itemHttpData.setRequestHttpHeaders(response.request().headers());
-        itemHttpData.setProtocol(response.protocol().toString());
-        itemHttpData.setResponseCode(response.code());
-        itemHttpData.setResponseMessage(response.message());
-        ResponseBody responseBody = response.body();
-        if (responseBody != null) {
-            itemHttpData.setResponseContentLength(responseBody.contentLength());
-            MediaType contentType = responseBody.contentType();
-            if (contentType != null) {
-                itemHttpData.setResponseContentType(contentType.toString());
-            }
-        }
-        itemHttpData.setResponseHttpHeaders(response.headers());
-        itemHttpData.setResponseBodyIsPlainText(bodyAllSupportedEncoding(response.headers()));
-        if (HttpHeaders.hasBody(response) && itemHttpData.isResponseBodyIsPlainText()) {
-            BufferedSource source = getNativeSource(response);
-            source.request(Long.MAX_VALUE);
-            Buffer buffer = source.buffer();
-            Charset charset = CHARSET_UTF8;
-            if (responseBody != null) {
-                MediaType contentType = responseBody.contentType();
+            if (requestBody != null) {
+                MediaType contentType = requestBody.contentType();
                 if (contentType != null) {
-                    try {
-                        charset = contentType.charset(CHARSET_UTF8);
-                    } catch (UnsupportedCharsetException e) {
-                        update(itemHttpData);
-                        return response;
-                    }
+                    itemHttpData.setRequestContentType(contentType.toString());
+                }
+                if (requestBody.contentLength() != -1) {
+                    itemHttpData.setRequestContentLength(requestBody.contentLength());
                 }
             }
-            if (isPlaintext(buffer)) {
-                itemHttpData.setResponseBody(readFromBuffer(buffer.clone(), charset));
-            } else {
-                itemHttpData.setResponseBodyIsPlainText(false);
+            itemHttpData.setRequestBodyIsPlainText(bodyAllSupportedEncoding(request.headers()));
+            if (requestBody != null && itemHttpData.isRequestBodyIsPlainText()) {
+                BufferedSource source = getNativeSource(new Buffer(), bodyGzipped(request.headers()));
+                Buffer buffer = source.buffer();
+                requestBody.writeTo(buffer);
+                Charset charset;
+                MediaType contentType = requestBody.contentType();
+                if (contentType != null) {
+                    charset = contentType.charset(CHARSET_UTF8);
+                } else {
+                    charset = CHARSET_UTF8;
+                }
+                if (isPlaintext(buffer)) {
+                    itemHttpData.setRequestBody(readFromBuffer(buffer, charset));
+                } else {
+                    itemHttpData.setResponseBodyIsPlainText(false);
+                }
             }
-            itemHttpData.setResponseContentLength(buffer.size());
+            long id = insert(itemHttpData);
+            itemHttpData.setId(id);
+            long startTime = System.nanoTime();
+            Response response;
+            try {
+                response = chain.proceed(request);
+            } catch (Exception e) {
+                itemHttpData.setError(e.toString());
+                update(itemHttpData);
+                throw e;
+            }
+            itemHttpData.setResponseDate(new Date());
+            itemHttpData.setDuration(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime));
+            itemHttpData.setRequestHttpHeaders(response.request().headers());
+            itemHttpData.setProtocol(response.protocol().toString());
+            itemHttpData.setResponseCode(response.code());
+            itemHttpData.setResponseMessage(response.message());
+            ResponseBody responseBody = response.body();
+            if (responseBody != null) {
+                itemHttpData.setResponseContentLength(responseBody.contentLength());
+                MediaType contentType = responseBody.contentType();
+                if (contentType != null) {
+                    itemHttpData.setResponseContentType(contentType.toString());
+                }
+            }
+            itemHttpData.setResponseHttpHeaders(response.headers());
+            itemHttpData.setResponseBodyIsPlainText(bodyAllSupportedEncoding(response.headers()));
+            if (HttpHeaders.hasBody(response) && itemHttpData.isResponseBodyIsPlainText()) {
+                BufferedSource source = getNativeSource(response);
+                source.request(Long.MAX_VALUE);
+                Buffer buffer = source.buffer();
+                Charset charset = CHARSET_UTF8;
+                if (responseBody != null) {
+                    MediaType contentType = responseBody.contentType();
+                    if (contentType != null) {
+                        try {
+                            charset = contentType.charset(CHARSET_UTF8);
+                        } catch (UnsupportedCharsetException e) {
+                            update(itemHttpData);
+                            return response;
+                        }
+                    }
+                }
+                if (isPlaintext(buffer)) {
+                    itemHttpData.setResponseBody(readFromBuffer(buffer.clone(), charset));
+                } else {
+                    itemHttpData.setResponseBodyIsPlainText(false);
+                }
+                itemHttpData.setResponseContentLength(buffer.size());
+            }
+            update(itemHttpData);
+            return response;
+        } else {
+            return chain.proceed(chain.request());
         }
-        update(itemHttpData);
-        return response;
     }
 
     private long insert(ItemHttpData itemHttpData) {

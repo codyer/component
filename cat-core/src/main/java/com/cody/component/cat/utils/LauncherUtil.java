@@ -27,8 +27,12 @@ import com.cody.component.util.LogUtil;
 public class LauncherUtil {
     public static String VISIBLE = "http_cat_visible";
 
+    public static boolean isCatVisible() {
+        return Repository.getLocalBoolean(VISIBLE);
+    }
+
     public static void launcherVisible(final Context context, final Class launcher) {
-        launcherVisible(context, launcher, Repository.getLocalBoolean(VISIBLE));
+        launcherVisible(context, launcher, isCatVisible());
     }
 
     /**

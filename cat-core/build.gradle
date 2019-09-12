@@ -16,5 +16,6 @@ dependencies {
     implementation rootProject.ext.dependencies["okhttp3"]
     implementation rootProject.ext.dependencies["legacy"]
     implementation rootProject.ext.dependencies["room-runtime"]
+    implementation rootProject.ext.dependencies["jsonhandleview"]
     annotationProcessor rootProject.ext.dependencies["room-compiler"]
 }

@@ -75,24 +75,27 @@ public class CatPayloadFragment extends EmptyBindFragment<CatFragmentPayloadBind
             switch (mType) {
                 case TYPE_REQUEST: {
                     setText(mItemHttpData.getRequestHeadersString(true),
-                            mItemHttpData.getFormattedRequestBody(), mItemHttpData.isRequestBodyIsPlainText());
+                            mItemHttpData.getFormattedRequestBody(), mItemHttpData.isRequestBodyIsPlainText(), mItemHttpData.isRequestJson());
                     break;
                 }
                 case TYPE_RESPONSE: {
                     setText(mItemHttpData.getResponseHeadersString(true),
-                            mItemHttpData.getFormattedResponseBody(), mItemHttpData.isResponseBodyIsPlainText());
+                            mItemHttpData.getFormattedResponseBody(), mItemHttpData.isResponseBodyIsPlainText(), mItemHttpData.isResponseJson());
                     break;
                 }
             }
         }
     }
 
-    private void setText(String headersString, String bodyString, boolean isPlainText) {
+    private void setText(String headersString, String bodyString, boolean isPlainText, boolean isJson) {
         if (TextUtils.isEmpty(headersString)) {
             getBinding().headers.setVisibility(View.GONE);
         } else {
             getBinding().headers.setVisibility(View.VISIBLE);
             getBinding().headers.setText(Html.fromHtml(headersString));
+        }
+        if (isJson) {
+            getBinding().json.bindJson(bodyString);
         }
         if (!isPlainText) {
             getBinding().body.setText("(encoded or binary body omitted)");
