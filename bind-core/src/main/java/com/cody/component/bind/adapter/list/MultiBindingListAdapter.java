@@ -12,6 +12,8 @@
 
 package com.cody.component.bind.adapter.list;
 
+import android.os.Handler;
+
 import androidx.annotation.CallSuper;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -60,6 +62,10 @@ public abstract class MultiBindingListAdapter extends BindingListAdapter<ItemVie
      * 加载状态改变的时候记得通知adapter
      */
     final public void setRequestStatus(RequestStatus newState) {
+        new Handler().post(() -> postRequestStatus(newState));
+    }
+
+    private void postRequestStatus(RequestStatus newState) {
         RequestStatus oldState = mRequestStatus;
         mItemHolderFooterOrHeader.setRequestStatus(newState);
         boolean hadHeader = hasHeaderItem();
