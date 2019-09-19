@@ -29,6 +29,7 @@ import com.cody.component.hybrid.JsBridge;
 import com.cody.component.hybrid.R;
 import com.cody.component.util.ActivityUtil;
 import com.cody.component.util.LogUtil;
+import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by Cody.yi on 17/4/12.
@@ -75,6 +76,8 @@ public class JsWebChromeClient extends WebChromeClient {
 
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
+        // 增加Javascript异常监控
+        CrashReport.setJavascriptMonitor(view, true);
         super.onProgressChanged(view, newProgress);
         mHtmlViewModel.getFriendlyViewData().setProgress(newProgress);
     }

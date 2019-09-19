@@ -13,4 +13,5 @@
 apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
     api rootProject.ext.dependencies["bugly-crashreport"]
+    api rootProject.ext.dependencies["bugly-nativecrashreport"]
 }

@@ -77,6 +77,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         mSensorController.setCameraFocusListener(this::focus);
     }
 
+    @Override
     public void surfaceCreated(SurfaceHolder holder) {
         mCamera = CameraUtils.openCamera();
         float previewRate = DisplayUtil.getScreenRate(mContext); //默认全屏的比例预览
@@ -126,10 +127,12 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
     }
 
+    @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
         //因为设置了固定屏幕方向，所以在实际使用中不会触发这个方法
     }
 
+    @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         holder.removeCallback(this);
         //回收释放资源
@@ -141,8 +144,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
      */
     private void release() {
         if (mCamera != null) {
-            mCamera.setPreviewCallback(null);
             mCamera.stopPreview();
+            mCamera.setOneShotPreviewCallback(null);
+            mCamera.setPreviewCallback(null);
+            mCamera.setPreviewCallbackWithBuffer(null);
             mCamera.release();
             mCamera = null;
 
