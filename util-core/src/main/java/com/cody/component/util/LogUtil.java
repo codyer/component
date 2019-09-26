@@ -115,6 +115,15 @@ public class LogUtil {
         w(LOG_TAG, message, t);
     }
 
+    public static void w(String tag, String message) {
+        if (null == message || null == tag) {
+            return;
+        }
+        if (RUNNING_MODE <= RUNNING_MODE_ERROR) {
+            Log.w(tag, message);
+        }
+    }
+
     public static void w(String tag, String message, Throwable t) {
         if (tag == null || message == null || t == null) {
             return;

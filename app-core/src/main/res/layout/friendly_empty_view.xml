@@ -36,40 +36,41 @@
         android:onClick="@{onClickListener::onClick}"
         android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="@{viewData.imageWidth, default=@dimen/dimen_hugest}"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dimen_normal">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:contentDescription="@null"
-                android:scaleType="fitCenter"
-                bind:layout_constraintBottom_toBottomOf="parent"
-                bind:layout_constraintDimensionRatio="h,129:100"
-                bind:layout_constraintEnd_toEndOf="parent"
-                bind:layout_constraintStart_toStartOf="parent"
-                bind:srcCompat="@drawable/ic_load_failed" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            bind:srcCompat="@drawable/ic_load_failed" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_normal"
+            android:layout_marginTop="@dimen/dimen_bigger"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="5"
-            android:text="@string/ui_str_no_content" />
+            android:text="@string/ui_str_no_content"
+            android:textColor="@color/uiColorGray9"
+            android:textSize="@dimen/ui_font_normal_odd" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_normal"
             android:gravity="center"
-            android:text="@string/ui_str_load_failed_click_to_reload" />
+            android:text="@string/ui_str_load_failed_click_to_reload"
+            android:textColor="@color/uiColorGray9"
+            android:textSize="@dimen/ui_font_normal_odd" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
     </LinearLayout>
 
 

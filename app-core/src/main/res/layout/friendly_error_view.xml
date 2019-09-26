@@ -37,6 +37,11 @@
         android:onClick="@{onClickListener::onClick}"
         android:orientation="vertical">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -46,11 +51,13 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_normal"
+            android:layout_marginTop="@dimen/dimen_bigger"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="5"
             android:text="@{viewData.message}"
+            android:textColor="@color/uiColorGray9"
+            android:textSize="@dimen/ui_font_normal_odd"
             tools:text="@string/ui_str_network_connect_error" />
 
         <TextView
@@ -58,8 +65,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_normal"
             android:gravity="center"
-            android:text="@string/ui_str_load_failed_click_to_reload" />
+            android:text="@string/ui_str_load_failed_click_to_reload"
+            android:textColor="@color/uiColorGray9"
+            android:textSize="@dimen/ui_font_normal_odd" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2" />
     </LinearLayout>
 
 

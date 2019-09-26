@@ -49,7 +49,9 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="5"
-            android:text="@string/ui_str_loading" />
+            android:text="@string/ui_str_loading"
+            android:textColor="@color/uiColorGray9"
+            android:textSize="@dimen/ui_font_normal_odd" />
 
     </LinearLayout>
 
