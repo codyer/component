@@ -69,11 +69,14 @@ final public class LiveEventWrapper<T> {
      */
     @NonNull
     public LiveData<T> getLiveData() {
-        return Transformations.map(mMutableLiveData, input -> {
+        if (mMutableLiveData.getValue() == null) {
+            throw new UnInitValueException();
+        }
+        return Transformations.switchMap(mMutableLiveData, input -> {
             if (input == null) {
                 throw new UnInitValueException();
             }
-            return input.value;
+            return new MutableLiveData<>(input.value);
         });
     }
 
