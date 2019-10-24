@@ -25,31 +25,29 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/actionBarSize"
             android:background="@color/uiColorSecondaryBackground"
-            android:orientation="vertical">
+            android:minHeight="?attr/actionBarSize"
+            android:onClick="@{onClickListener::onClick}"
+            android:theme="@style/ThemeOverlay.AppCompat.Light" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/uiColorSecondaryAccent"
-                android:minHeight="?attr/actionBarSize"
-                android:onClick="@{onClickListener::onClick}"
-                android:theme="@style/ThemeOverlay.AppCompat.Light" />
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="match_parent">
 
             <FrameLayout
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="6dp"
+                android:background="@drawable/bg_shadow_line"
+                bind:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/actionBottom"
@@ -62,8 +60,11 @@
                 android:onClick="@{onClickListener::onClick}"
                 android:textStyle="bold"
                 bind:fabSize="normal"
+                bind:layout_constraintBottom_toBottomOf="parent"
+                bind:layout_constraintEnd_toEndOf="parent"
                 bind:srcCompat="@drawable/ic_add" />
 
-        </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 </layout>
