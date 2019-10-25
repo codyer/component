@@ -70,8 +70,16 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
         submitStatus(getRequestStatus().loaded());
     }
 
+    public void onProgressChanged(final int progress) {
+        getFriendlyViewData().setProgress(progress);
+        if (progress == HtmlViewData.MAX_PROGRESS){
+            submitStatus(getRequestStatus().loaded());
+        }
+    }
+
     @Override
     public void onRequestData(final Operation operation) {
         setAction(ViewAction.DEFAULT);
     }
+
 }

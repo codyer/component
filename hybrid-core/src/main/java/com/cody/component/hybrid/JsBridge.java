@@ -12,20 +12,28 @@
 
 package com.cody.component.hybrid;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.SparseArray;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
 import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 
 import com.cody.component.hybrid.core.JsCallback;
 import com.cody.component.hybrid.core.JsHandler;
@@ -36,12 +44,15 @@ import com.cody.component.hybrid.core.JsWebChromeClient;
 import com.cody.component.hybrid.core.JsWebViewClient;
 import com.cody.component.hybrid.data.HtmlConfig;
 import com.cody.component.hybrid.data.HtmlViewData;
+import com.cody.component.util.ActivityUtil;
 import com.cody.component.util.LogUtil;
 
 import java.lang.reflect.Method;
 import java.util.Map;
 
 import pub.devrel.easypermissions.EasyPermissions;
+
+import static android.content.Context.DOWNLOAD_SERVICE;
 
 /**
  * Created by Cody.yi on 17/4/12.
@@ -347,6 +358,11 @@ public class JsBridge {
         if (mOnWebViewInitListener != null) {
             mOnWebViewInitListener.onWebViewInit(webView);
         }
+//        if (EasyPermissions.hasPermissions(webView.getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+//            webView.setDownloadListener((url, userAgent, contentDisposition, mimeType, contentLength) -> downloadBySystem(webView.getContext(), url, contentDisposition, mimeType));
+//        } else {
+        webView.setDownloadListener((url, userAgent, contentDisposition, mimeType, contentLength) -> downloadByBrowser(url));
+//        }
     }
 
     public interface OnActivityResultListener {
@@ -359,5 +375,44 @@ public class JsBridge {
 
     public interface OnProgressListener {
         void onProgress(int progress);
+    }
+
+    private void downloadByBrowser(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addCategory(Intent.CATEGORY_BROWSABLE);
+        intent.setData(Uri.parse(url));
+        ActivityUtil.navigateTo(intent);
+    }
+
+    private void downloadBySystem(Context context, String url, String contentDisposition, String mimeType) {
+        // 指定下载地址
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        // 允许媒体扫描，根据下载的文件类型被加入相册、音乐等媒体库
+        request.allowScanningByMediaScanner();
+        // 设置通知的显示类型，下载进行时和完成后显示通知
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        // 设置通知栏的标题，如果不设置，默认使用文件名
+        request.setTitle(APP_NAME);
+        // 设置通知栏的描述
+        request.setDescription("下载中...");
+        // 允许在计费流量下下载
+        request.setAllowedOverMetered(true);
+        // 允许该记录在下载管理界面可见
+        request.setVisibleInDownloadsUi(true);
+        // 允许漫游时下载
+        request.setAllowedOverRoaming(true);
+        // 允许下载的网路类型
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI);
+        // 设置下载文件保存的路径和文件名
+        String fileName = URLUtil.guessFileName(url, contentDisposition, mimeType);
+        LogUtil.d("fileName:{}" + fileName);
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+//        另外可选一下方法，自定义下载路径
+//        request.setDestinationUri()
+//        request.setDestinationInExternalFilesDir()
+        final DownloadManager downloadManager = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
+        // 添加一个下载任务
+        long downloadId = downloadManager.enqueue(request);
+        LogUtil.d("downloadId:{}" + downloadId);
     }
 }

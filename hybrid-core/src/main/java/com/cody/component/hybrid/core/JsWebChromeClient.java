@@ -79,7 +79,7 @@ public class JsWebChromeClient extends WebChromeClient {
         // 增加Javascript异常监控
         CrashReport.setJavascriptMonitor(view, true);
         super.onProgressChanged(view, newProgress);
-        mHtmlViewModel.getFriendlyViewData().setProgress(newProgress);
+        mHtmlViewModel.onProgressChanged(newProgress);
     }
 
     @Override
