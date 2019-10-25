@@ -53,6 +53,9 @@ android {
         // dex突破65535的限制
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+        manifestPlaceholders = [
+                qqappid           : "1108791539",
+        ]
     }
 
     //程序在buid的时候，会执行lint检查，有任何的错误或者警告提示，都会终止构建，我们可以将其关掉

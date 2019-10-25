@@ -69,6 +69,7 @@ public class BindingBanner extends FrameLayout {
 
     private final RecyclerView mRecyclerView;
     private final LinearLayout mLinearLayout;
+    private final ScrollSpeedLinearLayoutManger mSpeedLinearLayoutManger;
 
     private BindingBannerAdapter mBindingBannerAdapter;
 
@@ -82,8 +83,8 @@ public class BindingBanner extends FrameLayout {
                 int halfSize = Integer.MAX_VALUE / (mBindingBannerAdapter.getBannerSize() * 2);
                 mCurrentIndex = halfSize * mBindingBannerAdapter.getBannerSize();
             }
-            mRecyclerView.scrollToPosition(mCurrentIndex++);
-            mRecyclerView.smoothScrollToPosition(mCurrentIndex);
+            mRecyclerView.scrollToPosition(mCurrentIndex);
+            mRecyclerView.smoothScrollToPosition(++mCurrentIndex);
             if (mIsShowIndicator) {
                 switchIndicator();
             }
@@ -150,7 +151,8 @@ public class BindingBanner extends FrameLayout {
         mLinearLayout = new LinearLayout(context);
 
         new PagerSnapHelper().attachToRecyclerView(mRecyclerView);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+        mSpeedLinearLayoutManger = new ScrollSpeedLinearLayoutManger(context, LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(mSpeedLinearLayoutManger);
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
             @Override
@@ -201,6 +203,18 @@ public class BindingBanner extends FrameLayout {
             mRecyclerView.scrollToPosition(mCurrentIndex);
             mLinearLayout.removeAllViews();
         }
+    }
+
+    public void setSpeed(float speed) {
+        mSpeedLinearLayoutManger.setSpeed(speed);
+    }
+
+    public void setSpeedSlow() {
+        mSpeedLinearLayoutManger.setSpeedSlow();
+    }
+
+    public void setSpeedFast() {
+        mSpeedLinearLayoutManger.setSpeedFast();
     }
 
     public BindingBannerAdapter getBindingBannerAdapter() {
