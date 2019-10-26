@@ -16,12 +16,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.cody.component.app.R;
 import com.cody.component.app.widget.friendly.FriendlyLayout;
@@ -29,7 +26,6 @@ import com.cody.component.app.widget.friendly.IFriendlyView;
 import com.cody.component.handler.data.FriendlyViewData;
 import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.OnRetryListener;
-import com.cody.component.handler.viewmodel.BaseViewModel;
 import com.cody.component.handler.viewmodel.FriendlyViewModel;
 
 /**
@@ -39,17 +35,9 @@ import com.cody.component.handler.viewmodel.FriendlyViewModel;
  * bind:onClickListener="@{onClickListener}"
  * bind:viewData="@{viewData}"
  */
-public abstract class FriendlyBindActivity<B extends ViewDataBinding, VM extends FriendlyViewModel<?>> extends AbsBindActivity<B, FriendlyViewData> implements IFriendlyView, OnRetryListener {
+public abstract class FriendlyBindActivity<B extends ViewDataBinding, VM extends FriendlyViewModel<?>> extends AbsBindActivity<B, VM, FriendlyViewData> implements IFriendlyView, OnRetryListener {
 
     public abstract FriendlyLayout getFriendlyLayout();
-
-    /**
-     * 创建 viewModel 实例，注意初始化 viewData
-     */
-    public abstract VM buildFriendlyViewModel();
-
-    @NonNull
-    public abstract Class<VM> getVMClass();
 
     @Override
     public int initView() {
@@ -77,38 +65,20 @@ public abstract class FriendlyBindActivity<B extends ViewDataBinding, VM extends
         return this;
     }
 
-    @SuppressWarnings("unchecked")
-    @Deprecated
-    @Override
-    public <D extends BaseViewModel> D getViewModel(@NonNull final Class<D> viewModelClass) {
-        return (D) getFriendlyViewModel();
-    }
-
-    public VM getFriendlyViewModel() {
-        return getViewModel(getVMClass(), new ViewModelProvider.Factory() {
-            @NonNull
-            @Override
-            @SuppressWarnings("unchecked")
-            public <T extends ViewModel> T create(@NonNull final Class<T> modelClass) {
-                return (T) buildFriendlyViewModel();
-            }
-        });
-    }
-
     @Override
     public void retry() {
-        getFriendlyViewModel().retry();
+        getViewModel().retry();
     }
 
     @Override
     public void refresh() {
-        getFriendlyViewModel().refresh();
+        getViewModel().refresh();
     }
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getFriendlyViewModel().onInit();
+        getViewModel().onInit();
     }
 
     @Override
@@ -117,7 +87,7 @@ public abstract class FriendlyBindActivity<B extends ViewDataBinding, VM extends
         if (getFriendlyLayout() != null) {
             getFriendlyLayout().setIFriendlyView(this);
         }
-        getFriendlyViewModel().getRequestStatusLive().observe(this, this::onRequestStatus);
+        getViewModel().getRequestStatusLive().observe(this, this::onRequestStatus);
     }
 
     /**

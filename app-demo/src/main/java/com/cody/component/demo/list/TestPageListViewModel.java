@@ -61,8 +61,8 @@ public class TestPageListViewModel extends PageListViewModel<FriendlyViewData, S
         }, 500);
     }
 
-    public TestPageListViewModel(final FriendlyViewData viewData) {
-        super(viewData);
+    public TestPageListViewModel() {
+        super(new FriendlyViewData());
     }
 
     private boolean type = true;

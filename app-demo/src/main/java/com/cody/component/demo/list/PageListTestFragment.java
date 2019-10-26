@@ -47,18 +47,18 @@ public class PageListTestFragment extends PageListFragment<TestPageListViewModel
                 item.getStringLiveData().setValue(System.currentTimeMillis() + "");
             }
         }
-        getFriendlyViewModel().test();
+        getViewModel().test();
+    }
+
+    @Override
+    protected FriendlyViewData getViewData() {
+        return getViewModel().getFriendlyViewData();
     }
 
     @NonNull
     @Override
     public Class<TestPageListViewModel> getVMClass() {
         return TestPageListViewModel.class;
-    }
-
-    @Override
-    public TestPageListViewModel buildFriendlyViewModel() {
-        return new TestPageListViewModel(new FriendlyViewData());
     }
 
     @NonNull

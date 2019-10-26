@@ -15,16 +15,19 @@ package com.cody.component.cat.ui;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
 import com.cody.component.app.fragment.AbsBindFragment;
 import com.cody.component.cat.R;
 import com.cody.component.cat.databinding.CatFragmentOverviewBinding;
 import com.cody.component.cat.db.data.ItemHttpData;
+import com.cody.component.handler.viewmodel.BaseViewModel;
 
 /**
  * Created by xu.yi. on 2019/4/5.
  * CatOverviewFragment
  */
-public class CatOverviewFragment extends AbsBindFragment<CatFragmentOverviewBinding, ItemHttpData> {
+public class CatOverviewFragment extends AbsBindFragment<CatFragmentOverviewBinding, BaseViewModel, ItemHttpData> {
     private static final String ITEM_VIEW_DATA = "itemHttpData";
     private ItemHttpData mItemHttpData;
 
@@ -55,5 +58,11 @@ public class CatOverviewFragment extends AbsBindFragment<CatFragmentOverviewBind
             mItemHttpData = bundle.getParcelable(ITEM_VIEW_DATA);
         }
         return mItemHttpData;
+    }
+
+    @NonNull
+    @Override
+    public Class<BaseViewModel> getVMClass() {
+        return BaseViewModel.class;
     }
 }

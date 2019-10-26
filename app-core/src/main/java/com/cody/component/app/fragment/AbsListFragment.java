@@ -64,11 +64,11 @@ public abstract class AbsListFragment<B extends ViewDataBinding, VM extends List
         getRecyclerView().setLayoutManager(buildLayoutManager());
         getRecyclerView().setAdapter(getListAdapter());
 
-        getFriendlyViewModel().getItems().observe(this, items -> getFriendlyViewModel().getRequestStatusLive().observe(this, new Observer<RequestStatus>() {
+        getViewModel().getItems().observe(this, items -> getViewModel().getRequestStatusLive().observe(this, new Observer<RequestStatus>() {
             @Override
             public void onChanged(final RequestStatus requestStatus) {
                 if (requestStatus.isLoaded()) {
-                    getFriendlyViewModel().getRequestStatusLive().removeObserver(this);
+                    getViewModel().getRequestStatusLive().removeObserver(this);
                     getListAdapter().submitList(items);
                 }
             }

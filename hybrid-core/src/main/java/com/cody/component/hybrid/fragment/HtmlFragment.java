@@ -25,6 +25,7 @@ import android.webkit.WebChromeClient;
 
 import androidx.annotation.NonNull;
 
+import com.cody.component.app.fragment.FriendlyBindFragment;
 import com.cody.component.app.local.BaseLocalKey;
 import com.cody.component.app.local.Repository;
 import com.cody.component.app.widget.friendly.FriendlyLayout;
@@ -49,7 +50,7 @@ import java.util.List;
 /**
  * Html 页面具体实现
  */
-public class HtmlFragment extends com.cody.component.app.fragment.FriendlyBindFragment<FragmentHtmlBinding, HtmlViewModel>
+public class HtmlFragment extends FriendlyBindFragment<FragmentHtmlBinding, HtmlViewModel>
         implements OnImageViewListener, JsWebChromeClient.OpenFileChooserCallBack, Scrollable {
     private static final String HTML_URL = "html_url";
     private ImageViewDelegate mImageViewDelegate;
@@ -108,7 +109,7 @@ public class HtmlFragment extends com.cody.component.app.fragment.FriendlyBindFr
     }
 
     @Override
-    public HtmlViewModel buildFriendlyViewModel() {
+    public HtmlViewModel buildViewModel() {
         HtmlViewData htmlViewData = new HtmlViewData();
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -124,7 +125,7 @@ public class HtmlFragment extends com.cody.component.app.fragment.FriendlyBindFr
 
     @Override
     public HtmlViewData getViewData() {
-        return getFriendlyViewModel().getFriendlyViewData();
+        return getViewModel().getFriendlyViewData();
     }
 
     @NonNull
@@ -141,7 +142,7 @@ public class HtmlFragment extends com.cody.component.app.fragment.FriendlyBindFr
         JsBridge.getInstance()
                 .addJsHandler(JsHandlerCommonImpl.class.getSimpleName(), JsHandlerCommonImpl.class)
                 .setFileChooseCallBack(this)
-                .build(getBinding().webView, getFriendlyViewModel());
+                .build(getBinding().webView, getViewModel());
 
         if (null != savedInstanceState) {
             getBinding().webView.restoreState(savedInstanceState);
@@ -160,9 +161,9 @@ public class HtmlFragment extends com.cody.component.app.fragment.FriendlyBindFr
         switch (action.getAction()) {
             case ViewAction.DEFAULT:
                 getViewData().setProgress(0);
-                if (getFriendlyViewModel().getRequestStatus().isInitializing() ||
-                        getFriendlyViewModel().getRequestStatus().isRefreshing() ||
-                        getFriendlyViewModel().getRequestStatus().isRetrying()) {
+                if (getViewModel().getRequestStatus().isInitializing() ||
+                        getViewModel().getRequestStatus().isRefreshing() ||
+                        getViewModel().getRequestStatus().isRetrying()) {
                     getBinding().webView.loadUrl(getViewData().getUrl().get());
                 }
                 break;
