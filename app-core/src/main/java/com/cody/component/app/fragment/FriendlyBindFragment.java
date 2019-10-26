@@ -121,7 +121,6 @@ public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends
         if (getFriendlyLayout() != null) {
             getFriendlyLayout().setIFriendlyView(this);
         }
-
         getFriendlyViewModel().getRequestStatusLive().observe(this, this::onRequestStatus);
     }
 

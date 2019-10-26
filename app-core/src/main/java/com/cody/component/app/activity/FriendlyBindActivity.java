@@ -106,6 +106,12 @@ public abstract class FriendlyBindActivity<B extends ViewDataBinding, VM extends
     }
 
     @Override
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getFriendlyViewModel().onInit();
+    }
+
+    @Override
     protected void onBaseReady(Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
         if (getFriendlyLayout() != null) {
