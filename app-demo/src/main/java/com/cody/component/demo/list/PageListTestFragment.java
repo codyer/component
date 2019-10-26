@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：PageListTestBindFragment.java  模块：app  项目：component
+ * 文件：PageListTestFragment.java  模块：app  项目：component
  * 当前修改时间：2019年04月23日 18:23:19
  * 上次修改时间：2019年04月23日 12:42:32
  * 作者：Cody.yi   https://github.com/codyer
@@ -16,8 +16,9 @@ package com.cody.component.demo.list;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.cody.component.app.fragment.PageListBindFragment;
+import com.cody.component.app.fragment.PageListFragment;
 import com.cody.component.bind.adapter.list.BindingViewHolder;
 import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.demo.R;
@@ -26,10 +27,10 @@ import com.cody.component.handler.data.FriendlyViewData;
 /**
  * test
  */
-public class PageListTestBindFragment extends PageListBindFragment<ListTestViewModel> {
+public class PageListTestFragment extends PageListFragment<TestPageListViewModel> {
 
 
-    public PageListTestBindFragment() {
+    public PageListTestFragment() {
         // Required empty public constructor
     }
 
@@ -41,7 +42,7 @@ public class PageListTestBindFragment extends PageListBindFragment<ListTestViewM
     @Override
     public void onItemClick(BindingViewHolder holder, final View view, final int position, final int id) {
         if (id == R.id.testButton) {
-            ItemTestViewData item = (ItemTestViewData) mListAdapter.getItem(position);
+            ItemTestViewData item = (ItemTestViewData) getListAdapter().getItem(position);
             if (item != null) {
                 item.getStringLiveData().setValue(System.currentTimeMillis() + "");
             }
@@ -51,13 +52,13 @@ public class PageListTestBindFragment extends PageListBindFragment<ListTestViewM
 
     @NonNull
     @Override
-    public Class<ListTestViewModel> getVMClass() {
-        return ListTestViewModel.class;
+    public Class<TestPageListViewModel> getVMClass() {
+        return TestPageListViewModel.class;
     }
 
     @Override
-    public ListTestViewModel buildFriendlyViewModel() {
-        return new ListTestViewModel(new FriendlyViewData());
+    public TestPageListViewModel buildFriendlyViewModel() {
+        return new TestPageListViewModel(new FriendlyViewData());
     }
 
     @NonNull

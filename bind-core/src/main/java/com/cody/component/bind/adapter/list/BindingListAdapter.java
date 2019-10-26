@@ -28,7 +28,7 @@ import com.cody.component.handler.data.ItemViewDataHolder;
 
 /**
  * Created by xu.yi. on 2019/3/28.
- * 抽象列表adapter
+ * 抽象列表adapter 并无分页操作 没有头尾
  */
 public abstract class BindingListAdapter<Item extends ItemViewDataHolder> extends ListAdapter<Item, BindingViewHolder> implements IBindingAdapter {
 

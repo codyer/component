@@ -39,7 +39,7 @@ import com.cody.component.handler.viewmodel.FriendlyViewModel;
  * bind:onClickListener="@{onClickListener}"
  * bind:viewData="@{viewData}"
  */
-public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends FriendlyViewModel<VD>, VD extends FriendlyViewData> extends SimpleBindFragment<B, VD> implements IFriendlyView, OnRetryListener {
+public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends FriendlyViewModel<?>> extends AbsBindFragment<B, FriendlyViewData> implements IFriendlyView, OnRetryListener {
 
     public abstract FriendlyLayout getFriendlyLayout();
 
@@ -99,11 +99,6 @@ public abstract class FriendlyBindFragment<B extends ViewDataBinding, VM extends
                 return (T) buildFriendlyViewModel();
             }
         });
-    }
-
-    @Override
-    protected VD getViewData() {
-        return getFriendlyViewModel().getFriendlyViewData();
     }
 
     @Override

@@ -28,7 +28,7 @@ import com.cody.component.handler.livedata.BooleanLiveData;
 /**
  * 包含返回键和头部和快速关闭按钮
  */
-public abstract class FragmentContainerWithCloseActivity extends EmptyBindActivity<ActivityFragmentContainerWithCloseBinding> implements Scrollable {
+public abstract class FragmentContainerWithCloseActivity extends StaticActivity<ActivityFragmentContainerWithCloseBinding> implements Scrollable {
     public abstract Fragment getFragment();
 
     @Override

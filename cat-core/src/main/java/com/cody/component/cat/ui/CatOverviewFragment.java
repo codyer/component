@@ -15,7 +15,7 @@ package com.cody.component.cat.ui;
 import android.os.Bundle;
 import android.view.View;
 
-import com.cody.component.app.fragment.SimpleBindFragment;
+import com.cody.component.app.fragment.AbsBindFragment;
 import com.cody.component.cat.R;
 import com.cody.component.cat.databinding.CatFragmentOverviewBinding;
 import com.cody.component.cat.db.data.ItemHttpData;
@@ -24,7 +24,7 @@ import com.cody.component.cat.db.data.ItemHttpData;
  * Created by xu.yi. on 2019/4/5.
  * CatOverviewFragment
  */
-public class CatOverviewFragment extends SimpleBindFragment<CatFragmentOverviewBinding, ItemHttpData> {
+public class CatOverviewFragment extends AbsBindFragment<CatFragmentOverviewBinding, ItemHttpData> {
     private static final String ITEM_VIEW_DATA = "itemHttpData";
     private ItemHttpData mItemHttpData;
 

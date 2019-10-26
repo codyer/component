@@ -18,8 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.cody.component.app.activity.StaticActivity;
 import com.cody.component.bind.adapter.list.BindingListAdapter;
-import com.cody.component.app.activity.EmptyBindActivity;
 import com.cody.component.cat.HttpCat;
 import com.cody.component.cat.R;
 import com.cody.component.cat.databinding.CatActivityMainBinding;
@@ -32,7 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
  * Created by xu.yi. on 2019/3/26.
  * http 监视器
  */
-public class CatMainActivity extends EmptyBindActivity<CatActivityMainBinding> {
+public class CatMainActivity extends StaticActivity<CatActivityMainBinding> {
     private final BindingListAdapter<ItemHttpData> mListAdapter = new BindingListAdapter<ItemHttpData>(this) {
         @Override
         public int getItemLayoutId(int viewType) {

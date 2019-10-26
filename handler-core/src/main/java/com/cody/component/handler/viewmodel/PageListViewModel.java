@@ -31,7 +31,7 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
 
 /**
  * Created by xu.yi. on 2019/4/8.
- * 数据仓库，获取列表数据
+ * 数据仓库，获取列表数据，分页获取
  */
 public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> extends FriendlyViewModel<VD> {
     private LiveData<PagedList<ItemViewDataHolder>> mPagedList;

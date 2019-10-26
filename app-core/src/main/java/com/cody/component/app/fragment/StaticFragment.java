@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：EmptyBindActivity.java  模块：app-core  项目：component
+ * 文件：StaticFragment.java  模块：app-core  项目：component
  * 当前修改时间：2019年04月23日 18:23:19
  * 上次修改时间：2019年04月13日 08:43:55
  * 作者：Cody.yi   https://github.com/codyer
@@ -10,15 +10,15 @@
  * ************************************************************
  */
 
-package com.cody.component.app.activity;
+package com.cody.component.app.fragment;
 
 import androidx.databinding.ViewDataBinding;
 
 /**
  * Created by xu.yi. on 2019/3/25.
- * 不需要绑定viewData
+ * 不需要绑定viewData 页面静态 无需要绑定数据
  */
-public abstract class EmptyBindActivity<B extends ViewDataBinding> extends BaseBindActivity<B> {
+public abstract class StaticFragment<B extends ViewDataBinding> extends BaseBindFragment<B> {
     @Override
     protected void bindViewData() {
     }

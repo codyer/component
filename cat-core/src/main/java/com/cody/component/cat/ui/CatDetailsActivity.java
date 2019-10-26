@@ -19,7 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.cody.component.app.activity.EmptyBindActivity;
+import com.cody.component.app.activity.StaticActivity;
 import com.cody.component.cat.R;
 import com.cody.component.cat.databinding.CatActivityDetailsBinding;
 import com.cody.component.cat.db.data.ItemHttpData;
@@ -38,7 +38,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
  * Created by xu.yi. on 2019/4/5.
  * CatDetailsActivity
  */
-public class CatDetailsActivity extends EmptyBindActivity<CatActivityDetailsBinding> {
+public class CatDetailsActivity extends StaticActivity<CatActivityDetailsBinding> {
     private static final String ITEM_HTTP_DATA = "itemHttpData";
     private ItemHttpData mItemHttpData;
 

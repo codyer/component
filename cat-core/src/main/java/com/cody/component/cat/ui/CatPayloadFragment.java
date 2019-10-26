@@ -17,7 +17,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.cody.component.app.fragment.EmptyBindFragment;
+import com.cody.component.app.fragment.StaticFragment;
 import com.cody.component.cat.R;
 import com.cody.component.cat.databinding.CatFragmentPayloadBinding;
 import com.cody.component.cat.db.data.ItemHttpData;
@@ -26,7 +26,7 @@ import com.cody.component.cat.db.data.ItemHttpData;
  * Created by xu.yi. on 2019/4/5.
  * CatPayloadFragment
  */
-public class CatPayloadFragment extends EmptyBindFragment<CatFragmentPayloadBinding> {
+public class CatPayloadFragment extends StaticFragment<CatFragmentPayloadBinding> {
     private static final int TYPE_REQUEST = 100;
     private static final int TYPE_RESPONSE = 200;
     private static final String TYPE_KEY = "keyType";

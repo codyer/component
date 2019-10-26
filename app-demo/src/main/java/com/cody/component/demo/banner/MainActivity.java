@@ -25,7 +25,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.cody.component.bind.CoreBR;
 import com.cody.component.demo.R;
-import com.cody.component.app.activity.EmptyBindActivity;
+import com.cody.component.app.activity.StaticActivity;
 import com.cody.component.banner.adapter.BindingBannerAdapter;
 import com.cody.component.banner.data.BannerViewData;
 import com.cody.component.demo.bean.TestDataBean;
@@ -50,7 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainActivity extends EmptyBindActivity<ActivityMainBannerBinding> {
+public class MainActivity extends StaticActivity<ActivityMainBannerBinding> {
 
     @Override
     protected int getLayoutID() {

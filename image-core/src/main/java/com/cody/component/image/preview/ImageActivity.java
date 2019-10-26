@@ -18,7 +18,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.ViewPager;
 
-import com.cody.component.app.activity.EmptyBindActivity;
+import com.cody.component.app.activity.StaticActivity;
 import com.cody.component.image.R;
 import com.cody.component.image.databinding.ActivityImageBinding;
 import com.lzy.imagepicker.DataHolder;
@@ -28,7 +28,7 @@ import com.lzy.imagepicker.bean.ImageItem;
 
 import java.util.ArrayList;
 
-public class ImageActivity extends EmptyBindActivity<ActivityImageBinding> {
+public class ImageActivity extends StaticActivity<ActivityImageBinding> {
     protected ImagePicker mImagePicker;
     protected ArrayList<ImageItem> mImageItems;
     protected int mCurrentPosition = 0;

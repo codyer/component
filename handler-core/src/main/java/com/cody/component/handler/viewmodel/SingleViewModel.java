@@ -20,6 +20,7 @@ import com.cody.component.handler.interfaces.OnRequestListener;
 /**
  * Created by xu.yi. on 2019/4/23.
  * component 用户友好的view model
+ * 类似详情页，请求数据不要分页使用
  * 包含刷新，重试，出错默认提示页面
  */
 public abstract class  SingleViewModel<VD extends FriendlyViewData> extends FriendlyViewModel<VD> implements OnRequestListener {

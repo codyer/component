@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：ListTestViewModel.java  模块：app  项目：component
+ * 文件：TestPageListViewModel.java  模块：app  项目：component
  * 当前修改时间：2019年04月23日 18:23:19
  * 上次修改时间：2019年04月23日 12:42:32
  * 作者：Cody.yi   https://github.com/codyer
@@ -29,7 +29,7 @@ import java.util.ArrayList;
  * Created by xu.yi. on 2019/4/14.
  * component
  */
-public class ListTestViewModel extends PageListViewModel<FriendlyViewData, String> {
+public class TestPageListViewModel extends PageListViewModel<FriendlyViewData, String> {
 
     @Override
     protected PageDataMapper<ItemTestViewData, String> createMapper() {
@@ -61,7 +61,7 @@ public class ListTestViewModel extends PageListViewModel<FriendlyViewData, Strin
         }, 500);
     }
 
-    public ListTestViewModel(final FriendlyViewData viewData) {
+    public TestPageListViewModel(final FriendlyViewData viewData) {
         super(viewData);
     }
 

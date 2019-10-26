@@ -28,7 +28,7 @@ import com.cody.component.handler.interfaces.Scrollable;
 /**
  * fragment 容器基类
  */
-public abstract class BaseFragmentContainerActivity<B extends ViewDataBinding> extends EmptyBindActivity<B> implements Scrollable {
+public abstract class BaseFragmentContainerActivity<B extends ViewDataBinding> extends StaticActivity<B> implements Scrollable {
     public abstract Fragment getFragment();
 
     protected boolean isShowBack() {

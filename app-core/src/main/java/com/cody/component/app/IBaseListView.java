@@ -14,8 +14,11 @@ package com.cody.component.app;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.cody.component.bind.adapter.list.BindingListAdapter;
 import com.cody.component.bind.adapter.list.MultiBindingListAdapter;
+import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.interfaces.OnRetryListener;
 import com.cody.component.handler.interfaces.Scrollable;
 
@@ -25,8 +28,14 @@ import com.cody.component.handler.interfaces.Scrollable;
  */
 public interface IBaseListView extends OnRetryListener, Scrollable {
     @NonNull
-    MultiBindingListAdapter buildListAdapter();
+    BindingListAdapter<ItemViewDataHolder> buildListAdapter();
+
+    @NonNull
+    BindingListAdapter<ItemViewDataHolder> getListAdapter();
 
     @NonNull
     LinearLayoutManager buildLayoutManager();
+
+    @NonNull
+    RecyclerView getRecyclerView();
 }

@@ -24,20 +24,22 @@ import java.util.List;
 
 /**
  * Created by xu.yi. on 2019/4/8.
- * 获取列表数据
+ * 获取列表数据 不需要分页
  */
-public abstract class ListViewModel<VD extends FriendlyViewData, Item extends ItemViewDataHolder, Bean> extends SingleViewModel<VD> {
+public abstract class ListViewModel<VD extends FriendlyViewData, Bean> extends SingleViewModel<VD> {
 
-    private MutableLiveData<List<Item>> mItems = new MutableLiveData<>(new ArrayList<>());
-    private DataMapper<Item, Bean> mDataMapper = createMapper();
+    private MutableLiveData<List<ItemViewDataHolder>> mItems = new MutableLiveData<>(new ArrayList<>());
+    private DataMapper<ItemViewDataHolder, Bean> mDataMapper;
 
-    protected abstract DataMapper<Item, Bean> createMapper();
+    protected abstract DataMapper<? extends ItemViewDataHolder, Bean> createMapper();
 
+    @SuppressWarnings("unchecked")
     public ListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
+        mDataMapper = (DataMapper<ItemViewDataHolder, Bean>) createMapper();
     }
 
-    public MutableLiveData<List<Item>> getItems() {
+    public MutableLiveData<List<ItemViewDataHolder>> getItems() {
         return mItems;
     }
 

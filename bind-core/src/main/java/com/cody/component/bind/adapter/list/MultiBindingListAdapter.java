@@ -25,8 +25,7 @@ import com.cody.component.handler.interfaces.OnRetryListener;
 
 /**
  * Created by xu.yi. on 2019/4/8.
- * 包含下拉加载更多，加载失败显示重试 header
- * 包含上拉加载更多，加载失败显示重试 footer
+ * 无分页 包含上拉加载更多，加载失败显示重试 footer header
  */
 public abstract class MultiBindingListAdapter extends BindingListAdapter<ItemViewDataHolder> {
     final private ItemFooterOrHeaderData mItemHolderFooterOrHeader = new ItemFooterOrHeaderData();

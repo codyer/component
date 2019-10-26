@@ -15,10 +15,9 @@ package com.cody.component.demo.friendly;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.cody.component.app.activity.SimpleBindActivity;
+import com.cody.component.app.activity.AbsBindActivity;
 import com.cody.component.app.widget.friendly.IFriendlyView;
 import com.cody.component.demo.R;
 import com.cody.component.demo.databinding.ActivityFriendlyBinding;
@@ -27,7 +26,7 @@ import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.interfaces.Refreshable;
 
 
-public class FriendlyActivity extends SimpleBindActivity<ActivityFriendlyBinding, FriendlyViewData> implements Refreshable {
+public class FriendlyActivity extends AbsBindActivity<ActivityFriendlyBinding, FriendlyViewData> implements Refreshable {
     private RequestStatus mRequestStatus = new RequestStatus();
 
     @Override

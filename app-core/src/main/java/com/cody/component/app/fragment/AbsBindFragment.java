@@ -1,6 +1,6 @@
 /*
  * ************************************************************
- * 文件：SimpleBindFragment.java  模块：app-core  项目：component
+ * 文件：AbsBindFragment.java  模块：app-core  项目：component
  * 当前修改时间：2019年04月24日 20:05:59
  * 上次修改时间：2019年04月24日 18:51:59
  * 作者：Cody.yi   https://github.com/codyer
@@ -22,7 +22,7 @@ import com.cody.component.handler.data.ViewData;
  * Created by xu.yi. on 2019/3/25.
  * 一个页面只绑定一个viewModel
  */
-public abstract class SimpleBindFragment<B extends ViewDataBinding, VD extends ViewData> extends BaseBindFragment<B> {
+public abstract class AbsBindFragment<B extends ViewDataBinding, VD extends ViewData> extends BaseBindFragment<B> {
     protected abstract VD getViewData();
 
     @Override

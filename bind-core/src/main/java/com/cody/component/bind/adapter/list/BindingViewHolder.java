@@ -30,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 public class BindingViewHolder extends RecyclerView.ViewHolder {
     private View.OnCreateContextMenuListener mContextMenuListener;
     private OnBindingItemClickListener mClickListener;
-    private RecyclerView mParentView;
 
     protected BindingViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -43,7 +42,6 @@ public class BindingViewHolder extends RecyclerView.ViewHolder {
     void bindTo(ItemViewDataHolder item, RecyclerView recyclerView, View.OnCreateContextMenuListener contextMenuListener, OnBindingItemClickListener clickListener) {
         mContextMenuListener = contextMenuListener;
         mClickListener = clickListener;
-        mParentView = recyclerView;
         itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
             menuInfo = new AdapterView.AdapterContextMenuInfo(v, getAdapterPosition(), v.getId());
             if (mContextMenuListener != null) {
@@ -64,7 +62,6 @@ public class BindingViewHolder extends RecyclerView.ViewHolder {
         getItemBinding().setVariable(CoreBR.viewData, null);
         //分发点击事件
         getItemBinding().setVariable(CoreBR.onClickListener, null);
-        mParentView = null;
         mContextMenuListener = null;
         mClickListener = null;
     }

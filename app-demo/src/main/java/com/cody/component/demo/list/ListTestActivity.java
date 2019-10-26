@@ -22,7 +22,7 @@ public class ListTestActivity extends FragmentContainerActivity {
 
     @Override
     public Fragment getFragment() {
-        return new PageListTestBindFragment();
+        return new PageListTestFragment();
     }
 
     @Override
