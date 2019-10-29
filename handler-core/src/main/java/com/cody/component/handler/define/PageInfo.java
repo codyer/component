@@ -64,7 +64,7 @@ public class PageInfo {
     }
 
     public int getPositionByPageNo() {
-        if (mPosition == DEFAULT_POSITION) {
+        if (mPosition <= DEFAULT_POSITION) {
             return mPageNo * mPageSize;
         }
         return mPosition;

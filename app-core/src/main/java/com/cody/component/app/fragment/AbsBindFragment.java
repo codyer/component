@@ -28,6 +28,7 @@ import com.cody.component.handler.viewmodel.BaseViewModel;
  */
 public abstract class AbsBindFragment<B extends ViewDataBinding, VM extends BaseViewModel, VD extends ViewData> extends BaseBindFragment<B> {
     protected abstract VD getViewData();
+    private VM mViewModel;
 
     /**
      * 创建 viewModel 实例，注意初始化 viewData
@@ -46,16 +47,18 @@ public abstract class AbsBindFragment<B extends ViewDataBinding, VM extends Base
     }
 
     public VM getViewModel() {
-        VM vm = buildViewModel();
-        if (vm == null) {
-            return getViewModel(getVMClass());
-        } else {
+        if (mViewModel == null){
+            mViewModel = buildViewModel();
+        }
+        if (mViewModel == null) {
+           return getViewModel(getVMClass());
+        }else {
             return getViewModel(getVMClass(), new ViewModelProvider.Factory() {
                 @NonNull
                 @Override
                 @SuppressWarnings("unchecked")
                 public <T extends ViewModel> T create(@NonNull final Class<T> modelClass) {
-                    return (T) vm;
+                    return (T) mViewModel;
                 }
             });
         }

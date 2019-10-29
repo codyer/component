@@ -68,6 +68,7 @@ final public class LiveEventWrapper<T> {
      * LiveData 不为空，但是value有可能为空，因此要调用 getValue 前一定要先初始化，先设置默认值，后调用
      */
     @NonNull
+    @Deprecated
     public LiveData<T> getLiveData() {
         if (mMutableLiveData.getValue() == null) {
             throw new UnInitValueException();

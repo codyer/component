@@ -77,7 +77,7 @@ public class PageListKeyedDataSource<Bean> extends PageKeyedDataSource<PageInfo,
             mOnRetryListener = () -> loadAfter(params, callback);
         }
         requestPageData(Operation.LOAD_AFTER, params.key, (data, prePageKey, nextPageKey) -> {
-            if (nextPageKey != null && data.size() > nextPageKey.getPositionByPageNo()) {
+            if (nextPageKey != null && data.size() > nextPageKey.getPositionByPageNo() && nextPageKey.getPositionByPageNo() >= 0) {
                 callback.onResult(data.subList(nextPageKey.getPositionByPageNo(), data.size()), nextPageKey);
             } else {
                 callback.onResult(data, nextPageKey);
