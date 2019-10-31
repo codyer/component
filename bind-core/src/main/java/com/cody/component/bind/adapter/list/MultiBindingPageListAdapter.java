@@ -134,6 +134,6 @@ public abstract class MultiBindingPageListAdapter extends BindingPageListAdapter
     }
 
     private boolean hasFooterItem() {
-        return mRequestStatus.isLoadingAfter() || mRequestStatus.isEnd();
+        return mRequestStatus.isLoadingAfter() || (super.getItemCount() > 0 && mRequestStatus.isError()) || mRequestStatus.isEnd();
     }
 }

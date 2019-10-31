@@ -133,6 +133,6 @@ public abstract class MultiBindingListAdapter extends BindingListAdapter<ItemVie
     }
 
     private boolean hasFooterItem() {
-        return mRequestStatus.isLoadingAfter() || mRequestStatus.isEnd();
+        return mRequestStatus.isLoadingAfter() || (super.getItemCount() > 0 && mRequestStatus.isError()) || mRequestStatus.isEnd();
     }
 }
