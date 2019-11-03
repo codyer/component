@@ -38,9 +38,9 @@
                 <shape android:shape="rectangle">
                     <stroke
                         android:width="@dimen/dimen_line"
-                        android:color="@color/uiColorLine" />
+                        android:color="@color/uiColorPrimaryAccent" />
                     <corners android:radius="@dimen/dimen_smaller" />
-                    <solid android:color="@color/uiColorSecondaryAccent" />
+                    <solid android:color="@color/uiTouchRipple" />
                 </shape>
             </item>
             <item>
