@@ -27,13 +27,13 @@ import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.bind.adapter.list.OnBindingItemClickListener;
 import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.define.RequestStatus;
-import com.cody.component.handler.viewmodel.PageListViewModel;
+import com.cody.component.handler.viewmodel.AbsPageListViewModel;
 import com.cody.component.util.RecyclerViewUtil;
 
 /**
  * 使用pageList 做列表页面，自动分页，刷新，初始化，加载更多，出错提示，重试，下拉刷新, 可以包含头尾
  */
-public abstract class AbsPageListActivity<B extends ViewDataBinding, VM extends PageListViewModel<?, ?>> extends FriendlyBindActivity<B, VM> implements IBasePageListView, OnBindingItemClickListener {
+public abstract class AbsPageListActivity<B extends ViewDataBinding, VM extends AbsPageListViewModel<?, ?>> extends FriendlyBindActivity<B, VM> implements IBasePageListView, OnBindingItemClickListener {
     private BindingPageListAdapter<ItemViewDataHolder> mListAdapter;
 
     @NonNull

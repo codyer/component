@@ -24,6 +24,7 @@ import com.cody.component.cat.R;
 import com.cody.component.cat.databinding.CatActivityDetailsBinding;
 import com.cody.component.cat.db.data.ItemHttpData;
 import com.cody.component.cat.utils.FormatUtils;
+import com.cody.component.handler.data.ItemViewDataHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +43,12 @@ public class CatDetailsActivity extends StaticActivity<CatActivityDetailsBinding
     private static final String ITEM_HTTP_DATA = "itemHttpData";
     private ItemHttpData mItemHttpData;
 
-    public static void openActivity(Context context, ItemHttpData itemHttpData) {
-        Intent intent = new Intent(context, CatDetailsActivity.class);
-        intent.putExtra(ITEM_HTTP_DATA, itemHttpData);
-        context.startActivity(intent);
+    public static void openActivity(Context context, ItemViewDataHolder itemHttpData) {
+        if (itemHttpData instanceof ItemHttpData) {
+            Intent intent = new Intent(context, CatDetailsActivity.class);
+            intent.putExtra(ITEM_HTTP_DATA, (ItemHttpData) itemHttpData);
+            context.startActivity(intent);
+        }
     }
 
     @Override

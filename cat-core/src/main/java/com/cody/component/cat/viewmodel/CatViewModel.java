@@ -12,45 +12,53 @@
 
 package com.cody.component.cat.viewmodel;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
+import androidx.paging.DataSource;
 
-import com.cody.component.handler.viewmodel.BaseViewModel;
 import com.cody.component.cat.HttpCat;
+import com.cody.component.cat.db.HttpCatDao;
 import com.cody.component.cat.db.HttpCatDatabase;
 import com.cody.component.cat.db.data.ItemHttpData;
 import com.cody.component.cat.notification.NotificationManagement;
+import com.cody.component.handler.data.FriendlyViewData;
+import com.cody.component.handler.data.ItemViewDataHolder;
+import com.cody.component.handler.viewmodel.AbsPageListViewModel;
+import com.cody.component.handler.viewmodel.BaseViewModel;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by xu.yi. on 2019/3/31.
  * CatViewModel
  */
-public class CatViewModel extends BaseViewModel {
-
-    private final LiveData<List<ItemHttpData>> mAllRecordLiveData;
+public class CatViewModel extends AbsPageListViewModel<FriendlyViewData, Integer> {
+    private HttpCatDao mHttpCatDao;
 
     private LiveData<ItemHttpData> mRecordLiveData = new MutableLiveData<>();
 
-    private static final int LIMIT = 300;
-
     public CatViewModel() {
-        super();
-        mAllRecordLiveData = Transformations.map(
-                HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().queryAllRecordObservable(LIMIT),
-                ArrayList::new
-        );
+        super(new FriendlyViewData());
+    }
+
+    @Override
+    protected DataSource.Factory<Integer, ItemViewDataHolder> createDataSourceFactory() {
+        mHttpCatDao = HttpCatDatabase
+                .getInstance(HttpCat.getInstance().getContext())
+                .getHttpInformationDao();
+        return mHttpCatDao.getDataSource().map(input -> input);
+    }
+
+    @Override
+    public <T extends BaseViewModel> T setLifecycleOwner(final LifecycleOwner lifecycleOwner) {
+        mHttpCatDao.count().observe(lifecycleOwner, count -> submitStatus(count > 0 ? getRequestStatus().end() : getRequestStatus().empty()));
+        return super.setLifecycleOwner(lifecycleOwner);
     }
 
     public void clearAllCache() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().deleteAll();
-            }
+        new Thread(() -> {
+            mHttpCatDao.deleteAll();
+            submitStatus(getRequestStatus().empty());
         }).start();
     }
 
@@ -59,15 +67,10 @@ public class CatViewModel extends BaseViewModel {
     }
 
     public void queryRecordById(long id) {
-        mRecordLiveData = HttpCatDatabase.getInstance(HttpCat.getInstance().getContext()).getHttpInformationDao().queryRecordObservable(id);
-    }
-
-    public LiveData<List<ItemHttpData>> getAllRecordLiveData() {
-        return mAllRecordLiveData;
+        mRecordLiveData = mHttpCatDao.queryRecordObservable(id);
     }
 
     public LiveData<ItemHttpData> getRecordLiveData() {
         return mRecordLiveData;
     }
-
 }

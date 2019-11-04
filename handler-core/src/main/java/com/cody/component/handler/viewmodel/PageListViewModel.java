@@ -13,14 +13,12 @@
 package com.cody.component.handler.viewmodel;
 
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.paging.LivePagedListBuilder;
-import androidx.paging.PagedList;
+import androidx.paging.DataSource;
 
-import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.data.FriendlyViewData;
+import com.cody.component.handler.data.ItemViewDataHolder;
 import com.cody.component.handler.define.Operation;
 import com.cody.component.handler.define.PageInfo;
 import com.cody.component.handler.define.RequestStatus;
@@ -33,8 +31,7 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
  * Created by xu.yi. on 2019/4/8.
  * 数据仓库，获取列表数据，分页获取
  */
-public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> extends FriendlyViewModel<VD> {
-    private LiveData<PagedList<ItemViewDataHolder>> mPagedList;
+public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> extends AbsPageListViewModel<VD, PageInfo> {
     private MutableLiveData<PageListKeyedDataSource> mDataSource;
     private PageDataMapper<ItemViewDataHolder, Bean> mPageDataMapper;
 
@@ -42,11 +39,15 @@ public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> exten
 
     protected abstract OnRequestPageListener<Bean> createRequestPageListener();
 
-    @SuppressWarnings("unchecked")
     public PageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    protected DataSource.Factory<PageInfo, ItemViewDataHolder> createDataSourceFactory() {
         mPageDataMapper = (PageDataMapper<ItemViewDataHolder, Bean>) createMapper();
-        final PageListDataSourceFactory<Bean> sourceFactory = new PageListDataSourceFactory<>(mPageDataMapper, (operation, oldPageInfo, callBack) -> {
+        PageListDataSourceFactory<Bean> sourceFactory = new PageListDataSourceFactory<>(mPageDataMapper, (operation, oldPageInfo, callBack) -> {
             if (mRequestStatus.isRefreshing()) {
                 operation = Operation.REFRESH;
             }
@@ -54,24 +55,12 @@ public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> exten
             createRequestPageListener().onRequestPageData(operation, oldPageInfo, callBack);
         });
         mDataSource = sourceFactory.getDataSource();
-        mPagedList = new LivePagedListBuilder<>(sourceFactory.map(), initPageListConfig()).build();
-    }
-
-    /**
-     * 分页数据配置
-     */
-    protected PagedList.Config initPageListConfig() {
-        return (new PagedList.Config.Builder())
-                .setPrefetchDistance(PageInfo.DEFAULT_PREFETCH_DISTANCE)
-                .setEnablePlaceholders(false)
-                .setInitialLoadSizeHint(PageInfo.DEFAULT_PAGE_SIZE)
-                .setPageSize(PageInfo.DEFAULT_PAGE_SIZE)
-                .build();
+        return sourceFactory.map();
     }
 
     @Override
     public <T extends BaseViewModel> T setLifecycleOwner(final LifecycleOwner lifecycleOwner) {
-        mPagedList.observe(lifecycleOwner, items -> getRequestStatusLive().observe(lifecycleOwner, new Observer<RequestStatus>() {
+        getPagedList().observe(lifecycleOwner, items -> getRequestStatusLive().observe(lifecycleOwner, new Observer<RequestStatus>() {
             @Override
             public void onChanged(final RequestStatus requestStatus) {
                 if (requestStatus.isLoaded()) {
@@ -81,10 +70,6 @@ public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> exten
             }
         }));
         return super.setLifecycleOwner(lifecycleOwner);
-    }
-
-    public LiveData<PagedList<ItemViewDataHolder>> getPagedList() {
-        return mPagedList;
     }
 
     /**

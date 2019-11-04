@@ -24,6 +24,10 @@
             name="onClickListener"
             type="android.view.View.OnClickListener" />
 
+
+        <variable
+            name="viewData"
+            type="com.cody.component.handler.data.FriendlyViewData" />
     </data>
 
     <RelativeLayout
@@ -58,11 +62,19 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <com.cody.component.app.widget.friendly.FriendlyLayout
+            android:id="@+id/friendlyView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/appbar" />
+            android:layout_below="@+id/appbar"
+            bind:onClickListener="@{onClickListener}"
+            bind:viewData="@{viewData}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </com.cody.component.app.widget.friendly.FriendlyLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/top"
@@ -72,7 +84,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="16dp"
             android:onClick="@{onClickListener::onClick}"
-            bind:srcCompat="@drawable/ic_arrow_upward"
-            bind:fabSize="mini" />
+            bind:fabSize="mini"
+            bind:srcCompat="@drawable/ic_arrow_upward" />
     </RelativeLayout>
 </layout>

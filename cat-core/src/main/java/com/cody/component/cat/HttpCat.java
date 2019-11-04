@@ -70,14 +70,14 @@ public class HttpCat {
     }
 
     /**
-     * 只是单纯的删除图标，实际还在继续拦截
+     * 显示图标
      */
     public void show() {
         LauncherUtil.launcherVisible(getContext(), CatMainActivity.class, true);
     }
 
     /**
-     * 只是单纯的删除图标，实际还在继续拦截
+     * 显示图标且有提示
      */
     public void showWithNotification() {
         LauncherUtil.launcherVisible(getContext(), CatMainActivity.class, true);

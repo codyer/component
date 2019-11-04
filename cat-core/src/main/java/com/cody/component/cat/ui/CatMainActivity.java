@@ -18,27 +18,66 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.cody.component.app.activity.StaticActivity;
-import com.cody.component.bind.adapter.list.BindingListAdapter;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.cody.component.app.activity.AbsPageListActivity;
+import com.cody.component.app.widget.friendly.FriendlyLayout;
+import com.cody.component.bind.adapter.list.BindingViewHolder;
+import com.cody.component.bind.adapter.list.MultiBindingPageListAdapter;
 import com.cody.component.cat.HttpCat;
 import com.cody.component.cat.R;
 import com.cody.component.cat.databinding.CatActivityMainBinding;
-import com.cody.component.cat.db.data.ItemHttpData;
 import com.cody.component.cat.viewmodel.CatViewModel;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
+import com.cody.component.handler.data.FriendlyViewData;
+import com.cody.component.handler.data.ItemViewDataHolder;
 
 /**
  * Created by xu.yi. on 2019/3/26.
  * http 监视器
  */
-public class CatMainActivity extends StaticActivity<CatActivityMainBinding> {
-    private final BindingListAdapter<ItemHttpData> mListAdapter = new BindingListAdapter<ItemHttpData>(this) {
-        @Override
-        public int getItemLayoutId(int viewType) {
-            return R.layout.cat_item_main;
-        }
-    };
+public class CatMainActivity extends AbsPageListActivity<CatActivityMainBinding, CatViewModel> {
+
+    @Override
+    public FriendlyLayout getFriendlyLayout() {
+        return getBinding().friendlyView;
+    }
+
+    @NonNull
+    @Override
+    public MultiBindingPageListAdapter buildListAdapter() {
+        return new MultiBindingPageListAdapter(this, this) {
+            @Override
+            public int getItemLayoutId(int viewType) {
+                if (viewType == ItemViewDataHolder.DEFAULT_TYPE) {
+                    return R.layout.cat_item_main;
+                }
+                return super.getItemLayoutId(viewType);
+            }
+        };
+    }
+
+    @NonNull
+    @Override
+    public RecyclerView getRecyclerView() {
+        return getBinding().recyclerView;
+    }
+
+    @Override
+    protected FriendlyViewData getViewData() {
+        return getViewModel().getFriendlyViewData();
+    }
+
+    @NonNull
+    @Override
+    public Class<CatViewModel> getVMClass() {
+        return CatViewModel.class;
+    }
+
+    @Override
+    public void onItemClick(final BindingViewHolder holder, final View view, final int position, final int id) {
+        CatDetailsActivity.openActivity(CatMainActivity.this, getListAdapter().getItem(position));
+    }
 
     @Override
     protected int getLayoutID() {
@@ -57,11 +96,6 @@ public class CatMainActivity extends StaticActivity<CatActivityMainBinding> {
         if (!TextUtils.isEmpty(HttpCat.getInstance().getName())) {
             getBinding().toolbarTitle.setText(HttpCat.getInstance().getName());
         }
-        getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mListAdapter.setItemClickListener((parent, view, position, id) ->
-                CatDetailsActivity.openActivity(CatMainActivity.this, mListAdapter.getItem(position)));
-        getBinding().recyclerView.setAdapter(mListAdapter);
-        getViewModel(CatViewModel.class).getAllRecordLiveData().observe(this, mListAdapter::submitList);
     }
 
     @Override
@@ -89,6 +123,7 @@ public class CatMainActivity extends StaticActivity<CatActivityMainBinding> {
 
     @Override
     public void onClick(View v) {
+        super.onClick(v);
         if (v.getId() == R.id.top) {
             getBinding().recyclerView.smoothScrollToPosition(0);
         }

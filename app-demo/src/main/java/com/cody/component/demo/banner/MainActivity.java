@@ -64,9 +64,9 @@ public class MainActivity extends StaticActivity<ActivityMainBannerBinding> {
                 startActivity(new Intent(MainActivity.this, BusDemoActivity.class));
                 break;
             case R.id.httpRequest1:
-                ActivityUtil.navigateTo(FriendlyActivity.class);
+//                ActivityUtil.navigateTo(FriendlyActivity.class);
 //                testDialog();
-//                httpRequest1();
+                httpRequest1();
                 break;
             case R.id.httpRequest2:
                 httpRequest2();
@@ -75,7 +75,7 @@ public class MainActivity extends StaticActivity<ActivityMainBannerBinding> {
                 HttpCat.getInstance().hide();
                 break;
             case R.id.showCat:
-                HttpCat.getInstance().show();
+                HttpCat.getInstance().showWithNotification();
                 break;
             case R.id.muteCat:
                 HttpCat.getInstance().mute();

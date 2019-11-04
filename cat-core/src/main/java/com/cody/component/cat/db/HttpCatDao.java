@@ -13,6 +13,7 @@
 package com.cody.component.cat.db;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -37,6 +38,12 @@ public interface HttpCatDao {
 
     @Query("SELECT * FROM http_cat_table WHERE id =:id")
     LiveData<ItemHttpData> queryRecordObservable(long id);
+
+    @Query("select * from http_cat_table order by id DESC")
+    DataSource.Factory<Integer, ItemHttpData> getDataSource();
+
+    @Query("SELECT count(*) FROM http_cat_table")
+    LiveData<Long> count();
 
     @Query("SELECT * FROM http_cat_table")
     List<ItemHttpData> queryAllRecord();
