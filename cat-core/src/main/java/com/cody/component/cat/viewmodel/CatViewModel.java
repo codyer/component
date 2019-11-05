@@ -44,7 +44,7 @@ public class CatViewModel extends AbsPageListViewModel<FriendlyViewData, Integer
     @Override
     protected DataSource.Factory<Integer, ItemViewDataHolder> createDataSourceFactory() {
         mHttpCatDao = HttpCatDatabase
-                .getInstance(HttpCat.getInstance().getContext())
+                .getInstance()
                 .getHttpInformationDao();
         return mHttpCatDao.getDataSource().map(input -> input);
     }

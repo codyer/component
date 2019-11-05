@@ -168,12 +168,12 @@ public class HttpCatInterceptor implements Interceptor {
 
     private long insert(ItemHttpData itemHttpData) {
         showNotification(itemHttpData);
-        return HttpCatDatabase.getInstance(context).getHttpInformationDao().insert(itemHttpData);
+        return HttpCatDatabase.getInstance().getHttpInformationDao().insert(itemHttpData);
     }
 
     private void update(ItemHttpData itemHttpData) {
         showNotification(itemHttpData);
-        HttpCatDatabase.getInstance(context).getHttpInformationDao().update(itemHttpData);
+        HttpCatDatabase.getInstance().getHttpInformationDao().update(itemHttpData);
     }
 
     private void showNotification(ItemHttpData itemHttpData) {

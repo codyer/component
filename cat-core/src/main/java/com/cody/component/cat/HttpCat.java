@@ -66,6 +66,7 @@ public class HttpCat {
     public static Interceptor create(Context context) {
         LauncherUtil.launcherVisible(context, CatMainActivity.class);
         HttpCatHolder.INSTANCE.mContext = new WeakReference<>(context);
+        HttpCatDatabase.init(context);
         return new HttpCatInterceptor(context);
     }
 
@@ -113,14 +114,14 @@ public class HttpCat {
     }
 
     public void clearCache() {
-        HttpCatDatabase.getInstance(getContext()).getHttpInformationDao().deleteAll();
+        HttpCatDatabase.getInstance().getHttpInformationDao().deleteAll();
     }
 
     public LiveData<List<ItemHttpData>> queryAllRecord(int limit) {
-        return HttpCatDatabase.getInstance(getContext()).getHttpInformationDao().queryAllRecordObservable(limit);
+        return HttpCatDatabase.getInstance().getHttpInformationDao().queryAllRecordObservable(limit);
     }
 
     public LiveData<List<ItemHttpData>> queryAllRecord() {
-        return HttpCatDatabase.getInstance(getContext()).getHttpInformationDao().queryAllRecordObservable();
+        return HttpCatDatabase.getInstance().getHttpInformationDao().queryAllRecordObservable();
     }
 }

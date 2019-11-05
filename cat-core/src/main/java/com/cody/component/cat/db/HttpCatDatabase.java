@@ -12,13 +12,15 @@
 
 package com.cody.component.cat.db;
 
+import android.content.Context;
+
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
-import android.content.Context;
 
 import com.cody.component.cat.db.data.ItemHttpData;
+import com.cody.component.cat.exception.NotInitDataBaseException;
 import com.cody.component.cat.utils.Converters;
 
 /**
@@ -33,7 +35,14 @@ public abstract class HttpCatDatabase extends RoomDatabase {
 
     private static volatile HttpCatDatabase instance;
 
-    public static HttpCatDatabase getInstance(Context context) {
+    public static HttpCatDatabase getInstance() {
+        if (instance == null) {
+           throw new NotInitDataBaseException();
+        }
+        return instance;
+    }
+
+    public static void init(Context context) {
         if (instance == null) {
             synchronized (HttpCatDatabase.class) {
                 if (instance == null) {
@@ -41,7 +50,6 @@ public abstract class HttpCatDatabase extends RoomDatabase {
                 }
             }
         }
-        return instance;
     }
 
     private static HttpCatDatabase create(final Context context) {
