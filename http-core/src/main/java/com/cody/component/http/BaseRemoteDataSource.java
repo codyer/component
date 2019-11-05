@@ -29,7 +29,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by xu.yi. on 2019/4/6.
  */
-public abstract class BaseRemoteDataSource {
+public abstract class BaseRemoteDataSource implements IDataSource{
 
     private final CompositeDisposable mCompositeDisposable;
     private final IView mBaseViewModel;
@@ -47,6 +47,7 @@ public abstract class BaseRemoteDataSource {
         return RetrofitManagement.getInstance().getService(url, clz);
     }
 
+    @Override
     public void clear() {
         if (mCompositeDisposable != null) {
             mCompositeDisposable.clear();

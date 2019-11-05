@@ -20,7 +20,7 @@ import com.cody.component.http.repository.BaseRepository;
  * Created by xu.yi. on 2019-05-22.
  * component
  */
-public class AccountRepository extends BaseRepository<IAccountDataSource> implements IAccountDataSource {
+public class AccountRepository extends BaseRepository<AccountDataSource> implements IAccountDataSource {
 
     public static AccountRepository getRepository(BaseViewModel viewModel) {
         return new AccountRepository(viewModel);
@@ -33,7 +33,6 @@ public class AccountRepository extends BaseRepository<IAccountDataSource> implem
     @Override
     public void queryWeather(final String cityName, final RequestCallback<Weather> callback) {
         // 自动生成发现这个方法需要缓存
-
         mDataSource.queryWeather(cityName, callback);
     }
 

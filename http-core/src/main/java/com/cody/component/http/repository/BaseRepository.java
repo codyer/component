@@ -12,15 +12,22 @@
 
 package com.cody.component.http.repository;
 
+import com.cody.component.http.IDataSource;
+
 /**
  * Created by xu.yi. on 2019/4/6.
- *
  */
-public class BaseRepository<T> {
+public class BaseRepository<T extends IDataSource> {
 
     protected final T mDataSource;
 
     public BaseRepository(T dataSource) {
         this.mDataSource = dataSource;
+    }
+
+    public void clear() {
+        if (mDataSource != null) {
+            mDataSource.clear();
+        }
     }
 }

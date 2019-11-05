@@ -39,6 +39,9 @@ public interface HttpCatDao {
     @Query("SELECT * FROM http_cat_table WHERE id =:id")
     LiveData<ItemHttpData> queryRecordObservable(long id);
 
+    @Query("SELECT * FROM http_cat_table WHERE mUrl =:url and mMethod=:method and mResponseCode==200 order by mResponseDate DESC limit 1")
+    LiveData<ItemHttpData> queryCacheData(String url, String method);
+
     @Query("select * from http_cat_table order by id DESC")
     DataSource.Factory<Integer, ItemHttpData> getDataSource();
 
