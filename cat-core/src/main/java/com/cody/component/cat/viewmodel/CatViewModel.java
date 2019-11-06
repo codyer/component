@@ -51,7 +51,9 @@ public class CatViewModel extends AbsPageListViewModel<FriendlyViewData, Integer
 
     @Override
     public <T extends BaseViewModel> T setLifecycleOwner(final LifecycleOwner lifecycleOwner) {
-        mHttpCatDao.count().observe(lifecycleOwner, count -> submitStatus(count > 0 ? getRequestStatus().end() : getRequestStatus().empty()));
+        if (mLifecycleOwner == null && lifecycleOwner != null) {
+            mHttpCatDao.count().observe(lifecycleOwner, count -> submitStatus(count > 0 ? getRequestStatus().end() : getRequestStatus().empty()));
+        }
         return super.setLifecycleOwner(lifecycleOwner);
     }
 

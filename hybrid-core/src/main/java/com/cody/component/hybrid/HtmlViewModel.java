@@ -12,6 +12,9 @@
 
 package com.cody.component.hybrid;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.os.Build;
 import android.text.TextUtils;
 
 import com.cody.component.blues.CrashUtil;
@@ -21,8 +24,10 @@ import com.cody.component.handler.viewmodel.SingleViewModel;
 import com.cody.component.hybrid.activity.HtmlActivity;
 import com.cody.component.hybrid.core.UrlUtil;
 import com.cody.component.hybrid.data.HtmlViewData;
-import com.cody.component.lib.exception.BaseException;
 import com.cody.component.util.ActivityUtil;
+import com.cody.component.util.LogUtil;
+
+import java.net.URISyntaxException;
 
 
 /**
@@ -43,7 +48,49 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
             return true;
         }
         // 自定义请求在上面处理，拦截其他非http页面
-        if (!UrlUtil.isHttpUrl(url)) return true;
+        if (!UrlUtil.isHttpUrl(url)) {
+            Intent intent = null;
+            // perform generic parsing of the URI to turn it into an Intent.
+            try {
+                if (url.startsWith("android-app://")) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                        intent = Intent.parseUri(url, Intent.URI_ANDROID_APP_SCHEME);
+                    }
+                } else {
+                    intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+                }
+            } catch (URISyntaxException ex) {
+                LogUtil.w("Browser", "Bad URI " + url + ": " + ex.getMessage());
+                return false;
+            }
+            if (intent == null || TextUtils.isEmpty(intent.getScheme())) {
+                return true;
+            }
+
+            // check whether the intent can be resolved. If not, we will see
+            // whether we can download it from the Market.
+            // 如果本地没装能响应特殊协议的应用则return
+            if (ActivityUtil.getCurrentActivity() == null || intent.resolveActivity(ActivityUtil.getCurrentActivity().getPackageManager()) == null) {
+                return true;
+            }
+            // sanitize the Intent, ensuring web pages can not bypass browser
+            // security (only access to BROWSABLE activities).
+            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+
+            try {
+                if (ActivityUtil.getCurrentActivity().startActivityIfNeeded(intent, -1)) {
+                    LogUtil.d("tag", "success use the intent ");
+                    return true;
+                }
+            } catch (ActivityNotFoundException ex) {
+                LogUtil.d("tag", "error message is --> " + ex.getMessage());
+                // ignore the error. If no application can handle the URL,
+                // eg about:blank, assume the browser can handle it.
+            } catch (SecurityException se) {
+                se.printStackTrace();
+            }
+            return true;
+        }
         //从内部链接跳到外部链接打开新的html页面
         if (UrlUtil.isInnerLink(getFriendlyViewData().getUrl().get())
                 && !UrlUtil.isInnerLink(url)) {
@@ -72,7 +119,7 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
 
     public void onProgressChanged(final int progress) {
         getFriendlyViewData().setProgress(progress);
-        if (progress == HtmlViewData.MAX_PROGRESS){
+        if (progress == HtmlViewData.MAX_PROGRESS) {
             submitStatus(getRequestStatus().loaded());
         }
     }

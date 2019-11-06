@@ -20,8 +20,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.cody.component.cat.db.data.ItemHttpData;
-import com.cody.component.cat.exception.NotInitDataBaseException;
 import com.cody.component.cat.utils.Converters;
+import com.cody.component.lib.exception.NotInitializedException;
 
 /**
  * Created by xu.yi. on 2019/4/5.
@@ -37,7 +37,7 @@ public abstract class HttpCatDatabase extends RoomDatabase {
 
     public static HttpCatDatabase getInstance() {
         if (instance == null) {
-           throw new NotInitDataBaseException();
+           throw new NotInitializedException("HttpCatDatabase");
         }
         return instance;
     }

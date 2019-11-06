@@ -13,6 +13,8 @@
 package com.cody.component.demo.data;
 
 import com.cody.component.demo.bean.TestDataBean;
+import com.cody.component.http.HttpCore;
+import com.cody.component.http.interceptor.HttpCacheInterceptor;
 import com.cody.component.http.lib.annotation.Domain;
 
 import io.reactivex.Observable;
@@ -20,6 +22,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -41,13 +44,19 @@ public interface CatHttpBin {
 
     @PATCH("/patch")
     Observable<Void> patch(@Body TestDataBean body);
-
+    @Headers({
+            HttpCore.CACHE_KEY +":PATCH-https://httpbin.org/patch",
+    })
     @PUT("/put")
     Observable<Void> put(@Body TestDataBean body);
-
+    @Headers({
+            HttpCore.CACHE_KEY +":PUT-https://httpbin.org/put",
+    })
     @DELETE("/delete")
     Observable<Void> delete();
-
+    @Headers({
+            HttpCore.CACHE_KEY +":DELETE-https://httpbin.org/delete",
+    })
     @GET("/status/{tv_code}")
     Observable<Void> status(@Path("tv_code") int code);
 

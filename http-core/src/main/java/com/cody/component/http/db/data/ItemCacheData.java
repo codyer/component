@@ -15,6 +15,7 @@ package com.cody.component.http.db.data;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -27,19 +28,12 @@ import java.util.Date;
 @Entity(tableName = "http_cache_table")
 public class ItemCacheData implements Parcelable {
 
-    @PrimaryKey(autoGenerate = true)
-    private long id;
     private Date mRequestDate;
-    private String mKey;
+    @PrimaryKey
+    @NonNull
+    private String mKey = "";
+    private String mVersion;
     private String mDataJson;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(final long id) {
-        this.id = id;
-    }
 
     public Date getRequestDate() {
         return mRequestDate;
@@ -49,12 +43,21 @@ public class ItemCacheData implements Parcelable {
         mRequestDate = requestDate;
     }
 
+    @NonNull
     public String getKey() {
         return mKey;
     }
 
-    public void setKey(final String key) {
+    public void setKey(@NonNull final String key) {
         mKey = key;
+    }
+
+    public String getVersion() {
+        return mVersion;
+    }
+
+    public void setVersion(final String version) {
+        mVersion = version;
     }
 
     public String getDataJson() {
@@ -72,9 +75,9 @@ public class ItemCacheData implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
         dest.writeLong(this.mRequestDate != null ? this.mRequestDate.getTime() : -1);
         dest.writeString(this.mKey);
+        dest.writeString(this.mVersion);
         dest.writeString(this.mDataJson);
     }
 
@@ -82,10 +85,10 @@ public class ItemCacheData implements Parcelable {
     }
 
     protected ItemCacheData(Parcel in) {
-        this.id = in.readLong();
         long tmpMRequestDate = in.readLong();
         this.mRequestDate = tmpMRequestDate == -1 ? null : new Date(tmpMRequestDate);
         this.mKey = in.readString();
+        this.mVersion = in.readString();
         this.mDataJson = in.readString();
     }
 

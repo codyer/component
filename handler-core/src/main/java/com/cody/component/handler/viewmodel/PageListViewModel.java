@@ -60,15 +60,17 @@ public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> exten
 
     @Override
     public <T extends BaseViewModel> T setLifecycleOwner(final LifecycleOwner lifecycleOwner) {
-        getPagedList().observe(lifecycleOwner, items -> getRequestStatusLive().observe(lifecycleOwner, new Observer<RequestStatus>() {
-            @Override
-            public void onChanged(final RequestStatus requestStatus) {
-                if (requestStatus.isLoaded()) {
-                    getRequestStatusLive().removeObserver(this);
-                    mPageDataMapper.setOldItems(items);
+        if (mLifecycleOwner == null && lifecycleOwner != null) {
+            getPagedList().observe(lifecycleOwner, items -> getRequestStatusLive().observe(lifecycleOwner, new Observer<RequestStatus>() {
+                @Override
+                public void onChanged(final RequestStatus requestStatus) {
+                    if (requestStatus.isLoaded()) {
+                        getRequestStatusLive().removeObserver(this);
+                        mPageDataMapper.setOldItems(items);
+                    }
                 }
-            }
-        }));
+            }));
+        }
         return super.setLifecycleOwner(lifecycleOwner);
     }
 

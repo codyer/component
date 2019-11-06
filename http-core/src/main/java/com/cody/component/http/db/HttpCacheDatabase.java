@@ -20,6 +20,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.cody.component.http.db.data.ItemCacheData;
+import com.cody.component.lib.exception.NotInitializedException;
 
 /**
  * Created by xu.yi. on 2019/5/22.
@@ -33,7 +34,14 @@ public abstract class HttpCacheDatabase extends RoomDatabase {
 
     private static volatile HttpCacheDatabase instance;
 
-    public static HttpCacheDatabase getInstance(Context context) {
+    public static HttpCacheDatabase getInstance() {
+        if (instance == null) {
+            throw new NotInitializedException("HttpCacheDatabase");
+        }
+        return instance;
+    }
+
+    public static void init(Context context) {
         if (instance == null) {
             synchronized (HttpCacheDatabase.class) {
                 if (instance == null) {
@@ -41,13 +49,12 @@ public abstract class HttpCacheDatabase extends RoomDatabase {
                 }
             }
         }
-        return instance;
     }
 
     private static HttpCacheDatabase create(final Context context) {
         return Room.databaseBuilder(context, HttpCacheDatabase.class, DB_NAME).build();
     }
 
-    public abstract HttpCacheDao getHttpInformationDao();
+    public abstract HttpCacheDao getCacheDao();
 
 }

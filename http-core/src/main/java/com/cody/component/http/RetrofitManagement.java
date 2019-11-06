@@ -14,6 +14,7 @@ package com.cody.component.http;
 
 import android.webkit.URLUtil;
 
+import com.cody.component.http.interceptor.HttpCacheInterceptor;
 import com.cody.component.http.lib.config.HttpConfig;
 import com.cody.component.http.lib.exception.ServerResultHttpException;
 import com.cody.component.http.lib.exception.TokenInvalidHttpException;
@@ -165,7 +166,7 @@ class RetrofitManagement {
                 .readTimeout(HttpConfig.READ_TIMEOUT, TimeUnit.MILLISECONDS)
                 .writeTimeout(HttpConfig.WRITE_TIMEOUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(HttpConfig.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS)
-//                .addInterceptor(new HttpInterceptor())
+                .addInterceptor(new HttpCacheInterceptor())
                 .addInterceptor(new HeaderInterceptor())
                 .retryOnConnectionFailure(true);
         if (HttpCore.getInstance().getContext() != null) {

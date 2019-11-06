@@ -15,6 +15,7 @@ package com.cody.component.http.db;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -30,28 +31,25 @@ import java.util.List;
 @Dao
 public interface HttpCacheDao {
 
-    @Insert
-    long insert(ItemCacheData item);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(ItemCacheData item);
 
     @Update
     void update(ItemCacheData item);
 
-    @Query("SELECT * FROM http_cache_table WHERE mKey =:key")
-    ItemCacheData queryCacheByKey(String key);
+    @Query("SELECT * FROM http_cache_table WHERE mVersion=:version and mKey=:key order by mRequestDate DESC limit 1")
+    ItemCacheData queryCacheByVersionAndKey(String version, String key);
 
-    @Query("SELECT * FROM http_cache_table WHERE mKey =:key")
-    LiveData<ItemCacheData> queryCacheByKeyObservable(String key);
-
-    @Query("SELECT * FROM http_cache_table WHERE id =:id")
-    LiveData<ItemCacheData> queryCacheObservable(long id);
+    @Query("SELECT * FROM http_cache_table WHERE mVersion=:version and  mKey =:key order by mRequestDate DESC limit 1")
+    LiveData<ItemCacheData> queryCacheByVersionAndKeyObservable(String version, String key);
 
     @Query("SELECT * FROM http_cache_table")
     List<ItemCacheData> queryAllCache();
 
-    @Query("SELECT * FROM http_cache_table order by id ASC limit :limit")
+    @Query("SELECT * FROM http_cache_table order by mRequestDate ASC limit :limit")
     LiveData<List<ItemCacheData>> queryAllCacheObservable(int limit);
 
-    @Query("SELECT * FROM http_cache_table order by id ASC")
+    @Query("SELECT * FROM http_cache_table order by mRequestDate ASC")
     LiveData<List<ItemCacheData>> queryAllCacheObservable();
 
     @Query("DELETE FROM http_cache_table")
