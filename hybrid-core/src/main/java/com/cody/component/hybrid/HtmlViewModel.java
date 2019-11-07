@@ -52,8 +52,8 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
             Intent intent = null;
             // perform generic parsing of the URI to turn it into an Intent.
             try {
-                if (url.startsWith("android-app://")) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                    if (url.startsWith("android-app://")) {
                         intent = Intent.parseUri(url, Intent.URI_ANDROID_APP_SCHEME);
                     }
                 } else {
