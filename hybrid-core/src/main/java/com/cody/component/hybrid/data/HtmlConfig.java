@@ -106,15 +106,6 @@ public class HtmlConfig implements Parcelable {
         return this;
     }
 
-    public JSONObject getJsonData() throws JSONException {
-        return new JSONObject(data);
-    }
-
-    public HtmlConfig setJsonData(@NonNull final JSONObject data) {
-        this.data = data.toString();
-        return this;
-    }
-
     @NonNull
     @Override
     public String toString() {

@@ -31,6 +31,7 @@ import java.lang.reflect.Method;
  */
 public class JsInteract {
     private static final String JS_BRIDGE_PROTOCOL_SCHEMA = "js_bridge";
+    private static final String DEFAULT_METHOD = "defaultMethod";
     private String mHandlerName;
     private String mMethodName;
     private String mPort;
@@ -97,24 +98,40 @@ public class JsInteract {
 
     private void invokeNativeMethod(WebView webView) {
         Method method = JsBridge.findMethod(mHandlerName, mMethodName);
+        if (method != null) {
+            Object[] args = new Object[3];
+            args[0] = webView;
+            args[1] = mParams;
+            args[2] = mJsCallback;
 
-        if (method == null) {
-            String msg = "Method (" + mMethodName + ") in this class (" + mHandlerName + ") not found!";
-            mJsCallback.failure(msg);
+            try {
+                method.invoke(null, args);
+            } catch (Exception e) {
+                LogUtil.e(Log.getStackTraceString(e));
+                String msg = e.getCause().toString();
+                mJsCallback.failure(msg);
+            }
             return;
-        }
+        } else {
+            Method defaultMethod = JsBridge.findMethod(mHandlerName, DEFAULT_METHOD);
+            if (defaultMethod != null) {
+                Object[] args = new Object[4];
+                args[0] = webView;
+                args[1] = mMethodName;
+                args[2] = mParams;
+                args[3] = mJsCallback;
 
-        Object[] args = new Object[3];
-        args[0] = webView;
-        args[1] = mParams;
-        args[2] = mJsCallback;
-
-        try {
-            method.invoke(null, args);
-        } catch (Exception e) {
-            LogUtil.e(Log.getStackTraceString(e));
-            String msg = e.getCause().toString();
-            mJsCallback.failure(msg);
+                try {
+                    defaultMethod.invoke(null, args);
+                } catch (Exception e) {
+                    LogUtil.e(Log.getStackTraceString(e));
+                    String msg = e.getCause().toString();
+                    mJsCallback.failure(msg);
+                }
+                return;
+            }
         }
+        String msg = "Method (" + mMethodName + ") in this class (" + mHandlerName + ") not found!";
+        mJsCallback.failure(msg);
     }
 }

@@ -27,7 +27,9 @@ import com.cody.component.hybrid.data.HtmlViewData;
 import com.cody.component.util.ActivityUtil;
 import com.cody.component.util.LogUtil;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 
 
 /**
@@ -42,6 +44,11 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
 
     public boolean shouldOverrideUrl(String url) {
         if (TextUtils.isEmpty(url)) return true;
+        try {
+            url = URLDecoder.decode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         if (url.contains("tel:") || url.contains("phone:")) {
             url = url.replace("phone:", "").replace("tel:", "");
             ActivityUtil.openDialPage(url);

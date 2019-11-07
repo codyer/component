@@ -83,7 +83,7 @@ public class JsHandlerFactory {
         for (Method method : methods) {
             if (checkMethod(method)) {
                 Class<?>[] parameterTypes = method.getParameterTypes();
-                if (parameterTypes != null && parameterTypes.length == 3) {
+                if (parameterTypes != null && (parameterTypes.length == 3 || parameterTypes.length == 4)) {
                     if (checkParameter(parameterTypes)) {
                         arrayMap.put(method.getName(), method);
                     }
@@ -106,11 +106,20 @@ public class JsHandlerFactory {
     /**
      * 检查参数格式是否正确
      * 正确格式：public static void ***(WebView webView, JsonObject data, JsCallback callback){}
+     * 正确格式：public static void ***(WebView webView, String method, JsonObject data, JsCallback callback){}
      */
     private boolean checkParameter(Class<?>[] parameterTypes) {
-        return WebView.class == parameterTypes[0] &&
-                JSONObject.class == parameterTypes[1] &&
-                JsCallback.class == parameterTypes[2];
+        if (parameterTypes.length == 3) {
+            return WebView.class == parameterTypes[0] &&
+                    JSONObject.class == parameterTypes[1] &&
+                    JsCallback.class == parameterTypes[2];
+        } else if (parameterTypes.length == 4) {// 默认方法
+            return WebView.class == parameterTypes[0] &&
+                    String.class == parameterTypes[1] &&
+                    JSONObject.class == parameterTypes[2] &&
+                    JsCallback.class == parameterTypes[3];
+        }
+        return false;
     }
 
 }

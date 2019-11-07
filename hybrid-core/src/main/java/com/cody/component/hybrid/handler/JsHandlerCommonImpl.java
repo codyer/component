@@ -33,6 +33,14 @@ import com.cody.component.util.NotProguard;
 @NotProguard
 public final class JsHandlerCommonImpl implements JsHandler {
 
+    /**
+     * 默认方法处理器，当找不到对应的处理方法的时候调用此方法
+     */
+    public static void defaultMethod(WebView webView, String method, JSONObject params, JsCallback callback) {
+        String msg = "Method (" + method + ") in this class (JsHandlerCommonImpl) not found!";
+        callback.failure(msg);
+    }
+
     public static void getAppName(WebView webView, JSONObject params, JsCallback callback) {
         String appName;
         try {
