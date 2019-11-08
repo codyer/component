@@ -32,6 +32,7 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -55,6 +56,10 @@ import java.util.List;
 public abstract class BaseActivity extends AppCompatActivity implements IBaseView,
         DialogInterface.OnCancelListener,
         BGASwipeBackHelper.Delegate {
+    static {// 当在非ImageView控件中(Button、TextView等)使用svg作为Background、CompoundDrawable时
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
     private final static float DISTANCE = dp2px(10);
     private LoadingDialog mLoading;
     private List<String> mViewModelNames;
