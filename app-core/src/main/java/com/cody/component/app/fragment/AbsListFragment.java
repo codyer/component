@@ -85,6 +85,7 @@ public abstract class AbsListFragment<B extends ViewDataBinding, VM extends List
 
     @Override
     public void scrollToTop() {
+        if (unBound())return;
         RecyclerViewUtil.smoothScrollToTop(getRecyclerView());
     }
 }

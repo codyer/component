@@ -85,6 +85,7 @@ public abstract class AbsPageListActivity<B extends ViewDataBinding, VM extends 
 
     @Override
     public void scrollToTop() {
+        if (unBound())return;
         RecyclerViewUtil.smoothScrollToTop(getRecyclerView());
     }
 }
