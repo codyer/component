@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/dimen_normal"
-            android:drawableTop="@drawable/ic_load_failed"
+            android:drawableTop="@drawable/ic_load_failed_selector_for_text_view"
             android:drawablePadding="@dimen/dimen_smaller"
             android:ellipsize="end"
             android:gravity="center"

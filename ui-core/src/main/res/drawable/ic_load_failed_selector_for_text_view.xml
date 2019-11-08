@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *************************************************************
+  ~ 文件：ic_load_failed_selector_for_text_view.xml  模块：ui-core  项目：component
+  ~ 当前修改时间：2019年11月08日 10:55:29
+  ~ 上次修改时间：2019年11月08日 10:55:29
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：ui-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_load_failed"/>
+</selector>

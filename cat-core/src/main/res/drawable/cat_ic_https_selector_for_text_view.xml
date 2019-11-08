@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ *************************************************************
+  ~ 文件：cat_ic_https_selector_for_text_view.xml  模块：cat-core  项目：component
+  ~ 当前修改时间：2019年11月08日 10:53:14
+  ~ 上次修改时间：2019年11月08日 10:53:14
+  ~ 作者：Cody.yi   https://github.com/codyer
+  ~
+  ~ 描述：cat-core
+  ~ Copyright (c) 2019
+  ~ *************************************************************
+  -->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/cat_ic_https"/>
+</selector>

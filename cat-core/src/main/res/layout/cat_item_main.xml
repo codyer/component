@@ -57,7 +57,7 @@
             android:layout_marginStart="12dp"
             android:layout_toStartOf="@+id/status"
             android:layout_toEndOf="@+id/index"
-            android:drawableStart="@{viewData.isSsl?@drawable/cat_ic_https:null}"
+            android:drawableStart="@{viewData.isSsl?@drawable/cat_ic_https_selector_for_text_view:null}"
             android:drawablePadding="5dp"
             android:text="@{viewData.host}"
             android:textAppearance="@style/cat.title"
