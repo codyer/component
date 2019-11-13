@@ -44,7 +44,6 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     public static final String HTML_WITH_CONFIG = "html_with_config";
     private HtmlFragment mHtmlFragment;
     private HtmlConfig mHtmlConfig;
-    private Menu mMenu;
     private static Boolean isExit = false;
     private boolean mIsRoot = false;
 
@@ -138,14 +137,18 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
-        mHtmlFragment.onCancel(dialog);
+        if (mHtmlFragment != null) {
+            mHtmlFragment.onCancel(dialog);
+        }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
-        mHtmlFragment.onActivityResult(requestCode, resultCode, data);
+        if (mHtmlFragment != null) {
+            mHtmlFragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
@@ -190,10 +193,9 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
 
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
-        mMenu = menu;
-        if (null != mMenu) {
-            if (mMenu.findItem(R.id.action_share) != null) {
-                mMenu.findItem(R.id.action_share).setVisible(mHtmlConfig != null && mHtmlConfig.isCanShare());
+        if (null != menu) {
+            if (menu.findItem(R.id.action_share) != null) {
+                menu.findItem(R.id.action_share).setVisible(mHtmlConfig != null && mHtmlConfig.isCanShare());
             }
         }
         return super.onPrepareOptionsMenu(menu);

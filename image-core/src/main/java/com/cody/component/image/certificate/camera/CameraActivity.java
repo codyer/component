@@ -317,6 +317,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.camera_preview) {
+            if (mCameraPreview == null || mCameraPreview.isDestroyed()) return;
             mCameraPreview.focus();
         } else if (id == R.id.camera_close) {
             finish();
@@ -327,6 +328,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
                 mImageViewDelegate.withId(R.id.gallery).selectImage(1, false);
             }
         } else if (id == R.id.camera_flash) {
+            if (mCameraPreview == null || mCameraPreview.isDestroyed()) return;
             boolean isFlashOn = mCameraPreview.switchFlashLight();
             mFlashView.setImageResource(isFlashOn ? R.drawable.ic_flashlight_on : R.drawable.ic_flashlight_off);
         } else if (id == R.id.camera_result_ok) {
@@ -336,6 +338,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
             /*设置成手动裁剪模式*/
             runOnUiThread(() -> mCropImageView.setImageBitmap(mCropBitmap));
         } else if (id == R.id.camera_result_cancel) {
+            if (mCameraPreview == null || mCameraPreview.isDestroyed()) return;
             mCameraPreview.setEnabled(true);
             mCameraPreview.addCallback();
             mCameraPreview.startPreview();
@@ -348,6 +351,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
      * 拍照
      */
     private void takePhoto() {
+        if (mCameraPreview == null || mCameraPreview.isDestroyed()) return;
         mCameraPreview.setEnabled(false);
         CameraUtils.getCamera().setOneShotPreviewCallback((bytes, camera) -> {
             final Camera.Size size = camera.getParameters().getPreviewSize(); //获取预览大小
@@ -402,6 +406,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
      * 设置裁剪布局
      */
     private void setCropLayout() {
+        if (mCameraPreview == null || mCameraPreview.isDestroyed()) return;
         mCropView.setVisibility(View.GONE);
         mCameraPreview.setVisibility(View.GONE);
         mOptionView.setVisibility(View.INVISIBLE);
@@ -414,6 +419,7 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
      * 设置拍照布局
      */
     private void setTakePhotoLayout() {
+        if (mCameraPreview == null || mCameraPreview.isDestroyed()) return;
         mCropView.setVisibility(View.VISIBLE);
         mCameraPreview.setVisibility(View.VISIBLE);
         mOptionView.setVisibility(View.VISIBLE);

@@ -57,7 +57,7 @@ public class UrlUtil {
                     return true;
                 }
                 // debug 条件下，ip地址的都算内网地址，测试用
-                return BuildConfig.DEBUG;
+                return JsBridge.getInstance().isDebugMode();
             }
             return false;
         } catch (Exception e) {

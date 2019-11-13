@@ -60,7 +60,10 @@ public class CropImageView extends FrameLayout {
     public void crop(CropListener listener, boolean needStretch) {
         if (listener == null)
             return;
-        mCropOverlayView.crop(listener, needStretch);
+        try {
+            mCropOverlayView.crop(listener, needStretch);
+        } catch (Exception e) {
+            listener.onFinish(null);
+        }
     }
-
 }

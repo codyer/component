@@ -230,4 +230,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
             mSurfaceHolder.addCallback(this);
         }
     }
+
+    public boolean isDestroyed() {
+        return mCamera == null || mSensorController == null || mSurfaceHolder == null;
+    }
 }

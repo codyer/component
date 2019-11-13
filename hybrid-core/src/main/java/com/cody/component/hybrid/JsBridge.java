@@ -59,6 +59,7 @@ public class JsBridge {
     private String APP_NAME = "app";
     private String HOST_SUFFIX = "";
     private boolean mRefreshable = true;
+    private boolean mDebugMode = BuildConfig.DEBUG;
     private int mRequestCodeSequence = 0x001;
     final private static String USER_AGENT = "android;hybrid-core:";
     private volatile static JsBridge sInstance;
@@ -121,6 +122,10 @@ public class JsBridge {
 
     public boolean isRefreshable() {
         return mRefreshable;
+    }
+
+    public boolean isDebugMode() {
+        return mDebugMode;
     }
 
     /**
@@ -238,12 +243,19 @@ public class JsBridge {
         return this;
     }
 
-
     /**
      * 是否支持刷新
      */
     public JsBridge refreshable(boolean refreshable) {
         sInstance.mRefreshable = refreshable;
+        return this;
+    }
+
+    /**
+     * 是否支持刷新
+     */
+    public JsBridge setDebugMode(boolean debugMode) {
+        sInstance.mDebugMode = debugMode;
         return this;
     }
 
@@ -349,7 +361,7 @@ public class JsBridge {
         webView.setWebViewClient(new JsWebViewClient(viewModel));
         webView.setWebChromeClient(new JsWebChromeClient(webView, viewModel, mFileChooserCallBack));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG);
+            WebView.setWebContentsDebuggingEnabled(mDebugMode);
         }
         if (mOnWebViewInitListener != null) {
             mOnWebViewInitListener.onWebViewInit(webView);
