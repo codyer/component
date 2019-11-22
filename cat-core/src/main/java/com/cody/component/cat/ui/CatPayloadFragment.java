@@ -95,7 +95,11 @@ public class CatPayloadFragment extends StaticFragment<CatFragmentPayloadBinding
             getBinding().headers.setText(Html.fromHtml(headersString));
         }
         if (isJson) {
-            getBinding().json.bindJson(bodyString);
+            try {
+                getBinding().json.bindJson(bodyString);
+            } catch (Exception e) {
+                showToast(e.getMessage());
+            }
         }
         if (!isPlainText) {
             getBinding().body.setText("(encoded or binary body omitted)");

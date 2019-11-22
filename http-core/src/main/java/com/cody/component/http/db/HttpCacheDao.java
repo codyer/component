@@ -32,7 +32,7 @@ import java.util.List;
 public interface HttpCacheDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(ItemCacheData item);
+    long insert(ItemCacheData item);
 
     @Update
     void update(ItemCacheData item);

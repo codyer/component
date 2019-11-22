@@ -51,9 +51,9 @@ public abstract class AbsBindFragment<B extends ViewDataBinding, VM extends Base
             mViewModel = buildViewModel();
         }
         if (mViewModel == null) {
-           return getViewModel(getVMClass());
+           return mViewModel = getViewModel(getVMClass());
         }else {
-            return getViewModel(getVMClass(), new ViewModelProvider.Factory() {
+            return mViewModel = getViewModel(getVMClass(), new ViewModelProvider.Factory() {
                 @NonNull
                 @Override
                 @SuppressWarnings("unchecked")

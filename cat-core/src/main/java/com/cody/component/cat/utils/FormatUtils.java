@@ -90,14 +90,18 @@ public class FormatUtils {
     }
 
     public static String formatBody(String body, String contentType) {
-        if (contentType != null && contentType.toLowerCase().contains("json")) {
-            JSONObject object = JSONObject.parseObject(body);
-            return JSON.toJSONString(object, SerializerFeature.PrettyFormat,
-                    SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
-        } else if (contentType != null && contentType.toLowerCase().contains("xml")) {
-            return FormatUtils.formatXml(body);
-        } else {
-            return body;
+        try {
+            if (contentType != null && contentType.toLowerCase().contains("json")) {
+                JSONObject object = JSONObject.parseObject(body);
+                return JSON.toJSONString(object, SerializerFeature.PrettyFormat,
+                        SerializerFeature.WriteMapNullValue, SerializerFeature.WriteDateUseDateFormat);
+            } else if (contentType != null && contentType.toLowerCase().contains("xml")) {
+                return FormatUtils.formatXml(body);
+            } else {
+                return body;
+            }
+        }catch (Exception e){
+           return body;
         }
     }
 

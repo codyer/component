@@ -49,8 +49,6 @@ public class HttpCacheInterceptor implements Interceptor {
 
     private static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
 
-    private long maxContentLength = 250000L;
-
     public HttpCacheInterceptor() {
     }
 
@@ -74,6 +72,7 @@ public class HttpCacheInterceptor implements Interceptor {
                 itemCacheData.setVersion(HttpCore.getInstance().getVersion());
                 itemCacheData.setKey(cache);
                 itemCacheData.setRequestDate(new Date());
+                insert(itemCacheData);
                 ResponseBody responseBody = response.body();
                 if (responseBody != null && HttpHeaders.hasBody(response) && bodyAllSupportedEncoding(response.headers())) {
                     BufferedSource source = getNativeSource(response);
@@ -92,7 +91,7 @@ public class HttpCacheInterceptor implements Interceptor {
                         if (isPlaintext(buffer)) {
                             itemCacheData.setDataJson(readFromBuffer(buffer.clone(), charset));
                         }
-                        insert(itemCacheData);
+                        update(itemCacheData);
                     }
                 }
             }
@@ -104,6 +103,10 @@ public class HttpCacheInterceptor implements Interceptor {
 
     private void insert(ItemCacheData itemHttpData) {
         HttpCacheDatabase.getInstance().getCacheDao().insert(itemHttpData);
+    }
+
+    private void update(ItemCacheData itemHttpData) {
+        HttpCacheDatabase.getInstance().getCacheDao().update(itemHttpData);
     }
 
     private boolean isPlaintext(Buffer buffer) {
@@ -135,24 +138,19 @@ public class HttpCacheInterceptor implements Interceptor {
 
     private String readFromBuffer(Buffer buffer, Charset charset) {
         long bufferSize = buffer.size();
-        long maxBytes = Math.min(bufferSize, maxContentLength);
         String body;
         try {
-            body = buffer.readString(maxBytes, charset);
+            body = buffer.readString(bufferSize, charset);
         } catch (EOFException e) {
             body = "\\n\\n--- Unexpected end of content ---";
-        }
-        if (bufferSize > maxContentLength) {
-            body += "\\n\\n--- Content truncated ---";
         }
         return body;
     }
 
-    private BufferedSource getNativeSource(Response response) throws IOException {
+    private BufferedSource getNativeSource(Response response) {
         if (bodyGzipped(response.headers())) {
-            BufferedSource source = response.peekBody(maxContentLength).source();
-            if (source.buffer().size() < maxContentLength) {
-                return getNativeSource(source, true);
+            if (response.body() != null) {
+                return getNativeSource(response.body().source(), true);
             } else {
                 Log.e(TAG, "gzip encoded response was too long");
             }
