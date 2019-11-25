@@ -12,6 +12,7 @@
 
 package com.cody.component.hybrid.activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,12 +62,24 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
     }
 
     /**
+     * 设置参数到 bundle
+     */
+    public static Intent putConfig(HtmlConfig config) {
+        Intent intent = new Intent();
+        Activity activity = ActivityUtil.getCurrentActivity();
+        if (activity == null) return intent;
+        intent.setClass(activity, HtmlActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(HTML_WITH_CONFIG, config);
+        intent.putExtras(bundle);
+        return intent;
+    }
+
+    /**
      * 跳转html页面统一使用此函数
      */
     public static void startHtml(HtmlConfig config) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(HTML_WITH_CONFIG, config);
-        ActivityUtil.navigateTo(HtmlActivity.class, bundle);
+        ActivityUtil.navigateTo(putConfig(config));
     }
 
     /**

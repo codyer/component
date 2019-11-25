@@ -47,10 +47,12 @@ public abstract class AbsBindFragment<B extends ViewDataBinding, VM extends Base
     }
 
     public VM getViewModel() {
-        if (mViewModel == null){
+        if (mViewModel == null){// 检查是否需要自己构建viewModel
             mViewModel = buildViewModel();
+        }else {// 已经构建过不需要重复构建
+            return mViewModel;
         }
-        if (mViewModel == null) {
+        if (mViewModel == null) {// 使用默认构造函数创建
            return mViewModel = getViewModel(getVMClass());
         }else {
             return mViewModel = getViewModel(getVMClass(), new ViewModelProvider.Factory() {
