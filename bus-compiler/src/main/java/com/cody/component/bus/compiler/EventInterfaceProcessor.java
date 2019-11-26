@@ -123,9 +123,9 @@ public class EventInterfaceProcessor extends AbstractProcessor {
         }
     }
 
-    private EventScopeBean getScope(Element element1) {
+    private EventScopeBean getScope(Element element) {
         EventScopeBean scopeBean = new EventScopeBean();
-        List<? extends AnnotationMirror> annotationMirrors = mElementUtils.getAllAnnotationMirrors(element1);
+        List<? extends AnnotationMirror> annotationMirrors = mElementUtils.getAllAnnotationMirrors(element);
         if (annotationMirrors != null && annotationMirrors.size() > 0) {
             for (AnnotationMirror mirror : annotationMirrors) {
                 if (EventScope.class.getName().equals(mirror.getAnnotationType().toString())) {
@@ -147,9 +147,9 @@ public class EventInterfaceProcessor extends AbstractProcessor {
         return scopeBean;
     }
 
-    private EventBean getEvent(Element element1) {
+    private EventBean getEvent(Element element) {
         EventBean eventBean = new EventBean();
-        List<? extends AnnotationMirror> annotationMirrors = mElementUtils.getAllAnnotationMirrors(element1);
+        List<? extends AnnotationMirror> annotationMirrors = mElementUtils.getAllAnnotationMirrors(element);
         if (annotationMirrors != null && annotationMirrors.size() > 0) {
             for (AnnotationMirror mirror : annotationMirrors) {
                 if (Event.class.getName().equals(mirror.getAnnotationType().toString())) {
