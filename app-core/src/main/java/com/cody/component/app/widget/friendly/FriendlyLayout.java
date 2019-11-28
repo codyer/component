@@ -63,6 +63,10 @@ public class FriendlyLayout extends SwipeRefreshLayout {
     private View mEmptyView;
     private boolean mInitialized = false;
 
+    public boolean isInitialized() {
+        return mInitialized;
+    }
+
     public void setIFriendlyView(final IFriendlyView IFriendlyView) {
         mIFriendlyView = IFriendlyView;
         initViewBind();

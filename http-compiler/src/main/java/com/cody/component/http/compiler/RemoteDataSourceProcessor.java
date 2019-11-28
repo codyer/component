@@ -179,7 +179,7 @@ public class RemoteDataSourceProcessor extends AbstractProcessor {
                 if (parameter.asType().getKind().isPrimitive()) {
                     parameterBean.setType(Util.box((PrimitiveType) parameter.asType()));
                 } else {
-                    parameterBean.setType(ClassName.bestGuess(parameter.asType().toString()));
+                    parameterBean.setType(Util.getTypeName(parameter.asType().toString()));
                 }
                 methodBean.addParameter(parameterBean);
             }
