@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -185,7 +186,7 @@ public class MainActivity extends StaticActivity<ActivityMainBannerBinding> {
         }
         String result = ScanActivity.getScanResult(requestCode, resultCode, data);
         if (!TextUtils.isEmpty(result)) {
-            if (UrlUtil.isHttpUrl(result)) {
+            if (URLUtil.isValidUrl(result)) {
                 HtmlActivity.startHtml("扫码打开", result);
             } else {
                 showToast(result);

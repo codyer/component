@@ -16,6 +16,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
+import android.webkit.URLUtil;
 
 import com.cody.component.blues.CrashUtil;
 import com.cody.component.handler.define.Operation;
@@ -55,7 +56,7 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
             return true;
         }
         // 自定义请求在上面处理，拦截其他非http页面
-        if (!UrlUtil.isHttpUrl(url)) {
+        if (!URLUtil.isValidUrl(url)) {
             Intent intent = null;
             // perform generic parsing of the URI to turn it into an Intent.
             try {
@@ -71,14 +72,14 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
                 return false;
             }
             if (intent == null || TextUtils.isEmpty(intent.getScheme())) {
-                return true;
+                return false;
             }
 
             // check whether the intent can be resolved. If not, we will see
             // whether we can download it from the Market.
             // 如果本地没装能响应特殊协议的应用则return
             if (ActivityUtil.getCurrentActivity() == null || intent.resolveActivity(ActivityUtil.getCurrentActivity().getPackageManager()) == null) {
-                return true;
+                return false;
             }
             // sanitize the Intent, ensuring web pages can not bypass browser
             // security (only access to BROWSABLE activities).
@@ -96,7 +97,7 @@ public class HtmlViewModel extends SingleViewModel<HtmlViewData> {
             } catch (SecurityException se) {
                 se.printStackTrace();
             }
-            return true;
+            return false;
         }
         //从内部链接跳到外部链接打开新的html页面
         if (UrlUtil.isInnerLink(getFriendlyViewData().getUrl().get())
