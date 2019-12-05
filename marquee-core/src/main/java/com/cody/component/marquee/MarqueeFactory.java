@@ -10,7 +10,7 @@
  * ************************************************************
  */
 
-package com.cody.component.marqueen;
+package com.cody.component.marquee;
 
 import android.content.Context;
 import android.os.Handler;

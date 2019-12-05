@@ -10,7 +10,7 @@
  * ************************************************************
  */
 
-package com.cody.component.marqueen;
+package com.cody.component.marquee;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -20,8 +20,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ViewFlipper;
 
-
-import com.cody.component.marquee.R;
 
 import java.util.List;
 
