@@ -15,6 +15,7 @@ dependencies {
     api project(':cat-core')
     api project(':update-core')
     api project(":hybrid-core")
+    api project(":marquee-core")
     api project(':banner-core')
     api project(":http-core")
     api project(":bus-core")
