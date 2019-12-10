@@ -28,7 +28,6 @@ import androidx.databinding.BindingAdapter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -89,18 +88,23 @@ public class DataBindingAdapterDefines {
                 .into(view);
     }
 
-    @BindingAdapter(value = {"rectImageUrl", "error", "placeholder"}, requireAll = false)
-    public static void setRectImageUrl(ImageView view, String rectImageUrl, Drawable error, Drawable placeholder) {
+    // 支持透明图片背景
+    @BindingAdapter(value = {"rectImageUrl", "error", "placeholder", "transAlpha"}, requireAll = false)
+    public static void setRectImageUrl(ImageView view, String rectImageUrl, Drawable error, Drawable placeholder, boolean transAlpha) {
         Context context = view.getContext();
         RequestOptions options = new RequestOptions()
                 .placeholder(placeholder)
                 .error(error)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
-        if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
-            options = options.fitCenter();
+        if (transAlpha) {
+            options = options.transform(new AlphaTransformation(view.getScaleType()));
         } else {
-            options = options.centerCrop();
+            if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
+                options = options.fitCenter();
+            } else {
+                options = options.centerCrop();
+            }
         }
         if (!TextUtils.isEmpty(rectImageUrl) && !rectImageUrl.startsWith("http")) {
             Glide.with(context).load(rectImageUrl).apply(options).into(view);
