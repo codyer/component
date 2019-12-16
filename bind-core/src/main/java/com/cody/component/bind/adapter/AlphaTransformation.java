@@ -14,6 +14,7 @@ package com.cody.component.bind.adapter;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -37,8 +38,11 @@ public class AlphaTransformation extends BitmapTransformation {
     public AlphaTransformation() {
     }
 
-    public AlphaTransformation(final int color) {
-        mColor = color;
+    public AlphaTransformation(final ColorDrawable color, final ImageView.ScaleType scaleType) {
+        if (color != null) {
+            mColor = color.getColor();
+        }
+        mScaleType = scaleType;
     }
 
     public AlphaTransformation(final ImageView.ScaleType scaleType) {
@@ -54,21 +58,20 @@ public class AlphaTransformation extends BitmapTransformation {
         } else {
             result = TransformationUtils.centerCrop(pool, toTransform, width, height);
         }
-        Bitmap bitmap = result.copy(Bitmap.Config.ARGB_8888, true);
-        bitmap.setHasAlpha(true);
-        int bitmapWidth = bitmap.getWidth();
-        int bitmapHeight = bitmap.getHeight();
+        result.setHasAlpha(true);
+        int bitmapWidth = result.getWidth();
+        int bitmapHeight = result.getHeight();
 
         for (int i = 0; i < bitmapHeight; i++) {
             for (int j = 0; j < bitmapWidth; j++) {
-                int color = bitmap.getPixel(j, i);
+                int color = result.getPixel(j, i);
                 if (color == mColor) {
-                    bitmap.setPixel(j, i, Color.TRANSPARENT);
+                    result.setPixel(j, i, Color.TRANSPARENT);
                 }
             }
         }
 
-        return bitmap;
+        return result;
     }
 
     @Override

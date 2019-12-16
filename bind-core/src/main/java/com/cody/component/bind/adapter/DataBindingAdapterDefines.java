@@ -14,6 +14,7 @@ package com.cody.component.bind.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.View;
@@ -89,8 +90,8 @@ public class DataBindingAdapterDefines {
     }
 
     // 支持透明图片背景
-    @BindingAdapter(value = {"rectImageUrl", "error", "placeholder", "transAlpha"}, requireAll = false)
-    public static void setRectImageUrl(ImageView view, String rectImageUrl, Drawable error, Drawable placeholder, boolean transAlpha) {
+    @BindingAdapter(value = {"rectImageUrl", "error", "placeholder", "transAlpha", "transAlphaColor"}, requireAll = false)
+    public static void setRectImageUrl(ImageView view, String rectImageUrl, Drawable error, Drawable placeholder, boolean transAlpha, ColorDrawable transAlphaColor) {
         Context context = view.getContext();
         RequestOptions options = new RequestOptions()
                 .placeholder(placeholder)
@@ -98,7 +99,7 @@ public class DataBindingAdapterDefines {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
         if (transAlpha) {
-            options = options.transform(new AlphaTransformation(view.getScaleType()));
+            options = options.transform(new AlphaTransformation(transAlphaColor, view.getScaleType()));
         } else {
             if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
                 options = options.fitCenter();
