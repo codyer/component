@@ -77,6 +77,7 @@ public class BindingBannerAdapter<T extends BannerViewData> extends BindingListA
     }
 
     public int getPosition(int position) {
+        if (getBannerSize() == 0)return 0;
         return position % getBannerSize();
     }
 }
