@@ -31,6 +31,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.DrawableImageViewTarget;
+import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
 /**
@@ -49,11 +50,6 @@ public class DataBindingAdapterDefines {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .priority(Priority.HIGH);
-        if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
-            options = options.fitCenter();
-        } else {
-            options = options.centerCrop();
-        }
         Glide.with(view.getContext()).asGif().load(gif).apply(options).into(view);
     }
 
@@ -62,11 +58,6 @@ public class DataBindingAdapterDefines {
         RequestOptions options = new RequestOptions()
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .priority(Priority.HIGH);
-        if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
-            options = options.fitCenter();
-        } else {
-            options = options.centerCrop();
-        }
         Glide.with(view.getContext()).asGif().load(gif).apply(options).into(view);
     }
 
@@ -99,13 +90,7 @@ public class DataBindingAdapterDefines {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
         if (transAlpha) {
-            options = options.transform(new AlphaTransformation(transAlphaColor, view.getScaleType()));
-        } else {
-            if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
-                options = options.fitCenter();
-            } else {
-                options = options.centerCrop();
-            }
+            options = options.transform(new AlphaTransformation(transAlphaColor));
         }
         if (!TextUtils.isEmpty(rectImageUrl) && !rectImageUrl.startsWith("http")) {
             Glide.with(context).load(rectImageUrl).apply(options).into(view);
@@ -117,6 +102,11 @@ public class DataBindingAdapterDefines {
                 .into(view);
     }
 
+    // android:scaleType="fitXY"
+    //        bind:error="@{@drawable/ic_default_image}"
+    //        bind:fixedWidthUrl="@{viewData.imageUrl}"
+    //        bind:minWidth="@{viewData.miniWidth}"
+    //        bind:placeholder="@{@drawable/ic_default_image}"
     @BindingAdapter(value = {"fixedWidthUrl", "error", "placeholder", "minWidth"}, requireAll = false)
     public static void setFixedWidthUrl(ImageView view, String rectImageUrl, Drawable error, Drawable placeholder, int minWidth) {
         final ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
@@ -126,11 +116,6 @@ public class DataBindingAdapterDefines {
                 .error(error)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
-        if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
-            options = options.fitCenter();
-        } else {
-            options = options.centerCrop();
-        }
         Glide.with(context)
                 .load(rectImageUrl)
                 .apply(options)
@@ -162,11 +147,6 @@ public class DataBindingAdapterDefines {
                 .error(error)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .priority(Priority.HIGH);
-        if (view.getScaleType() == ImageView.ScaleType.FIT_CENTER) {
-            options = options.fitCenter();
-        } else {
-            options = options.centerCrop();
-        }
         Glide.with(context)
                 .load(rectImageUrl)
                 .apply(options)

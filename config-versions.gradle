@@ -17,7 +17,7 @@ ext {
     targetSdkVersion = 28
     compileSdkVersion = 28
     supportLibraryVersion = '28.0.0'
-    componentVersion = '1.0.42'
+    componentVersion = '1.0.45'
 
     //libraries dependencies
     dependencies = [
@@ -34,7 +34,7 @@ ext {
             "livedata"               : "androidx.lifecycle:lifecycle-livedata:2.1.0-alpha04",
             "auto-service"           : "com.google.auto.service:auto-service:1.0-rc2",
             "javapoet"               : "com.squareup:javapoet:1.11.1",
-            "glide"                  : "com.github.bumptech.glide:glide:4.8.0",
+            "glide"                  : "com.github.bumptech.glide:glide:4.10.0",
             "okhttp3"                : "com.squareup.okhttp3:okhttp:3.12.0",
             "fastjson"               : "com.alibaba:fastjson:1.1.71.android",
             "retrofit"               : "com.squareup.retrofit2:retrofit:2.5.0",

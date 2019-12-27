@@ -15,13 +15,11 @@ package com.cody.component.bind.adapter;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 
 import java.security.MessageDigest;
 import java.util.Objects;
@@ -33,45 +31,32 @@ import java.util.Objects;
 public class AlphaTransformation extends BitmapTransformation {
     private static final String ID = "com.cody.component.bind.adapter.AlphaTransformation";
     private int mColor = Color.WHITE;
-    private ImageView.ScaleType mScaleType;
 
     public AlphaTransformation() {
     }
 
-    public AlphaTransformation(final ColorDrawable color, final ImageView.ScaleType scaleType) {
+    public AlphaTransformation(final ColorDrawable color) {
         if (color != null) {
             mColor = color.getColor();
         }
-        mScaleType = scaleType;
-    }
-
-    public AlphaTransformation(final ImageView.ScaleType scaleType) {
-        mScaleType = scaleType;
     }
 
     @Override
-    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int width,
-                               int height) {
-        Bitmap result;
-        if (mScaleType == ImageView.ScaleType.FIT_CENTER) {
-            result = TransformationUtils.fitCenter(pool, toTransform, width, height);
-        } else {
-            result = TransformationUtils.centerCrop(pool, toTransform, width, height);
-        }
-        result.setHasAlpha(true);
-        int bitmapWidth = result.getWidth();
-        int bitmapHeight = result.getHeight();
+    protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int width, int height) {
+        toTransform.setHasAlpha(true);
+        int bitmapWidth = toTransform.getWidth();
+        int bitmapHeight = toTransform.getHeight();
 
         for (int i = 0; i < bitmapHeight; i++) {
             for (int j = 0; j < bitmapWidth; j++) {
-                int color = result.getPixel(j, i);
+                int color = toTransform.getPixel(j, i);
                 if (color == mColor) {
-                    result.setPixel(j, i, Color.TRANSPARENT);
+                    toTransform.setPixel(j, i, Color.TRANSPARENT);
                 }
             }
         }
 
-        return result;
+        return toTransform;
     }
 
     @Override
@@ -79,17 +64,16 @@ public class AlphaTransformation extends BitmapTransformation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final AlphaTransformation that = (AlphaTransformation) o;
-        return mColor == that.mColor &&
-                mScaleType == that.mScaleType;
+        return mColor == that.mColor;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ID, mColor, mScaleType);
+        return Objects.hash(ID, mColor);
     }
 
     @Override
     public void updateDiskCacheKey(@NonNull MessageDigest messageDigest) {
-        messageDigest.update((ID + mColor + mScaleType).getBytes(CHARSET));
+        messageDigest.update((ID + mColor).getBytes(CHARSET));
     }
 }
