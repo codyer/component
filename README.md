@@ -1,6 +1,12 @@
 # component
 android-component
+## 这个工程可以给你提供什么？
+MVVM 、databinding、APT、升级更新、模块化、crash捕获、recycleView实现banner效果、滚动广告组建、Retrofit封装、日志监听、hybrid方案、LiveData、Room 、PageList、Jetpack等
+快速开发App和提升开发效率、提升开发技术的很好的参考事例。
+
 ## 模块化编程
+模块化编程的“最佳”实践事例，抽取自己的模块，不再重复做一样的工作，需要的时候直接引用就可以，创建自己的本地仓库和远端仓库
+这个工程也是很好的事例。
 
 ## 抽取各个通用模块
 
