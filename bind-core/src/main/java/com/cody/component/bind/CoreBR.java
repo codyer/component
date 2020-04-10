@@ -17,9 +17,9 @@ package com.cody.component.bind;
  * 所有用到BR的地方都使用这个,XML中不能自定义其他数据变量
  */
 public class CoreBR {
-    public static final int _all = 0;
+    public static final int _all = BR._all;
 
-    public static final int viewData = 1;
+    public static final int viewData = BR.viewData;
 
-    public static final int onClickListener = 2;
+    public static final int onClickListener = BR.onClickListener;
 }
