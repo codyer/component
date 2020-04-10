@@ -17,7 +17,7 @@ ext {
     targetSdkVersion = 28
     compileSdkVersion = 28
     supportLibraryVersion = '28.0.0'
-    componentVersion = '1.0.45'
+    componentVersion = '1.0.55'
 
     //libraries dependencies
     dependencies = [

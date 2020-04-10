@@ -52,4 +52,8 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+    if (isLocalMaven) {
+        apply from: "${project.rootDir}/config-doc.gradle"
+    }
 }

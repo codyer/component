@@ -17,5 +17,6 @@ dependencies {
     compileOnly files(Jvm.current().getToolsJar())
     implementation project(':bus-lib')
     implementation rootProject.ext.dependencies["auto-service"]
+    annotationProcessor rootProject.ext.dependencies["auto-service"]
     implementation rootProject.ext.dependencies["javapoet"]
 }

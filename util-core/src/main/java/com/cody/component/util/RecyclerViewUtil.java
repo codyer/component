@@ -69,7 +69,7 @@ public class RecyclerViewUtil {
     /**
      * 结合使用如下布局管理器实现真实滚动某个位置到顶部，而不是仅仅可见
      *
-     * @see com.gongbangbang.www.business.widget.ScrollSpeedLinearLayoutManger
+     * com.gongbangbang.www.business.widget.ScrollSpeedLinearLayoutManger
      */
     public static void smoothScrollToTop(RecyclerView recyclerView, int newPosition) {
         if (recyclerView == null || recyclerView.getChildCount() == 0 || newPosition == RecyclerView.NO_POSITION) return;
