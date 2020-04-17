@@ -54,7 +54,6 @@ public class UrlUtil {
 
     /**
      * 解析出url参数中的键值对
-     * 如 "index.jsp?Action=del&id=123"，解析出Action:del,id:123存入map中
      *
      * @param url url地址
      * @return url请求参数部分

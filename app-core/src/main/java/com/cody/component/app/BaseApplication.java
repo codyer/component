@@ -44,7 +44,6 @@ public class BaseApplication extends MultiDexApplication {
     public void onInit() {
         ApplicationUtil.install(this);
         Repository.install(this);
-//        Blues.install(this);
         /*
          * 必须在 Application 的 onCreate 方法中执行 BGASwipeBackHelper.init 来初始化滑动返回
          * 第一个参数：应用程序上下文

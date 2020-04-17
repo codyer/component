@@ -154,12 +154,9 @@
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-viewmodel:2.1.0-alpha04@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.cardview:cardview:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.bumptech.glide:gifdecoder:4.10.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.tencent.bugly:crashreport:3.0.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.tencent.bugly:nativecrashreport:3.7.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.tzx.json:jsonhandleview:1.2.2@aar" level="project" />
     <orderEntry type="module" module-name="app-core" />
     <orderEntry type="module" module-name="bind-core" />
-    <orderEntry type="module" module-name="blues-core" />
     <orderEntry type="module" module-name="handler-core" />
     <orderEntry type="module" module-name="ui-core" />
     <orderEntry type="module" module-name="util-core" />

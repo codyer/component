@@ -14,24 +14,23 @@ package com.cody.component.cat.interceptor;
 
 import android.content.Context;
 import android.net.Uri;
-
-import androidx.annotation.NonNull;
-
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.UnsupportedCharsetException;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
+import androidx.annotation.NonNull;
 
-import com.cody.component.app.local.Repository;
 import com.cody.component.cat.db.HttpCatDatabase;
 import com.cody.component.cat.db.data.ItemHttpData;
 import com.cody.component.cat.notification.NotificationManagement;
 import com.cody.component.cat.utils.LauncherUtil;
+
+import java.io.EOFException;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.charset.UnsupportedCharsetException;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Headers;
 import okhttp3.Interceptor;
@@ -54,7 +53,7 @@ public class HttpCatInterceptor implements Interceptor {
 
     private static final String TAG = "HttpCatInterceptor";
 
-    private static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
+    private static final Charset CHARSET_UTF8 = StandardCharsets.UTF_8;
 
     private final Context context;
 

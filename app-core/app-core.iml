@@ -146,10 +146,7 @@
     <orderEntry type="library" name="Gradle: androidx.documentfile:documentfile:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.localbroadcastmanager:localbroadcastmanager:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.print:print:1.0.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.tencent.bugly:crashreport:3.0.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.tencent.bugly:nativecrashreport:3.7.1@aar" level="project" />
     <orderEntry type="module" module-name="bind-core" />
-    <orderEntry type="module" module-name="blues-core" />
     <orderEntry type="module" module-name="handler-core" />
     <orderEntry type="module" module-name="ui-core" />
     <orderEntry type="module" module-name="util-core" />

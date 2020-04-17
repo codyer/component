@@ -176,12 +176,12 @@
     <orderEntry type="module" module-name="cat-core" />
     <orderEntry type="module" module-name="update-core" />
     <orderEntry type="module" module-name="hybrid-core" />
-    <orderEntry type="module" module-name="image-core" />
-    <orderEntry type="module" module-name="app-core" />
     <orderEntry type="module" module-name="blues-core" />
     <orderEntry type="module" module-name="banner-core" />
     <orderEntry type="module" module-name="http-core" />
     <orderEntry type="module" module-name="bus-core" />
+    <orderEntry type="module" module-name="image-core" />
+    <orderEntry type="module" module-name="app-core" />
     <orderEntry type="module" module-name="bind-core" />
     <orderEntry type="module" module-name="handler-core" />
     <orderEntry type="module" module-name="ui-core" />
