@@ -13,7 +13,6 @@
 package com.cody.component.handler.viewmodel;
 
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.paging.DataSource;
 
@@ -25,14 +24,13 @@ import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.factory.PageListDataSourceFactory;
 import com.cody.component.handler.interfaces.OnRequestPageListener;
 import com.cody.component.handler.mapper.PageDataMapper;
-import com.cody.component.handler.source.PageListKeyedDataSource;
 
 /**
  * Created by xu.yi. on 2019/4/8.
  * 数据仓库，获取列表数据，分页获取
  */
 public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> extends AbsPageListViewModel<VD, PageInfo> {
-    private MutableLiveData<PageListKeyedDataSource> mDataSource;
+    private PageListDataSourceFactory<Bean> mSourceFactory;
     private PageDataMapper<ItemViewDataHolder, Bean> mPageDataMapper;
 
     protected abstract PageDataMapper<? extends ItemViewDataHolder, Bean> createMapper();
@@ -47,15 +45,14 @@ public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> exten
     @SuppressWarnings("unchecked")
     protected DataSource.Factory<PageInfo, ItemViewDataHolder> createDataSourceFactory() {
         mPageDataMapper = (PageDataMapper<ItemViewDataHolder, Bean>) createMapper();
-        PageListDataSourceFactory<Bean> sourceFactory = new PageListDataSourceFactory<>(mPageDataMapper, (operation, oldPageInfo, callBack) -> {
+        mSourceFactory = new PageListDataSourceFactory<>(mPageDataMapper, (operation, oldPageInfo, callBack) -> {
             if (mRequestStatus.isRefreshing()) {
                 operation = Operation.REFRESH;
             }
             mRequestStatusLive.postValue(mRequestStatus = mRequestStatus.setOperation(operation));
             createRequestPageListener().onRequestPageData(operation, oldPageInfo, callBack);
         });
-        mDataSource = sourceFactory.getDataSource();
-        return sourceFactory.map();
+        return mSourceFactory.map();
     }
 
     @Override
@@ -81,13 +78,13 @@ public abstract class PageListViewModel<VD extends FriendlyViewData, Bean> exten
     protected void startOperation(RequestStatus requestStatus) {
         super.startOperation(requestStatus);
 
-        if (requestStatus != null && mDataSource != null && mDataSource.getValue() != null) {
+        if (requestStatus != null && mSourceFactory != null && mSourceFactory.getDataSource() != null) {
             if (requestStatus.isInitializing()) {
-                mDataSource.getValue().invalidate();
+                mSourceFactory.getDataSource().invalidate();
             } else if (requestStatus.isRefreshing()) {
-                mDataSource.getValue().refresh();
+                mSourceFactory.getDataSource().refresh();
             } else if (requestStatus.isRetrying()) {
-                mDataSource.getValue().retry();
+                mSourceFactory.getDataSource().retry();
             }
         }
     }
