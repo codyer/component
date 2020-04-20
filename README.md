@@ -29,7 +29,12 @@
 + 其他底层工具类和UI组件
 
 [项目结构](https://github.com/codyer/component/blob/master/structure/APP-structure.xmind)
-![](https://github.com/codyer/component/blob/master/structure/module_structure.png)
+
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0ejsmvqtj311c0oitbv.jpg" width="50%"><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0ejtdeohj30ue0jy75a.jpg" width="50%">
+
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0ejtl5upj30uv0i4q3u.jpg" width="50%"><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0ejt0qm1j31210kr0u8.jpg" width="50%">
+
 
 # 仓库说明
 
