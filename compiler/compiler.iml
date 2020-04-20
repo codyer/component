@@ -31,18 +31,15 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="bus-compiler" exported="" />
     <orderEntry type="module" module-name="http-compiler" exported="" />
-    <orderEntry type="module" module-name="bus-lib" exported="" scope="TEST" />
-    <orderEntry type="module" module-name="http-lib" exported="" scope="TEST" />
-    <orderEntry type="module" module-name="lib-core" exported="" scope="TEST" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: auto-service-1.0-rc2" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: javapoet-1.11.1" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: auto-common-0.3" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: guava-18.0" level="project" />
-    <orderEntry type="library" exported="" scope="RUNTIME" name="Gradle: fastjson-1.1.71.android" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: auto-service-1.0-rc2" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: javapoet-1.11.1" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: auto-common-0.3" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: guava-18.0" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: fastjson-1.1.71.android" level="project" />
+    <orderEntry type="module" module-name="bus-lib" exported="" />
+    <orderEntry type="module" module-name="http-lib" exported="" />
+    <orderEntry type="module" module-name="lib-core" exported="" />
+    <orderEntry type="library" exported="" name="Gradle: javapoet-1.11.1" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: auto-service-1.0-rc2" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: auto-common-0.3" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: guava-18.0" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: fastjson-1.1.71.android" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: compiler.compiler-sources" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: compiler.compiler-javadoc" level="project" />
   </component>
 </module>

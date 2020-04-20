@@ -12,5 +12,5 @@
 
 apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
-    implementation project(':app-core')
+    api project(':app-core')
 }
