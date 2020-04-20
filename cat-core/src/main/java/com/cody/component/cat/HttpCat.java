@@ -21,6 +21,7 @@ import android.content.Context;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import com.cody.component.app.local.Repository;
 import com.cody.component.cat.db.HttpCatDatabase;
 import com.cody.component.cat.db.data.ItemHttpData;
 import com.cody.component.cat.exception.NoCatCreatedException;
@@ -62,8 +63,11 @@ public class HttpCat {
 
     /**
      * 在创建OkHttpClient时候进行拦截器添加
+     * @param context application
+     * @return Interceptor
      */
     public static Interceptor create(Context context) {
+        Repository.install(context);
         LauncherUtil.launcherVisible(context, CatMainActivity.class);
         HttpCatHolder.INSTANCE.mContext = new WeakReference<>(context);
         HttpCatDatabase.init(context);
@@ -95,6 +99,7 @@ public class HttpCat {
 
     /**
      * 给猫取名字
+     * @param name cat name
      */
     public void setName(String name) {
         mName = name;

@@ -31,6 +31,7 @@ import com.cody.component.cat.databinding.CatActivityMainBinding;
 import com.cody.component.cat.viewmodel.CatViewModel;
 import com.cody.component.handler.data.FriendlyViewData;
 import com.cody.component.handler.data.ItemViewDataHolder;
+import com.cody.component.util.RecyclerViewUtil;
 
 /**
  * Created by xu.yi. on 2019/3/26.
@@ -125,7 +126,7 @@ public class CatMainActivity extends AbsPageListActivity<CatActivityMainBinding,
     public void onClick(View v) {
         super.onClick(v);
         if (v.getId() == R.id.top) {
-            getBinding().recyclerView.smoothScrollToPosition(0);
+            RecyclerViewUtil.smoothScrollToTop(getBinding().recyclerView);
         }
     }
 }

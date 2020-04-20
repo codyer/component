@@ -50,10 +50,10 @@ public class Repository {
     }
 
     public static void install(Context context) {
-        if (sRepository != null) {
-            throw new NullPointerException("please only call install Repository one time.");
-        } else if (context instanceof Application) {
-            sRepository = new Repository(new LocalProfile(context.getApplicationContext()));
+        if (context instanceof Application) {
+            if (sRepository == null) {
+                sRepository = new Repository(new LocalProfile(context.getApplicationContext()));
+            }
         } else {
             throw new NullPointerException("context is invalid when call Repository.install.");
         }
