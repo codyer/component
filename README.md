@@ -1,22 +1,47 @@
-## component
-android-component
+# 模块化编程
 
-### 这个工程可以给你提供什么？
-MVVM 、databinding、APT、升级更新、模块化、crash捕获、recycleView实现banner效果、滚动广告组建、Retrofit封装、日志监听、hybrid方案、LiveData、Room 、PageList、Jetpack等
-快速开发App和提升开发效率、提升开发技术的很好的参考事例。
++ 模块化编程的“最佳”实践事例，需要的模块直接引用就可以，
++ 创建本地仓库和远端仓库，提高编译效率
 
-### 模块化编程
-模块化编程的“最佳”实践事例，抽取自己的模块，不再重复做一样的工作，需要的时候直接引用就可以，创建自己的本地仓库和远端仓库
-这个工程也是很好的事例。
+# 使用技术
+
+- MVVM
+- databinding
+- APT
+- LiveData
+- Room
+- PageList
+- Retrofit
+
+# 包含模块
++ marquee-core --> 滚动广告布局
++ update-core --> 升级更新 
++ blues-core --> crash捕获
++ banner-core --> 滚动广告组建 
++ cat-core --> 数据监听 监控猫
++ hybrid-core --> hybrid方案
++ image-core --> 图片浏览，扫码，身份证，营业执照拍摄等照片相关 
++ app-core --> 利用databinding实现MVVM底层BASE模块
++ http-core --> 对retrofit封装
++ http-compiler --> 通过APT实现模版代码自动生成，减少重复工作量
++ bus-core --> 利用livedata实现的event-bus
++ bus-compiler --> 定义事件后，通过APT实现模版代码自动生成，减少重复工作量
++ 其他底层工具类和UI组件
 
 [项目结构](https://github.com/codyer/component/blob/master/structure/APP-structure.xmind)
 ![](https://github.com/codyer/component/blob/master/structure/module_structure.png)
 
-### 说明
-- 本项目使用了本地仓库和远程仓库，当是自己开发时，可以使用本地仓库离线开发，当多团队合作的时候可以使用远程仓库
-本地仓库的使用可以更好的进行模块的管理
+# 仓库说明
 
-#### 使用：通过分支名来实现不同的依赖方式，免去了总是切换参数的麻烦，直接使用不同分支实现
+- 本地仓库
+  自己开发时，可以使用本地仓库离线开发，提高编译效率
+  
+- 远程仓库
+  团队合作时，可以使用远程仓库
+
+## 本地和远程仓库通过分支或者tag进行自动区分
+  
+  通过分支名来实现不同的依赖方式，免去了总是切换参数的麻烦，直接使用不同分支实现
 
 - 通过包含指定名字（local）的tag或者branch 实现推送到本地仓库
 
@@ -26,7 +51,8 @@ MVVM 、databinding、APT、升级更新、模块化、crash捕获、recycleView
 
 - 通过包含指定名字（compiler）的tag或者branch 实现排除 component 打出一个总注解处理器的包
 
-### 调试远端代码
+# 调试APT代码
+
 APT会用到调试，调试步骤如下
 1. 打开gradle.properties 里面的两行代码注释
 org.gradle.jvmargs=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5033
