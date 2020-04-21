@@ -153,8 +153,6 @@ dependencies {
 
 - 如果运行错误可以看看是不是没有开启multiDexEnabled
 
-###  👏欢迎使用并提意见，感兴趣可以star，大家一同进步！
-
 ## 下载地址
 
 1）[蒲公英地址](https://www.pgyer.com/iZqn)
@@ -168,8 +166,15 @@ dependencies {
 
 ## 截图演示
 
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge1fekznefj30u01poqk2.jpg" width="40%"><img width="5%"><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge1fejx4srj30u01po4l4.jpg" width="40%">
+----------
+<img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge1feiy9v2j30u01poata.jpg" width="40%"><img width="5%"><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge1fei5ad7j30u01poar6.jpg" width="40%">
+----------
 <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0catu64cj30u01poah1.jpg" width="40%"><img width="5%"><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0cavec5nj30u01po44y.jpg" width="40%">
 ----------
 <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0caufrzqj30u01podiz.jpg" width="40%"><img width="5%"><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0cawtqk4j30u01poajc.jpg" width="40%">
 
 
+###  👏欢迎使用并提意见，感兴趣可以star，大家一同进步！
+
+# tks
