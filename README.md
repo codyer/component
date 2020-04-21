@@ -9,7 +9,7 @@
 # 使用技术
 
 |        技术             |               说明                   |
-|------------------------|--------------------------------------|
+| ---------------------  |  ----------------------------------  |
 |       MVVM             |   Model和View通过VM进行绑定的设计模式    |
 |       databinding      |   数据绑定实现MVVM设计模式              |
 |       APT              |   Android注解处理工具进行代码生成        |
@@ -21,24 +21,26 @@
 |       multi module     |   多模块依赖、模块化                    |
 |       version ext      |   统一变量进行版本管理                  |
 |       glide            |   图片加载通过bindingAdapter统一处理    |
-|       other            |   其他第三方依赖处理常规问题             |
+|       ...              |   其他第三方依赖处理常规问题             |
 
 
 # 包含模块
-+ app-demo --> 模块使用示例
-+ marquee-core --> 滚动广告布局
-+ update-core --> 升级更新 
-+ blues-core --> crash捕获
-+ banner-core --> 滚动广告组建 
-+ [cat-core](https://github.com/codyer/component/blob/master/cat-core/README.md) --> 数据监听 监控猫
-+ hybrid-core --> hybrid方案
-+ image-core --> 图片浏览，扫码，身份证，营业执照拍摄等照片相关 
-+ app-core --> 利用databinding实现MVVM底层BASE模块
-+ http-core --> 对retrofit封装
-+ http-compiler --> 通过APT实现模版代码自动生成，减少重复工作量
-+ bus-core --> 利用livedata实现的event-bus
-+ bus-compiler --> 定义事件后，通过APT实现模版代码自动生成，减少重复工作量
-+ 其他底层工具类和UI组件
+| 模块 | 说明 | 详细说明 |
+| ----| --- | ---- |
+| app-demo      | 模块使用示例 |   [详细说明](待补充)   |
+| marquee-core  | 滚动广告布局 | [详细说明](待补充) |
+| update-core   | 应用升级更新套件 | [详细说明](待补充) |
+| blues-core    | crash捕获，内部集成bugly | [详细说明](待补充) |
+| banner-core   | 向上滚动广告组建 | [详细说明](待补充) |
+| cat-core      | 网络数据监听，快速定位bug原因 | [详细说明](https://github.com/codyer/component/blob/master/cat-core/README.md)  |
+| hybrid-core   | 利用拦截onJsPrompt实现的混合交互方案 | [详细说明](待补充) |
+| image-core    | 图片浏览，扫码，身份证，营业执照拍摄等照片相关  | [详细说明](待补充) |
+| app-core      | 利用databinding实现MVVM底层BASE模块  | [详细说明](待补充) |
+| http-core     | 对retrofit封装  | [详细说明](待补充) |
+| http-compiler | 通过APT实现模版代码自动生成，减少重复工作量  | [详细说明](待补充) |
+| bus-core      | 利用livedata实现的event-bus | [详细说明](待补充) |
+| bus-compiler  | 定义事件后，通过APT实现模版代码自动生成，减少重复工作量  | [详细说明](待补充) |
+| ...           | 其他底层工具类和UI组件 | [详细说明](待补充) |
 
 
 # 项目结构图
@@ -148,7 +150,7 @@ dependencies {
 
 - 如果运行错误可以看看是不是没有开启multiDexEnabled
 
-####  👏欢迎使用并提意见，大家一同进步！
+###  👏欢迎使用并提意见，感兴趣可以star，大家一同进步！
 
 # 下载地址
 
