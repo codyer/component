@@ -38,8 +38,8 @@
 | app-core      | 利用databinding实现MVVM底层BASE模块  | [详细说明](待补充) |
 | http-core     | 对retrofit封装  | [详细说明](待补充) |
 | http-compiler | 通过APT实现模版代码自动生成，减少重复工作量  | [详细说明](待补充) |
-| bus-core      | 利用livedata实现的event-bus | [详细说明](待补充) |
-| bus-compiler  | 定义事件后，通过APT实现模版代码自动生成，减少重复工作量  | [详细说明](待补充) |
+| bus-core      | 利用livedata实现的event-bus | [详细说明](https://github.com/codyer/LiveEventBus/blob/master/README.md) |
+| bus-compiler  | 定义事件后，通过APT实现模版代码自动生成，减少重复工作量  | [详细说明](https://github.com/codyer/LiveEventBus/blob/master/README.md) |
 | ...           | 其他底层工具类和UI组件 | [详细说明](待补充) |
 
 
