@@ -1,12 +1,12 @@
 # 👏👏👏👏👏👏👏👏
 
-# 模块化编程
+## 模块化编程
 
 + 模块化编程的“最佳”实践示例，需要的模块直接引用就可以，
 + 创建本地仓库和远端仓库，提高编译效率
 
 
-# 使用技术
+## 使用技术
 
 |        技术             |               说明                   |
 | ---------------------  |  ----------------------------------  |
@@ -24,7 +24,8 @@
 |       ...              |   其他第三方依赖处理常规问题             |
 
 
-# 包含模块
+## 包含模块
+
 | 模块 | 说明 | 详细说明 |
 | ----| --- | ---- |
 | app-demo      | 模块使用示例 |   [详细说明](待补充)   |
@@ -43,7 +44,7 @@
 | ...           | 其他底层工具类和UI组件 | [详细说明](待补充) |
 
 
-# 项目结构图
+## 项目结构图
 
 [项目结构](https://github.com/codyer/component/blob/master/structure/APP-structure.xmind)
 
@@ -53,7 +54,7 @@
 <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0ejtl5upj30uv0i4q3u.jpg" width="48.2%"><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0ejt0qm1j31210kr0u8.jpg" width="51.8%">
 
 
-# 仓库说明
+## 仓库说明
 
 - 本地仓库
   自己开发时，可以使用本地仓库离线开发，提高编译效率
@@ -62,7 +63,7 @@
   团队合作时，可以使用远程仓库
 
 
-## 本地和远程仓库通过分支或者tag进行自动区分
+### 本地和远程仓库通过分支或者tag进行自动区分
   
   通过分支名来实现不同的依赖方式，免去了总是切换参数的麻烦，直接使用不同分支实现
 
@@ -75,7 +76,7 @@
 - 通过包含指定名字（compiler）的tag或者branch 实现排除 component 打出一个总注解处理器的包
 
 
-# 调试APT代码
+## 调试APT代码
 
 APT会用到调试，调试步骤如下
 1. 打开gradle.properties 里面的两行代码注释
@@ -86,12 +87,14 @@ org.gradle.jvmargs=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address
 4. 在Android Studio Terminal控制台中输入gradlew clean assembleDebug
 
 
-# 接入说明
+## 接入说明
+
 + 单模块依赖请查看各个模块说明文件
 + 整体component依赖说明如下
 
 * 1） 在项目根目录的build.gradle中添加jitpack依赖
-```
+
+```groovy
 allprojects {
     repositories {
         maven { url "https://jitpack.io" }  // <===添加这行
@@ -102,7 +105,7 @@ allprojects {
 ```
 
 * 2） 在应用的build.gradle中开启dataBinding并且添加依赖
-```
+```groovy
 android {
   .
   .
@@ -114,7 +117,7 @@ android {
 }
 ```
 
-```
+```groovy
 dependencies {
   .
   .
@@ -128,7 +131,7 @@ dependencies {
 ```
 
 * 3） Application继承BaseApplication并在Application中初始化
-```
+```java
                 .
                 .
                 .
@@ -146,19 +149,24 @@ dependencies {
 
 * 4）具体初始化方式可以参考demo-app
 
-# 问题说明
+## 问题说明
 
 - 如果运行错误可以看看是不是没有开启multiDexEnabled
 
 ###  👏欢迎使用并提意见，感兴趣可以star，大家一同进步！
 
-# 下载地址
+## 下载地址
 
-1）[蒲公英](https://www.pgyer.com/app/qrcode/iZqn?sign=hIW%252FnmwCphNQbGMK8g0i3m4sHsZA85Yx9FxLHd7%252F5L5t6NaNQyRa%252F6znmpf6Xljh&auSign=&code=)
+1）[蒲公英地址](https://www.pgyer.com/iZqn)
+
+#### 二维码：  
+   ![](https://tva1.sinaimg.cn/large/007S8ZIlgy1ge16zvhh3bj30760763yd.jpg)
+  
+#### 密码: 123456
 
 2）[apk]可以下载代码自己编译
 
-# 截图演示
+## 截图演示
 
 <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0catu64cj30u01poah1.jpg" width="40%"><img width="5%"><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0cavec5nj30u01po44y.jpg" width="40%">
 ----------
