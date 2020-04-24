@@ -25,17 +25,17 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface EventScope {
     /**
-     * 默认范围描述
+     * @return 默认范围描述
      */
     String value() default "";
 
     /**
-     * 同value作用一样，为了匹配实际意义添加
+     * @return 同value作用一样，为了匹配实际意义添加
      */
     String name() default "";
 
     /**
-     * 是否激活,可以根据需要配置是否激活事件分发，eg：debug开启，release关闭
+     * @return 是否激活,可以根据需要配置是否激活事件分发，eg：debug开启，release关闭
      */
     boolean active() default true;
 }

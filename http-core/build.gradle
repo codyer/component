@@ -14,12 +14,12 @@ apply from: "${project.rootDir}/config-aar.gradle"
 
 dependencies {
     api project(':http-lib')
-    api rootProject.ext.dependencies["appcompat"]
     api rootProject.ext.dependencies["retrofit"]
     api rootProject.ext.dependencies["converter-fastjson"]
     api rootProject.ext.dependencies["logging"]
     api rootProject.ext.dependencies["adapter-rxjava2"]
     api rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["appcompat"]
     implementation rootProject.ext.dependencies["room-runtime"]
     annotationProcessor rootProject.ext.dependencies["room-compiler"]
 }

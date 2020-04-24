@@ -13,7 +13,7 @@
 apply from: "${project.rootDir}/config-aar.gradle"
 dependencies {
     api project(':bus-lib')
-    implementation rootProject.ext.dependencies["appcompat"]
-    implementation rootProject.ext.dependencies["lifecycle"]
-    implementation rootProject.ext.dependencies["livedata"]
+    api rootProject.ext.dependencies["appcompat"]
+    api rootProject.ext.dependencies["lifecycle"]
+    api rootProject.ext.dependencies["livedata"]
 }

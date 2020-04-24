@@ -25,12 +25,13 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface AutoGenerate {
     /**
-     * 范围
+     * @return 范围
      */
     String value() default "DefaultScope";
 
     /**
      * 是否激活,可以根据需要配置是否激活事件分发，eg：debug开启，release关闭
+     * @return debug开启，release关闭
      */
     boolean active() default true;
 }

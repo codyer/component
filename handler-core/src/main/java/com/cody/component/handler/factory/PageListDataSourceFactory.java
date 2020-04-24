@@ -13,7 +13,6 @@
 package com.cody.component.handler.factory;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 
 import com.cody.component.handler.data.ItemViewDataHolder;
@@ -28,7 +27,7 @@ import com.cody.component.handler.source.PageListKeyedDataSource;
  * 泛型为分页Item的类类型
  */
 public class PageListDataSourceFactory<Bean> extends DataSource.Factory<PageInfo, Bean> {
-    private MutableLiveData<PageListKeyedDataSource> mDataSource = new MutableLiveData<>();
+    private PageListKeyedDataSource<Bean> mDataSource;
     private OnRequestPageListener<Bean> mOnRequestPageListener;
     private PageDataMapper<ItemViewDataHolder, Bean> mPageDataMapper;
 
@@ -40,13 +39,12 @@ public class PageListDataSourceFactory<Bean> extends DataSource.Factory<PageInfo
     @NonNull
     @Override
     public DataSource<PageInfo, Bean> create() {
-        PageListKeyedDataSource<Bean> dataSource = new PageListKeyedDataSource<>(mOnRequestPageListener);
+        mDataSource = new PageListKeyedDataSource<>(mOnRequestPageListener);
         mPageDataMapper.init();
-        mDataSource.postValue(dataSource);
-        return dataSource;
+        return mDataSource;
     }
 
-    public MutableLiveData<PageListKeyedDataSource> getDataSource() {
+    public PageListKeyedDataSource getDataSource() {
         return mDataSource;
     }
 

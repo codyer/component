@@ -10,37 +10,53 @@
  * ************************************************************
  */
 
-//生成文档注释
-task androidJavadocs(type: Javadoc) {
-    failOnError = false
-    source = android.sourceSets.main.java.srcDirs
-    ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
-    classpath += files(ext.androidJar)
+//编译groovy代码时采用 UTF-8
+tasks.withType(GroovyCompile) {
+    groovyOptions.encoding = "MacRoman"
 }
 
-//防止生成的文档中文乱码
-tasks.withType(Javadoc) {
-    options{
-        encoding "UTF-8"
+//编译JAVA文件时采用UTF-8
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+// 打包源码jar
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    failOnError false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    classpath += configurations.compile
+}
+
+// 打包文档jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+/*在javadoc task执行之前先添加第三方的依赖进来，否则会找不到相关的jar包*/
+/*afterEvaluate {
+    javadoc.classpath += files(android.libraryVariants.collect { variant2 ->
+        variant2.getJavaCompiler().classpath.files
+    })
+}*/
+
+javadoc {
+    options {
+        // 语言
+        locale 'en_US'
+        encoding 'UTF-8'
         charSet 'UTF-8'
         links "http://docs.oracle.com/javase/7/docs/api"
     }
-}
-
-//将文档打包成jar
-task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-    classifier = 'javadoc'
-    from androidJavadocs.destinationDir
-}
-
-//将源码打包
-task androidSourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.java.srcDirs
-}
-
-//包含文档和源码的aar
-artifacts {
-    archives androidSourcesJar
-    archives androidJavadocsJar
 }

@@ -25,17 +25,17 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Event {
     /**
-     * 事件描述
+     * @return 事件描述
      */
     String value() default "";
 
     /**
-     * 同value作用一样，为了匹配实际意义添加
+     * @return 同value作用一样，为了匹配实际意义添加
      */
     String description() default "";
 
     /**
-     * 事件携带数据类型
+     * @return 事件携带数据类型
      */
     Class data() default Object.class;
 }

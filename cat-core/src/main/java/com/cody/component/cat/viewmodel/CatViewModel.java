@@ -12,6 +12,9 @@
 
 package com.cody.component.cat.viewmodel;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,10 +25,14 @@ import com.cody.component.cat.db.HttpCatDao;
 import com.cody.component.cat.db.HttpCatDatabase;
 import com.cody.component.cat.db.data.ItemHttpData;
 import com.cody.component.cat.notification.NotificationManagement;
+import com.cody.component.handler.RequestStatusUtil;
 import com.cody.component.handler.data.FriendlyViewData;
 import com.cody.component.handler.data.ItemViewDataHolder;
+import com.cody.component.handler.define.RequestStatus;
 import com.cody.component.handler.viewmodel.AbsPageListViewModel;
 import com.cody.component.handler.viewmodel.BaseViewModel;
+import com.cody.component.util.RecyclerViewUtil;
+
 
 
 /**
@@ -55,6 +62,12 @@ public class CatViewModel extends AbsPageListViewModel<FriendlyViewData, Integer
             mHttpCatDao.count().observe(lifecycleOwner, count -> submitStatus(count > 0 ? getRequestStatus().end() : getRequestStatus().empty()));
         }
         return super.setLifecycleOwner(lifecycleOwner);
+    }
+
+    @Override
+    protected void startOperation(final RequestStatus requestStatus) {
+        super.startOperation(requestStatus);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> submitStatus(RequestStatusUtil.getRequestStatus(requestStatus, getPagedList().getValue())),500);
     }
 
     public void clearAllCache() {

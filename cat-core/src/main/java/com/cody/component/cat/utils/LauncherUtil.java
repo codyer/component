@@ -37,6 +37,9 @@ public class LauncherUtil {
 
     /**
      * 显示隐藏App图标
+     * @param context c
+     * @param launcher l
+     * @param visible v
      */
     static public void launcherVisible(Context context, Class launcher, boolean visible) {
         PackageManager packageManager = context.getPackageManager();

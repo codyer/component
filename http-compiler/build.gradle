@@ -15,7 +15,8 @@ import org.gradle.internal.jvm.Jvm
 apply from:  "${project.rootDir}/config-compiler.gradle"
 dependencies {
     compileOnly files(Jvm.current().getToolsJar())
-    implementation project(':http-lib')
-    implementation rootProject.ext.dependencies["auto-service"]
-    implementation rootProject.ext.dependencies["javapoet"]
+    api project(':http-lib')
+    api rootProject.ext.dependencies["javapoet"]
+    api rootProject.ext.dependencies["auto-service"]
+    annotationProcessor rootProject.ext.dependencies["auto-service"]
 }

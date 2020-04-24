@@ -19,7 +19,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.6.2'
         // 使用github仓库代码
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         //多渠道打包
