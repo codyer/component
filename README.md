@@ -1,47 +1,61 @@
-# 👏👏👏👏👏👏👏👏
+# component 👏👏👏👏👏👏👏👏
 
-## 模块化编程
+## 简介
 
-+ 模块化编程的“最佳”实践示例，需要的模块直接引用就可以，
++ 中小型公司或个人项目快速开发的良好脚手架，经过实际项目检验，目前持续维护更新中
+
+## 优点
+
++ 模版模式，自动生成大部风重复代码，提供大部分业务情景Base类
++ 简单明了的 M-V-VM 模式
++ 底层逻辑（出错、loading显示、初始化页面、刷新、加载更多等）统一处理，只需要处理业务逻辑和画子布局
++ 不依赖后段开发进度可以直接测试前段代码显示逻辑
++ 模块化编程，需要的模块直接引用就可以
 + 创建本地仓库和远端仓库，提高编译效率
++ 清晰明了的架构和底层依赖图，方便合理组合选用
++ 良好的UI反馈机制，尽量做到每一个点击都能给用户很好的反馈
++ 其他
 
 
 ## 使用技术
 
 |        技术             |               说明                   |
 | ---------------------  |  ----------------------------------  |
-|       MVVM             |   Model和View通过VM进行绑定的设计模式    |
-|       databinding      |   数据绑定实现MVVM设计模式              |
-|       APT              |   Android注解处理工具进行代码生成        |
-|       LiveData         |   生命周期绑定的数据对象                |
-|       Room             |   数据库                              |
-|       PageList & Paging|   数据分页                            |
-|       Retrofit         |   网络请求                            |
-|       channel          |   多渠道打包                          |
-|       multi module     |   多模块依赖、模块化                    |
-|       version ext      |   统一变量进行版本管理                  |
-|       glide            |   图片加载通过bindingAdapter统一处理    |
-|       ...              |   其他第三方依赖处理常规问题             |
+|       M-V-VM             |   Model和View通过VM进行绑定的设计模式 |
+|       dataBinding      |   数据绑定实现M-V-VM设计模式 |
+|       APT              |   Android注解处理工具进行代码生成 |
+|       LiveData         |   生命周期绑定的数据对象 |
+|       Room             |   数据库 |
+|       PageList & Paging|   数据分页 |
+|       Retrofit         |   网络请求 |
+|       channel          |   多渠道打包 |
+|       multi module     |   多模块依赖、模块化 |
+|       version ext      |   统一变量进行版本管理 |
+|       glide            |   图片加载通过bindingAdapter统一处理 |
+|      easy permissions  |   权限问题统一处理 |
+|      lazy loading      |   Fragment懒加载 |
+|      Swipe Back        |   侧滑返回 |
+|       ...              |   其他第三方依赖处理常规问题 |
 
 
 ## 包含模块
 
 | 模块 | 说明 | 详细说明 |
 | ----| --- | ---- |
-| app-demo      | 模块使用示例 |   [详细说明](待补充)   |
-| marquee-core  | 滚动广告布局 | [详细说明](待补充) |
-| update-core   | 应用升级更新套件 | [详细说明](待补充) |
-| blues-core    | crash捕获，内部集成bugly | [详细说明](待补充) |
-| banner-core   | 向上滚动广告组建 | [详细说明](待补充) |
+| app-demo      | 模块使用示例 |   [详细说明](https://github.com/codyer/component/blob/master/app-demo/README.md)   |
+| app-core      | 利用dataBinding实现M-V-VM底层BASE模块 沉浸式体验布局 侧滑返回 懒加载等| [详细说明](https://github.com/codyer/component/blob/master/app-core/README.md) |
+| marquee-core  | 滚动广告布局 | [详细说明](https://github.com/codyer/component/blob/master/marquee-core/README.md) |
+| update-core   | 应用升级更新套件 | [详细说明](https://github.com/codyer/component/blob/master/update-core/README.md) |
+| blues-core    | crash捕获，内部集成bugly | [详细说明](https://github.com/codyer/component/blob/master/blues-core/README.md) |
+| banner-core   | 向上滚动广告组建 | [详细说明](https://github.com/codyer/component/blob/master/banner-core/README.md) |
 | cat-core      | 网络数据监听，快速定位bug原因 | [详细说明](https://github.com/codyer/component/blob/master/cat-core/README.md)  |
-| hybrid-core   | 利用拦截onJsPrompt实现的混合交互方案 | [详细说明](待补充) |
-| image-core    | 图片浏览，扫码，身份证，营业执照拍摄等照片相关  | [详细说明](待补充) |
-| app-core      | 利用databinding实现MVVM底层BASE模块  | [详细说明](待补充) |
-| http-core     | 对retrofit封装  | [详细说明](待补充) |
-| http-compiler | 通过APT实现模版代码自动生成，减少重复工作量  | [详细说明](待补充) |
-| bus-core      | 利用livedata实现的event-bus | [详细说明](https://github.com/codyer/LiveEventBus/blob/master/README.md) |
+| hybrid-core   | 利用拦截onJsPrompt实现的混合交互方案 | [详细说明](https://github.com/codyer/component/blob/master/hybrid-core/README.md) |
+| image-core    | 图片浏览，扫码，身份证，营业执照拍摄等照片相关  | [详细说明](https://github.com/codyer/component/blob/master/image-core/README.md) |
+| http-core     | 对retrofit封装  | [详细说明](https://github.com/codyer/component/blob/master/http-core/README.md) |
+| http-compiler | 通过APT实现模版代码自动生成，减少重复工作量  | [详细说明](https://github.com/codyer/component/blob/master/http-compiler/README.md) |
+| bus-core      | 利用LiveData实现的event-bus | [详细说明](https://github.com/codyer/LiveEventBus/blob/master/README.md) |
 | bus-compiler  | 定义事件后，通过APT实现模版代码自动生成，减少重复工作量  | [详细说明](https://github.com/codyer/LiveEventBus/blob/master/README.md) |
-| ...           | 其他底层工具类和UI组件 | [详细说明](待补充) |
+| ...           | 其他底层工具类和UI组件 | [详细说明](https://github.com/codyer/component/blob/master/cat-core/README.md) |
 
 
 ## 项目结构图
@@ -79,6 +93,7 @@
 ## 调试APT代码
 
 APT会用到调试，调试步骤如下
+
 1. 打开gradle.properties 里面的两行代码注释
 org.gradle.jvmargs=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5033
 -Dorg.gradle.debug=true
@@ -174,6 +189,12 @@ dependencies {
 ----------
 <img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0caufrzqj30u01podiz.jpg" width="40%"><img width="5%"><img src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ge0cawtqk4j30u01poajc.jpg" width="40%">
 
+
+## 原则
+
+1. Simple is Fast ：简单保障快速迭代，目前为了方便，所有的模块使用了统一的版本号管理，后期稳定了也许会考虑单独的版本依赖方式
+2. Less is More ：少即是多，用更少的技术实现更高效的开发效率，一点都不花里胡哨，每一个技术引入都是为了更高的开发效率和更低的维护成本。
+3. Fit is Better ：最适合的才是最好的，中小型团队和大型团队开发方式会有所不同，但初衷都是为了提高效率。
 
 ###  👏欢迎使用并提意见，感兴趣可以star，大家一同进步！
 

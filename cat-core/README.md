@@ -1,5 +1,5 @@
 # 介绍
-httpCat简称监控猫，为了提高测试人员和开发人员的沟通定位bug的效率而产生的一个工具模块
+开发调试神器，httpCat简称监控猫，为了提高测试人员和开发人员的沟通定位bug的效率而产生的一个工具模块
 
 # 原理
 整个模块的原理比较简单，就是通过一个拦截器，拦截经过App的网络数据，并把请求过程产出的数据存储在数据库，
@@ -8,7 +8,8 @@ httpCat简称监控猫，为了提高测试人员和开发人员的沟通定位b
 
 # 使用
 * 1） 在项目根目录的build.gradle中添加jitpack依赖
-```
+
+```groovy
 allprojects {
     repositories {
         maven { url "https://jitpack.io" }  // <===添加这行
@@ -19,7 +20,8 @@ allprojects {
 ```
 
 * 2） 在应用的build.gradle中开启dataBinding并且添加依赖
-```
+
+```groovy
 android {
   .
   .
@@ -31,7 +33,7 @@ android {
 }
 ```
 
-```
+```groovy
 dependencies {
   .
   .
@@ -44,13 +46,19 @@ dependencies {
 ```
 
 * 3） 在Application中初始化
-```
+
+```java
  Interceptor interceptor = HttpCat.create(this);
+ OkHttpClient.Builder builder = new OkHttpClient.Builder();
+ if (BuildConfig.DEBUG) {
+    builder.addNetworkInterceptor(interceptor);//将创建的拦截器加入你自己的请求框架
+ }
 ```
-将创建的拦截器加入你自己的请求框架
+
 
 * 4）默认是关闭监控猫的，可以通过下面代码进行打开监控猫，打开会在桌面产生一个图标
-```
+
+```java
 HttpCat.getInstance().showWithNotification();
 ```
 
