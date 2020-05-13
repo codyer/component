@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
  * 不要主动改变属性值
  */
 public abstract class ObserverWrapper<T> {
+    // 每个观察者都记录自己序号，只有在进入观察状态之后产生的数据才通知到观察者
     int sequence;
     Observer<ValueWrapper<T>> observer;
 

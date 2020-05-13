@@ -57,7 +57,12 @@ final public class LiveEventWrapper<T> {
         mMutableLiveData.removeObservers(owner);
     }
 
-    public T getValue() {
+    /**
+     * 获取最后保留的值，比如登录状态 可能会没有初始化就会没有值
+     *
+     * @return 获取最后保留的值
+     */
+    public T getValue() throws UnInitValueException {
         if (mMutableLiveData.getValue() == null) {
             throw new UnInitValueException();
         }
@@ -69,7 +74,7 @@ final public class LiveEventWrapper<T> {
      */
     @NonNull
     @Deprecated
-    public LiveData<T> getLiveData() {
+    public LiveData<T> getLiveData() throws UnInitValueException {
         if (mMutableLiveData.getValue() == null) {
             throw new UnInitValueException();
         }
@@ -113,13 +118,13 @@ final public class LiveEventWrapper<T> {
         mMutableLiveData.setValue(new ValueWrapper<>(value, mSequence));
     }
 
-
     @NonNull
     private Observer<ValueWrapper<T>> filterObserver(@NonNull final ObserverWrapper<T> observerWrapper) {
         if (observerWrapper.observer != null) {
             return observerWrapper.observer;
         }
         return observerWrapper.observer = valueWrapper -> {
+            // 产生的事件序号要大于观察者序号才被通知事件变化
             if (valueWrapper != null && valueWrapper.sequence > observerWrapper.sequence) {
                 observerWrapper.onChanged(valueWrapper.value);
             }

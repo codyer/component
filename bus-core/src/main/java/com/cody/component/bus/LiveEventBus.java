@@ -70,7 +70,7 @@ public class LiveEventBus {
                 new InterfaceInvokeHandler<>(scopeClass));
     }
 
-    private class InterfaceInvokeHandler<T> implements InvocationHandler {
+    private static class InterfaceInvokeHandler<T> implements InvocationHandler {
         private final String mScopeName;
 
         InterfaceInvokeHandler(Class<T> scopeClass) {
