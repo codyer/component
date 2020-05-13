@@ -31,7 +31,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="lib-core" exported="" />
     <orderEntry type="library" exported="" name="Gradle: fastjson-1.1.71.android" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: http-lib.http-lib-sources" level="project" />
     <orderEntry type="library" exported="" name="Gradle: http-lib.http-lib-javadoc" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: http-lib.http-lib-sources" level="project" />
   </component>
 </module>

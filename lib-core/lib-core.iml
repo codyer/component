@@ -30,7 +30,7 @@
     <orderEntry type="jdk" jdkName="Android API 28 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="Gradle: fastjson-1.1.71.android" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: lib-core.lib-core-sources" level="project" />
     <orderEntry type="library" exported="" name="Gradle: lib-core.lib-core-javadoc" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: lib-core.lib-core-sources" level="project" />
   </component>
 </module>
