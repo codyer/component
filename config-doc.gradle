@@ -45,11 +45,11 @@ artifacts {
 }
 
 /*在javadoc task执行之前先添加第三方的依赖进来，否则会找不到相关的jar包*/
-/*afterEvaluate {
+afterEvaluate {
     javadoc.classpath += files(android.libraryVariants.collect { variant2 ->
         variant2.getJavaCompiler().classpath.files
     })
-}*/
+}
 
 javadoc {
     options {

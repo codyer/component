@@ -12,6 +12,9 @@
 
 apply plugin: 'java-library'
 
+sourceCompatibility = "7"
+targetCompatibility = "7"
+
 if (isLocalMaven) {
     apply from: "${project.rootDir}/config-local-maven.gradle"
 } else {
