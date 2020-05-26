@@ -39,7 +39,9 @@ public class JsHandlerFactory {
     }
 
     /**
-     * 注册可以处理Js请求的类
+     * @param handlerName 注册可以处理Js请求的类的名称
+     * @param clazz 注册可以处理Js请求的类类型
+     * @return 工厂
      */
     public JsHandlerFactory register(String handlerName, Class<? extends JsHandler> clazz) {
         if (clazz == null)

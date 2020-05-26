@@ -28,10 +28,8 @@ public class CameraUtils {
     private static Camera camera;
 
     /**
-     * 检查是否有相机
-     *
-     * @param context
-     * @return
+     * @param context 上下文
+     * @return 检查是否有相机
      */
     public static boolean hasCamera(Context context) {
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
@@ -44,9 +42,7 @@ public class CameraUtils {
     }
 
     /**
-     * 打开相机
-     *
-     * @return
+     * @return 打开相机
      */
     public static Camera openCamera() {
         camera = null;
@@ -63,7 +59,8 @@ public class CameraUtils {
     }
 
     /**
-     * 适配相机旋转
+     * @return 适配相机旋转
+     * @param context 上下文
      */
     public static int getCameraDisplayOrientation(Context context) {
         Camera.CameraInfo info = new Camera.CameraInfo();

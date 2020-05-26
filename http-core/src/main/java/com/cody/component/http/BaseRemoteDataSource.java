@@ -68,6 +68,11 @@ public abstract class BaseRemoteDataSource implements IDataSource{
 
     /**
      * 原始数据对象不做解析
+     * @param observable 可观察者
+     * @param <T> 返回数据结果类型
+     * @param callback 回调
+     * @return Disposable
+     *
      */
     protected <T> Disposable executeOriginal(Observable<T> observable, RequestCallback<T> callback) {
         Disposable disposable = observable
@@ -83,6 +88,10 @@ public abstract class BaseRemoteDataSource implements IDataSource{
 
     /**
      * 直接解析出result中的data
+     * @param observable 可观察者
+     * @param <T> 返回数据结果类型
+     * @param callback 回调
+     * @return Disposable
      */
     protected <T> Disposable execute(Observable<Result<T>> observable, RequestCallback<T> callback) {
         Disposable disposable = observable

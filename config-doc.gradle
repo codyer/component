@@ -1,3 +1,5 @@
+import org.gradle.internal.jvm.Jvm
+
 /*
  * ************************************************************
  * 文件：config-doc.gradle  模块：StudioProjects-component  项目：component
@@ -31,6 +33,9 @@ task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile
+    if (Jvm.current().getJavaVersion() == JavaVersion.VERSION_1_8) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
 }
 
 // 打包文档jar
@@ -45,10 +50,16 @@ artifacts {
 }
 
 /*在javadoc task执行之前先添加第三方的依赖进来，否则会找不到相关的jar包*/
+/*
 afterEvaluate {
     javadoc.classpath += files(android.libraryVariants.collect { variant2 ->
         variant2.getJavaCompiler().classpath.files
     })
+}
+*/
+
+afterEvaluate {
+    javadoc.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
 }
 
 javadoc {

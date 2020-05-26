@@ -12,12 +12,7 @@
 
 import org.gradle.internal.jvm.Jvm
 
-apply plugin: 'java-library'
-
-sourceCompatibility = "7"
-targetCompatibility = "7"
-
-//apply from:  "${project.rootDir}/config-compiler.gradle"
+apply from:  "${project.rootDir}/config-compiler.gradle"
 dependencies {
     compileOnly files(Jvm.current().getToolsJar())
     api project(':http-lib')

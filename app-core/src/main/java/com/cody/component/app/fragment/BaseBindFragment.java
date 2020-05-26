@@ -54,6 +54,7 @@ public abstract class BaseBindFragment<B extends ViewDataBinding> extends BaseLa
             savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         if (getLayoutID() == 0) {
+            onBaseReady(savedInstanceState);
             return view;
         }
         if (unBound()) {
@@ -67,11 +68,11 @@ public abstract class BaseBindFragment<B extends ViewDataBinding> extends BaseLa
         } else {
             view = inflater.inflate(getLayoutID(), container, false);
         }
+        onBaseReady(savedInstanceState);
         return view;
     }
 
     @CallSuper
-    @Override
     protected void onBaseReady(Bundle savedInstanceState) {
         // The same thing as activity has been done in onCreateView
     }

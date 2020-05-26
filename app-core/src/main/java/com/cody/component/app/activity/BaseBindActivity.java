@@ -46,11 +46,16 @@ public abstract class BaseBindActivity<B extends ViewDataBinding> extends BaseAc
     @LayoutRes
     protected abstract int getLayoutID();
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        onBaseReady(savedInstanceState);
+    }
+
     /**
      * 子Activity逻辑重载这个函数
      */
     @CallSuper
-    @Override
     protected void onBaseReady(Bundle savedInstanceState) {
         mBinding = DataBindingUtil.setContentView(this, getLayoutID());
         if (mBinding != null) {
@@ -61,7 +66,7 @@ public abstract class BaseBindActivity<B extends ViewDataBinding> extends BaseAc
             setContentView(getLayoutID());
         }
 
-        if (isSupportImmersive()){
+        if (isSupportImmersive()) {
             onImmersiveReady();
         }
     }

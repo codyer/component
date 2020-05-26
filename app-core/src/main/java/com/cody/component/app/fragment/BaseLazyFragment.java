@@ -32,13 +32,10 @@ public abstract class BaseLazyFragment extends BaseFragment {
     private boolean mIsPrepared = false;
     private boolean mCurrentVisibleState = false;
 
-    protected abstract void onBaseReady(Bundle savedInstanceState);
-
     /**
      * when fragment is visible for the first time, here we can do some initialized work or refresh data only once
      */
     protected void onFirstUserVisible(@Nullable Bundle savedInstanceState) {
-        onBaseReady(savedInstanceState);
     }
 
     /**

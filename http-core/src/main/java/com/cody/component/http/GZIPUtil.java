@@ -37,6 +37,8 @@ public class GZIPUtil {
 
     /**
      * String 压缩至gzip 字节数据
+     * @param str 字符串
+     * @return 压缩结果
      */
     public static byte[] compress(String str) {
         return compress(str, ENCODE_UTF_8);
@@ -44,6 +46,9 @@ public class GZIPUtil {
 
     /**
      * String 压缩至gzip 字节数组，可选择encoding配置
+     * @param str 字符串
+     * @param encoding 编码
+     * @return 压缩结果
      */
     public static byte[] compress(String str, String encoding) {
         if (str == null || str.length() == 0) {
@@ -86,6 +91,8 @@ public class GZIPUtil {
 
     /**
      * 字节数组解压至string
+     * @param bytes 字节
+     * @return 结果
      */
     public static String uncompressToString(byte[] bytes) {
         return uncompressToString(bytes, ENCODE_UTF_8);
@@ -93,6 +100,9 @@ public class GZIPUtil {
 
     /**
      * 字节数组解压至string，可选择encoding配置
+     * @param bytes 字节
+     * @param encoding 编码
+     * @return 结果
      */
     public static String uncompressToString(byte[] bytes, String encoding) {
         if (bytes == null || bytes.length == 0) {
@@ -116,6 +126,8 @@ public class GZIPUtil {
 
     /**
      * 判断请求头是否存在gzip
+     * @param headers 请求头
+     * @return 是否包含gzip
      */
     public static boolean isGzip(Headers headers) {
         boolean gzip = false;

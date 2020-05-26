@@ -89,6 +89,8 @@ public class JsBridge {
 
     /**
      * 设置分享回调
+     * @param listener 回调
+     * @return JsBridge
      */
     public JsBridge setShareListener(OnShareListener listener) {
         sInstance.mOnShareListener = listener;
@@ -98,6 +100,8 @@ public class JsBridge {
 
     /**
      * 设置webView 初始化监听
+     * @param listener 回调
+     * @return JsBridge
      */
     public JsBridge setOnWebViewInitListener(OnWebViewInitListener listener) {
         sInstance.mOnWebViewInitListener = listener;
@@ -129,7 +133,9 @@ public class JsBridge {
     }
 
     /**
-     * 查找处理js处理方法
+     * @param handlerName 处理器名字
+     * @param methodName 调用的方法名字
+     * @return 查找处理js处理方法
      */
     public static Method findMethod(String handlerName, String methodName) {
         return getInstance().mJsHandlerFactory.findMethod(handlerName, methodName);
@@ -137,6 +143,9 @@ public class JsBridge {
 
     /**
      * 调用Native方法
+     * @param webView 浏览器
+     * @param message 协议串
+     * @return 结果
      */
     public static boolean callNative(WebView webView, String message) {
         return JsInteract.newInstance().callNative(webView, message);
@@ -148,6 +157,9 @@ public class JsBridge {
 
     /**
      * 替换Activity中的startActivityForResult
+     * @param webView 浏览器
+     * @param intent 意图
+     * @param listener 回调
      */
     public static void startActivityForResult(WebView webView, Intent intent, OnActivityResultListener listener) {
         int requestCode = getInstance().mRequestCodeSequence++;
@@ -163,6 +175,9 @@ public class JsBridge {
 
     /**
      * 需要用到startActivityForResult的时候需要调用此回调
+     * @param requestCode 请求码
+     * @param resultCode 结果码
+     * @param data 数据
      */
     public static void onActivityResult(int requestCode, int resultCode, Intent data) {
         OnActivityResultListener listener = getInstance().mResultListener.get(requestCode);
@@ -174,6 +189,10 @@ public class JsBridge {
 
     /**
      * 6.0以上需要动态请求权限的时候需要调用此函数
+     * @param activity 活动
+     * @param rationale 申请权限的说明
+     * @param listener 回调
+     * @param perms 需要申请的权限
      */
     public static void requestPermissions(Activity activity, @NonNull String rationale, EasyPermissions.PermissionCallbacks listener, @NonNull String... perms) {
         int requestCode = getInstance().mPermissionsListener.size();
@@ -196,6 +215,7 @@ public class JsBridge {
 
     /**
      * 需要在包含webView的Activity中调用
+     * @param webView 浏览器
      */
     public static void onResume(WebView webView) {
         if (webView != null) {
@@ -205,6 +225,7 @@ public class JsBridge {
 
     /**
      * 需要在包含webView的Activity中调用
+     * @param webView 浏览器
      */
     public static void onPause(WebView webView) {
         if (webView != null) {
@@ -214,6 +235,7 @@ public class JsBridge {
 
     /**
      * 需要在包含webView的Activity中调用，用来回收webView数据
+     * @param webView 浏览器
      */
     public static void onDestroy(WebView webView) {
         if (webView != null) {
@@ -228,6 +250,7 @@ public class JsBridge {
      *
      * @param version 处理类名
      * @param name    处理类类型
+     * @return JsBridge
      */
     public JsBridge init(String version, String name) {
         sInstance.VERSION = version;
@@ -237,6 +260,8 @@ public class JsBridge {
 
     /**
      * 调用Native方法
+     * @param host 设置内部域名，会过滤非内部域名网页
+     * @return JsBridge
      */
     public JsBridge setHost(String host) {
         sInstance.HOST_SUFFIX = host;
@@ -244,7 +269,8 @@ public class JsBridge {
     }
 
     /**
-     * 是否支持刷新
+     * @param refreshable 是否支持刷新
+     * @return JsBridge
      */
     public JsBridge refreshable(boolean refreshable) {
         sInstance.mRefreshable = refreshable;
@@ -252,7 +278,8 @@ public class JsBridge {
     }
 
     /**
-     * 是否支持刷新
+     * @param debugMode 是否调试模式
+     * @return JsBridge
      */
     public JsBridge setDebugMode(boolean debugMode) {
         sInstance.mDebugMode = debugMode;
@@ -264,6 +291,7 @@ public class JsBridge {
      *
      * @param handlerName 处理类名
      * @param clazz       处理类类型
+     * @return JsBridge
      */
     public JsBridge addJsHandler(String handlerName, Class<? extends JsHandler> clazz) {
         sInstance.mJsHandlerFactory.register(handlerName, clazz);
@@ -272,6 +300,9 @@ public class JsBridge {
 
     /**
      * 退出 和 登录 的时候调用清空cookie
+     *
+     * @param context 上下文
+     * @return JsBridge
      */
     public JsBridge clearCookie(Context context) {
         if (context == null) {
@@ -294,6 +325,11 @@ public class JsBridge {
 
     /**
      * 同步指定地址的cookie到webView
+     *
+     * @param context 上下文
+     * @param url     地址
+     * @param cookies cookies
+     * @return JsBridge
      */
     public JsBridge syncCookie(Context context, String url, Map<String, Object> cookies) {
         if (context == null || TextUtils.isEmpty(url) || cookies == null) {
@@ -317,6 +353,9 @@ public class JsBridge {
 
     /**
      * 设置图片选择回调到webView
+     *
+     * @param fileChooseCallBack 文件选择回调
+     * @return JsBridge
      */
     public JsBridge setFileChooseCallBack(JsWebChromeClient.OpenFileChooserCallBack fileChooseCallBack) {
         mFileChooserCallBack = fileChooseCallBack;
@@ -325,6 +364,9 @@ public class JsBridge {
 
     /**
      * 构建已经注册的处理类
+     *
+     * @param webView   浏览器
+     * @param viewModel 网页处理ViewModel
      */
     @SuppressLint("SetJavaScriptEnabled")
     public void build(WebView webView, HtmlViewModel viewModel) {

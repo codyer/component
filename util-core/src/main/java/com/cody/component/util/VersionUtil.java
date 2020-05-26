@@ -24,7 +24,7 @@ public class VersionUtil {
      * 比较版本
      * @param newVersion 新版本
      * @param oldVersion 当前版本
-     * @return
+     * @return 比较结果
      */
     public static boolean compareVersion(String newVersion, String oldVersion){
         if (TextUtils.isEmpty(newVersion) || TextUtils.isEmpty(oldVersion)){

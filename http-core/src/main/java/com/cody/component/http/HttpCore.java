@@ -52,6 +52,8 @@ public class HttpCore {
 
     /**
      * 必须在application中初始化
+     * @param context application上下文
+     * @return HttpCore
      */
     public static HttpCore init(Context context) {
         InstanceHolder.INSTANCE.mContextWeakReference = new WeakReference<>(context);
@@ -61,6 +63,8 @@ public class HttpCore {
 
     /**
      * 设置App的版本，缓存需要使用
+     * @param version 设置当前版本
+     * @return HttpCore
      */
     public HttpCore withVersion(String version) {
         getInstance().mVersion = version;
@@ -69,6 +73,8 @@ public class HttpCore {
 
     /**
      * 默认关闭log
+     * @param log 是否需要log
+     * @return HttpCore
      */
     public HttpCore withLog(boolean log) {
         RetrofitManagement.getInstance().setLog(log);
@@ -77,6 +83,7 @@ public class HttpCore {
 
     /**
      * 杀死HttpCat
+     * @return HttpCore
      */
     public HttpCore killHttpCat() {
         RetrofitManagement.getInstance().setHttpCatInterceptor(null);
@@ -85,6 +92,8 @@ public class HttpCore {
 
     /**
      * 默认关闭log
+     * @param cat 添加数据拦截器
+     * @return HttpCore
      */
     public HttpCore withHttpCat(Interceptor cat) {
         RetrofitManagement.getInstance().setHttpCatInterceptor(cat);
@@ -93,6 +102,8 @@ public class HttpCore {
 
     /**
      * 默认关闭log
+     * @param interceptor 添加头部拦截器
+     * @return HttpCore
      */
     public HttpCore withHttpHeader(Interceptor interceptor) {
         RetrofitManagement.getInstance().addInterceptor(interceptor);
@@ -102,6 +113,9 @@ public class HttpCore {
 
     /**
      * 获取Service
+     * @param url 服务地址
+     * @param clz 服务类类型
+     * @return 服务类
      */
     public <T> T getService(String url, Class<T> clz) {
         return RetrofitManagement.getInstance().getService(url, clz);

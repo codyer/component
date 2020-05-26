@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public interface IImageViewListener {
     /**
      * 预览图片
+     * @param path 地址
      */
     void preview(String path);
 
@@ -40,14 +41,16 @@ public interface IImageViewListener {
     /**
      * 直接选择图片
      *
-     * @param limit 还可以添加的图片数量 limit = LIMIT - items.size()
+     * @param limit  还可以添加的图片数量 limit = LIMIT - items.size()
+     * @param isCrop 是否裁剪
      */
     void selectImage(final int limit, boolean isCrop); // 获取图片
 
     /**
      * 获取图片，弹出选择照相或者从相册选择,可选择是否裁剪
      *
-     * @param limit 还可以添加的图片数量 limit = LIMIT - items.size()
+     * @param limit  还可以添加的图片数量 limit = LIMIT - items.size()
+     * @param isCrop 是否裁剪
      */
     void pickImage(final int limit, boolean isCrop); // 获取图片
 

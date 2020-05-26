@@ -153,9 +153,7 @@ public class SensorController implements SensorEventListener {
     }
 
     /**
-     * 对焦是否被锁定
-     *
-     * @return
+     * @return 对焦是否被锁定
      */
     public boolean isFocusLocked() {
         if (canFocus) {

@@ -35,12 +35,22 @@ public final class JsHandlerCommonImpl implements JsHandler {
 
     /**
      * 默认方法处理器，当找不到对应的处理方法的时候调用此方法
+     *
+     * @param webView 浏览器
+     * @param params 参数
+     * @param callback 回调
      */
     public static void defaultMethod(WebView webView, String method, JSONObject params, JsCallback callback) {
         String msg = "Method (" + method + ") in this class (JsHandlerCommonImpl) not found!";
         callback.failure(msg);
     }
 
+    /**
+     * 获取App名字
+     * @param webView 浏览器
+     * @param params 参数
+     * @param callback 回调
+     */
     public static void getAppName(WebView webView, JSONObject params, JsCallback callback) {
         String appName;
         try {
@@ -71,6 +81,9 @@ public final class JsHandlerCommonImpl implements JsHandler {
 
     /**
      * 开新页
+     * @param webView 浏览器
+     * @param params 参数
+     * @param callback 回调
      */
     public static void openNewPage(final WebView webView, final JSONObject params, JsCallback callback) {
         if (params != null) {

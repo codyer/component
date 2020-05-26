@@ -79,7 +79,7 @@ public class JsCallback {
     }
 
     /**
-     * 直接返回失败消息，不需要包含data部分
+     * @param message 直接返回失败消息，不需要包含data部分
      */
     public void failure(String message) {
         Result<Object> result = new Result<>(JsCode.FAILURE, message, null);
@@ -88,7 +88,7 @@ public class JsCallback {
     }
 
     /**
-     * 直接返回成功消息，不需要包含data部分
+     * @param message 直接返回成功消息，不需要包含data部分
      */
     public void success(String message) {
         Result<Object> result = new Result<>(JsCode.SUCCESS, message, null);
@@ -104,7 +104,8 @@ public class JsCallback {
     }
 
     /**
-     * 直接返回成功消息，需要包含data部分
+     * @param message 直接返回成功消息
+     * @param data    需要包含data部分
      */
     public void success(String message, JSONObject data) {
         Result<JSONObject> result = new Result<>(JsCode.SUCCESS, message, data);
@@ -112,7 +113,7 @@ public class JsCallback {
     }
 
     /**
-     * 直接返回成功消息，需要包含data部分
+     * @param data 直接返回成功消息，需要包含data部分
      */
     public void success(JSONObject data) {
         Result<JSONObject> result = new Result<>(JsCode.SUCCESS, null, data);
@@ -120,7 +121,7 @@ public class JsCallback {
     }
 
     /**
-     * 直接返回成功消息，需要包含data部分
+     *  @param result 直接返回成功消息，需要包含data部分
      */
     public void callback(JSONObject result) {
         callJs(getCallBackUrl(result));

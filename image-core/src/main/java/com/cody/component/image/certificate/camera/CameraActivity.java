@@ -22,6 +22,7 @@ import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -115,7 +117,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     }
 
     /**
-     * 获取图片路径
+     * @param data 意图
+     * @return 获取图片路径
      */
     public static boolean getImageTypeVertical(Intent data) {
         if (data != null) {
@@ -126,7 +129,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     }
 
     /**
-     * 获取图片路径
+     * @param data 意图
+     * @return 获取图片路径
      */
     public static String getImagePath(Intent data) {
         if (data != null) {
@@ -141,7 +145,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    protected void onBaseReady(Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState, @Nullable final PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
         mType = getIntent().getIntExtra(TAKE_TYPE, 0);
         /*动态请求需要的权限*/
         //权限请求码

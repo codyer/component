@@ -310,7 +310,7 @@ public class DownloadService extends Service {
 
     public class DownloadBinder extends Binder {
         /**
-         * 返回当前服务的实例
+         * @return 返回当前服务的实例
          */
         public DownloadService getService() {
             return DownloadService.this;

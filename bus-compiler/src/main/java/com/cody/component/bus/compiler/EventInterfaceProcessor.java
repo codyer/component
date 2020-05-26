@@ -180,7 +180,7 @@ public class EventInterfaceProcessor extends AbstractProcessor {
                 .addModifiers(Modifier.PUBLIC)
                 .addSuperinterface(IEvent.class)
                 .addAnnotation(autoGenerate)
-                .addJavadoc(FILE_DESCRIPTION);
+                .addJavadoc(FILE_DESCRIPTION + "@see " + infoBean.getPackageName() + "." + infoBean.getClassName() + "\n");
         for (EventBean e : infoBean.getEventBeans()) {
             ClassName className = ClassName.bestGuess(RETURN_CLASS);
             TypeName returnType;

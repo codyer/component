@@ -30,7 +30,8 @@ import java.util.Map;
 public class UrlUtil {
 
     /**
-     * 是否是内部链接
+     * @param url 地址
+     * @return 是否是内部链接
      */
     public static boolean isInnerLink(String url) {
         if (TextUtils.isEmpty(url)) return false;

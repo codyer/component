@@ -52,7 +52,9 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
      * 跳转html页面统一使用此函数
      *
      * @param title title为空意味着不要原生的头部
+     * @param description   描述
      * @param url   地址
+     * @param share 是否可以分享
      * @param root  根页面
      */
     public static void startHtml(String title, String description, String url, boolean share, boolean root) {
@@ -63,6 +65,9 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
 
     /**
      * 设置参数到 bundle
+     *
+     * @param config 跳转页面配置
+     * @return 意图包装结果
      */
     public static Intent putConfig(HtmlConfig config) {
         Intent intent = new Intent();
@@ -77,6 +82,8 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
 
     /**
      * 跳转html页面统一使用此函数
+     *
+     * @param config 跳转页面配置
      */
     public static void startHtml(HtmlConfig config) {
         ActivityUtil.navigateTo(putConfig(config));
@@ -97,6 +104,7 @@ public class HtmlActivity extends FragmentContainerWithCloseActivity implements 
      *
      * @param title title为空意味着不要原生的头部
      * @param url   地址
+     * @param share 是否能分享
      */
     public static void startHtml(String title, String url, boolean share) {
         startHtml(title, null, url, share, false);

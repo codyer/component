@@ -70,8 +70,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
     private float mDownY;
     private BGASwipeBackHelper mSwipeBackHelper;
 
-    protected abstract void onBaseReady(Bundle savedInstanceState);
-
     public static int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 Resources.getSystem().getDisplayMetrics());
@@ -195,7 +193,6 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
         super.onCreate(savedInstanceState);
         TAG = this.getClass().getName();
         ActivityUtil.setCurrentActivity(this);
-        onBaseReady(savedInstanceState);
     }
 
     @Override

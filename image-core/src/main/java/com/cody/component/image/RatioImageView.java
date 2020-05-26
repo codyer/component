@@ -78,9 +78,7 @@ public class RatioImageView extends ImageView {
     }
 
     /**
-     * 设置高宽比
-     *
-     * @param ratio
+     * @param ratio 设置高宽比
      */
     public void setRatio(float ratio) {
         this.mRatio = ratio;

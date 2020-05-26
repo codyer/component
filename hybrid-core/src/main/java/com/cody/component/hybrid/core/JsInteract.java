@@ -48,6 +48,7 @@ public class JsInteract {
     /**
      * @param webView WebView
      * @param message js_bridge://class:port/method?params
+     * @return 结果
      */
     public boolean callNative(WebView webView, String message) {
         if (webView == null || TextUtils.isEmpty(message))
