@@ -77,7 +77,7 @@ public class BusDemoActivity extends AppCompatActivity {
             case R.id.action_settings:
                 Toast.makeText(BusDemoActivity.this, "注册事件监听", Toast.LENGTH_SHORT).show();
                 LiveEventBus.begin().inScope(Scope$demo.class).testBean()
-                        .observe(BusDemoActivity.this, new ObserverWrapper<TestBean>() {
+                        .observeAny(BusDemoActivity.this, new ObserverWrapper<TestBean>() {
                             @Override
                             public void onChanged(TestBean testBean) {
                                 Toast.makeText(BusDemoActivity.this, "事件监听" + testBean.toString(), Toast.LENGTH_SHORT).show();

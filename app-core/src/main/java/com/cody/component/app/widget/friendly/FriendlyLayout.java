@@ -61,6 +61,7 @@ public class FriendlyLayout extends SwipeRefreshLayout {
     private View mInitView;
     private View mErrorView;
     private View mEmptyView;
+    private boolean mCanRefresh = true;
     private boolean mInitialized = false;
 
     public boolean isInitialized() {
@@ -81,6 +82,20 @@ public class FriendlyLayout extends SwipeRefreshLayout {
     }
 
     /**
+     * 是否可以刷新
+     */
+    public boolean isCanRefresh() {
+        return mCanRefresh;
+    }
+
+    /**
+     * 是否可以刷新
+     */
+    public void setCanRefresh(final boolean canRefresh) {
+        mCanRefresh = canRefresh;
+    }
+
+    /**
      * bind:onClickListener="@{onClickListener}"
      */
     @Override
@@ -89,7 +104,7 @@ public class FriendlyLayout extends SwipeRefreshLayout {
     }
 
     public void removeFriendLyView() {
-        setEnabled(true);
+        setEnabled(mCanRefresh);
         if (mFrameLayout != null) {
             mFrameLayout.removeView(mInitView);
             mFrameLayout.removeView(mEmptyView);

@@ -25,12 +25,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 
 import com.cody.component.bind.CoreBR;
+import com.cody.component.bus.LiveEventBus;
+import com.cody.component.bus.wrapper.ObserverWrapper;
 import com.cody.component.demo.R;
 import com.cody.component.app.activity.StaticActivity;
 import com.cody.component.banner.adapter.BindingBannerAdapter;
 import com.cody.component.banner.data.BannerViewData;
+import com.cody.component.demo.bean.TestBean;
 import com.cody.component.demo.bean.TestDataBean;
 import com.cody.component.demo.bus.BusDemoActivity;
+import com.cody.component.demo.bus.event.Scope$demo;
 import com.cody.component.demo.data.generate.CatApiOpen$RemoteDataSource;
 import com.cody.component.demo.data.generate.CatHttpBin$RemoteDataSource;
 import com.cody.component.demo.databinding.ActivityMainBannerBinding;
@@ -121,6 +125,13 @@ public class MainActivity extends StaticActivity<ActivityMainBannerBinding> {
         bannerAdapter.setItemClickListener((parent, view, position, id) -> Toast.makeText(MainActivity.this, "position=" + position, Toast.LENGTH_SHORT).show());
         bannerAdapter.submitList(banners);
         getBinding().banner.setBindingBannerAdapter(bannerAdapter);
+        LiveEventBus.begin().inScope(Scope$demo.class).testBean()
+                .observe(MainActivity.this, new ObserverWrapper<TestBean>() {
+                    @Override
+                    public void onChanged(TestBean testBean) {
+                        Toast.makeText(MainActivity.this, "首页事件监听" + testBean.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void testDialog() {

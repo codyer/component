@@ -44,11 +44,6 @@ final public class LiveEventWrapper<T> {
         mMutableLiveData.setValue(new ValueWrapper<>(value, mSequence));
     }
 
-    public void observeForever(@NonNull final ObserverWrapper<T> observer) {
-        observer.sequence = mSequence++;
-        mMutableLiveData.observeForever(filterObserver(observer));
-    }
-
     public void removeObserver(@NonNull ObserverWrapper<T> observer) {
         mMutableLiveData.removeObserver(filterObserver(observer));
     }
@@ -95,6 +90,14 @@ final public class LiveEventWrapper<T> {
     }
 
     /**
+     * @param observer 观察者
+     */
+    public void observeForever(@NonNull final ObserverWrapper<T> observer) {
+        observer.sequence = mSequence++;
+        mMutableLiveData.observeForever(filterObserver(observer));
+    }
+
+    /**
      * 设置监听之前发送的消息也可以接受到
      */
     public void observeAny(@NonNull LifecycleOwner owner, @NonNull ObserverWrapper<T> observer) {
@@ -110,6 +113,10 @@ final public class LiveEventWrapper<T> {
         mMutableLiveData.observe(owner, filterObserver(observer));
     }
 
+    /**
+     * 如果在多线程中调用，还没有来得及更新的时候，只会保留最后一个值
+     * @param value 需要更新的值
+     */
     public void postValue(@NonNull T value) {
         mMutableLiveData.postValue(new ValueWrapper<>(value, mSequence));
     }
