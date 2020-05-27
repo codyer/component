@@ -12,14 +12,20 @@
 
 package com.cody.component.bus.wrapper;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 
+import com.cody.component.bus.LiveEventBus;
+import com.cody.component.bus.factory.BusFactory;
 import com.cody.component.bus.lib.exception.UnInitValueException;
 
 /**
@@ -115,10 +121,20 @@ final public class LiveEventWrapper<T> {
 
     /**
      * 如果在多线程中调用，还没有来得及更新的时候，只会保留最后一个值
+     *
      * @param value 需要更新的值
      */
     public void postValue(@NonNull T value) {
         mMutableLiveData.postValue(new ValueWrapper<>(value, mSequence));
+    }
+
+    /**
+     * 如果在多线程中调用，保留每一个值
+     *
+     * @param value 需要更新的值
+     */
+    public void postValueSafe(@NonNull T value) {
+        postToMainThread(value);
     }
 
     public void setValue(@NonNull T value) {
@@ -136,5 +152,9 @@ final public class LiveEventWrapper<T> {
                 observerWrapper.onChanged(valueWrapper.value);
             }
         };
+    }
+
+    private void postToMainThread(T value) {
+        MainLooperFactory.ready().getMainHandler().post(() -> setValue(value));
     }
 }

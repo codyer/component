@@ -12,6 +12,9 @@
 
 package com.cody.component.bus;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import com.cody.component.bus.factory.BusFactory;
 import com.cody.component.bus.lib.IEvent;
 import com.cody.component.bus.lib.annotation.AutoGenerate;
@@ -28,20 +31,20 @@ import java.lang.reflect.Proxy;
  * 使用 LiveData 实现类似event bus功能，支持生命周期管理
  * 使用方式：
  * LiveEventBus.begin()
- *                 .inScope(ToBeCompilerOut.class)
- *                 .withEvent$userDefinedEvent()
- *                 .observe(null, new ObserverWrapper&lt;String&gt;() {
- *                     Override
- *                     public void onChanged(@Nullable String s) {
- *                     }
- *                 });
- *
- *         LiveEventBus.begin()
- *                 .inScope(ToBeCompilerOut.class)
- *                 .withEvent$userDefinedEvent().postValue("");
- *         LiveEventBus.begin()
- *                 .inScope(ToBeCompilerOut.class)
- *                 .withEvent$userDefinedEvent().setValue("");
+ * .inScope(ToBeCompilerOut.class)
+ * .withEvent$userDefinedEvent()
+ * .observe(null, new ObserverWrapper&lt;String&gt;() {
+ * Override
+ * public void onChanged(@Nullable String s) {
+ * }
+ * });
+ * <p>
+ * LiveEventBus.begin()
+ * .inScope(ToBeCompilerOut.class)
+ * .withEvent$userDefinedEvent().postValue("");
+ * LiveEventBus.begin()
+ * .inScope(ToBeCompilerOut.class)
+ * .withEvent$userDefinedEvent().setValue("");
  */
 public class LiveEventBus {
     private static class InstanceHolder {
