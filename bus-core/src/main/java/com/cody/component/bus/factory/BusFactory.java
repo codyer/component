@@ -13,20 +13,20 @@
 package com.cody.component.bus.factory;
 
 
-import android.os.Handler;
-import android.os.Looper;
-
 import androidx.annotation.NonNull;
 
 import com.cody.component.bus.wrapper.LiveEventWrapper;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by xu.yi. on 2019/3/31.
  * 和生命周期绑定的事件总线,创建基于事件的总线，对不同scope进行隔离
  */
 public class BusFactory {
+    private final ExecutorService mExecutorService;
     private final HashMap<String, ScopeHolder<Object>> mScopeBus;//不同scope的bus集
 
     private static class InstanceHolder {
@@ -39,6 +39,7 @@ public class BusFactory {
 
     private BusFactory() {
         mScopeBus = new HashMap<>();
+        mExecutorService = Executors.newCachedThreadPool();
     }
 
     @NonNull
@@ -53,6 +54,10 @@ public class BusFactory {
             mScopeBus.put(scope, scopeHolder);
         }
         return (LiveEventWrapper<T>) scopeHolder.getBus(event);
+    }
+
+    public ExecutorService getExecutorService() {
+        return mExecutorService;
     }
 
     /**

@@ -13,21 +13,20 @@
 package com.cody.component.demo.bus;
 
 import android.os.Bundle;
-
-import com.cody.component.bus.LiveEventBus;
-import com.cody.component.demo.R;
-import com.cody.component.demo.bean.TestBean;
-import com.cody.component.demo.bus.event.Scope$demo;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.View;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.cody.component.bus.LiveEventBus;
 import com.cody.component.bus.wrapper.ObserverWrapper;
+import com.cody.component.demo.R;
+import com.cody.component.demo.bean.TestBean;
+import com.cody.component.demo.bus.event.Scope$demo;
+import com.cody.component.util.LogUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -46,15 +45,53 @@ public class BusDemoActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                count++;
-                Snackbar.make(view, "发送事件监听" + count, Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                LiveEventBus.begin().inScope(Scope$demo.class).testBean().setValue(new TestBean("count", ("count" + count)));
-            }
+        fab.setOnClickListener(view -> {
+            count++;
+            Snackbar.make(view, "发送事件监听" + count, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            LiveEventBus.begin().inScope(Scope$demo.class).testBean().post(new TestBean("count", ("count" + count)));
         });
+
+        LogUtil.d("ddd", "1 id=" + Thread.currentThread().getId());
+        // 只支持在主线程调用观察者
+        // 线程执行某个耗时任务，同时监听事件回调
+        new Thread(() -> {
+            LogUtil.d("ddd", "0 id=" + Thread.currentThread().getId());
+            testThread1();
+        }).start();
+    }
+
+    private void testThread1() {
+        LiveEventBus.begin()
+                .inScope(Scope$demo.class)
+                .testBean()
+                .observe(this, new ObserverWrapper<TestBean>(false, false) {
+                    @Override
+                    public void onChanged(final TestBean testBean) {
+                        boolean finish = TextUtils.equals(testBean.getCode(), "count5");
+                        LogUtil.d("ddd", "2 事件监听 in thread id=" + Thread.currentThread().getId());
+                        //Toast.makeText(BusDemoActivity.this, "事件监听 in thread" + testBean.toString(), Toast.LENGTH_SHORT).show();
+                        /*if (finish) {
+                            LiveEventBus.begin()
+                                    .inScope(Scope$demo.class)
+                                    .testBean().removeObserver(this);
+                        }*/
+                    }
+                });
+        try {
+            int i = 0;
+            while (true) {
+                if (i++ < 10) {
+                    Thread.sleep(1000);
+                    LiveEventBus.begin().inScope(Scope$demo.class).testBean().post(new TestBean("count", ("count" + count)));
+                    LogUtil.d("ddd", "处理时间用了：" + i + "s id=" + Thread.currentThread().getId());
+                } else {
+                    break;
+                }
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -77,7 +114,12 @@ public class BusDemoActivity extends AppCompatActivity {
             case R.id.action_settings:
                 Toast.makeText(BusDemoActivity.this, "注册事件监听", Toast.LENGTH_SHORT).show();
                 LiveEventBus.begin().inScope(Scope$demo.class).testBean()
-                        .observeAny(BusDemoActivity.this, new ObserverWrapper<TestBean>() {
+                        .observe(BusDemoActivity.this, new ObserverWrapper<TestBean>() {
+                            @Override
+                            protected boolean isSticky() {
+                                return true;
+                            }
+
                             @Override
                             public void onChanged(TestBean testBean) {
                                 Toast.makeText(BusDemoActivity.this, "事件监听" + testBean.toString(), Toast.LENGTH_SHORT).show();

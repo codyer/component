@@ -139,6 +139,7 @@ dependencies {
 //        implementation rootProject.ext.dependencies["local-component"]
 //        annotationProcessor rootProject.ext.dependencies["local-compiler"]
 //    } else if (isComponent) {
+    implementation 'org.greenrobot:eventbus:3.2.0'
     implementation project(':cat-core')
     implementation project(':update-core')
     implementation project(':blues-core')

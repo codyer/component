@@ -12,20 +12,18 @@
 
 package com.cody.component.bus.wrapper;
 
-import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 
-import com.cody.component.bus.LiveEventBus;
 import com.cody.component.bus.factory.BusFactory;
+import com.cody.component.bus.factory.BusHandlerFactory;
 import com.cody.component.bus.lib.exception.UnInitValueException;
 
 /**
@@ -43,19 +41,6 @@ final public class LiveEventWrapper<T> {
 
     public LiveEventWrapper() {
         mMutableLiveData = new MutableLiveData<>();
-    }
-
-    @MainThread
-    public void initValue(@NonNull T value) {
-        mMutableLiveData.setValue(new ValueWrapper<>(value, mSequence));
-    }
-
-    public void removeObserver(@NonNull ObserverWrapper<T> observer) {
-        mMutableLiveData.removeObserver(filterObserver(observer));
-    }
-
-    public void removeObservers(@NonNull LifecycleOwner owner) {
-        mMutableLiveData.removeObservers(owner);
     }
 
     /**
@@ -87,60 +72,116 @@ final public class LiveEventWrapper<T> {
         });
     }
 
+    /**
+     * 是否有观察者
+     *
+     * @return 是否有观察者
+     */
     public boolean hasObservers() {
         return mMutableLiveData.hasObservers();
     }
 
+    /**
+     * 是否有激活的观察者
+     *
+     * @return 是否有激活的观察者
+     */
     public boolean hasActiveObservers() {
         return mMutableLiveData.hasActiveObservers();
     }
 
     /**
-     * @param observer 观察者
+     * 如果在多线程中调用，保留每一个值
+     * 无需关心调用线程，只要确保在相同进程中就可以
+     *
+     * @param value 需要更新的值
      */
-    public void observeForever(@NonNull final ObserverWrapper<T> observer) {
-        observer.sequence = mSequence++;
-        mMutableLiveData.observeForever(filterObserver(observer));
+    public void post(@NonNull T value) {
+        checkThread(() -> setValue(value));
     }
 
     /**
-     * 设置监听之前发送的消息也可以接受到
+     * 更新事件
+     * 主线程中才能使用
+     *
+     * @param value 更新事件值
      */
-    public void observeAny(@NonNull LifecycleOwner owner, @NonNull ObserverWrapper<T> observer) {
-        observer.sequence = -1;
-        mMutableLiveData.observe(owner, filterObserver(observer));
-    }
-
-    /**
-     * 设置监听之前发送的消息不可以接受到
-     */
-    public void observe(@NonNull LifecycleOwner owner, @NonNull ObserverWrapper<T> observer) {
-        observer.sequence = mSequence++;
-        mMutableLiveData.observe(owner, filterObserver(observer));
+    @MainThread
+    public void setValue(@NonNull T value) {
+        mMutableLiveData.setValue(new ValueWrapper<>(value, mSequence));
     }
 
     /**
      * 如果在多线程中调用，还没有来得及更新的时候，只会保留最后一个值
+     * 因为LiveData设计原因，只会保留最后一个值，有可能会丢失事件，因此不建议使用这个方法
      *
      * @param value 需要更新的值
      */
+    @Deprecated
     public void postValue(@NonNull T value) {
         mMutableLiveData.postValue(new ValueWrapper<>(value, mSequence));
     }
 
     /**
-     * 如果在多线程中调用，保留每一个值
+     * 主动取消观察
      *
-     * @param value 需要更新的值
+     * @param observerWrapper 观察者包装类
      */
-    public void postValueSafe(@NonNull T value) {
-        postToMainThread(value);
+    public void removeObserver(@NonNull ObserverWrapper<T> observerWrapper) {
+        checkThread(() -> mMutableLiveData.removeObserver(filterObserver(observerWrapper)));
     }
 
-    public void setValue(@NonNull T value) {
-        mMutableLiveData.setValue(new ValueWrapper<>(value, mSequence));
+    /**
+     * 移除某个生命周期拥有者的所有观察者
+     *
+     * @param owner 生命周期拥有者
+     */
+    public void removeObservers(@NonNull LifecycleOwner owner) {
+        checkThread(() -> mMutableLiveData.removeObservers(owner));
     }
 
+    /**
+     * 和生命周期无关，全生命周期一直都监听，不用的时候需要用户自己取消监听
+     *
+     * @param observerWrapper 观察者包装类
+     */
+    public void observeForever(@NonNull final ObserverWrapper<T> observerWrapper) {
+        observerWrapper.sequence = mSequence++;
+        checkThread(() -> mMutableLiveData.observeForever(filterObserver(observerWrapper)));
+    }
+
+    /**
+     * 粘性事件，设置监听之前发送的消息也可以接收到
+     * 重写 observer 的函数 isSticky ，返回true，可以实现粘性事件
+     *
+     * @param owner           生命周期拥有者
+     * @param observerWrapper 观察者包装类
+     * @see #observe(LifecycleOwner, ObserverWrapper)
+     */
+    @Deprecated
+    public void observeSticky(@NonNull LifecycleOwner owner, @NonNull ObserverWrapper<T> observerWrapper) {
+        observerWrapper.sequence = -1;
+        checkThread(() -> mMutableLiveData.observe(owner, filterObserver(observerWrapper)));
+    }
+
+    /**
+     * 设置监听之前发送的消息不可以接收到
+     * 重写 observer 的函数 isSticky ，返回true，可以实现粘性事件
+     *
+     * @param owner           生命周期拥有者
+     * @param observerWrapper 观察者包装类
+     */
+    public void observe(@NonNull LifecycleOwner owner, @NonNull ObserverWrapper<T> observerWrapper) {
+        observerWrapper.sequence = observerWrapper.isSticky() ? -1 : mSequence++;
+        checkThread(() -> mMutableLiveData.observe(owner, filterObserver(observerWrapper)));
+    }
+
+    /**
+     * 从包装类中过滤出原始观察者
+     *
+     * @param observerWrapper 包装类
+     * @return 原始观察者
+     */
     @NonNull
     private Observer<ValueWrapper<T>> filterObserver(@NonNull final ObserverWrapper<T> observerWrapper) {
         if (observerWrapper.observer != null) {
@@ -149,12 +190,41 @@ final public class LiveEventWrapper<T> {
         return observerWrapper.observer = valueWrapper -> {
             // 产生的事件序号要大于观察者序号才被通知事件变化
             if (valueWrapper != null && valueWrapper.sequence > observerWrapper.sequence) {
-                observerWrapper.onChanged(valueWrapper.value);
+                if (observerWrapper.uiThread()) {
+                    observerWrapper.onChanged(valueWrapper.value);
+                } else {
+                    BusFactory
+                            .ready()
+                            .getExecutorService()
+                            .execute(() -> observerWrapper.onChanged(valueWrapper.value));
+                }
             }
         };
     }
 
-    private void postToMainThread(T value) {
-        MainLooperFactory.ready().getMainHandler().post(() -> setValue(value));
+    /**
+     * 是否是在主线程
+     *
+     * @return 是主线程
+     */
+    private boolean isMainThread() {
+        return Looper.getMainLooper().getThread() == Thread.currentThread();
+    }
+
+    /**
+     * 检查线程并执行不同的操作
+     *
+     * @param runnable 可运行的一段代码
+     */
+    private void checkThread(Runnable runnable) {
+        if (isMainThread()) {
+            runnable.run();
+        } else {
+            // 主线程中观察
+            BusHandlerFactory
+                    .ready()
+                    .getMainHandler()
+                    .post(runnable);
+        }
     }
 }
