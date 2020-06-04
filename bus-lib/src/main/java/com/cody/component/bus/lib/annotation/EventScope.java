@@ -20,6 +20,12 @@ import java.lang.annotation.Target;
 /**
  * Created by Cody.yi on 2019/3/31.
  * 定义事件范围，注释在枚举上，可以给范围取一个名字
+ * eg:
+ *  //@EventScope(name = "demo",active = true)
+ * public enum AppDemo {
+ *     //@Event(description = "定义一个测试事件",data = String.class)testString,
+ *     //@Event(description = "定义一个测试事件测试对象",data = TestBean.class)testBean,
+ * }
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.TYPE)

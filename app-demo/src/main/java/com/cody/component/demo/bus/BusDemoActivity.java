@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -30,8 +31,12 @@ import com.cody.component.util.LogUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 public class BusDemoActivity extends AppCompatActivity {
     private static int count = 0;
+    private TestThread testThread;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,9 @@ public class BusDemoActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             count++;
+//            EventBus.getDefault().post("hello" + count);
+            LiveEventBus.getDefault("login", String.class).post("LiveEventBus");
+            LiveEventBus.getDefault("login", TestBean.class).post(new TestBean("count", ("count" + count)));
             Snackbar.make(view, "发送事件监听" + count, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             LiveEventBus.begin().inScope(Scope$demo.class).testBean().post(new TestBean("count", ("count" + count)));
@@ -55,10 +63,48 @@ public class BusDemoActivity extends AppCompatActivity {
         LogUtil.d("ddd", "1 id=" + Thread.currentThread().getId());
         // 只支持在主线程调用观察者
         // 线程执行某个耗时任务，同时监听事件回调
-        new Thread(() -> {
+        testThread = new TestThread(() -> {
             LogUtil.d("ddd", "0 id=" + Thread.currentThread().getId());
             testThread1();
-        }).start();
+        });
+        testThread.start();
+        LiveEventBus.getDefault("login", Object.class).observe(this, new ObserverWrapper<Object>() {
+            @Override
+            public void onChanged(@Nullable final Object hello) {
+                Toast.makeText(BusDemoActivity.this, "事件监听 in Object=" + hello, Toast.LENGTH_SHORT).show();
+            }
+        });
+        LiveEventBus.getDefault("login", TestBean.class).observe(this, new ObserverWrapper<TestBean>() {
+            @Override
+            public void onChanged(@Nullable final TestBean hello) {
+                Toast.makeText(BusDemoActivity.this, "事件监听 in TestBean=" + hello, Toast.LENGTH_SHORT).show();
+            }
+        });
+        EventBus.getDefault().register(testThread);
+        EventBus.getDefault().register(this);
+    }
+
+    final class TestThread extends Thread {
+        public TestThread(final Runnable target) {
+            super(target);
+        }
+
+        @Subscribe
+        public void test(String hello) {
+            Toast.makeText(BusDemoActivity.this, "事件监听 in TestThread" + hello, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Subscribe
+    public void test(String hello) {
+        Toast.makeText(BusDemoActivity.this, "事件监听 in test" + hello, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(testThread);
+        super.onStop();
     }
 
     private void testThread1() {
@@ -114,12 +160,7 @@ public class BusDemoActivity extends AppCompatActivity {
             case R.id.action_settings:
                 Toast.makeText(BusDemoActivity.this, "注册事件监听", Toast.LENGTH_SHORT).show();
                 LiveEventBus.begin().inScope(Scope$demo.class).testBean()
-                        .observe(BusDemoActivity.this, new ObserverWrapper<TestBean>() {
-                            @Override
-                            protected boolean isSticky() {
-                                return true;
-                            }
-
+                        .observe(BusDemoActivity.this, new ObserverWrapper<TestBean>(true) {
                             @Override
                             public void onChanged(TestBean testBean) {
                                 Toast.makeText(BusDemoActivity.this, "事件监听" + testBean.toString(), Toast.LENGTH_SHORT).show();

@@ -20,6 +20,12 @@ import java.lang.annotation.Target;
 /**
  * Created by xu.yi. on 2019/3/31.
  * 事件类型,定义在枚举值上，定义事件名称和事件携带的数据类型
+ * eg:
+ * //@EventScope(name = "demo",active = true)
+ * public enum AppDemo {
+ *     //@Event(description = "定义一个测试事件",data = String.class)testString,
+ *     //@Event(description = "定义一个测试事件测试对象",data = TestBean.class)testBean,
+ * }
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.FIELD)

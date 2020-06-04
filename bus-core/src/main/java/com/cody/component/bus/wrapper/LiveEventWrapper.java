@@ -23,7 +23,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.Transformations;
 
 import com.cody.component.bus.factory.BusFactory;
-import com.cody.component.bus.factory.BusHandlerFactory;
 import com.cody.component.bus.lib.exception.UnInitValueException;
 
 /**
@@ -35,7 +34,7 @@ import com.cody.component.bus.lib.exception.UnInitValueException;
  * 解决会收到注册前发送的消息更新问题
  */
 @SuppressWarnings("unused")
-final public class LiveEventWrapper<T> {
+public class LiveEventWrapper<T> {
     private int mSequence = 0;
     private final MutableLiveData<ValueWrapper<T>> mMutableLiveData;
 
@@ -221,7 +220,7 @@ final public class LiveEventWrapper<T> {
             runnable.run();
         } else {
             // 主线程中观察
-            BusHandlerFactory
+            BusFactory
                     .ready()
                     .getMainHandler()
                     .post(runnable);

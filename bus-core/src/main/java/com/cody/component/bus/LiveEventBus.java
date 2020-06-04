@@ -12,14 +12,14 @@
 
 package com.cody.component.bus;
 
-import android.os.Handler;
-import android.os.Looper;
+import androidx.annotation.NonNull;
 
 import com.cody.component.bus.factory.BusFactory;
 import com.cody.component.bus.lib.IEvent;
 import com.cody.component.bus.lib.annotation.AutoGenerate;
-import com.cody.component.bus.lib.exception.ScopeInactiveException;
 import com.cody.component.bus.lib.exception.WrongTypeException;
+import com.cody.component.bus.wrapper.LiveEventWrapper;
+import com.cody.component.bus.wrapper.StubLiveEventWrapper;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
@@ -41,18 +41,66 @@ import java.lang.reflect.Proxy;
  * <p>
  * LiveEventBus.begin()
  * .inScope(ToBeCompilerOut.class)
- * .withEvent$userDefinedEvent().postValue("");
- * LiveEventBus.begin()
- * .inScope(ToBeCompilerOut.class)
- * .withEvent$userDefinedEvent().setValue("");
+ * .withEvent$userDefinedEvent().post("");
  */
 public class LiveEventBus {
     private static class InstanceHolder {
         private static final LiveEventBus INSTANCE = new LiveEventBus();
     }
 
+    /**
+     * 建议使用，统一事件管理，且可以定义分组Scope
+     *
+     * @return 单例
+     * @see com.cody.component.bus.lib.annotation.EventScope
+     */
     public static LiveEventBus begin() {
         return InstanceHolder.INSTANCE;
+    }
+
+    /**
+     * 获取默认域的事件包装类
+     *
+     * @param event 事件名
+     * @return 默认域的事件包装类
+     * <p>
+     * 所有事件以事件名为key进行观察
+     * 使用此方法需要自己管理事件，重名等问题，不建议使用，建议使用begin函数
+     * @see #begin()
+     */
+    public static LiveEventWrapper getDefault(String event) {
+        return getDefault(event, Object.class);
+    }
+
+    /**
+     * 获取默认域的事件包装类
+     *
+     * @param event     事件名
+     * @param eventType 事件类型
+     * @param <T>       事件类型
+     * @return 默认域的事件包装类
+     * <p>
+     * 使用此方法需要自己管理事件，重名等问题，不建议使用，建议使用begin函数
+     * @see #begin()
+     */
+    public static <T> LiveEventWrapper<T> getDefault(String event, @NonNull Class<T> eventType) {
+        return getDefault(LiveEventBus.class.getName(), event, eventType);
+    }
+
+    /**
+     * 获取默认域的事件包装类
+     *
+     * @param scope     分组管理
+     * @param event     事件名
+     * @param eventType 事件类型
+     * @param <T>       事件类型
+     * @return 默认域的事件包装类
+     * <p>
+     * 使用此方法需要自己管理事件，重名等问题，不建议使用，建议使用begin函数
+     * @see #begin()
+     */
+    public static <T> LiveEventWrapper<T> getDefault(String scope, String event, @NonNull Class<T> eventType) {
+        return BusFactory.ready().create(scope, event + eventType.getName());
     }
 
     private LiveEventBus() {
@@ -74,17 +122,16 @@ public class LiveEventBus {
     }
 
     private static class InterfaceInvokeHandler<T> implements InvocationHandler {
-        private final String mScopeName;
+        private final String scopeName;
+        private boolean active;
 
         InterfaceInvokeHandler(Class<T> scopeClass) {
             AutoGenerate generate = scopeClass.getAnnotation(AutoGenerate.class);
             if (generate == null) {
                 throw new WrongTypeException();
             }
-            if (!generate.active()) {
-                throw new ScopeInactiveException();
-            }
-            mScopeName = generate.value();
+            scopeName = generate.value();
+            active = generate.active();
         }
 
         @Override
@@ -93,7 +140,10 @@ public class LiveEventBus {
             if (method.getDeclaringClass() == Object.class) {
                 return method.invoke(this, args);
             }
-            return BusFactory.ready().create(mScopeName, method.getName());
+            if (active) {
+                return BusFactory.ready().create(scopeName, method.getName());
+            }
+            return new StubLiveEventWrapper<>();
         }
     }
 }
