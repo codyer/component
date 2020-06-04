@@ -145,8 +145,8 @@ public class CameraActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void onCreate(@Nullable final Bundle savedInstanceState, @Nullable final PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         mType = getIntent().getIntExtra(TAKE_TYPE, 0);
         /*动态请求需要的权限*/
         //权限请求码

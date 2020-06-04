@@ -33,6 +33,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class BusDemoActivity extends AppCompatActivity {
     private static int count = 0;
@@ -52,23 +53,38 @@ public class BusDemoActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             count++;
-//            EventBus.getDefault().post("hello" + count);
-            LiveEventBus.getDefault("login", String.class).post("LiveEventBus");
-            LiveEventBus.getDefault("login", TestBean.class).post(new TestBean("count", ("count" + count)));
+            EventBus.getDefault().post("hello" + count);
+//            LiveEventBus.getDefault("login", String.class).post("LiveEventBus");
+//            LiveEventBus.getDefault("login", TestBean.class).post(new TestBean("count", ("count" + count)));
             Snackbar.make(view, "发送事件监听" + count, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-            LiveEventBus.begin().inScope(Scope$demo.class).testBean().post(new TestBean("count", ("count" + count)));
+//            LiveEventBus.begin().inScope(Scope$demo.class).testBean().post(new TestBean("count", ("count" + count)));
         });
 
         LogUtil.d("ddd", "1 id=" + Thread.currentThread().getId());
         // 只支持在主线程调用观察者
         // 线程执行某个耗时任务，同时监听事件回调
         testThread = new TestThread(() -> {
-            LogUtil.d("ddd", "0 id=" + Thread.currentThread().getId());
-            testThread1();
+            LogUtil.d("ddd", "TestThread id=" + Thread.currentThread().getId());
+            try {
+                int i = 0;
+                while (true) {
+                    if (i++ < 10) {
+                        Thread.sleep(1000);
+                        LogUtil.d("ddd", "TestThread 处理时间用了：" + i + "s id=" + Thread.currentThread().getId());
+                        if (i > 3 && i < 6) {
+                            EventBus.getDefault().post("TestThread" + i);
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         });
         testThread.start();
-        LiveEventBus.getDefault("login", Object.class).observe(this, new ObserverWrapper<Object>() {
+        /*LiveEventBus.getDefault("login", Object.class).observe(this, new ObserverWrapper<Object>() {
             @Override
             public void onChanged(@Nullable final Object hello) {
                 Toast.makeText(BusDemoActivity.this, "事件监听 in Object=" + hello, Toast.LENGTH_SHORT).show();
@@ -79,7 +95,7 @@ public class BusDemoActivity extends AppCompatActivity {
             public void onChanged(@Nullable final TestBean hello) {
                 Toast.makeText(BusDemoActivity.this, "事件监听 in TestBean=" + hello, Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         EventBus.getDefault().register(testThread);
         EventBus.getDefault().register(this);
     }
@@ -89,8 +105,9 @@ public class BusDemoActivity extends AppCompatActivity {
             super(target);
         }
 
-        @Subscribe
+        @Subscribe(threadMode = ThreadMode.POSTING)
         public void test(String hello) {
+            LogUtil.d("ddd", "TestThread in test id=" + Thread.currentThread().getId());
             Toast.makeText(BusDemoActivity.this, "事件监听 in TestThread" + hello, Toast.LENGTH_SHORT).show();
         }
     }
