@@ -21,7 +21,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 
+//import com.cody.component.bus.LiveEventBus;
 import com.cody.component.bus.LiveEventBus;
 import com.cody.component.bus.wrapper.ObserverWrapper;
 import com.cody.component.demo.R;
@@ -51,14 +53,23 @@ public class BusDemoActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         FloatingActionButton fab = findViewById(R.id.fab);
+      /*  fab.setOnClickListener(view -> {
+            LiveEventBus.getDefault("Event1",String.class).setValue("推送数据"+count++);
+        });
+        LiveEventBus.getDefault("Event1",String.class).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(final String event) {
+                Toast.makeText(BusDemoActivity.this, "监听到数据 -> " + event, Toast.LENGTH_SHORT).show();
+            }
+        });*/
         fab.setOnClickListener(view -> {
             count++;
-            EventBus.getDefault().post("hello" + count);
+//            EventBus.getDefault().post("hello" + count);
 //            LiveEventBus.getDefault("login", String.class).post("LiveEventBus");
-//            LiveEventBus.getDefault("login", TestBean.class).post(new TestBean("count", ("count" + count)));
+            LiveEventBus.getDefault("login", TestBean.class).post(new TestBean("count", ("count" + count)));
             Snackbar.make(view, "发送事件监听" + count, Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
-//            LiveEventBus.begin().inScope(Scope$demo.class).testBean().post(new TestBean("count", ("count" + count)));
+            LiveEventBus.begin().inScope(Scope$demo.class).testBean().post(new TestBean("count", ("count" + count)));
         });
 
         LogUtil.d("ddd", "1 id=" + Thread.currentThread().getId());
@@ -83,7 +94,7 @@ public class BusDemoActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         });
-        testThread.start();
+//        testThread.start();
         /*LiveEventBus.getDefault("login", Object.class).observe(this, new ObserverWrapper<Object>() {
             @Override
             public void onChanged(@Nullable final Object hello) {
@@ -96,8 +107,8 @@ public class BusDemoActivity extends AppCompatActivity {
                 Toast.makeText(BusDemoActivity.this, "事件监听 in TestBean=" + hello, Toast.LENGTH_SHORT).show();
             }
         });*/
-        EventBus.getDefault().register(testThread);
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(testThread);
+//        EventBus.getDefault().register(this);
     }
 
     final class TestThread extends Thread {
@@ -119,10 +130,11 @@ public class BusDemoActivity extends AppCompatActivity {
 
     @Override
     protected void onStop() {
-        EventBus.getDefault().unregister(this);
-        EventBus.getDefault().unregister(testThread);
+//        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(testThread);
         super.onStop();
     }
+/*
 
     private void testThread1() {
         LiveEventBus.begin()
@@ -134,11 +146,13 @@ public class BusDemoActivity extends AppCompatActivity {
                         boolean finish = TextUtils.equals(testBean.getCode(), "count5");
                         LogUtil.d("ddd", "2 事件监听 in thread id=" + Thread.currentThread().getId());
                         //Toast.makeText(BusDemoActivity.this, "事件监听 in thread" + testBean.toString(), Toast.LENGTH_SHORT).show();
-                        /*if (finish) {
+                        */
+/*if (finish) {
                             LiveEventBus.begin()
                                     .inScope(Scope$demo.class)
                                     .testBean().removeObserver(this);
-                        }*/
+                        }*//*
+
                     }
                 });
         try {
@@ -156,6 +170,7 @@ public class BusDemoActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -175,7 +190,13 @@ public class BusDemoActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.action_settings:
-                Toast.makeText(BusDemoActivity.this, "注册事件监听", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(BusDemoActivity.this, "注册事件监听", Toast.LENGTH_SHORT).show();
+               /* LiveEventBus.getDefault("Event1",String.class).observe(this, new Observer<String>() {
+                    @Override
+                    public void onChanged(final String event) {
+                        Toast.makeText(BusDemoActivity.this, "后注册的监听到数据 -> " + event, Toast.LENGTH_SHORT).show();
+                    }
+                });*/
                 LiveEventBus.begin().inScope(Scope$demo.class).testBean()
                         .observe(BusDemoActivity.this, new ObserverWrapper<TestBean>(true) {
                             @Override

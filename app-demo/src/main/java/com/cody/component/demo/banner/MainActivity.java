@@ -66,6 +66,8 @@ public class MainActivity extends StaticActivity<ActivityMainBannerBinding> {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.toBus:
+
+                com.cody.component.demo.LiveEventBus.getDefault("Event1",String.class).setValue("推送数据 原始数据");
                 startActivity(new Intent(MainActivity.this, BusDemoActivity.class));
                 break;
             case R.id.httpRequest1:
