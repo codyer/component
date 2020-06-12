@@ -26,7 +26,7 @@
             android:name=".process.BusProcessService"
             android:enabled="true"
             android:exported="true"
-            android:permission="com.cody.bus.process.permission"
+            android:permission="com.cody.component.bus.process.permission"
             android:process="com.cody.component.bus.process.BusProcessService"/>
     </application>
 
