@@ -24,7 +24,6 @@
 
         <service
             android:name=".process.BusProcessService"
-            android:description="support multi process event bus."
             android:enabled="true"
             android:exported="true"
             android:permission="com.cody.bus.process.permission"
