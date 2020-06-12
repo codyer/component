@@ -63,10 +63,27 @@ public class LiveEventBus {
 
     /**
      * 进程创建时调用，一般在 Application 的 onCreate 中调用
+     * 单应用场景使用
+     *
      * @param context 上下文
+     * @see #supportMultiProcess(Context, String)
      */
     public static void supportMultiProcess(Context context) {
-        MultiProcessSupport.start(context);
+        supportMultiProcess(context, context.getPackageName());
+    }
+
+    /**
+     * 进程创建时调用，一般在 Application 的 onCreate 中调用
+     * 多应用场景请使用
+     *
+     * @param context           上下文
+     * @param mainApplicationId 共享服务且常驻的包名
+     *                          如果是单应用，即为应用的包名
+     *                          如果是多个应用，即为常驻的主应用的包名
+     *                          主应用必须安装，否则不能正常运行
+     */
+    public static void supportMultiProcess(Context context, String mainApplicationId) {
+        MultiProcessSupport.start(context, mainApplicationId);
     }
 
     /**

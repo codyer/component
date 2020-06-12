@@ -33,6 +33,7 @@ import java.util.Map;
  */
 public class BusProcessService extends Service {
     private final static String TAG = "BusProcessService";
+    public final static String CLASS_NAME = "com.cody.component.bus.process.BusProcessService";
     private RemoteCallbackList<IBusListener> mBusListener = new RemoteCallbackList<>();
     private String mProcessName;
     private Map<String, BusEventItem> mProcessCacheMap = new HashMap<>();

@@ -14,20 +14,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <permission
-        android:name="com.cody.bus.process.permission"
+        android:name="com.cody.component.bus.process.permission"
         android:label="bus process service permission"
         android:protectionLevel="normal" />
 
-    <uses-permission android:name="com.cody.bus.process.permission" />
+    <uses-permission android:name="com.cody.component.bus.process.permission" />
 
     <application>
 
         <service
-            android:name="com.cody.component.bus.process.BusProcessService"
+            android:name=".process.BusProcessService"
+            android:description="support multi process event bus."
             android:enabled="true"
             android:exported="true"
             android:permission="com.cody.bus.process.permission"
-            android:process="com.cody.bus.BusProcessService"/>
+            android:process="com.cody.component.bus.process.BusProcessService"/>
     </application>
 
 </manifest>

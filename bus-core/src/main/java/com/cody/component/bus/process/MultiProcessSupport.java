@@ -52,11 +52,15 @@ public class MultiProcessSupport {
     /**
      * 进程创建的时候调用
      *
-     * @param context 上下文
+     * @param context           上下文
+     * @param mainApplicationId 共享服务且常驻的包名
+     *                          如果是单应用，即为应用的包名
+     *                          如果是多个应用，即为常驻的主应用的包名
+     *                          主应用必须安装，否则不能正常运行
      */
-    public static void start(Context context) {
+    public static void start(Context context, String mainApplicationId) {
         ready().mContext = context;
-        ready().bindService();
+        ready().bindService(mainApplicationId);
     }
 
     /**
@@ -121,8 +125,9 @@ public class MultiProcessSupport {
         }
     }
 
-    private void bindService() {
-        Intent intent = new Intent(mContext, BusProcessService.class);
+    private void bindService(final String mainApplicationId) {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setComponent(new ComponentName(mainApplicationId, BusProcessService.CLASS_NAME));
         mContext.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
     }
 
