@@ -1,4 +1,5 @@
 # component 👏👏👏👏👏👏👏👏
+[![](https://jitpack.io/v/codyer/component.svg)](https://jitpack.io/#codyer/component)
 
 ## 简介
 
