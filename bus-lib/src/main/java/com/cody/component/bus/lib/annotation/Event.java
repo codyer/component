@@ -23,8 +23,8 @@ import java.lang.annotation.Target;
  * eg:
  * //@EventScope(name = "demo",active = true)
  * public enum AppDemo {
- *     //@Event(description = "定义一个测试事件",data = String.class)testString,
- *     //@Event(description = "定义一个测试事件测试对象",data = TestBean.class)testBean,
+ * //@Event(description = "定义一个测试事件",data = String.class)testString,
+ * //@Event(description = "定义一个测试事件测试对象",data = TestBean.class,process = true)testBean,
  * }
  */
 @Retention(RetentionPolicy.SOURCE)
@@ -44,4 +44,9 @@ public @interface Event {
      * @return 事件携带数据类型
      */
     Class data() default Object.class;
+
+    /**
+     * @return 此事件是否支持跨进程
+     */
+    boolean process() default false;
 }

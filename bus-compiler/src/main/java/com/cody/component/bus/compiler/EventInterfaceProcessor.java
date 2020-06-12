@@ -162,6 +162,8 @@ public class EventInterfaceProcessor extends AbstractProcessor {
                                 eventBean.setType(entry.getValue().getValue().toString());
                             } else if (("description").equals(key)) {
                                 eventBean.setDescription(entry.getValue().getValue().toString());
+                            } else if (("process").equals(key)) {
+                                eventBean.setProcess((Boolean) entry.getValue().getValue());
                             }
                         }
                     }
@@ -174,7 +176,7 @@ public class EventInterfaceProcessor extends AbstractProcessor {
     private void generateEventInterfaceClass(EventInfoBean infoBean) {
         String interfaceName = generateClassName(infoBean.getScopeBean().getName());
         AnnotationSpec autoGenerate = AnnotationSpec.builder(AutoGenerate.class)
-                .addMember("value", "$S", infoBean.getScopeBean().getName())
+                .addMember("scope", "$S", infoBean.getScopeBean().getName())
                 .addMember("active", "$L", infoBean.getScopeBean().isActive()).build();
         TypeSpec.Builder builder = TypeSpec.interfaceBuilder(interfaceName)
                 .addModifiers(Modifier.PUBLIC)
@@ -184,19 +186,25 @@ public class EventInterfaceProcessor extends AbstractProcessor {
         for (EventBean e : infoBean.getEventBeans()) {
             ClassName className = ClassName.bestGuess(RETURN_CLASS);
             TypeName returnType;
+            TypeName returnInType;
             String eventTypeStr = e.getType();
             if (eventTypeStr == null || eventTypeStr.length() == 0) {
-                returnType = ParameterizedTypeName.get(className, ClassName.get(Object.class));
+                returnInType = ClassName.get(Object.class);
             } else {
                 Type eventType = getType(eventTypeStr);
                 if (eventType != null) {
-                    returnType = ParameterizedTypeName.get(className, ClassName.get(eventType));
+                    returnInType = ClassName.get(eventType);
                 } else {
-                    returnType = ParameterizedTypeName.get(className, TypeVariableName.get(eventTypeStr));
+                    returnInType = TypeVariableName.get(eventTypeStr);
                 }
             }
+            returnType = ParameterizedTypeName.get(className, returnInType);
+            AnnotationSpec methodAnnotation = AnnotationSpec.builder(AutoGenerate.class)
+                    .addMember("type", "$S", returnInType.toString())
+                    .addMember("process", "$L", e.isProcess()).build();
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(EVENT_PREFIX + e.getName())
                     .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                    .addAnnotation(methodAnnotation)
                     .returns(returnType);
             if (e.getDescription() != null && e.getDescription().length() > 0) {
                 methodBuilder.addJavadoc(e.getDescription());

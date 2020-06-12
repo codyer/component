@@ -20,6 +20,7 @@ public class EventBean {
     private String name;
     private String type;
     private String description;
+    private boolean process;
 
     public String getName() {
         return name;
@@ -43,5 +44,13 @@ public class EventBean {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isProcess() {
+        return process;
+    }
+
+    public void setProcess(final boolean process) {
+        this.process = process;
     }
 }

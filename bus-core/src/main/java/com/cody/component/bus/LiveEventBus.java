@@ -12,12 +12,15 @@
 
 package com.cody.component.bus;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.cody.component.bus.factory.BusFactory;
 import com.cody.component.bus.lib.IEvent;
 import com.cody.component.bus.lib.annotation.AutoGenerate;
 import com.cody.component.bus.lib.exception.WrongTypeException;
+import com.cody.component.bus.process.MultiProcessSupport;
 import com.cody.component.bus.wrapper.LiveEventWrapper;
 import com.cody.component.bus.wrapper.StubLiveEventWrapper;
 
@@ -59,6 +62,21 @@ public class LiveEventBus {
     }
 
     /**
+     * 进程创建时调用，一般在 Application 的 onCreate 中调用
+     * @param context 上下文
+     */
+    public static void supportMultiProcess(Context context) {
+        MultiProcessSupport.start(context);
+    }
+
+    /**
+     * 进程结束时调用，一般在 Application 的 onTerminate 中调用
+     */
+    public static void stopSupportMultiProcess() {
+        MultiProcessSupport.stop();
+    }
+
+    /**
      * 获取默认域的事件包装类
      *
      * @param event 事件名
@@ -75,32 +93,48 @@ public class LiveEventBus {
     /**
      * 获取默认域的事件包装类
      *
-     * @param event     事件名
-     * @param eventType 事件类型
-     * @param <T>       事件类型
+     * @param event 事件名
+     * @param type  事件类型
+     * @param <T>   事件类型
      * @return 默认域的事件包装类
      * <p>
      * 使用此方法需要自己管理事件，重名等问题，不建议使用，建议使用begin函数
      * @see #begin()
      */
-    public static <T> LiveEventWrapper<T> getDefault(String event, @NonNull Class<T> eventType) {
-        return getDefault(LiveEventBus.class.getName(), event, eventType);
+    public static <T> LiveEventWrapper<T> getDefault(String event, @NonNull Class<T> type) {
+        return getDefault(event, type, false);
     }
 
     /**
      * 获取默认域的事件包装类
      *
-     * @param scope     分组管理
-     * @param event     事件名
-     * @param eventType 事件类型
-     * @param <T>       事件类型
+     * @param event 事件名
+     * @param type  事件类型
+     * @param <T>   事件类型
      * @return 默认域的事件包装类
      * <p>
      * 使用此方法需要自己管理事件，重名等问题，不建议使用，建议使用begin函数
      * @see #begin()
      */
-    public static <T> LiveEventWrapper<T> getDefault(String scope, String event, @NonNull Class<T> eventType) {
-        return BusFactory.ready().create(scope, event + eventType.getName());
+    public static <T> LiveEventWrapper<T> getDefault(String event, @NonNull Class<T> type, boolean process) {
+        return getDefault(LiveEventBus.class.getName(), event, type, process);
+    }
+
+    /**
+     * 获取默认域的事件包装类
+     *
+     * @param scope   分组管理
+     * @param event   事件名
+     * @param type    事件类型
+     * @param <T>     事件类型
+     * @param process 是否支持跨进程
+     * @return 默认域的事件包装类
+     * <p>
+     * 使用此方法需要自己管理事件，重名等问题，不建议使用，建议使用begin函数
+     * @see #begin()
+     */
+    public static <T> LiveEventWrapper<T> getDefault(String scope, String event, @NonNull Class<T> type, boolean process) {
+        return BusFactory.ready().create(scope, event, type.getName(), process);
     }
 
     private LiveEventBus() {
@@ -130,18 +164,22 @@ public class LiveEventBus {
             if (generate == null) {
                 throw new WrongTypeException();
             }
-            scopeName = generate.value();
+            scopeName = generate.scope();
             active = generate.active();
         }
 
         @Override
-        public Object invoke(Object proxy, Method method, Object... args) throws InvocationTargetException, IllegalAccessException {
+        public Object invoke(Object proxy, Method method, Object... args) throws InvocationTargetException, IllegalAccessException, ClassNotFoundException {
 
             if (method.getDeclaringClass() == Object.class) {
                 return method.invoke(this, args);
             }
             if (active) {
-                return BusFactory.ready().create(scopeName, method.getName());
+                AutoGenerate generate = method.getAnnotation(AutoGenerate.class);
+                if (generate == null) {
+                    throw new WrongTypeException();
+                }
+                return BusFactory.ready().create(scopeName, method.getName(), generate.type(), generate.process());
             }
             return new StubLiveEventWrapper<>();
         }

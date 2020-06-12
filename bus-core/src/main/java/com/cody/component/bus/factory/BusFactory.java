@@ -51,16 +51,16 @@ public class BusFactory {
     }
 
     @NonNull
-    public <T> LiveEventWrapper<T> create(String scope, String event) {
+    public <T> LiveEventWrapper<T> create(String scope, String event, String type, boolean process) {
         ScopeHolder scopeHolder = null;
         if (mScopeBus.containsKey(scope)) {
             scopeHolder = mScopeBus.get(scope);
         }
         if (scopeHolder == null) {
-            scopeHolder = new ScopeHolder(scope, event);
+            scopeHolder = new ScopeHolder(scope, event, type, process);
             mScopeBus.put(scope, scopeHolder);
         }
-        return scopeHolder.getBus(event);
+        return scopeHolder.getBus(scope, event, type, process);
     }
 
     public ExecutorService getExecutorService() {
@@ -86,20 +86,20 @@ public class BusFactory {
         final String scope;
         final HashMap<String, LiveEventWrapper<?>> eventBus = new HashMap<>();
 
-        ScopeHolder(String scopeName, String event) {
+        ScopeHolder(String scopeName, String event, String type, final boolean process) {
             if (!eventBus.containsKey(event)) {
-                eventBus.put(event, new LiveEventWrapper<>());
+                eventBus.put(event, new LiveEventWrapper<>(scopeName, event, type, process));
             }
             scope = scopeName;
         }
 
         @SuppressWarnings("unchecked")
-        <T> LiveEventWrapper<T> getBus(String event) {
+        <T> LiveEventWrapper<T> getBus(String scope, String event, String type, final boolean process) {
             LiveEventWrapper<T> bus;
             if (eventBus.containsKey(event)) {
                 bus = (LiveEventWrapper<T>) eventBus.get(event);
             } else {
-                bus = new LiveEventWrapper<>();
+                bus = new LiveEventWrapper<>(scope, event, type, process);
                 eventBus.put(event, bus);
             }
             return bus;

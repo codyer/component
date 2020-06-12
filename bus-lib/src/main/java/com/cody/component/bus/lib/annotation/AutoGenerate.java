@@ -22,16 +22,31 @@ import java.lang.annotation.Target;
  * 自动生成的文件注解，不要人为加上
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
+@Target({ElementType.TYPE, ElementType.METHOD})
 public @interface AutoGenerate {
     /**
-     * @return 范围
+     * @return 用在Class上表示范围
+     * 用在方法上表示返回事件类型
      */
-    String value() default "DefaultScope";
+    String scope() default "DefaultScope";
+    /**
+     * @return 用在Class上表示范围
+     * 用在方法上表示返回事件类型
+     */
+    String type() default "java.lang.Object";
 
     /**
-     * 是否激活,可以根据需要配置是否激活事件分发，eg：debug开启，release关闭
+     * 用在 Scope 类上表示：是否激活,可以根据需要配置是否激活事件分发，eg：debug开启，release关闭
+     * 用在 Event 方法上表示：是否激活跨进程
+     *
      * @return debug开启，release关闭
      */
     boolean active() default true;
+    /**
+     * 用在 Scope 类上表示：是否激活,可以根据需要配置是否激活事件分发，eg：debug开启，release关闭
+     * 用在 Event 方法上表示：是否激活跨进程
+     *
+     * @return debug开启，release关闭
+     */
+    boolean process() default false;
 }

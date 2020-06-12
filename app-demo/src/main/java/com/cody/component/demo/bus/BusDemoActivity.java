@@ -33,9 +33,9 @@ import com.cody.component.util.LogUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+//import org.greenrobot.eventbus.EventBus;
+//import org.greenrobot.eventbus.Subscribe;
+//import org.greenrobot.eventbus.ThreadMode;
 
 public class BusDemoActivity extends AppCompatActivity {
     private static int count = 0;
@@ -84,7 +84,7 @@ public class BusDemoActivity extends AppCompatActivity {
                         Thread.sleep(1000);
                         LogUtil.d("ddd", "TestThread 处理时间用了：" + i + "s id=" + Thread.currentThread().getId());
                         if (i > 3 && i < 6) {
-                            EventBus.getDefault().post("TestThread" + i);
+//                            EventBus.getDefault().post("TestThread" + i);
                         }
                     } else {
                         break;
@@ -116,14 +116,14 @@ public class BusDemoActivity extends AppCompatActivity {
             super(target);
         }
 
-        @Subscribe(threadMode = ThreadMode.POSTING)
+//        @Subscribe(threadMode = ThreadMode.POSTING)
         public void test(String hello) {
             LogUtil.d("ddd", "TestThread in test id=" + Thread.currentThread().getId());
             Toast.makeText(BusDemoActivity.this, "事件监听 in TestThread" + hello, Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Subscribe
+//    @Subscribe
     public void test(String hello) {
         Toast.makeText(BusDemoActivity.this, "事件监听 in test" + hello, Toast.LENGTH_SHORT).show();
     }

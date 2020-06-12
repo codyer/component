@@ -24,6 +24,7 @@ import androidx.lifecycle.Transformations;
 
 import com.cody.component.bus.factory.BusFactory;
 import com.cody.component.bus.lib.exception.UnInitValueException;
+import com.cody.component.bus.process.MultiProcessSupport;
 
 /**
  * Created by xu.yi. on 2019/3/31.
@@ -36,9 +37,21 @@ import com.cody.component.bus.lib.exception.UnInitValueException;
 @SuppressWarnings("unused")
 public class LiveEventWrapper<T> {
     private int mSequence = 0;
+    private String mScopeName;
+    private String mEventName;
+    private String mEventType;
+    private boolean mProcess;
     private final MutableLiveData<ValueWrapper<T>> mMutableLiveData;
 
     public LiveEventWrapper() {
+        mMutableLiveData = new MutableLiveData<>();
+    }
+
+    public LiveEventWrapper(String scope, String event, String type, boolean process) {
+        mScopeName = scope;
+        mEventName = event;
+        mEventType = type;
+        mProcess = process;
         mMutableLiveData = new MutableLiveData<>();
     }
 
@@ -97,6 +110,32 @@ public class LiveEventWrapper<T> {
      */
     public void post(@NonNull T value) {
         checkThread(() -> setValue(value));
+        //转发到其他进程
+        if (mProcess) {
+            MultiProcessSupport.post(mScopeName, mEventName, mEventType, value);
+        }
+    }
+
+    /**
+     * 只在当前进程 post 事件
+     * 如果在多线程中调用，保留每一个值
+     * 无需关心调用线程，只要确保在相同进程中就可以
+     *
+     * @param value 需要更新的值
+     */
+    public void postToCurrentProcess(@NonNull T value) {
+        checkThread(() -> setValue(value));
+    }
+
+    /**
+     * 只在当前进程 post 事件
+     * 如果在多线程中调用，保留每一个值
+     * 无需关心调用线程，只要确保在相同进程中就可以
+     *
+     * @param value 需要更新的值
+     */
+    public void postInitValue(@NonNull T value) {
+        checkThread(() -> mMutableLiveData.setValue(new ValueWrapper<>(value, 0)));
     }
 
     /**

@@ -139,7 +139,7 @@ dependencies {
 //        implementation rootProject.ext.dependencies["local-component"]
 //        annotationProcessor rootProject.ext.dependencies["local-compiler"]
 //    } else if (isComponent) {
-    implementation 'org.greenrobot:eventbus:3.2.0'
+//    implementation 'org.greenrobot:eventbus:3.2.0'
     implementation project(':cat-core')
     implementation project(':update-core')
     implementation project(':blues-core')
@@ -149,6 +149,9 @@ dependencies {
     implementation project(":bus-core")
     annotationProcessor project(":bus-compiler")
     annotationProcessor project(":http-compiler")
+    implementation 'com.jeremyliao:live-event-bus-x:1.7.2'
+    implementation 'com.jeremyliao:smart-event-bus-base:0.0.1'
+    annotationProcessor 'com.jeremyliao:smart-event-bus-compiler:0.0.2'
 //    } else {//if (isApp || isJitPack)
 //        implementation rootProject.ext.dependencies["component"]
 //        annotationProcessor rootProject.ext.dependencies["compiler"]
