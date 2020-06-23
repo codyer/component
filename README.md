@@ -2,6 +2,11 @@
 [![](https://jitpack.io/v/codyer/component.svg)](https://jitpack.io/#codyer/component)
 
 ## 简介
+考虑到有的朋友可能只是想看部分模块，近期准备把各个模块拆分出来，方便大家使用
+拆分进度
+|模块|进度|新地址|
+|---|----|-----|
+|bus|已完成|[ElegantBus](https://github.com/codyer/ElegantBus)|
 
 + 中小型公司或个人项目快速开发的良好脚手架，经过实际项目检验，目前持续维护更新中
 
