@@ -54,7 +54,7 @@
 | marquee-core  | 滚动广告布局 | [详细说明](https://github.com/codyer/component/blob/master/marquee-core/README.md) |
 | update-core   | 应用升级更新套件 | [详细说明](https://github.com/codyer/component/blob/master/update-core/README.md) |
 | blues-core    | crash捕获，内部集成bugly | [详细说明](https://github.com/codyer/component/blob/master/blues-core/README.md) |
-| banner-core   | 向上滚动广告组建 | [详细说明](https://github.com/codyer/component/blob/master/banner-core/README.md) |
+| banner-core   | 滚动播放广告组件 | [详细说明](https://github.com/codyer/component/blob/master/banner-core/README.md) |
 | cat-core      | 网络数据监听，快速定位bug原因 | [详细说明](https://github.com/codyer/component/blob/master/cat-core/README.md)  |
 | hybrid-core   | 利用拦截onJsPrompt实现的混合交互方案 | [详细说明](https://github.com/codyer/component/blob/master/hybrid-core/README.md) |
 | image-core    | 图片浏览，扫码，身份证，营业执照拍摄等照片相关  | [详细说明](https://github.com/codyer/component/blob/master/image-core/README.md) |
