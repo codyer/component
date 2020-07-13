@@ -64,13 +64,14 @@
 | bus-compiler  | 定义事件后，通过APT实现模版代码自动生成，减少重复工作量  | [详细说明](https://github.com/codyer/LiveEventBus/blob/master/README.md) |
 | ...           | 其他底层工具类和UI组件 | [详细说明](https://github.com/codyer/component/blob/master/cat-core/README.md) |
 
+## 项目结构图
+
 说明：每个模块都可以单独依赖，根据下图结构，上层自动会将底层依赖进来。
 例如：
 dependencies {
     implementation 'com.github.codyer.component:app-core:1.0.72'
 }
 可以直接依赖app-core
-## 项目结构图
 
 [项目结构](https://github.com/codyer/component/blob/master/structure/APP-structure.xmind)
 
@@ -144,6 +145,7 @@ android {
 }
 ```
 
+依赖所有模块方式
 ```groovy
 dependencies {
   .
