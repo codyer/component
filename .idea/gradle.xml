@@ -17,9 +17,6 @@
             <option value="$PROJECT_DIR$/banner-core" />
             <option value="$PROJECT_DIR$/bind-core" />
             <option value="$PROJECT_DIR$/blues-core" />
-            <option value="$PROJECT_DIR$/bus-compiler" />
-            <option value="$PROJECT_DIR$/bus-core" />
-            <option value="$PROJECT_DIR$/bus-lib" />
             <option value="$PROJECT_DIR$/cat-core" />
             <option value="$PROJECT_DIR$/compiler" />
             <option value="$PROJECT_DIR$/core" />

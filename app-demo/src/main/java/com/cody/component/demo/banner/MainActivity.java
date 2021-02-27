@@ -1,12 +1,12 @@
 /*
  * ************************************************************
- * 文件：MainActivity.java  模块：app  项目：component
- * 当前修改时间：2019年04月23日 18:23:19
- * 上次修改时间：2019年04月23日 11:18:56
+ * 文件：MainActivity.java  模块：app-demo  项目：component
+ * 当前修改时间：2021年02月27日 15:30:04
+ * 上次修改时间：2021年02月27日 15:09:40
  * 作者：Cody.yi   https://github.com/codyer
  *
- * 描述：app
- * Copyright (c) 2019
+ * 描述：app-demo
+ * Copyright (c) 2021
  * ************************************************************
  */
 
@@ -23,10 +23,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
+import cody.bus.ObserverWrapper;
 
 import com.cody.component.bind.CoreBR;
-import com.cody.component.bus.LiveEventBus;
-import com.cody.component.bus.wrapper.ObserverWrapper;
+import com.cody.component.demo.LiveEventBus;
 import com.cody.component.demo.R;
 import com.cody.component.app.activity.StaticActivity;
 import com.cody.component.banner.adapter.BindingBannerAdapter;
@@ -34,14 +34,12 @@ import com.cody.component.banner.data.BannerViewData;
 import com.cody.component.demo.bean.TestBean;
 import com.cody.component.demo.bean.TestDataBean;
 import com.cody.component.demo.bus.BusDemoActivity;
-import com.cody.component.demo.bus.event.Scope$demo;
+import com.cody.component.demo.bus.cody.DemoGroupBus;
 import com.cody.component.demo.data.generate.CatApiOpen$RemoteDataSource;
 import com.cody.component.demo.data.generate.CatHttpBin$RemoteDataSource;
 import com.cody.component.demo.databinding.ActivityMainBannerBinding;
 import com.cody.component.demo.databinding.UpdateDialogBinding;
-import com.cody.component.demo.friendly.FriendlyActivity;
 import com.cody.component.hybrid.activity.HtmlActivity;
-import com.cody.component.hybrid.core.UrlUtil;
 import com.cody.component.image.certificate.camera.CameraActivity;
 import com.cody.component.image.scan.ScanActivity;
 import com.cody.component.demo.list.ListTestActivity;
@@ -126,7 +124,7 @@ public class MainActivity extends StaticActivity<ActivityMainBannerBinding> {
         bannerAdapter.setItemClickListener((parent, view, position, id) -> Toast.makeText(MainActivity.this, "position=" + position, Toast.LENGTH_SHORT).show());
         bannerAdapter.submitList(banners);
         getBinding().banner.setBindingBannerAdapter(bannerAdapter);
-        LiveEventBus.begin().inScope(Scope$demo.class).testBean()
+        DemoGroupBus.testBean()
                 .observe(MainActivity.this, new ObserverWrapper<TestBean>() {
                     @Override
                     public void onChanged(TestBean testBean) {
