@@ -1,12 +1,12 @@
 /*
  * ************************************************************
- * 文件：AbsBindActivity.java  模块：app-core  项目：component
- * 当前修改时间：2019年05月13日 17:02:49
- * 上次修改时间：2019年04月26日 22:46:37
+ * 文件：AbsBindActivity.java  模块：component.app-core  项目：component
+ * 当前修改时间：2021年03月03日 23:46:06
+ * 上次修改时间：2021年02月28日 17:59:19
  * 作者：Cody.yi   https://github.com/codyer
  *
- * 描述：app-core
- * Copyright (c) 2019
+ * 描述：component.app-core
+ * Copyright (c) 2021
  * ************************************************************
  */
 
@@ -25,7 +25,7 @@ import com.cody.component.handler.viewmodel.BaseViewModel;
  * Created by xu.yi. on 2019/3/25.
  * 一个页面只绑定一个viewData
  */
-public abstract class AbsBindActivity<B extends ViewDataBinding, VM extends BaseViewModel, VD extends ViewData> extends BaseBindActivity<B> {
+public abstract class AbsBindActivity<B extends ViewDataBinding, VM extends BaseViewModel, VD extends ViewData> extends BaseActionbarActivity<B> {
     protected abstract VD getViewData();
     private VM mViewModel;
 

@@ -1,12 +1,12 @@
 /*
  * ************************************************************
- * 文件：AbsPageListViewModel.java  模块：handler-core  项目：component
- * 当前修改时间：2019年11月04日 14:15:44
- * 上次修改时间：2019年11月04日 14:11:02
+ * 文件：AbsPageListViewModel.java  模块：component.handler-core  项目：component
+ * 当前修改时间：2021年03月03日 23:46:06
+ * 上次修改时间：2021年02月28日 21:18:51
  * 作者：Cody.yi   https://github.com/codyer
  *
- * 描述：handler-core
- * Copyright (c) 2019
+ * 描述：component.handler-core
+ * Copyright (c) 2021
  * ************************************************************
  */
 
@@ -31,7 +31,6 @@ public abstract class AbsPageListViewModel<VD extends FriendlyViewData, Key> ext
 
     public AbsPageListViewModel(final VD friendlyViewData) {
         super(friendlyViewData);
-        mPagedList = new LivePagedListBuilder<>(createDataSourceFactory(), initPageListConfig()).build();
     }
 
     /**
@@ -47,6 +46,9 @@ public abstract class AbsPageListViewModel<VD extends FriendlyViewData, Key> ext
     }
 
     public LiveData<PagedList<ItemViewDataHolder>> getPagedList() {
+        if (mPagedList == null){
+            mPagedList = new LivePagedListBuilder<>(createDataSourceFactory(), initPageListConfig()).build();
+        }
         return mPagedList;
     }
 }

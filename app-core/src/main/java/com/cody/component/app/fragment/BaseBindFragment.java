@@ -1,12 +1,12 @@
 /*
  * ************************************************************
- * 文件：BaseBindFragment.java  模块：app-core  项目：component
- * 当前修改时间：2019年04月23日 18:23:19
- * 上次修改时间：2019年04月23日 14:08:23
+ * 文件：BaseBindFragment.java  模块：component.app-core  项目：component
+ * 当前修改时间：2021年03月03日 23:46:06
+ * 上次修改时间：2021年02月27日 16:19:32
  * 作者：Cody.yi   https://github.com/codyer
  *
- * 描述：app-core
- * Copyright (c) 2019
+ * 描述：component.app-core
+ * Copyright (c) 2021
  * ************************************************************
  */
 
@@ -33,7 +33,7 @@ import androidx.databinding.ViewDataBinding;
  * Created by xu.yi. on 2019/3/25.
  * dataBinding 基类
  */
-public abstract class BaseBindFragment<B extends ViewDataBinding> extends BaseLazyFragment implements IBinding, View.OnClickListener {
+public abstract class BaseBindFragment<B extends ViewDataBinding> extends BaseLazyFragment implements IBinding<B>, View.OnClickListener {
     private B mBinding;
 
     /**
