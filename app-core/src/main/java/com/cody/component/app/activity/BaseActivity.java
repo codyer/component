@@ -1,12 +1,12 @@
 /*
  * ************************************************************
- * 文件：BaseActivity.java  模块：app-core  项目：component
- * 当前修改时间：2019年04月23日 18:23:19
- * 上次修改时间：2019年04月22日 00:03:14
+ * 文件：BaseActivity.java  模块：component.app-core  项目：component
+ * 当前修改时间：2021年03月09日 23:47:19
+ * 上次修改时间：2021年03月09日 23:47:11
  * 作者：Cody.yi   https://github.com/codyer
  *
- * 描述：app-core
- * Copyright (c) 2019
+ * 描述：component.app-core
+ * Copyright (c) 2021
  * ************************************************************
  */
 
@@ -15,6 +15,7 @@ package com.cody.component.app.activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -28,14 +29,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.CallSuper;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.cody.component.app.R;
 import com.cody.component.app.widget.LoadingDialog;
 import com.cody.component.app.widget.swipebacklayout.BGASwipeBackHelper;
@@ -48,6 +41,14 @@ import com.cody.component.util.SystemBarUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 /**
  * Created by xu.yi. on 2019/3/25.
@@ -98,6 +99,32 @@ public abstract class BaseActivity extends AppCompatActivity implements IBaseVie
             SystemBarUtil.immersiveStatusBar(this, 0.0f);
             SystemBarUtil.setPadding(this, topLayout);
         }
+    }
+
+    protected boolean autoFont() {
+        return false;
+    }
+
+    //设置字体为默认大小，不随系统字体大小改而改变
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        if (!autoFont()) {
+            if (newConfig.fontScale != 1)//非默认值
+                getResources();
+        }
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public Resources getResources() {
+        Resources res = super.getResources();
+        if (autoFont()) return res;
+        if (res.getConfiguration().fontScale != 1) {//非默认值
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
     }
 
     /**

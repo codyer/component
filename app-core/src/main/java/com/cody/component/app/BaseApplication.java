@@ -1,23 +1,22 @@
 /*
  * ************************************************************
- * 文件：BaseApplication.java  模块：app-core  项目：component
- * 当前修改时间：2019年05月27日 19:57:57
- * 上次修改时间：2019年05月24日 15:21:32
+ * 文件：BaseApplication.java  模块：component.app-core  项目：component
+ * 当前修改时间：2021年03月09日 23:47:19
+ * 上次修改时间：2021年03月09日 23:47:11
  * 作者：Cody.yi   https://github.com/codyer
  *
- * 描述：app-core
- * Copyright (c) 2019
+ * 描述：component.app-core
+ * Copyright (c) 2021
  * ************************************************************
  */
 
 package com.cody.component.app;
 
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
-
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.multidex.MultiDexApplication;
 
 import com.cody.component.app.local.Repository;
 import com.cody.component.app.widget.swipebacklayout.BGASwipeBackHelper;
@@ -28,6 +27,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.multidex.MultiDexApplication;
+
 /**
  * Created by xu.yi. on 2019/4/7.
  * component
@@ -36,6 +38,10 @@ public class BaseApplication extends MultiDexApplication {
     // This flag should be set to true to enable VectorDrawable support for API < 21
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
+
+    protected boolean autoFont() {
+        return false;
     }
 
     /**
@@ -50,6 +56,34 @@ public class BaseApplication extends MultiDexApplication {
          * 第二个参数：如果发现滑动返回后立即触摸界面时应用崩溃，请把该界面里比较特殊的 View 的 class 添加到该集合中，目前在库中已经添加了 WebView 和 SurfaceView
          */
         BGASwipeBackHelper.init(this, null);
+        if (!autoFont()) {
+            Resources res = super.getResources();
+            Configuration config = new Configuration();
+            config.setToDefaults();
+            res.updateConfiguration(config, res.getDisplayMetrics());
+        }
+    }
+
+    //设置字体为默认大小，不随系统字体大小改而改变
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        if (!autoFont()) {
+            if (newConfig.fontScale != 1)//非默认值
+                getResources();
+        }
+        super.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public Resources getResources() {
+        Resources res = super.getResources();
+        if (autoFont()) return res;
+        if (res.getConfiguration().fontScale != 1) {//非默认值
+            Configuration newConfig = new Configuration();
+            newConfig.setToDefaults();//设置默认
+            res.updateConfiguration(newConfig, res.getDisplayMetrics());
+        }
+        return res;
     }
 
     @Override
