@@ -13,12 +13,15 @@
 package com.cody.component.http;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.cody.component.http.db.HttpCacheDatabase;
 import com.cody.component.lib.exception.NotInitializedException;
 
 import java.lang.ref.WeakReference;
 
+import io.reactivex.functions.Consumer;
+import io.reactivex.plugins.RxJavaPlugins;
 import okhttp3.Interceptor;
 
 /**
@@ -27,6 +30,10 @@ import okhttp3.Interceptor;
 public class HttpCore {
     public static final String CACHE_KEY = "cache-once-time";
     private String mVersion = BuildConfig.VERSION_NAME;
+
+    private HttpCore() {
+        RxJavaPlugins.setErrorHandler(throwable -> Log.w("RxJavaPlugins","RxJava catch global exception", throwable));
+    }
 
     private static class InstanceHolder {
         private static final HttpCore INSTANCE = new HttpCore();

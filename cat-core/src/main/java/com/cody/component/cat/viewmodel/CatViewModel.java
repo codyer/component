@@ -40,7 +40,9 @@ import com.cody.component.util.RecyclerViewUtil;
  * CatViewModel
  */
 public class CatViewModel extends AbsPageListViewModel<FriendlyViewData, Integer> {
-    private HttpCatDao mHttpCatDao;
+    private final HttpCatDao mHttpCatDao = HttpCatDatabase
+            .getInstance()
+            .getHttpInformationDao();
 
     private LiveData<ItemHttpData> mRecordLiveData = new MutableLiveData<>();
 
@@ -50,9 +52,6 @@ public class CatViewModel extends AbsPageListViewModel<FriendlyViewData, Integer
 
     @Override
     protected DataSource.Factory<Integer, ItemViewDataHolder> createDataSourceFactory() {
-        mHttpCatDao = HttpCatDatabase
-                .getInstance()
-                .getHttpInformationDao();
         return mHttpCatDao.getDataSource().map(input -> input);
     }
 

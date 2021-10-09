@@ -116,10 +116,10 @@ public class MainActivity extends StaticActivity<ActivityMainBannerBinding> {
     protected void onBaseReady(Bundle savedInstanceState) {
         super.onBaseReady(savedInstanceState);
         final List<BannerViewData> banners = new ArrayList<>();
-        banners.add(new BannerViewData("http://img.zcool.cn/community/01c98059093a88a801214550cd0853.jpg"));
-        banners.add(new BannerViewData("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554377914890&di=7ab78e69f3fec25509f88cd70171db38&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01a82c5711fd566ac7251343a63c56.jpg%40900w_1l_2o_100sh.jpg"));
-        banners.add(new BannerViewData("http://img.zcool.cn/community/01c98059093a88a801214550cd0853.jpg"));
-        banners.add(new BannerViewData("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1554377856503&di=eddca6d3c83a95e183dfb7c073d14b69&imgtype=0&src=http%3A%2F%2Fpic23.nipic.com%2F20120814%2F8758059_141413668315_2.jpg"));
+        banners.add(new BannerViewData("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.jj20.com%2Fup%2Fallimg%2F911%2F101416132957%2F161014132957-9.jpg&refer=http%3A%2F%2Fpic.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1636386194&t=23f880115ab992812c4b550ee6212a9e"));
+        banners.add(new BannerViewData("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg2.niutuku.com%2Fdesk%2F1207%2F0944%2Fntk111703.jpg&refer=http%3A%2F%2Fimg2.niutuku.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1636386194&t=9d34950bd0273601a852ca89ca8d0f18"));
+        banners.add(new BannerViewData("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fwww.33lc.com%2Farticle%2FUploadPic%2F2012-7%2F201272614275728076.jpg&refer=http%3A%2F%2Fwww.33lc.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1636386265&t=bddb9f5ce9017f5a83ebf4a5ce3ad3f0"));
+        banners.add(new BannerViewData("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fpic.jj20.com%2Fup%2Fallimg%2F1113%2F051R0115229%2F20051Q15229-11-1200.jpg&refer=http%3A%2F%2Fpic.jj20.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1636386265&t=641d7e71a5b73c4c8cc49c042ff15198"));
         BindingBannerAdapter<BannerViewData> bannerAdapter = new BindingBannerAdapter<>(this);
         bannerAdapter.setItemClickListener((parent, view, position, id) -> Toast.makeText(MainActivity.this, "position=" + position, Toast.LENGTH_SHORT).show());
         bannerAdapter.submitList(banners);
